@@ -50,7 +50,13 @@ class TagNotes extends Table {
 class MobiNoteDatabase extends _$MobiNoteDatabase {
   MobiNoteDatabase() : super(_openConnection());
 
-  Future<List<Note>> get allNotes => select(notes).get();
+  Future<List<Note>?> get allNotes => select(notes).get();
+  Future<Note?> noteWithId(int id) =>
+      (select(notes)..where((tbl) => tbl.id.equals(id))).watchSingle().first;
+
+  Future<void> updateNote(Note updatedNote) async {
+    await update(notes).replace(updatedNote);
+  }
 
   @override
   int get schemaVersion => 1;

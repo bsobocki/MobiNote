@@ -45,11 +45,27 @@ class _MyHomePageState extends State<MyHomePage> {
     ));
   }
 
-  void createNewNote() {
+  void createNewNotePage() {
+    Navigator.of(context)
+        .push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => NoteEditorPage(
+              id: -1,
+              title: '',
+              content: '',
+            ),
+          ),
+        )
+        .then((value) => setState(() {
+              _notesFuture = fetchNotes();
+            }));
+  }
+
+  void openNoteEditorPage(int id, String title, String content) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return const NoteEditorPage(title: 'Title');
+          return NoteEditorPage(id: id, title: title, content: content);
         },
       ),
     ).then((value) => setState(() {
@@ -93,11 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
             } else if (snapshot.hasData) {
               List<Note> allNotes = snapshot.data?.toList() ?? [];
               List<Widget> noteListWidgets = [];
-              allNotes.map((note) => NoteWidget(note: note)).toList();
+              allNotes.map((note) => NoteWidget(note: note, noteAction: openNoteEditorPage,)).toList();
 
               noteListWidgets.add(const SizedBox(height: 30));
               for (var note in allNotes) {
-                noteListWidgets.add(NoteWidget(note: note));
+                noteListWidgets.add(NoteWidget(note: note, noteAction: openNoteEditorPage,));
                 noteListWidgets.add(const SizedBox(height: 30));
               }
 
@@ -111,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
             }
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: createNewNote,
+        onPressed: createNewNotePage,
         tooltip: 'Create a new Note',
         child: const Icon(Icons.create),
       ), // This trailing comma makes auto-formatting nicer for build methods.
