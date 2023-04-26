@@ -26,10 +26,9 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 
   void saveNote() async {
     try {
+      await database.noteWithId(id);
       final newNote = Note(
-          id: id,
-          title: titleController.text,
-          content: contentController.text);
+          id: id, title: titleController.text, content: contentController.text);
       await database.updateNote(newNote);
     } catch (e) {
       id = await database.into(database.notes).insert(NotesCompanion.insert(
