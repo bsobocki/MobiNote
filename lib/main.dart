@@ -46,19 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void createNewNotePage() {
-    Navigator.of(context)
-        .push(
-          MaterialPageRoute(
-            builder: (BuildContext context) => NoteEditorPage(
-              id: -1,
-              title: '',
-              content: '',
-            ),
-          ),
-        )
-        .then((value) => setState(() {
-              _notesFuture = fetchNotes();
-            }));
+    openNoteEditorPage(-1, '', 'content');
   }
 
   void openNoteEditorPage(int id, String title, String content) {
@@ -68,13 +56,17 @@ class _MyHomePageState extends State<MyHomePage> {
           return NoteEditorPage(id: id, title: title, content: content);
         },
       ),
-    ).then((value) => setState(() {
-          _notesFuture = fetchNotes();
-        }));
+    ).then((value) => updateNotesListView());
   }
 
   Future<List<Note>> fetchNotes() {
     return database.select(database.notes).get();
+  }
+
+  void updateNotesListView() {
+    setState(() {
+      _notesFuture = fetchNotes();
+    });
   }
 
   @override
@@ -109,11 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
             } else if (snapshot.hasData) {
               List<Note> allNotes = snapshot.data?.toList() ?? [];
               List<Widget> noteListWidgets = [];
-              allNotes.map((note) => NoteWidget(note: note, noteAction: openNoteEditorPage,)).toList();
-
               noteListWidgets.add(const SizedBox(height: 30));
               for (var note in allNotes) {
-                noteListWidgets.add(NoteWidget(note: note, noteAction: openNoteEditorPage,));
+                noteListWidgets.add(NoteWidget(note: note, noteAction: openNoteEditorPage, updateViewAction: updateNotesListView));
                 noteListWidgets.add(const SizedBox(height: 30));
               }
 

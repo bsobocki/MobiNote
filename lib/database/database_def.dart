@@ -51,12 +51,13 @@ class MobiNoteDatabase extends _$MobiNoteDatabase {
   MobiNoteDatabase() : super(_openConnection());
 
   Future<List<Note>?> get allNotes => select(notes).get();
+
   Future<Note?> noteWithId(int id) =>
       (select(notes)..where((tbl) => tbl.id.equals(id))).watchSingle().first;
 
-  Future<void> updateNote(Note updatedNote) async {
-    await update(notes).replace(updatedNote);
-  }
+  Future<void> updateNote(Note updatedNote) => update(notes).replace(updatedNote);
+
+  Future<int> deleteNote(int id) => (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
 
   @override
   int get schemaVersion => 1;
@@ -69,3 +70,20 @@ LazyDatabase _openConnection() {
     return NativeDatabase.createInBackground(file);
   });
 }
+
+
+/*
+For my information how it can be done:
+
+ @Query('SELECT * FROM notes')
+  Future<List<Note>> getAllNotes();
+
+  @insert
+  Future<int> insertNote(Note note);
+
+  @update
+  Future<int> updateNote(Note note);
+
+  @delete
+  Future<int> deleteNote(Note note);
+*/

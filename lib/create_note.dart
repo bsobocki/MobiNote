@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'database/database_def.dart';
 
 class NoteEditorPage extends StatefulWidget {
-  NoteEditorPage(
+  const NoteEditorPage(
       {super.key,
       required this.id,
       required this.title,
       required this.content});
-  int id;
+  final int id;
   final String title;
   final String content;
 
@@ -18,24 +18,22 @@ class NoteEditorPage extends StatefulWidget {
 }
 
 class _NoteEditorPageState extends State<NoteEditorPage> {
+  final database = Get.find<MobiNoteDatabase>();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
 
   late int id;
 
   void saveNote() async {
-    final database = Get.find<MobiNoteDatabase>();
-    final selectedNote = await database.noteWithId(id);
-
-    if (selectedNote == null) {
-      id = await database.into(database.notes).insert(NotesCompanion.insert(
-          title: titleController.text, content: contentController.text));
-    } else {
+    try {
       final newNote = Note(
-          id: widget.id,
+          id: id,
           title: titleController.text,
           content: contentController.text);
-      database.updateNote(newNote);
+      await database.updateNote(newNote);
+    } catch (e) {
+      id = await database.into(database.notes).insert(NotesCompanion.insert(
+          title: titleController.text, content: contentController.text));
     }
   }
 
