@@ -9,7 +9,7 @@ part 'database_def.g.dart';
 
 class DBInfo {
   static Directory? _dir;
-  static const String name = 'db.sqlite';
+  static const String name = 'mobinote_db.sqlite';
 
   static void initialize(Directory directory) {
     _dir ??= directory;
@@ -29,7 +29,9 @@ class DBInfo {
 class Notes extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
-  TextColumn get contentFileName => text()();
+
+  @JsonKey('body') //This is required for the drift_db_viewer.
+  TextColumn get content => text().named('body')();
 }
 
 @DataClassName('Tag')
@@ -47,6 +49,8 @@ class TagNotes extends Table {
 @DriftDatabase(tables: [Notes, Tags, TagNotes])
 class MobiNoteDatabase extends _$MobiNoteDatabase {
   MobiNoteDatabase() : super(_openConnection());
+
+  Future<List<Note>> get allNotes => select(notes).get();
 
   @override
   int get schemaVersion => 1;

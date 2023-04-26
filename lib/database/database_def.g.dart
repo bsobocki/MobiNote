@@ -22,14 +22,14 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _contentFileNameMeta =
-      const VerificationMeta('contentFileName');
+  static const VerificationMeta _contentMeta =
+      const VerificationMeta('content');
   @override
-  late final GeneratedColumn<String> contentFileName = GeneratedColumn<String>(
-      'content_file_name', aliasedName, false,
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+      'body', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, title, contentFileName];
+  List<GeneratedColumn> get $columns => [id, title, content];
   @override
   String get aliasedName => _alias ?? 'notes';
   @override
@@ -48,13 +48,11 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (data.containsKey('content_file_name')) {
-      context.handle(
-          _contentFileNameMeta,
-          contentFileName.isAcceptableOrUnknown(
-              data['content_file_name']!, _contentFileNameMeta));
+    if (data.containsKey('body')) {
+      context.handle(_contentMeta,
+          content.isAcceptableOrUnknown(data['body']!, _contentMeta));
     } else if (isInserting) {
-      context.missing(_contentFileNameMeta);
+      context.missing(_contentMeta);
     }
     return context;
   }
@@ -69,8 +67,8 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      contentFileName: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}content_file_name'])!,
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
     );
   }
 
@@ -83,15 +81,14 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
 class Note extends DataClass implements Insertable<Note> {
   final int id;
   final String title;
-  final String contentFileName;
-  const Note(
-      {required this.id, required this.title, required this.contentFileName});
+  final String content;
+  const Note({required this.id, required this.title, required this.content});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
-    map['content_file_name'] = Variable<String>(contentFileName);
+    map['body'] = Variable<String>(content);
     return map;
   }
 
@@ -99,7 +96,7 @@ class Note extends DataClass implements Insertable<Note> {
     return NotesCompanion(
       id: Value(id),
       title: Value(title),
-      contentFileName: Value(contentFileName),
+      content: Value(content),
     );
   }
 
@@ -109,7 +106,7 @@ class Note extends DataClass implements Insertable<Note> {
     return Note(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
-      contentFileName: serializer.fromJson<String>(json['contentFileName']),
+      content: serializer.fromJson<String>(json['body']),
     );
   }
   @override
@@ -118,69 +115,69 @@ class Note extends DataClass implements Insertable<Note> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
-      'contentFileName': serializer.toJson<String>(contentFileName),
+      'body': serializer.toJson<String>(content),
     };
   }
 
-  Note copyWith({int? id, String? title, String? contentFileName}) => Note(
+  Note copyWith({int? id, String? title, String? content}) => Note(
         id: id ?? this.id,
         title: title ?? this.title,
-        contentFileName: contentFileName ?? this.contentFileName,
+        content: content ?? this.content,
       );
   @override
   String toString() {
     return (StringBuffer('Note(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('contentFileName: $contentFileName')
+          ..write('content: $content')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, contentFileName);
+  int get hashCode => Object.hash(id, title, content);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Note &&
           other.id == this.id &&
           other.title == this.title &&
-          other.contentFileName == this.contentFileName);
+          other.content == this.content);
 }
 
 class NotesCompanion extends UpdateCompanion<Note> {
   final Value<int> id;
   final Value<String> title;
-  final Value<String> contentFileName;
+  final Value<String> content;
   const NotesCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
-    this.contentFileName = const Value.absent(),
+    this.content = const Value.absent(),
   });
   NotesCompanion.insert({
     this.id = const Value.absent(),
     required String title,
-    required String contentFileName,
+    required String content,
   })  : title = Value(title),
-        contentFileName = Value(contentFileName);
+        content = Value(content);
   static Insertable<Note> custom({
     Expression<int>? id,
     Expression<String>? title,
-    Expression<String>? contentFileName,
+    Expression<String>? content,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
-      if (contentFileName != null) 'content_file_name': contentFileName,
+      if (content != null) 'body': content,
     });
   }
 
   NotesCompanion copyWith(
-      {Value<int>? id, Value<String>? title, Value<String>? contentFileName}) {
+      {Value<int>? id, Value<String>? title, Value<String>? content}) {
     return NotesCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
-      contentFileName: contentFileName ?? this.contentFileName,
+      content: content ?? this.content,
     );
   }
 
@@ -193,8 +190,8 @@ class NotesCompanion extends UpdateCompanion<Note> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
-    if (contentFileName.present) {
-      map['content_file_name'] = Variable<String>(contentFileName.value);
+    if (content.present) {
+      map['body'] = Variable<String>(content.value);
     }
     return map;
   }
@@ -204,7 +201,7 @@ class NotesCompanion extends UpdateCompanion<Note> {
     return (StringBuffer('NotesCompanion(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('contentFileName: $contentFileName')
+          ..write('content: $content')
           ..write(')'))
         .toString();
   }
