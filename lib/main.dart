@@ -2,6 +2,7 @@ import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobi_note/database/note_widget.dart';
+import 'package:mobi_note/flexible_spaces/mountains_flexible_space.dart';
 import 'create_note.dart';
 import 'database/database_def.dart';
 
@@ -20,9 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MobiNote',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.teal),
       home: const MyHomePage(title: 'MobiNote'),
     );
   }
@@ -89,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        flexibleSpace: MountainsFlexibleSpace(),
         actions: [
           IconButton(
             onPressed: showDatabase,

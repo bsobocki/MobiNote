@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/flexible_spaces/mountains_flexible_space.dart';
 
 import 'database/database_def.dart';
 
@@ -69,6 +70,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: MountainsFlexibleSpace(),
         actions: [
           Switch(
             value: wantToSaveNote,

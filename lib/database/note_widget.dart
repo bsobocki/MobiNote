@@ -40,8 +40,9 @@ class _NoteWidgetState extends State<NoteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
       style: OutlinedButton.styleFrom(
+        backgroundColor: Color.fromARGB(255, 110, 194, 190),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -87,7 +88,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                     ),
                   ],
                 ),
-                const Divider(),
+                const Divider(color: Color.fromARGB(255, 241, 239, 239),),
                 Text(
                   widget.note.content,
                   maxLines: maxLines,
