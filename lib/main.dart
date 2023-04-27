@@ -103,7 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
               List<Widget> noteListWidgets = [];
               noteListWidgets.add(const SizedBox(height: 30));
               for (var note in allNotes) {
-                noteListWidgets.add(NoteWidget(note: note, noteAction: openNoteEditorPage, updateViewAction: updateNotesListView));
+                noteListWidgets.add(NoteWidget(
+                    note: note,
+                    noteAction: openNoteEditorPage,
+                    updateViewAction: updateNotesListView));
                 noteListWidgets.add(const SizedBox(height: 30));
               }
 
