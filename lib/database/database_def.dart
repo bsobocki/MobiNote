@@ -50,14 +50,19 @@ class TagNotes extends Table {
 class MobiNoteDatabase extends _$MobiNoteDatabase {
   MobiNoteDatabase() : super(_openConnection());
 
-  Future<List<Note>?> get allNotes => select(notes).get();
+  Future<List<Note>> get allNotes => select(notes).get();
 
-  Future<Note?> noteWithId(int id) =>
-      (select(notes)..where((tbl) => tbl.id.equals(id))).watchSingle().first;
+  Future<Note?> getNoteWithId(int id) =>
+      (select(notes)..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
 
-  Future<void> updateNote(Note updatedNote) => update(notes).replace(updatedNote);
+  Future<void> updateNote(Note updatedNote) =>
+      update(notes).replace(updatedNote);
 
-  Future<int> deleteNote(int id) => (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
+  Future<int> deleteNote(int id) =>
+      (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
+
+  Future<int> addNote(String title, String content) =>
+      into(notes).insert(NotesCompanion.insert(title: title, content: content));
 
   @override
   int get schemaVersion => 1;

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 import 'database/database_def.dart';
 
+const double noteContentPadding = 10.0;
+
 class NoteEditorPage extends StatefulWidget {
   const NoteEditorPage(
       {super.key,
@@ -18,25 +20,44 @@ class NoteEditorPage extends StatefulWidget {
 }
 
 class _NoteEditorPageState extends State<NoteEditorPage> {
+  late int id;
   final database = Get.find<MobiNoteDatabase>();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  bool noteChanged = false;
+  bool wantToSaveNote = true;
 
-  late int id;
+  Future<void> saveNote() async {
+    if (wantToSaveNote && noteChanged) {
+      try {
+        final selectedNote = await database.getNoteWithId(id);
 
-  void saveNote() async {
-    try {
-      await database.noteWithId(id);
-      final newNote = Note(
-          id: id, title: titleController.text, content: contentController.text);
-      await database.updateNote(newNote);
-    } catch (e) {
-      id = await database.into(database.notes).insert(NotesCompanion.insert(
-          title: titleController.text, content: contentController.text));
+        if (selectedNote != null) {
+          final newNote = Note(
+              id: id,
+              title: titleController.text,
+              content: contentController.text);
+          await database.updateNote(newNote);
+        } else {
+          id = await database.addNote(
+              titleController.text, contentController.text);
+        }
+      } catch (e) {
+        await showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text(
+                      'Cannot save note with id: $id! cause: ${e.toString()}!'),
+                ));
+      }
     }
   }
 
-  void initFields() {
+  void saveAndExit() async {
+    await saveNote().then((value) => Navigator.pop(context));
+  }
+
+  void init() {
     id = widget.id;
     titleController.text = widget.title;
     contentController.text = widget.content;
@@ -44,49 +65,53 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    initFields();
+    init();
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: saveNote,
-            icon: const Icon(Icons.save),
-          )
+          Switch(
+            value: wantToSaveNote,
+            onChanged: (value) {
+              setState(() {
+                wantToSaveNote = value;
+              });
+            },
+            activeColor: const Color.fromARGB(255, 133, 226, 26),
+            activeTrackColor: const Color.fromARGB(255, 193, 250, 127),
+            inactiveThumbColor: Colors.grey,
+            inactiveTrackColor: Colors.grey[300],
+          ),
         ],
         title: TextField(
           controller: titleController,
-          decoration: InputDecoration(
-            labelText: 'Title',
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.clear),
-              onPressed: () {
-                titleController.clear();
-              },
-            ),
+          onChanged: (value) => noteChanged = true,
+          cursorColor: Colors.white,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
           ),
+          decoration: const InputDecoration(border: InputBorder.none),
+        ),
+        leading: IconButton(
+          onPressed: saveAndExit,
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(noteContentPadding),
         child: Column(
           children: <Widget>[
             Expanded(
               child: TextField(
+                onChanged: (value) => noteChanged = true,
                 controller: contentController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration: InputDecoration(
-                  labelText: 'Note',
-                  border: const UnderlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      contentController.clear();
-                    },
-                  ),
-                ),
+                decoration: const InputDecoration(
+                    border: UnderlineInputBorder(
+                  borderSide: BorderSide.none,
+                )),
               ),
             )
           ],

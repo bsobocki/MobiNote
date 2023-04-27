@@ -1,9 +1,11 @@
 import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobi_note/database/notes.dart';
+import 'package:mobi_note/database/note_widget.dart';
 import 'create_note.dart';
 import 'database/database_def.dart';
+
+const double listViewPadding = 30.0;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,15 +16,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MobiNote',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'MobiNote'),
     );
   }
 }
@@ -38,6 +39,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final database = Get.find<MobiNoteDatabase>();
   late Future<List<Note>> _notesFuture;
+  final double appBarHeight = AppBar().preferredSize.height;
+  double bottomPadding(context) => MediaQuery.of(context).padding.bottom;
+  double listViewHeight(context) =>
+      MediaQuery.of(context).size.height -
+      appBarHeight -
+      bottomPadding(context) -
+      listViewPadding;
 
   void showDatabase() {
     Navigator.of(context).push(MaterialPageRoute(
@@ -46,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void createNewNotePage() {
-    openNoteEditorPage(-1, '', 'content');
+    openNoteEditorPage(-1, '', '');
   }
 
   void openNoteEditorPage(int id, String title, String content) {
@@ -59,20 +67,16 @@ class _MyHomePageState extends State<MyHomePage> {
     ).then((value) => updateNotesListView());
   }
 
-  Future<List<Note>> fetchNotes() {
-    return database.select(database.notes).get();
-  }
-
   void updateNotesListView() {
     setState(() {
-      _notesFuture = fetchNotes();
+      _notesFuture = database.allNotes;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _notesFuture = fetchNotes();
+    updateNotesListView();
   }
 
   @override
@@ -101,18 +105,27 @@ class _MyHomePageState extends State<MyHomePage> {
             } else if (snapshot.hasData) {
               List<Note> allNotes = snapshot.data?.toList() ?? [];
               List<Widget> noteListWidgets = [];
-              noteListWidgets.add(const SizedBox(height: 30));
               for (var note in allNotes) {
-                noteListWidgets.add(NoteWidget(
-                    note: note,
-                    noteAction: openNoteEditorPage,
-                    updateViewAction: updateNotesListView));
+                noteListWidgets.add(
+                  SizedBox(
+                    width: 20,
+                    child: NoteWidget(
+                      note: note,
+                      noteAction: openNoteEditorPage,
+                      updateViewAction: updateNotesListView,
+                    ),
+                  ),
+                );
                 noteListWidgets.add(const SizedBox(height: 30));
               }
 
               return Center(
-                child: ListView(
-                  children: noteListWidgets,
+                child: SizedBox(
+                  height: listViewHeight(context),
+                  child: ListView(
+                    padding: const EdgeInsets.all(listViewPadding),
+                    children: noteListWidgets,
+                  ),
                 ),
               );
             } else {
