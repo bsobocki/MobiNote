@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'database_def.dart';
+import '../database/database_def.dart';
 
 const int maxLines = 4;
 const double padding = 15.0;
@@ -42,7 +42,7 @@ class _NoteWidgetState extends State<NoteWidget> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: OutlinedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 110, 194, 190),
+        backgroundColor: const Color.fromARGB(255, 110, 194, 190),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),

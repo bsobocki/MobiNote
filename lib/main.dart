@@ -1,8 +1,8 @@
 import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobi_note/database/note_widget.dart';
-import 'package:mobi_note/flexible_spaces/mountains_flexible_space.dart';
+import 'package:mobi_note/widgets/note_widget.dart';
+import 'package:mobi_note/widgets/flexible_spaces/mountains_flexible_space.dart';
 import 'create_note.dart';
 import 'database/database_def.dart';
 
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomPadding(context) -
       listViewPadding;
 
-  void showDatabase() {
+  void showDatabasePage() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => DriftDbViewer(database),
     ));
@@ -83,6 +83,32 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  Widget noteListViewBuilder(BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (!snapshot.hasData) {
+      return const Center(child: Text("No notes found"));
+    }
+    List<Widget> noteListWidgets = [];
+    for (var note in snapshot.data!.toList()) {
+      noteListWidgets.add(
+        NoteWidget(
+          note: note,
+          noteAction: openNoteEditorPage,
+          updateViewAction: updateNotesListView,
+        ),
+      );
+      noteListWidgets.add(const SizedBox(height: 30));
+    }
+
+    return ListView(
+      padding: const EdgeInsets.all(listViewPadding),
+      children: noteListWidgets,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,47 +117,16 @@ class _MyHomePageState extends State<MyHomePage> {
         flexibleSpace: MountainsFlexibleSpace(),
         actions: [
           IconButton(
-            onPressed: showDatabase,
+            onPressed: showDatabasePage,
             tooltip: 'Show Database',
             icon: const Icon(Icons.storage),
           ),
         ],
       ),
       body: FutureBuilder<List<Note>>(
-          future: _notesFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasData) {
-              List<Note> allNotes = snapshot.data?.toList() ?? [];
-              List<Widget> noteListWidgets = [];
-              for (var note in allNotes) {
-                noteListWidgets.add(
-                  SizedBox(
-                    width: 20,
-                    child: NoteWidget(
-                      note: note,
-                      noteAction: openNoteEditorPage,
-                      updateViewAction: updateNotesListView,
-                    ),
-                  ),
-                );
-                noteListWidgets.add(const SizedBox(height: 30));
-              }
-
-              return Center(
-                child: SizedBox(
-                  height: listViewHeight(context),
-                  child: ListView(
-                    padding: const EdgeInsets.all(listViewPadding),
-                    children: noteListWidgets,
-                  ),
-                ),
-              );
-            } else {
-              return const Center(child: Text("No notes found"));
-            }
-          }),
+        future: _notesFuture,
+        builder: noteListViewBuilder,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewNotePage,
         tooltip: 'Create a new Note',
