@@ -1,12 +1,14 @@
 import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobi_note/widgets/note_widget.dart';
-import 'package:mobi_note/widgets/flexible_spaces/mountains_flexible_space.dart';
+import 'package:mobi_note/widgets/note_button_widget.dart';
 import 'create_note.dart';
 import 'database/database_def.dart';
 
 const double listViewPadding = 30.0;
+const double listDivideSpaceSize = 15;
+const Color themeColor = Color.fromARGB(255, 51, 51, 51);
+const Color pageBackgroundColor = Color.fromARGB(255, 75, 75, 75);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +23,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MobiNote',
-      theme: ThemeData(primarySwatch: Colors.teal),
+      theme: ThemeData(
+        primaryColor: themeColor,
+        floatingActionButtonTheme:
+            const FloatingActionButtonThemeData(backgroundColor: themeColor),
+        dialogBackgroundColor: themeColor,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: themeColor, 
+            unselectedItemColor: Colors.grey,
+            selectedItemColor: Colors.white),
+      ),
       home: const MyHomePage(title: 'MobiNote'),
     );
   }
@@ -53,14 +64,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void createNewNotePage() {
-    openNoteEditorPage(-1, '', '');
+    openNoteEditorPage(invalidNote);
   }
 
-  void openNoteEditorPage(int id, String title, String content) {
+  void openNoteEditorPage([Note note = invalidNote]) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return NoteEditorPage(id: id, title: title, content: content);
+          return NoteEditorPage(
+            id: note.id,
+            title: note.title,
+            content: note.content,
+          );
         },
       ),
     ).then((value) => updateNotesListView());
@@ -83,7 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  Widget noteListViewBuilder(BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
+  Widget noteListViewBuilder(
+      BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return const Center(
         child: CircularProgressIndicator(),
@@ -100,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
           updateViewAction: updateNotesListView,
         ),
       );
-      noteListWidgets.add(const SizedBox(height: 30));
+      noteListWidgets.add(const SizedBox(height: listDivideSpaceSize));
     }
 
     return ListView(
@@ -114,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        flexibleSpace: MountainsFlexibleSpace(),
+        backgroundColor: themeColor,
         actions: [
           IconButton(
             onPressed: showDatabasePage,
@@ -123,15 +139,28 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: FutureBuilder<List<Note>>(
-        future: _notesFuture,
-        builder: noteListViewBuilder,
+      body: Container(
+        decoration: const BoxDecoration(color: pageBackgroundColor),
+        child: FutureBuilder<List<Note>>(
+          future: _notesFuture,
+          builder: noteListViewBuilder,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewNotePage,
         tooltip: 'Create a new Note',
         child: const Icon(Icons.create),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.menu_book_rounded), label: "Library"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
+      ),
     );
   }
+
+  void profileButtonAction() {}
 }

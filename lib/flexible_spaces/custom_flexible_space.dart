@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-class MountainsFlexibleSpace extends Container {
-  MountainsFlexibleSpace({super.key});
+const String lightBackgroundPath = 'images/day.png';
+const String nightBackgroundPath = 'images/night.png';
+
+class CustomFlexibleSpace extends Container {
+  CustomFlexibleSpace({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/cartoon-mountain.jpg"),
+          image: AssetImage(lightBackgroundPath),
           fit: BoxFit.cover,
         ),
       ),
