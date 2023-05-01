@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/widgets/note_content_editor_widget.dart';
 
 import 'database/database_def.dart';
-
-const double noteContentPadding = 10.0;
-const double noteContentFontSize = 16.0;
 
 class NoteEditorPage extends StatefulWidget {
   const NoteEditorPage(
@@ -64,6 +62,10 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
     contentController.text = widget.content;
   }
 
+  void onContentChange(value) {
+      noteChanged = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     init();
@@ -100,35 +102,10 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 75, 75, 75)
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(noteContentPadding),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: TextField(
-                  onChanged: (value) => noteChanged = true,
-                  cursorColor: Colors.white,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: noteContentFontSize,
-                  ),
-                  controller: contentController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                      border: UnderlineInputBorder(
-                    borderSide: BorderSide.none,
-                  )),
-                ),
-              )
-            ],
-          ),
-        ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: NoteContentEditor(
+        onChanged: onContentChange,
+        contentController: contentController,
+      ),
     );
   }
 }
