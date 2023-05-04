@@ -1,4 +1,4 @@
-import 'package:drift_db_viewer/drift_db_viewer.dart';
+// import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobi_note/widgets/note_button_widget.dart';
@@ -57,11 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomPadding(context) -
       listViewPadding;
 
-  void showDatabasePage() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => DriftDbViewer(database),
-    ));
-  }
+  // void showDatabasePage() {
+  //   Navigator.of(context).push(MaterialPageRoute(
+  //     builder: (context) => DriftDbViewer(database),
+  //   ));
+  // }
 
   void createNewNotePage() {
     openNoteEditorPage(invalidNote);
@@ -131,12 +131,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: themeColor,
-        actions: [
-          IconButton(
-            onPressed: showDatabasePage,
-            tooltip: 'Show Database',
-            icon: const Icon(Icons.storage),
-          ),
+        actions: const [
+          // IconButton(
+          //   onPressed: showDatabasePage,
+          //   tooltip: 'Show Database',
+          //   icon: const Icon(Icons.storage),
+          // ),
         ],
       ),
       body: Container(
