@@ -6,6 +6,7 @@ abstract class NoteElement {
   String get json;
   double get width;
   Widget get widget;
+  InlineSpan get span;
 }
 
 class SpaceElem extends NoteElement {
@@ -17,6 +18,10 @@ class SpaceElem extends NoteElement {
 
   @override
   double get width => 0;
+
+  @override
+  // TODO: implement span
+  InlineSpan get span => throw UnimplementedError();
 }
 
 class RowElem extends NoteElement {
@@ -51,20 +56,68 @@ class RowElem extends NoteElement {
 
   @override
   double get width => elements.fold(0, (sum, element) => sum + element.width);
+
+  @override
+  // TODO: implement span
+  InlineSpan get span => throw UnimplementedError();
 }
 
 class TextElem extends NoteElement {
+  final String text;
+  final TextStyle style;
+  // Function(dynamic) onTap;
+
+  TextElem({required this.text, required this.style});
+
+  @override
+  String get json => (StringBuffer('Text(')
+        ..write('text: $text, ')
+        ..write('style: $style, ')
+        ..write(')'))
+      .toString();
+
+  @override
+  Widget get widget {
+    return GestureDetector(
+      onTap: () => debugPrint("tap on $text"),
+      child: Text(
+        text,
+        style: style,
+      ),
+    );
+  }
+
+  @override
+  double get width {
+    final textSpan = TextSpan(text: text, style: style);
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    return textPainter.width;
+  }
+
+  @override
+  // TODO: implement span
+  InlineSpan get span => throw UnimplementedError();
+}
+
+class EditedTextElem extends NoteElement {
   late double _width;
   final TextStyle style;
   final _editingController = TextEditingController();
   Function(String value) onChanged;
+  bool isActive = true;
 
-  TextElem(
+  EditedTextElem(
       {required String text, required this.style, required this.onChanged}) {
     _editingController.text = text;
     _width = style.fontSize ?? noteContentDefaultFontSize;
   }
 
+  bool get active => isActive;
+  set active(bool val) => isActive = val;
   String get text => _editingController.text;
 
   void onChangedCall(String val) {
@@ -86,7 +139,6 @@ class TextElem extends NoteElement {
 
   @override
   Widget get widget {
-    debugPrint("resize widget: $_width");
     return SizedBox(
       width: _width,
       child: TextField(
@@ -115,6 +167,10 @@ class TextElem extends NoteElement {
     debugPrint("textWidth is called and returns: ${textPainter.width}");
     return textPainter.width;
   }
+
+  @override
+  // TODO: implement span
+  InlineSpan get span => throw UnimplementedError();
 }
 
 class IconElem extends NoteElement {
@@ -139,6 +195,10 @@ class IconElem extends NoteElement {
   double get width => SizedBox(
         child: widget,
       ).width!;
+
+  @override
+  // TODO: implement span
+  InlineSpan get span => throw UnimplementedError();
 }
 
 class ImageElem extends NoteElement {
@@ -161,6 +221,10 @@ class ImageElem extends NoteElement {
 
   @override
   double get width => (widget as Image).width!;
+
+  @override
+  // TODO: implement span
+  InlineSpan get span => throw UnimplementedError();
 }
 
 class CheckBoxElem extends NoteElement {
@@ -188,4 +252,8 @@ class CheckBoxElem extends NoteElement {
 
   @override
   double get width => Checkbox.width;
+
+  @override
+  // TODO: implement span
+  InlineSpan get span => throw UnimplementedError();
 }

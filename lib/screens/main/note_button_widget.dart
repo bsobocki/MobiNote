@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../database/database_def.dart';
+import '../../database/database_def.dart';
 
 const Note invalidNote = Note(id: -1, title: '', content: '');
 

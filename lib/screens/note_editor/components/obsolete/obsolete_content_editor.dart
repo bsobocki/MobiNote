@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/main.dart';
-import 'package:mobi_note/note_editor/note_element.dart';
+import 'package:mobi_note/screens/note_editor/components/obsolete/obsolete_note_element.dart';
+
+import '../../../main/homepage.dart';
 
 const double noteContentPadding = 10.0;
 const TextStyle defaultTextStyle =
@@ -36,7 +37,7 @@ class _NoteContentEditorState extends State<NoteContentEditor> {
   void addEmptyRow() => rows.add(
         RowElem(
           elements: [
-            TextElem(text: '', style: defaultTextStyle, onChanged: onChanged),
+            EditedTextElem(text: '', style: defaultTextStyle, onChanged: onChanged),
           ],
         ),
       );
@@ -58,9 +59,9 @@ class _NoteContentEditorState extends State<NoteContentEditor> {
 
     var lastElem = currRow.last;
 
-    if (lastElem is! TextElem) {
+    if (lastElem is! EditedTextElem) {
       throw ErrorDescription(
-          "Add Element: The last of elements is not a Text!");
+          "Add Element: The last of elements is not EditedTextElem!");
     }
 
     setState(() {
@@ -73,7 +74,7 @@ class _NoteContentEditorState extends State<NoteContentEditor> {
       } else {
         currRow.add(element);
         currRow
-            .add(TextElem(text: '', style: currentStyle, onChanged: onChanged));
+            .add(EditedTextElem(text: '', style: currentStyle, onChanged: onChanged));
       }
     });
   }
@@ -109,6 +110,3 @@ class _NoteContentEditorState extends State<NoteContentEditor> {
     );
   }
 }
-
-// mogę zrobić render na poczekaniu, tylko TextField niewidoczny pod tym.. 
-// przy zmianie tego, wymuszę render
