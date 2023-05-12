@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/screens/test/textspan_test_page.dart';
 import '../../database/database_def.dart';
 import '../note_editor/note_editor.dart';
 import 'note_button_widget.dart';
@@ -33,6 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
   //     builder: (context) => DriftDbViewer(database),
   //   ));
   // }
+
+  void showTestPage() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const TestPage(),
+    ));
+  }
 
   void createNewNotePage() {
     openNoteEditorPage(invalidNote);
@@ -102,12 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: themeColor,
-        actions: const [
-          // IconButton(
-          //   onPressed: showDatabasePage,
-          //   tooltip: 'Show Database',
-          //   icon: const Icon(Icons.storage),
-          // ),
+        actions: [
+          IconButton(
+            onPressed: showTestPage,
+            tooltip: 'Show Database',
+            icon: const Icon(Icons.storage),
+          ),
         ],
       ),
       body: Container(

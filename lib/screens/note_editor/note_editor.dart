@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/screens/note_editor/components/content_editor.dart';
 import '../../database/database_def.dart';
-import 'components/paragraph.dart';
+import 'components/obsolete/obsolete_paragraph_controller.dart';
 
 class NoteEditorPage extends StatefulWidget {
   const NoteEditorPage(
@@ -18,64 +19,7 @@ class NoteEditorPage extends StatefulWidget {
 }
 
 class _NoteEditorPageState extends State<NoteEditorPage> {
-  late final contentController = ParagraphController(mapping: {
-    '\ufffa': TextSpan(children: [
-      WidgetSpan(
-        child: Image.asset('images/capsule_tree.png'),
-      ),
-    ]),
-    '\ufffe': TextSpan(
-      children: [
-        WidgetSpan(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 1),
-            child: SizedBox(
-              width: Checkbox.width,
-              height: Checkbox.width,
-              child: Checkbox(
-                onChanged: (val) {},
-                value: val,
-                activeColor: Colors.transparent,
-                checkColor: Colors.grey,
-                focusColor: Colors.white,
-                hoverColor: Colors.white,
-              ),
-            ),
-          ),
-        )
-      ],
-    ),
-    '\uffff': const TextSpan(
-      children: [
-        WidgetSpan(
-          child: SizedBox(
-            child: Icon(Icons.flutter_dash),
-          ),
-        )
-      ],
-    ),
-    '\ufffb': TextSpan(
-      children: [
-        WidgetSpan(
-          style: const TextStyle(fontSize: 30),
-          child: SizedBox(
-            child: ElevatedButton(
-              onPressed: () => showDialog(
-                  context: context,
-                  builder: (_) => const AlertDialog(
-                        title: Text('Button has been clicked!'),
-                      )),
-              child: const Text("kliknij"),
-            ),
-          ),
-        )
-      ],
-    ),
-    '\ufffc': const TextSpan(
-      style: TextStyle(color: Colors.red, fontSize: 30),
-      text: 'to jest czerwony wstawiony text',
-    )
-  });
+  late final contentController = ParagraphController();
   late int id;
   final database = Get.find<MobiNoteDatabase>();
   final titleController = TextEditingController();
@@ -119,13 +63,14 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   }
 
   void onContentChange(value) {
+    debugPrint(contentController.text);
     noteChanged = true;
     var newValue = value
         .replaceAll("<dog>", '\uffff')
         .replaceAll("[ ] ", '\ufffe')
         .replaceAll("[b] ", '\ufffb')
         .replaceAll("<img>", '\ufffa')
-        .replaceAll("<red>", '\ufffc');
+        .replaceAll("<red>", 'to jest czerwony wstawiony text');
     if (newValue == value) return;
 
     contentController.value = TextEditingValue(
@@ -172,21 +117,13 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 75, 75, 75),
-      body: TextField(
-        onChanged: onContentChange,
-        controller: contentController,
-        style: const TextStyle(
-          fontSize: 20,
-          color: Colors.white,
-          decorationColor: Colors.amber,
-        ),
-        maxLines: null,
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          hintText: 'Enter a note',
-        ),
-      ),
+      backgroundColor: const Color.fromARGB(
+        255,
+        75,
+        75,
+        75,
+      ), // _textEditingController.selection.textInside(_textEditingController.text)
+      body: ContentEditor(contentController: contentController)
     );
   }
 }
