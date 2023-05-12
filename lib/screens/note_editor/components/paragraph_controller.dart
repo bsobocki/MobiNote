@@ -13,10 +13,12 @@ class ParagraphController extends TextEditingController {
   String signedText(String text) {
     String signed = "";
 
-    for (int i = 0; i < text.length; i++) {
+    for (int i = 1; i < text.length-1; i++) {
       if (isStyleSpecialCharacter(text[i])) {
         var context = text.substring(i-1, i+1);
-        if (isOpening(context)){}
+        if (isOpening(context)){
+          
+        }
       }
     }
 
