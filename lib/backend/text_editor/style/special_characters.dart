@@ -1,4 +1,4 @@
-Map<String, String> specialElementConversion = {
+Map<String, String> tagConversion = {
   '(w)': 'web_link',
   '(n)': 'note_link',
   '(i)': 'image',
@@ -13,33 +13,51 @@ Map<String, String> styleConversion = {
   '^': 'italic',
   '_': 'underline',
   '~': 'strikethrough',
+  '>': 'quote',
+  '`': 'one_line_code',
+  '\$': 'one_line_latex',
 };
 
-Map<String, String> styleCharOpeningConversion = {
+Map<String, String> startStyleCharConversion = {
+  '#': '\ue000',
+  '*': '\ue002',
+  '^': '\ue004',
+  '_': '\ue006',
+  '~': '\ue008',
+  '>': '\ue00a',
+  '`': '\ue00c',
+  '\$': '\ue00e',
+};
+
+Map<String, String> endStyleCharConversion = {
   '#': '\ue001',
   '*': '\ue003',
   '^': '\ue005',
   '_': '\ue007',
   '~': '\ue009',
+  '>': '\ue00b',
+  '`': '\ue00d',
+  '\$': '\ue00f',
 };
 
-Map<String, String> styleCharClosureConversion = {
-  '#': '\ue002',
-  '*': '\ue004',
-  '^': '\ue006',
-  '_': '\ue008',
-  '~': '\ue00a',
+Map<String, String> widgetConversion = {
+  '(w)': '\ue100',
+  '(n)': '\ue101',
+  '(i)': '\ue102',
+  '<n>': '\ue103',
+  '[ ]': '\ue104',
+  '[x]': '\ue105',
 };
 
-bool isElementSpecialCharacter(String char) {
-  return styleConversion.containsKey(char);
+bool isWidgetTag(String char) {
+  return widgetConversion.containsKey(char);
 }
 
 String elementDecode(String char) {
   return styleConversion[char] ?? 'text';
 }
 
-bool isStyleSpecialCharacter(String char) {
+bool isStyleBoundaryCharacter(String char) {
   return styleConversion.containsKey(char);
 }
 
@@ -47,26 +65,25 @@ bool isWhitespace(String c) {
   return RegExp(r'\s').hasMatch(c);
 }
 
-bool isMiddle(String context) {
-  return !isWhitespace(context[0]) &&
-        isStyleSpecialCharacter(context[1]) &&
-        !isWhitespace(context[2]);
-}
-
-bool isOpening(String context) {
-  return isWhitespace(context[0]) &&
-      isStyleSpecialCharacter(context[1]) &&
+bool matchesStyleStart(String context) {
+  return context.length != 2 &&
+      isStyleBoundaryCharacter(context[1]) &&
       !isWhitespace(context[2]);
 }
 
-bool isClosure(String context) {
-  return !isWhitespace(context[0]) &&
-      isStyleSpecialCharacter(context[1]) &&
-      isWhitespace(context[2]);
+bool matchesStyleEnd(String context) {
+  return !isWhitespace(context[0]) && isStyleBoundaryCharacter(context[1]);
 }
 
 String styleDecode(String char) {
   return styleConversion[char] ?? 'text';
+}
+
+class SpecialCharInfo {
+  final int index;
+  final String char;
+
+  SpecialCharInfo({required this.index, required this.char});
 }
 
 class StyleInfo {
@@ -82,7 +99,10 @@ class StyleInfo {
   set end(int newEndIndex) => endIndex = newEndIndex;
 }
 
-/* 
+/*
+widget tags don't have to check context to find out whether it is start or end
+because after first new occurrence there have to be the next one as end
+of widget
 
 paragraph_fontSize: #size#
   example: #25#
