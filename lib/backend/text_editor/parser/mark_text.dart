@@ -1,11 +1,11 @@
 import 'dart:math';
+import 'package:mobi_note/backend/text_editor/parser/special_characters.dart';
 
-import 'package:flutter/material.dart';
-import 'package:mobi_note/backend/text_editor/span/span_info.dart';
-import 'package:mobi_note/backend/text_editor/style/special_characters.dart';
+class SpecialPatternInfo {
+  final int indexInText;
+  final String pattern;
 
-bool found(int index) {
-  return index != -1;
+  SpecialPatternInfo({required this.indexInText, required this.pattern});
 }
 
 String textWithConvertedMarks(String text) {
@@ -19,7 +19,7 @@ String textWithConvertedMarks(String text) {
       textBuff.add(oneCharStyleMarkConversion[character]!);
       continue;
     } else if (isStyleBoundaryCharacter(character)) {
-      var context = getContext(text, i);
+      var context = getCharacterContext(text, i);
       if (matchesStyleEnd(context)) {
         var boundIndex = startBounds.indexWhere((e) => e.pattern == character);
         if (found(boundIndex)) {
@@ -79,15 +79,8 @@ String textWithConvertedMarks(String text) {
   return textBuff.join('');
 }
 
-List<InlineSpan> parseConversionMarkedText(String text) {
-  List<InlineSpan> spans = [];
-  List<SpanInfo> spanInfo = [];
-  String rawText = "";
-
-  for (int i = 0; i < text.length; i++) {
-    String style = styleDecode(text[i]);
-  }
-  return spans;
+bool found(int index) {
+  return index != -1;
 }
 
 String firstMatch(String text, int i, Iterable<String> patterns) {
@@ -97,7 +90,7 @@ String firstMatch(String text, int i, Iterable<String> patterns) {
   );
 }
 
-String getContext(String text, int i) {
+String getCharacterContext(String text, int i) {
   return text.substring(
     max(0, i - 1),
     min(text.length, i + 2),

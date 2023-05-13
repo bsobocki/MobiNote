@@ -1,23 +1,3 @@
-Map<String, String> tagConversion = {
-  '(w)': 'web_link',
-  '(n)': 'note_link',
-  '(i)': 'image',
-  '<n>': 'note_Widget',
-  '[ ]': 'unselected_checkbox',
-  '[x]': 'selected_checkbox',
-};
-
-Map<String, String> styleConversion = {
-  '#': 'paragraph_fontSize',
-  '*': 'bold',
-  '^': 'italic',
-  '_': 'underline',
-  '~': 'strikethrough',
-  '>': 'quote',
-  '`': 'one_line_code',
-  '\$': 'one_line_latex',
-};
-
 Map<String, String> startStyleCharConversion = {
   '*': '\ue000',
   '^': '\ue002',
@@ -54,7 +34,7 @@ Map<String, String> oneCharStyleMarkConversion = {
 };
 
 bool isStyleBoundaryCharacter(String char) {
-  return styleConversion.containsKey(char);
+  return startStyleCharConversion.containsKey(char);
 }
 
 bool matchesStyleStart(String context) {
@@ -79,19 +59,28 @@ bool isOneCharStyleMarkCharacter(String char) {
   return oneCharStyleMarkConversion.containsKey(char);
 }
 
-String styleDecode(String char) {
-  return styleConversion[char] ?? 'text';
-}
-
 bool isWhitespace(String c) {
   return RegExp(r'\s').hasMatch(c);
 }
 
-class SpecialPatternInfo {
-  final int indexInText;
-  final String pattern;
+bool isUnicodeStartSyleCharacter(String char) {
+  return startStyleCharConversion.containsValue(char);
+}
 
-  SpecialPatternInfo({required this.indexInText, required this.pattern});
+bool isUnicodeEndStyleCharacter(String char) {
+  return endStyleCharConversion.containsValue(char);
+}
+
+bool isUnicodeOneCharStyleMarkCharacter(String char) {
+  return oneCharStyleMarkConversion.containsValue(char);
+}
+
+bool isUnicodeElementPatternCharacter(String char) {
+  return elementPatternsConversion.containsValue(char);
+}
+
+bool isUnicodeWidgetCharacter(String char) {
+  return widgetTagConversion.containsValue(char);
 }
 
 class StyleInfo {

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:mobi_note/backend/text_editor/parse.dart';
-import 'package:mobi_note/backend/text_editor/style/special_characters.dart';
+import 'package:mobi_note/backend/text_editor/parser/mark_text.dart';
+import 'package:mobi_note/backend/text_editor/parser/parse.dart';
+import 'package:mobi_note/backend/text_editor/parser/special_characters.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -40,7 +41,7 @@ void main() {
     expect(isWhitespace('^'), false);
   });
 
-  test("check style boundary characters", () {
+  test("check style characters", () {
     expect(isStyleBoundaryCharacter(' '), false);
     expect(isStyleBoundaryCharacter('\t'), false);
     expect(isStyleBoundaryCharacter('\r'), false);
@@ -50,11 +51,13 @@ void main() {
     expect(isStyleBoundaryCharacter('a'), false);
     expect(isStyleBoundaryCharacter('*'), true);
     expect(isStyleBoundaryCharacter('^'), true);
-    expect(isStyleBoundaryCharacter('#'), true);
     expect(isStyleBoundaryCharacter('_'), true);
     expect(isStyleBoundaryCharacter('~'), true);
     expect(isStyleBoundaryCharacter('`'), true);
     expect(isStyleBoundaryCharacter('\$'), true);
+
+    expect(isOneCharStyleMarkCharacter('#'), true);
+    expect(isOneCharStyleMarkCharacter('>'), true);
   });
 
   test("patterns starting from character", () {
@@ -66,7 +69,7 @@ void main() {
       firstMatch(
         "this is a [ ] unselected checkbox and this is [x] checked.",
         10,
-        ['[ ]', '[x]','[i]'],
+        ['[ ]', '[x]', '[i]'],
       ),
       '[ ]',
     );
@@ -81,9 +84,9 @@ void main() {
   });
 
   test("check getContext", () {
-    expect(getContext('to jest con*text', 11), 'n*t');
-    expect(getContext('to jest con*text', 1), 'to ');
-    expect(getContext('to jest con*text', 7), 't c');
+    expect(getCharacterContext('to jest con*text', 11), 'n*t');
+    expect(getCharacterContext('to jest con*text', 1), 'to ');
+    expect(getCharacterContext('to jest con*text', 7), 't c');
   });
 
   test("converted style marks", () {

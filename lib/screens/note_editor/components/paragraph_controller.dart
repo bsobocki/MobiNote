@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/backend/text_editor/parse.dart';
-
-import '../../../backend/text_editor/span/span_info.dart';
-import '../../../backend/text_editor/style/special_characters.dart';
+import 'package:mobi_note/backend/text_editor/parser/parse.dart';
+import '../../../backend/text_editor/parser/mark_text.dart';
 
 class ParagraphController extends TextEditingController {
   late String markdownText;
@@ -14,7 +12,9 @@ class ParagraphController extends TextEditingController {
   @override
   TextSpan buildTextSpan(
       {BuildContext? context, TextStyle? style, bool? withComposing}) {
-    List<InlineSpan> children = parseConversionMarkedText(markdownText);
-    return TextSpan(style: style, children: children);
+    var markedText = textWithConvertedMarks(markdownText);
+    var parsedContent = parseConversionMarkedText(markedText);
+    text = parsedContent.rawText;
+    return TextSpan(style: style, children: parsedContent.spans);
   }
 }
