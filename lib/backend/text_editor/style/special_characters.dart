@@ -39,10 +39,13 @@ Map<String, String> endStyleCharConversion = {
 Map<String, String> widgetTagConversion = {
   '(w)': '\ue100',
   '(n)': '\ue101',
-  '(i)': '\ue102',
-  '<n>': '\ue103',
-  '[ ]': '\ue104',
-  '[x]': '\ue105',
+  '<n>': '\ue102',
+};
+
+Map<String, String> elementPatternsConversion = {
+  '[ ]': '\ue1a0',
+  '[x]': '\ue1a1',
+  '[i]': '\ue1a2',
 };
 
 Map<String, String> oneCharStyleMarkConversion = {
@@ -68,6 +71,10 @@ Iterable<String> widgetTagsStartingFrom(String char) {
   return widgetTagConversion.keys.where((e) => e[0] == char);
 }
 
+Iterable<String> elementPatternsStartingFrom(String char) {
+  return elementPatternsConversion.keys.where((e) => e[0] == char);
+}
+
 bool isOneCharStyleMarkCharacter(String char) {
   return oneCharStyleMarkConversion.containsKey(char);
 }
@@ -80,11 +87,11 @@ bool isWhitespace(String c) {
   return RegExp(r'\s').hasMatch(c);
 }
 
-class SpecialCharInfo {
-  final int index;
-  final String char;
+class SpecialPatternInfo {
+  final int indexInText;
+  final String pattern;
 
-  SpecialCharInfo({required this.index, required this.char});
+  SpecialPatternInfo({required this.indexInText, required this.pattern});
 }
 
 class StyleInfo {

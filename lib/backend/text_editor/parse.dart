@@ -10,20 +10,20 @@ bool found(int index) {
 
 String textWithConvertedMarks(String text) {
   List<String> textBuff = [];
-  List<SpecialCharInfo> startBounds = [];
+  List<SpecialPatternInfo> startBounds = [];
+  List<SpecialPatternInfo> startTags = [];
 
   for (int i = 0; i < text.length; i++) {
     var character = text[i];
     if (isOneCharStyleMarkCharacter(character)) {
       textBuff.add(oneCharStyleMarkConversion[character]!);
       continue;
-    }
-    if (isStyleBoundaryCharacter(character)) {
+    } else if (isStyleBoundaryCharacter(character)) {
       var context = getContext(text, i);
       if (matchesStyleEnd(context)) {
-        var boundIndex = startBounds.indexWhere((e) => e.char == character);
+        var boundIndex = startBounds.indexWhere((e) => e.pattern == character);
         if (found(boundIndex)) {
-          var startBoundIndex = startBounds[boundIndex].index;
+          var startBoundIndex = startBounds[boundIndex].indexInText;
           textBuff[startBoundIndex] = startStyleCharConversion[character]!;
           textBuff.add(endStyleCharConversion[character]!);
           startBounds.removeAt(boundIndex);
@@ -31,17 +31,46 @@ String textWithConvertedMarks(String text) {
         }
       }
       if (matchesStyleStart(context)) {
-        startBounds.add(SpecialCharInfo(index: i, char: character));
+        startBounds.add(SpecialPatternInfo(indexInText: i, pattern: character));
       }
-    }
+    } else {
+      var patterns = elementPatternsStartingFrom(character);
+      if (patterns.isNotEmpty) {
+        var pattern = firstMatch(text, i, patterns);
+        if (pattern.isNotEmpty) {
+          textBuff.add(elementPatternsConversion[pattern]!);
+          for (int j = 1; j < pattern.length; j++) {
+            textBuff.add('');
+          }
+          i += pattern.length - 1;
+          continue;
+        }
+      }
 
-    var tags = widgetTagsStartingFrom(character);
-    if (tags.isNotEmpty) {
-      var pattern = firstMatch(text, i, tags);
-      if (pattern.isNotEmpty) {
-        textBuff.add(widgetTagConversion[pattern]!);
-        i += pattern.length - 1;
-        continue;
+      var tags = widgetTagsStartingFrom(character);
+      if (tags.isNotEmpty) {
+        var tag = firstMatch(text, i, tags);
+        if (tag.isNotEmpty) {
+          var tagIndex = startTags.indexWhere((e) => e.pattern == tag);
+          if (found(tagIndex)) {
+            var startTagIndex = startTags[tagIndex].indexInText;
+            textBuff[startTagIndex] = widgetTagConversion[tag]!;
+            for (int j = startTagIndex + 1;
+                j < startTagIndex + tag.length;
+                j++) {
+              textBuff[j] = '';
+            }
+            textBuff.add(widgetTagConversion[tag]!);
+            for (int j = 1; j < tag.length; j++) {
+              textBuff.add('');
+            }
+            i += tag.length - 1;
+            startTags.removeAt(tagIndex);
+            continue;
+          } else {
+            startTags.add(SpecialPatternInfo(indexInText: i, pattern: tag));
+          }
+        }
       }
     }
     textBuff.add(character);

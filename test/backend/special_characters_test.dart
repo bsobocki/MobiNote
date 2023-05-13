@@ -58,7 +58,7 @@ void main() {
   });
 
   test("patterns starting from character", () {
-    expect(widgetTagsStartingFrom('['), ['[ ]', '[x]']);
+    expect(elementPatternsStartingFrom('['), ['[ ]', '[x]', '[i]']);
   });
 
   test("first match from list to text", () {
@@ -66,7 +66,7 @@ void main() {
       firstMatch(
         "this is a [ ] unselected checkbox and this is [x] checked.",
         10,
-        ['[ ]', '[x]'],
+        ['[ ]', '[x]','[i]'],
       ),
       '[ ]',
     );
@@ -98,16 +98,16 @@ void main() {
     );
   });
 
-  test("converted elements boundaries", () {
+  test("converted elements and widgets", () {
     expect(
       textWithConvertedMarks(
           "this is a [ ] unselected checkbox and this is [x] checked."),
-      "this is a \ue104 unselected checkbox and this is \ue105 checked.",
+      "this is a \ue1a0 unselected checkbox and this is \ue1a1 checked.",
     );
     expect(
       textWithConvertedMarks(
-          "(n)this is a (w)[ ] widget and next to it is unselected checkbox and this is [x] selected checkbox(i) and this is nothing (o), [v] and [ x] or [x ] hihi<n>.<n>"),
-      "\ue101this is a \ue100\ue104 widget and next to it is unselected checkbox and this is \ue105 selected checkbox\ue102 and this is nothing (o), [v] and [ x] or [x ] hihi\ue103.\ue103",
+          "(n)this is(n) a (w)[ ] widget(w) and next (w) to(n) it is unselected checkbox and this is [x] selected checkbox[i] and this is nothing (i), [v] and [ x] or [x ] hihi<n>.<n>"),
+      "\ue101this is\ue101 a \ue100\ue1a0 widget\ue100 and next (w) to(n) it is unselected checkbox and this is \ue1a1 selected checkbox\ue1a2 and this is nothing (i), [v] and [ x] or [x ] hihi\ue102.\ue102",
     );
   });
 }
