@@ -57,6 +57,21 @@ void main() {
     expect(isStyleBoundaryCharacter('\$'), true);
   });
 
+  test("patterns starting from character", () {
+    expect(elementPatternsStartingFrom('['), ['[ ]', '[x]']);
+  });
+
+  test("first match from list to text", () {
+    expect(
+      firstMatch(
+        "this is a [ ] unselected checkbox and this is [x] checked.",
+        10,
+        ['[ ]', '[x]'],
+      ),
+      '[ ]',
+    );
+  });
+
   test("check getContext", () {
     expect(getContext('to jest con*text', 11), 'n*t');
     expect(getContext('to jest con*text', 1), 'to ');
@@ -67,6 +82,13 @@ void main() {
     expect(
       textWithConvertedMarks("this is a *bold ^italic^ text* hihi."),
       "this is a \ue002bold \ue004italic\ue005 text\ue003 hihi.",
+    );
+  });
+
+  test("converted elements boundaries", () {
+    expect(
+      textWithConvertedMarks("this is a [ ] unselected checkbox and this is [x] checked."),
+      "this is a \ue104 unselected checkbox and this is \ue105 checked.",
     );
   });
 }

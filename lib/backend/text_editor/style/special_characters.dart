@@ -40,17 +40,32 @@ Map<String, String> endStyleCharConversion = {
   '\$': '\ue00f',
 };
 
-Map<String, String> widgetConversion = {
-  '(w)': '\ue100',
-  '(n)': '\ue101',
-  '(i)': '\ue102',
-  '<n>': '\ue103',
+Map<String, String> elementPattenrConversion = {
   '[ ]': '\ue104',
   '[x]': '\ue105',
 };
 
+Map<String, String> widgetTagConversion = {
+  '(w)': '\ue200',
+  '(n)': '\ue201',
+  '(i)': '\ue202',
+  '<n>': '\ue203',
+};
+
+Iterable<String> elementPatternsStartingFrom(String char) {
+  return elementPattenrConversion.keys.where((e) => e[0] == char);
+}
+
+bool isElementPattern(String char) {
+  return elementPattenrConversion.containsKey(char);
+}
+
 bool isWidgetTag(String char) {
-  return widgetConversion.containsKey(char);
+  return widgetTagConversion.containsKey(char);
+}
+
+bool isWidgetTagStartCharacter(char) {
+  return widgetTagConversion.keys.where((e) => e == char).isNotEmpty;
 }
 
 String elementDecode(String char) {
