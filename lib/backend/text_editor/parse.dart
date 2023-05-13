@@ -31,11 +31,11 @@ String textWithConvertedMarks(String text) {
       }
     }
 
-    var patterns = elementPatternsStartingFrom(character);
-    if (patterns.isNotEmpty) {
-      var pattern = firstMatch(text, i, patterns);
+    var tags = widgetTagsStartingFrom(character);
+    if (tags.isNotEmpty) {
+      var pattern = firstMatch(text, i, tags);
       if (pattern.isNotEmpty) {
-        textBuff.add(elementPattenrConversion[pattern]!);
+        textBuff.add(widgetTagConversion[pattern]!);
         i += pattern.length - 1;
         continue;
       }

@@ -58,7 +58,7 @@ void main() {
   });
 
   test("patterns starting from character", () {
-    expect(elementPatternsStartingFrom('['), ['[ ]', '[x]']);
+    expect(widgetTagsStartingFrom('['), ['[ ]', '[x]']);
   });
 
   test("first match from list to text", () {
@@ -69,6 +69,14 @@ void main() {
         ['[ ]', '[x]'],
       ),
       '[ ]',
+    );
+    expect(
+      firstMatch(
+        "ojj (w) widget appears! and this is (w)",
+        4,
+        ['[ ]', '[x]', '(a)', '(w)', 'a', ' '],
+      ),
+      '(w)',
     );
   });
 
@@ -87,8 +95,14 @@ void main() {
 
   test("converted elements boundaries", () {
     expect(
-      textWithConvertedMarks("this is a [ ] unselected checkbox and this is [x] checked."),
+      textWithConvertedMarks(
+          "this is a [ ] unselected checkbox and this is [x] checked."),
       "this is a \ue104 unselected checkbox and this is \ue105 checked.",
+    );
+    expect(
+      textWithConvertedMarks(
+          "(n)this is a (w)[ ] widget and next to it is unselected checkbox and this is [x] selected checkbox(i) and this is nothing (o), [v] and [ x] or [x ] hihi<n>.<n>"),
+      "\ue101this is a \ue100\ue104 widget and next to it is unselected checkbox and this is \ue105 selected checkbox\ue102 and this is nothing (o), [v] and [ x] or [x ] hihi\ue103.\ue103",
     );
   });
 }
