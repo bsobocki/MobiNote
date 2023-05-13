@@ -19,25 +19,21 @@ Map<String, String> styleConversion = {
 };
 
 Map<String, String> startStyleCharConversion = {
-  '#': '\ue000',
-  '*': '\ue002',
-  '^': '\ue004',
-  '_': '\ue006',
-  '~': '\ue008',
-  '>': '\ue00a',
-  '`': '\ue00c',
-  '\$': '\ue00e',
+  '*': '\ue000',
+  '^': '\ue002',
+  '_': '\ue004',
+  '~': '\ue006',
+  '`': '\ue008',
+  '\$': '\ue00a',
 };
 
 Map<String, String> endStyleCharConversion = {
-  '#': '\ue001',
-  '*': '\ue003',
-  '^': '\ue005',
-  '_': '\ue007',
-  '~': '\ue009',
-  '>': '\ue00b',
-  '`': '\ue00d',
-  '\$': '\ue00f',
+  '*': '\ue001',
+  '^': '\ue003',
+  '_': '\ue005',
+  '~': '\ue007',
+  '`': '\ue009',
+  '\$': '\ue00b',
 };
 
 Map<String, String> widgetTagConversion = {
@@ -49,20 +45,13 @@ Map<String, String> widgetTagConversion = {
   '[x]': '\ue105',
 };
 
-Iterable<String> widgetTagsStartingFrom(String char) {
-  return widgetTagConversion.keys.where((e) => e[0] == char);
-}
-
-bool isElementPattern(String char) {
-  return widgetTagConversion.containsKey(char);
-}
+Map<String, String> oneCharStyleMarkConversion = {
+  '#': '\ue200',
+  '>': '\ue201',
+};
 
 bool isStyleBoundaryCharacter(String char) {
   return styleConversion.containsKey(char);
-}
-
-bool isWhitespace(String c) {
-  return RegExp(r'\s').hasMatch(c);
 }
 
 bool matchesStyleStart(String context) {
@@ -75,8 +64,20 @@ bool matchesStyleEnd(String context) {
   return !isWhitespace(context[0]) && isStyleBoundaryCharacter(context[1]);
 }
 
+Iterable<String> widgetTagsStartingFrom(String char) {
+  return widgetTagConversion.keys.where((e) => e[0] == char);
+}
+
+bool isOneCharStyleMarkCharacter(String char) {
+  return oneCharStyleMarkConversion.containsKey(char);
+}
+
 String styleDecode(String char) {
   return styleConversion[char] ?? 'text';
+}
+
+bool isWhitespace(String c) {
+  return RegExp(r'\s').hasMatch(c);
 }
 
 class SpecialCharInfo {

@@ -14,6 +14,10 @@ String textWithConvertedMarks(String text) {
 
   for (int i = 0; i < text.length; i++) {
     var character = text[i];
+    if (isOneCharStyleMarkCharacter(character)) {
+      textBuff.add(oneCharStyleMarkConversion[character]!);
+      continue;
+    }
     if (isStyleBoundaryCharacter(character)) {
       var context = getContext(text, i);
       if (matchesStyleEnd(context)) {

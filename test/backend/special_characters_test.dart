@@ -86,10 +86,15 @@ void main() {
     expect(getContext('to jest con*text', 7), 't c');
   });
 
-  test("converted style boundaries", () {
+  test("converted style marks", () {
     expect(
       textWithConvertedMarks("this is a *bold ^italic^ text* hihi."),
-      "this is a \ue002bold \ue004italic\ue005 text\ue003 hihi.",
+      "this is a \ue000bold \ue002italic\ue003 text\ue001 hihi.",
+    );
+    expect(
+      textWithConvertedMarks(
+          "#paragraph ; *and* _this `is`_ *a \$not *bold * ~strikethrough~ text\$>quote ~ hihihihi.~"),
+      "\ue200paragraph ; \ue000and\ue001 \ue004this \ue008is\ue009\ue005 *a \ue00anot *bold * \ue006strikethrough\ue007 text\ue00b\ue201quote ~ hihihihi.~",
     );
   });
 
