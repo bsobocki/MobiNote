@@ -45,37 +45,37 @@ void main() {
   });
 
   test("converted style marks", () {
+    var converter = StyledTextConverter();
     expect(
-      textWithConvertedMarks("this is a *bold ^italic^ text* hihi."),
+      converter.textWithConvertedMarks("this is a *bold ^italic^ text* hihi."),
       "this is a \ue000bold \ue002italic\ue003 text\ue001 hihi.",
     );
     expect(
-      textWithConvertedMarks(
+      converter.textWithConvertedMarks(
           "#paragraph ; *and* _this `is`_ *a \$not *bold * ~strikethrough~ text\$>quote ~ hihihihi.~%"),
       "\ue200paragraph ; \ue000and\ue001 \ue004this \ue008is\ue009\ue005 *a \ue103not *bold * \ue006strikethrough\ue007 text\ue103>quote ~ hihihihi.~%",
     );
     expect(
-      textWithConvertedMarks(
+      converter.textWithConvertedMarks(
         "> This is quoted text, did you know?",
       ),
-      "\ue201 This is quoted text, did you know?"
-    );
+      "\ue201 This is quoted text, did you know?");
     expect(
-      textWithConvertedMarks(
+      converter.textWithConvertedMarks(
         "% And this is LaTeX",
       ),
-      "\ue202 And this is LaTeX"
-    );
+      "\ue202 And this is LaTeX");
   });
 
   test("converted elements and widgets", () {
+    var converter = StyledTextConverter();
     expect(
-      textWithConvertedMarks(
+      converter.textWithConvertedMarks(
           "this is a [ ] unselected checkbox and this is [x] checked."),
       "this is a \ue1a0 unselected checkbox and this is \ue1a1 checked.",
     );
     expect(
-      textWithConvertedMarks(
+      converter.textWithConvertedMarks(
           "(n)this is(n) a (w)[ ] widget(w) and next (w) to(n) it is unselected checkbox and this is [x] selected checkbox[i] and this is nothing (i), [v] and [ x] or [x ] hihi<n>.<n>"),
       "\ue101this is\ue101 a \ue100\ue1a0 widget\ue100 and next (w) to(n) it is unselected checkbox and this is \ue1a1 selected checkbox\ue1a2 and this is nothing (i), [v] and [ x] or [x ] hihi\ue102.\ue102",
     );

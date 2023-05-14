@@ -4,6 +4,11 @@ int unicodeNumber(String char) {
   return char.codeUnitAt(0);
 }
 
+bool isSpecialUnicode(String char) {
+  int num = unicodeNumber(char);
+  return 0xe000 <= num && num <= 0xefff;
+}
+
 bool inUnicodeRange(int num, UnicodeRange range) {
   return range.unicode <= num && num < range.unicode + range.size;
 }

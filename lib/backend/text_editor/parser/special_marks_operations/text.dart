@@ -14,7 +14,7 @@ String? widgetUnicodeChar(String char) {
   return String.fromCharCode(widgetTags.indexOf(char) + widgetUnicodeNumber);
 }
 
-String? elementPatternUnicodeChar(String char) {
+String? elementUnicodeChar(String char) {
   return String.fromCharCode(
       elementPatterns.indexOf(char) + elementUnicodeNumber);
 }
