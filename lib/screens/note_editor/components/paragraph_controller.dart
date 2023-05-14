@@ -13,7 +13,7 @@ class ParagraphController extends TextEditingController {
   TextSpan buildTextSpan(
       {BuildContext? context, TextStyle? style, bool? withComposing}) {
     var markedText = textWithConvertedMarks(markdownText);
-    var parsedContent = parseConversionMarkedText(markedText);
+    var parsedContent = parseUnicodeMarkedText(markedText);
     text = parsedContent.rawText;
     return TextSpan(style: style, children: parsedContent.spans);
   }

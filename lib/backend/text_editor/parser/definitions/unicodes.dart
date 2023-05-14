@@ -2,21 +2,21 @@ import 'marks.dart';
 
 const styleUnicodeNumber = 0xe000;
 const widgetUnicodeNumber = 0xe100;
-const elementPatternUnicodeNumber = 0xe1A0;
-const oneCharStyleUnicodeNumber = 0xe200;
+const elementUnicodeNumber = 0xe1A0;
+const paragraphUnicodeNumber = 0xe200;
 
 var styleUnicodeRange = UnicodeRange(
   unicode: styleUnicodeNumber,
   size: styleChars.length,
 );
 
-var oneCharStyleUnicodeRange = UnicodeRange(
-  unicode: oneCharStyleUnicodeNumber,
-  size: oneCharStyleMarks.length,
+var paragraphStyleUnicodeRange = UnicodeRange(
+  unicode: paragraphUnicodeNumber,
+  size: paragraphStyleChars.length,
 );
 
 var elementPatternUnicodeRange = UnicodeRange(
-  unicode: elementPatternUnicodeNumber,
+  unicode: elementUnicodeNumber,
   size: elementPatterns.length,
 );
 

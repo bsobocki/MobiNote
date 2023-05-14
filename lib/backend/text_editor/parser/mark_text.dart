@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:mobi_note/backend/text_editor/parser/special_marks/plain_text.dart';
+import 'package:mobi_note/backend/text_editor/parser/special_marks_operations/text.dart';
 
 class SpecialPatternInfo {
   final int indexInText;
@@ -9,17 +9,20 @@ class SpecialPatternInfo {
 }
 
 String textWithConvertedMarks(String text) {
+  int startIndex = 0;
   List<String> textBuff = [];
   List<SpecialPatternInfo> startBounds = [];
   List<SpecialPatternInfo> startTags = [];
 
-  for (int i = 0; i < text.length; i++) {
+  if (isParagraphStyleCharacter(text[0])) {
+    textBuff.add(paragraphStyleUnicodeChar(text[0])!);
+    startIndex = 1;
+  }
+
+  for (int i = startIndex; i < text.length; i++) {
     var character = text[i];
-    if (isOneCharStyleMarkCharacter(character)) {
-      textBuff.add(oneCharStyleMarkUnicodeChar(character)!);
-      continue;
-    } else if (isStyleBoundaryCharacter(character)) {
-      var context = getCharacterContext(text, i);
+    if (isStyleBoundaryCharacter(character)) {
+      var context = characterContext(text, i);
       if (matchesStyleEnd(context)) {
         var boundIndex = startBounds.indexWhere((e) => e.pattern == character);
         if (found(boundIndex)) {
@@ -90,7 +93,7 @@ String firstMatch(String text, int i, Iterable<String> patterns) {
   );
 }
 
-String getCharacterContext(String text, int i) {
+String characterContext(String text, int i) {
   return text.substring(
     max(0, i - 1),
     min(text.length, i + 2),

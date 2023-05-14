@@ -1,17 +1,16 @@
-
 const List<String> styleChars = [
   '*',
   '^',
   '_',
   '~',
   '`',
-  '\$',
 ];
 
 const List<String> widgetTags = [
   '(w)',
   '(n)',
   '<n>',
+  '\$',
 ];
 
 const List<String> elementPatterns = [
@@ -20,7 +19,8 @@ const List<String> elementPatterns = [
   '[i]',
 ];
 
-const List<String> oneCharStyleMarks = [
+const List<String> paragraphStyleChars = [
   '#',
   '>',
+  '%',
 ];

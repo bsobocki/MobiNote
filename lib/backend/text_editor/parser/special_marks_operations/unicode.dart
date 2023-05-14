@@ -1,4 +1,4 @@
-import 'definitions/unicodes.dart';
+import '../definitions/unicodes.dart';
 
 int unicodeNumber(String char) {
   return char.codeUnitAt(0);
@@ -18,8 +18,8 @@ bool isUnicodeEndStyleCharacter(String char) {
   return inUnicodeRange(num, styleUnicodeRange) && num.isOdd;
 }
 
-bool isUnicodeOneCharStyleMarkCharacter(String char) {
-  return inUnicodeRange(unicodeNumber(char), oneCharStyleUnicodeRange);
+bool isUnicodeParagraphStyleCharacter(String char) {
+  return inUnicodeRange(unicodeNumber(char), paragraphStyleUnicodeRange);
 }
 
 bool isUnicodeElementPatternCharacter(String char) {
