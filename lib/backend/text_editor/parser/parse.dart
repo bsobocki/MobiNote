@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/backend/text_editor/span/span_info.dart';
-import 'package:mobi_note/backend/text_editor/parser/style_conversion.dart';
+import 'package:mobi_note/backend/text_editor/parser/special_marks/unicode.dart';
+
+TextNoteContent parseConversionMarkedText(String text) {
+  List<InlineSpan> spans = [];
+  String rawText = "";
+  SpanInfo currentSpan = SpanInfo(type: 'text');
+  List<SpanInfo> spanInfo = [];
+
+  for (int i = 0; i < text.length; i++) {
+    var char = text[i];
+    if (isUnicodeStartSyleCharacter(char)) {
+      //var span = SpanInfo(type: decodeUnicodeStyle(char));
+    }
+    if (isUnicodeEndStyleCharacter(char)) {}
+    if (isUnicodeWidgetCharacter(char)) {}
+    if (isUnicodeOneCharStyleMarkCharacter(char)) {}
+    if (isUnicodeElementPatternCharacter(char)) {}
+  }
+  return TextNoteContent(rawText: rawText, spans: spans);
+}
 
 class TextNoteContent {
   final String rawText;
@@ -9,12 +27,11 @@ class TextNoteContent {
   TextNoteContent({required this.rawText, required this.spans});
 }
 
-TextNoteContent parseConversionMarkedText(String text) {
-  List<InlineSpan> spans = [];
-  List<SpanInfo> spanInfo = [];
-  String rawText = "";
+class SpanInfo {
+  String type;
+  late String text;
+  late List<SpanInfo> children;
+  late SpanInfo parent;
 
-  for (int i = 0; i < text.length; i++) {
-  }
-  return TextNoteContent(rawText: rawText, spans: spans);
+  SpanInfo({required this.type});
 }

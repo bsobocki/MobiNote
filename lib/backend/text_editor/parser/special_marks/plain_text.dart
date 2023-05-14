@@ -1,40 +1,31 @@
-Map<String, String> startStyleCharConversion = {
-  '*': '\ue000',
-  '^': '\ue002',
-  '_': '\ue004',
-  '~': '\ue006',
-  '`': '\ue008',
-  '\$': '\ue00a',
-};
+import 'definitions/unicodes.dart';
+import 'definitions/marks.dart';
 
-Map<String, String> endStyleCharConversion = {
-  '*': '\ue001',
-  '^': '\ue003',
-  '_': '\ue005',
-  '~': '\ue007',
-  '`': '\ue009',
-  '\$': '\ue00b',
-};
+String? startStyleUnicodeChar(String char) {
+  return String.fromCharCode(styleChars.indexOf(char) * 2 + styleUnicodeNumber);
+}
 
-Map<String, String> widgetTagConversion = {
-  '(w)': '\ue100',
-  '(n)': '\ue101',
-  '<n>': '\ue102',
-};
+String? endStyleUnicodeChar(String char) {
+  return String.fromCharCode(
+      styleChars.indexOf(char) * 2 + 1 + styleUnicodeNumber);
+}
 
-Map<String, String> elementPatternsConversion = {
-  '[ ]': '\ue1a0',
-  '[x]': '\ue1a1',
-  '[i]': '\ue1a2',
-};
+String? widgetUnicodeChar(String char) {
+  return String.fromCharCode(widgetTags.indexOf(char) + widgetUnicodeNumber);
+}
 
-Map<String, String> oneCharStyleMarkConversion = {
-  '#': '\ue200',
-  '>': '\ue201',
-};
+String? elementPatternUnicodeChar(String char) {
+  return String.fromCharCode(
+      elementPatterns.indexOf(char) + elementPatternUnicodeNumber);
+}
+
+String? oneCharStyleMarkUnicodeChar(String char) {
+  return String.fromCharCode(
+      oneCharStyleMarks.indexOf(char) + oneCharStyleUnicodeNumber);
+}
 
 bool isStyleBoundaryCharacter(String char) {
-  return startStyleCharConversion.containsKey(char);
+  return styleChars.contains(char);
 }
 
 bool matchesStyleStart(String context) {
@@ -48,39 +39,19 @@ bool matchesStyleEnd(String context) {
 }
 
 Iterable<String> widgetTagsStartingFrom(String char) {
-  return widgetTagConversion.keys.where((e) => e[0] == char);
+  return widgetTags.where((e) => e[0] == char);
 }
 
 Iterable<String> elementPatternsStartingFrom(String char) {
-  return elementPatternsConversion.keys.where((e) => e[0] == char);
+  return elementPatterns.where((e) => e[0] == char);
 }
 
 bool isOneCharStyleMarkCharacter(String char) {
-  return oneCharStyleMarkConversion.containsKey(char);
+  return oneCharStyleMarks.contains(char);
 }
 
 bool isWhitespace(String c) {
   return RegExp(r'\s').hasMatch(c);
-}
-
-bool isUnicodeStartSyleCharacter(String char) {
-  return startStyleCharConversion.containsValue(char);
-}
-
-bool isUnicodeEndStyleCharacter(String char) {
-  return endStyleCharConversion.containsValue(char);
-}
-
-bool isUnicodeOneCharStyleMarkCharacter(String char) {
-  return oneCharStyleMarkConversion.containsValue(char);
-}
-
-bool isUnicodeElementPatternCharacter(String char) {
-  return elementPatternsConversion.containsValue(char);
-}
-
-bool isUnicodeWidgetCharacter(String char) {
-  return widgetTagConversion.containsValue(char);
 }
 
 class StyleInfo {

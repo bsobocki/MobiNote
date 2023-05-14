@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:mobi_note/backend/text_editor/parser/special_characters.dart';
+import 'package:mobi_note/backend/text_editor/parser/special_marks/plain_text.dart';
 
 class SpecialPatternInfo {
   final int indexInText;
@@ -16,7 +16,7 @@ String textWithConvertedMarks(String text) {
   for (int i = 0; i < text.length; i++) {
     var character = text[i];
     if (isOneCharStyleMarkCharacter(character)) {
-      textBuff.add(oneCharStyleMarkConversion[character]!);
+      textBuff.add(oneCharStyleMarkUnicodeChar(character)!);
       continue;
     } else if (isStyleBoundaryCharacter(character)) {
       var context = getCharacterContext(text, i);
@@ -24,8 +24,8 @@ String textWithConvertedMarks(String text) {
         var boundIndex = startBounds.indexWhere((e) => e.pattern == character);
         if (found(boundIndex)) {
           var startBoundIndex = startBounds[boundIndex].indexInText;
-          textBuff[startBoundIndex] = startStyleCharConversion[character]!;
-          textBuff.add(endStyleCharConversion[character]!);
+          textBuff[startBoundIndex] = startStyleUnicodeChar(character)!;
+          textBuff.add(endStyleUnicodeChar(character)!);
           startBounds.removeAt(boundIndex);
           continue;
         }
@@ -38,7 +38,7 @@ String textWithConvertedMarks(String text) {
       if (patterns.isNotEmpty) {
         var pattern = firstMatch(text, i, patterns);
         if (pattern.isNotEmpty) {
-          textBuff.add(elementPatternsConversion[pattern]!);
+          textBuff.add(elementPatternUnicodeChar(pattern)!);
           for (int j = 1; j < pattern.length; j++) {
             textBuff.add('');
           }
@@ -54,13 +54,13 @@ String textWithConvertedMarks(String text) {
           var tagIndex = startTags.indexWhere((e) => e.pattern == tag);
           if (found(tagIndex)) {
             var startTagIndex = startTags[tagIndex].indexInText;
-            textBuff[startTagIndex] = widgetTagConversion[tag]!;
+            textBuff[startTagIndex] = widgetUnicodeChar(tag)!;
             for (int j = startTagIndex + 1;
                 j < startTagIndex + tag.length;
                 j++) {
               textBuff[j] = '';
             }
-            textBuff.add(widgetTagConversion[tag]!);
+            textBuff.add(widgetUnicodeChar(tag)!);
             for (int j = 1; j < tag.length; j++) {
               textBuff.add('');
             }
