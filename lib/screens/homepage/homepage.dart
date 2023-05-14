@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobi_note/screens/test/textspan_test_page.dart';
+import 'package:mobi_note/screens/test_pages/textspan_test_page.dart';
 import '../../database/database_def.dart';
 import '../note_editor/note_editor.dart';
 import 'note_button_widget.dart';
