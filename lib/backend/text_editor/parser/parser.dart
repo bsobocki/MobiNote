@@ -1,22 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/backend/text_editor/parser/definitions/types/decode.dart';
 import 'package:mobi_note/backend/text_editor/parser/special_marks_operations/unicode.dart';
+import 'package:path/path.dart';
 
 class Parser {
   List<InlineSpan> spans = [];
-  String rawText = "";
-  late SpanInfo currentSpan;
-  List<SpanInfo> spansInfo = [];
+  List<String> rawTextBuff = [];
+  List<SpanInfo> spansInfos = [];
+  List<String> currTextBuff = [];
 
   Parser();
 
+  void clearData() {
+    spans.clear();
+    rawTextBuff.clear();
+    spansInfos.clear();
+    currTextBuff.clear();
+  }
+
+  String get rawText => rawTextBuff.join('');
+
   void setParagraph(String type) {}
+
   void addTextSpan(String text) {}
+
   void addWidget(String type, String text) {}
+
   void addElement(String type, String text) {}
 
+  String currTextFlush() {
+    String text = currTextBuff.join('');
+    currTextBuff.clear();
+    return text;
+  }
+
   TextNoteContent parseUnicodeMarkedText(String text) {
-    List<String> currTextBuf = [];
+    SpanInfo currentSpan;
+    clearData();
 
     if (isUnicodeParagraphStyleCharacter(text[0])) {
       setParagraph(decodeParagraphType(text[0]));
@@ -32,8 +52,10 @@ class Parser {
         if (isUnicodeWidgetCharacter(char)) {}
         if (isUnicodeElementPatternCharacter(char)) {}
       }
-      currTextBuf.add(char);
+      currTextBuff.add(char);
     }
+
+    //if 
     return TextNoteContent(rawText: rawText, spans: spans);
   }
 }

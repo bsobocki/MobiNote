@@ -17,15 +17,16 @@ class StyledTextConverter {
     return startBounds.indexWhere((e) => e.pattern == char);
   }
 
-  void convertStyleBoundary(String char, int boundIndex) {
-    var startBoundIndex = startBounds[boundIndex].indexInText;
-    textBuff[startBoundIndex] = startStyleUnicodeChar(char)!;
-    textBuff.add(endStyleUnicodeChar(char)!);
-    startBounds.removeAt(boundIndex);
+  void convertStyleBoundary(String boundChar, int startBoundIndex) {
+    var startBoundIndexInText = startBounds[startBoundIndex].indexInText;
+    textBuff[startBoundIndexInText] =
+        unicodeOfStyleStartBoundaryChar(boundChar)!;
+    textBuff.add(unicodeOfStyleEndBoundaryChar(boundChar)!);
+    startBounds.removeAt(startBoundIndex);
   }
 
   void convertElementPattern(String pattern) {
-    textBuff.add(elementUnicodeChar(pattern)!);
+    textBuff.add(unicodeOfElementChar(pattern)!);
     for (int j = 1; j < pattern.length; j++) {
       textBuff.add('');
     }
@@ -33,11 +34,11 @@ class StyledTextConverter {
 
   void convertWidgetTags(String tag, int tagIndex) {
     var startTagIndex = startTags[tagIndex].indexInText;
-    textBuff[startTagIndex] = widgetUnicodeChar(tag)!;
+    textBuff[startTagIndex] = unicodeOfWidgetChar(tag)!;
     for (int j = startTagIndex + 1; j < startTagIndex + tag.length; j++) {
       textBuff[j] = '';
     }
-    textBuff.add(widgetUnicodeChar(tag)!);
+    textBuff.add(unicodeOfWidgetChar(tag)!);
     for (int j = 1; j < tag.length; j++) {
       textBuff.add('');
     }
@@ -48,14 +49,14 @@ class StyledTextConverter {
     textBuff.clear();
     int startIndex = 0;
 
-    if (isParagraphStyleCharacter(text[0])) {
-      textBuff.add(paragraphStyleUnicodeChar(text[0])!);
+    if (isParagraphChar(text[0])) {
+      textBuff.add(unicodeOfParagraphChar(text[0])!);
       startIndex = 1;
     }
 
     for (int i = startIndex; i < text.length; i++) {
       var character = text[i];
-      if (isStyleBoundaryCharacter(character)) {
+      if (isStyleBoundaryChar(character)) {
         var context = characterContext(text, i);
         if (matchesStyleEnd(context)) {
           var boundIndex = startBoundIndex(character);

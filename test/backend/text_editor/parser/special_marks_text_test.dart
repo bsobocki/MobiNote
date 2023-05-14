@@ -39,21 +39,21 @@ void main() {
   });
 
   test("check text style characters", () {
-    expect(isStyleBoundaryCharacter(' '), false);
-    expect(isStyleBoundaryCharacter('\t'), false);
-    expect(isStyleBoundaryCharacter('\r'), false);
-    expect(isStyleBoundaryCharacter('\u000b'), false);
-    expect(isStyleBoundaryCharacter('\n'), false);
-    expect(isStyleBoundaryCharacter('r'), false);
-    expect(isStyleBoundaryCharacter('a'), false);
-    expect(isStyleBoundaryCharacter('*'), true);
-    expect(isStyleBoundaryCharacter('^'), true);
-    expect(isStyleBoundaryCharacter('_'), true);
-    expect(isStyleBoundaryCharacter('~'), true);
-    expect(isStyleBoundaryCharacter('`'), true);
-    expect(isStyleBoundaryCharacter('\$'), false);
-    expect(isParagraphStyleCharacter('#'), true);
-    expect(isParagraphStyleCharacter('>'), true);
+    expect(isStyleBoundaryChar(' '), false);
+    expect(isStyleBoundaryChar('\t'), false);
+    expect(isStyleBoundaryChar('\r'), false);
+    expect(isStyleBoundaryChar('\u000b'), false);
+    expect(isStyleBoundaryChar('\n'), false);
+    expect(isStyleBoundaryChar('r'), false);
+    expect(isStyleBoundaryChar('a'), false);
+    expect(isStyleBoundaryChar('*'), true);
+    expect(isStyleBoundaryChar('^'), true);
+    expect(isStyleBoundaryChar('_'), true);
+    expect(isStyleBoundaryChar('~'), true);
+    expect(isStyleBoundaryChar('`'), true);
+    expect(isStyleBoundaryChar('\$'), false);
+    expect(isParagraphChar('#'), true);
+    expect(isParagraphChar('>'), true);
   });
 
   test("check widgets tags", () {

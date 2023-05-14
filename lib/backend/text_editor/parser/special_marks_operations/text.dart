@@ -1,41 +1,41 @@
 import '../definitions/unicodes.dart';
 import '../definitions/marks.dart';
 
-String? startStyleUnicodeChar(String char) {
+String? unicodeOfStyleStartBoundaryChar(String char) {
   return String.fromCharCode(styleChars.indexOf(char) * 2 + styleUnicodeNumber);
 }
 
-String? endStyleUnicodeChar(String char) {
+String? unicodeOfStyleEndBoundaryChar(String char) {
   return String.fromCharCode(
       styleChars.indexOf(char) * 2 + 1 + styleUnicodeNumber);
 }
 
-String? widgetUnicodeChar(String char) {
+String? unicodeOfWidgetChar(String char) {
   return String.fromCharCode(widgetTags.indexOf(char) + widgetUnicodeNumber);
 }
 
-String? elementUnicodeChar(String char) {
+String? unicodeOfElementChar(String char) {
   return String.fromCharCode(
       elementPatterns.indexOf(char) + elementUnicodeNumber);
 }
 
-String? paragraphStyleUnicodeChar(String char) {
+String? unicodeOfParagraphChar(String char) {
   return String.fromCharCode(
       paragraphStyleChars.indexOf(char) + paragraphUnicodeNumber);
 }
 
-bool isStyleBoundaryCharacter(String char) {
+bool isStyleBoundaryChar(String char) {
   return styleChars.contains(char);
 }
 
 bool matchesStyleStart(String context) {
   return context.length != 2 &&
-      isStyleBoundaryCharacter(context[1]) &&
+      isStyleBoundaryChar(context[1]) &&
       !isWhitespace(context[2]);
 }
 
 bool matchesStyleEnd(String context) {
-  return !isWhitespace(context[0]) && isStyleBoundaryCharacter(context[1]);
+  return !isWhitespace(context[0]) && isStyleBoundaryChar(context[1]);
 }
 
 Iterable<String> widgetTagsStartingFrom(String char) {
@@ -46,7 +46,7 @@ Iterable<String> elementPatternsStartingFrom(String char) {
   return elementPatterns.where((e) => e[0] == char);
 }
 
-bool isParagraphStyleCharacter(String char) {
+bool isParagraphChar(String char) {
   return paragraphStyleChars.contains(char);
 }
 
