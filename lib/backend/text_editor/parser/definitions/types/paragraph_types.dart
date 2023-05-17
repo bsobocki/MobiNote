@@ -1,5 +1,9 @@
 List<String> paragraphTypes = [
-  'header',
+  'header1',
+  'header2',
+  'header3',
+  'header4',
   'quote',
   'latex',
+  'paragraph',
 ];

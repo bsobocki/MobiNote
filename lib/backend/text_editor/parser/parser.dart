@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/backend/text_editor/parser/definitions/types/decode.dart';
 import 'package:mobi_note/backend/text_editor/parser/special_marks_operations/unicode.dart';
-import 'package:path/path.dart';
 
 class Parser {
   List<InlineSpan> spans = [];
@@ -20,7 +19,16 @@ class Parser {
 
   String get rawText => rawTextBuff.join('');
 
-  void setParagraph(String type) {}
+  void setParagraph(String type) {
+    switch (type) {
+      case 'header':
+        break;
+      case 'quote':
+        break;
+      case 'latex':
+        break;
+    }
+  }
 
   void addTextSpan(String text) {}
 
@@ -35,6 +43,7 @@ class Parser {
   }
 
   TextNoteContent parseUnicodeMarkedText(String text) {
+    SpanInfo mainSpan = SpanInfo(type: 'paragraph');
     SpanInfo currentSpan;
     clearData();
 
@@ -55,7 +64,7 @@ class Parser {
       currTextBuff.add(char);
     }
 
-    //if 
+    //if
     return TextNoteContent(rawText: rawText, spans: spans);
   }
 }

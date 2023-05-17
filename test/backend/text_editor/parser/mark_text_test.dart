@@ -44,27 +44,57 @@ void main() {
     expect(characterContext('to jest con*text', 7), 't c');
   });
 
+  test('first not whitespace', () {
+    expect(firstNotWhitespace('   sdafdafad'), 3);
+    expect(firstNotWhitespace('   \nsdafdafad'), 4);
+    expect(firstNotWhitespace('\t\t sdafdafad'), 3);
+    expect(firstNotWhitespace('\n\t  sdafdafad'), 4);
+  });
+
+  test("check getContext", () {
+    expect(paragraphOf('## to jest con*text', 0), '##');
+    expect(paragraphOf('# to jest con*text', 0), '#');
+    expect(paragraphOf('### some text', 0), '###');
+    expect(paragraphOf('#### some text', 0), '####');
+    expect(paragraphOf('#### some text', 0), '####');
+    expect(paragraphOf('    ## to jest con*text', 4), '##');
+    expect(paragraphOf('    # to jest con*text', 4), '#');
+    expect(paragraphOf('  \n\t### some text', 4), '###');
+    expect(paragraphOf(' \t\t#### some text', 3), '####');
+    expect(paragraphOf('  \n\n#### some text', 4), '####');
+    expect(paragraphOf('  ## to jest con*text', 2), '##');
+    expect(paragraphOf(' # to jest con*text', 1), '#');
+    expect(paragraphOf('  ### some text', 2), '###');
+    expect(paragraphOf(' ########## some text', 1), '####');
+    expect(paragraphOf('   ####### some text', 3), '####');
+  });
+
   test("converted style marks", () {
     var converter = StyledTextConverter();
     expect(
-      converter.textWithConvertedMarks("this is a *bold ^italic^ text* hihi."),
-      "this is a \ue000bold \ue002italic\ue003 text\ue001 hihi.",
+      converter.textWithConvertedMarks("  this is a *bold ^italic^ text* hihi."),
+      "  this is a \ue000bold \ue002italic\ue003 text\ue001 hihi.",
     );
     expect(
       converter.textWithConvertedMarks(
-          "#paragraph ; *and* _this `is`_ *a \$not *bold * ~strikethrough~ text\$>quote ~ hihihihi.~%"),
-      "\ue200paragraph ; \ue000and\ue001 \ue004this \ue008is\ue009\ue005 *a \ue103not *bold * \ue006strikethrough\ue007 text\ue103>quote ~ hihihihi.~%",
+          "  ### paragraph ; *and* _this `is`_ *a \$not *bold * ~strikethrough~ text\$>quote ~ hihihihi.~%"),
+      "  \ue202 paragraph ; \ue000and\ue001 \ue004this \ue008is\ue009\ue005 *a \ue103not *bold * \ue006strikethrough\ue007 text\ue103>quote ~ hihihihi.~%",
     );
     expect(
       converter.textWithConvertedMarks(
-        "> This is quoted text, did you know?",
-      ),
-      "\ue201 This is quoted text, did you know?");
+          "smaller paragraph ; *and* _this `is`_ *a \$not *bold * ~strikethrough~ text\$>quote ~ hihihihi.~%"),
+      "smaller paragraph ; \ue000and\ue001 \ue004this \ue008is\ue009\ue005 *a \ue103not *bold * \ue006strikethrough\ue007 text\ue103>quote ~ hihihihi.~%",
+    );
     expect(
-      converter.textWithConvertedMarks(
-        "% And this is LaTeX",
-      ),
-      "\ue202 And this is LaTeX");
+        converter.textWithConvertedMarks(
+          "> This is quoted text, did you know?",
+        ),
+        "\ue204 This is quoted text, did you know?");
+    expect(
+        converter.textWithConvertedMarks(
+          "% And this is LaTeX",
+        ),
+        "\ue205 And this is LaTeX");
   });
 
   test("converted elements and widgets", () {

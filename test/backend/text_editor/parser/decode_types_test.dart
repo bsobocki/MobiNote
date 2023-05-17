@@ -29,8 +29,11 @@ void main() {
   });
   
   test('decode paragraphs', () {
-    expect(decodeParagraphType('\ue200'), 'header');
-    expect(decodeParagraphType('\ue201'), 'quote');
-    expect(decodeParagraphType('\ue202'), 'latex');
+    expect(decodeParagraphType('\ue200'), 'header1');
+    expect(decodeParagraphType('\ue201'), 'header2');
+    expect(decodeParagraphType('\ue202'), 'header3');
+    expect(decodeParagraphType('\ue203'), 'header4');
+    expect(decodeParagraphType('\ue204'), 'quote');
+    expect(decodeParagraphType('\ue205'), 'latex');
   });
 }

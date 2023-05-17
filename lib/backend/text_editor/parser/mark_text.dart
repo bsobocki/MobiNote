@@ -6,15 +6,44 @@ class SpecialPatternInfo {
   final String pattern;
 
   SpecialPatternInfo({required this.indexInText, required this.pattern});
+
+  @override
+  String toString() => "{i: $indexInText, p: $pattern}";
 }
 
 class StyledTextConverter {
   List<SpecialPatternInfo> startBounds = [];
   List<SpecialPatternInfo> startTags = [];
   List<String> textBuff = [];
+  int startIndex = 0;
+
+  void clearData() {
+    startBounds.clear();
+    startTags.clear();
+    textBuff.clear();
+  }
 
   int startBoundIndex(String char) {
     return startBounds.indexWhere((e) => e.pattern == char);
+  }
+
+  void addPlaceholders(int times) {
+    for (int i = 1; i <= times; i++) {
+      textBuff.add('');
+    }
+  }
+
+  void addStringToBuff(String text, int startIndex, int length) {
+    for (int i = startIndex; i < startIndex + length; i++) {
+      textBuff.add(text[i]);
+    }
+  }
+
+  void convertParagraph(String text) {
+    var paragraph = paragraphOf(text, startIndex);
+    textBuff.add(unicodeOfParagraphChar(paragraph)!);
+    addPlaceholders(paragraph.length - 1);
+    startIndex += paragraph.length;
   }
 
   void convertStyleBoundary(String boundChar, int startBoundIndex) {
@@ -27,9 +56,7 @@ class StyledTextConverter {
 
   void convertElementPattern(String pattern) {
     textBuff.add(unicodeOfElementChar(pattern)!);
-    for (int j = 1; j < pattern.length; j++) {
-      textBuff.add('');
-    }
+    addPlaceholders(pattern.length - 1);
   }
 
   void convertWidgetTags(String tag, int tagIndex) {
@@ -39,19 +66,17 @@ class StyledTextConverter {
       textBuff[j] = '';
     }
     textBuff.add(unicodeOfWidgetChar(tag)!);
-    for (int j = 1; j < tag.length; j++) {
-      textBuff.add('');
-    }
+    addPlaceholders(tag.length - 1);
     startTags.removeAt(tagIndex);
   }
 
   String textWithConvertedMarks(String text) {
-    textBuff.clear();
-    int startIndex = 0;
+    clearData();
+    startIndex = firstNotWhitespace(text);
+    addStringToBuff(text, 0, startIndex);
 
-    if (isParagraphChar(text[0])) {
-      textBuff.add(unicodeOfParagraphChar(text[0])!);
-      startIndex = 1;
+    if (isParagraphChar(text[startIndex])) {
+      convertParagraph(text);
     }
 
     for (int i = startIndex; i < text.length; i++) {
@@ -122,4 +147,17 @@ String characterContext(String text, int i) {
 
 String getTag(String text, int i) {
   return text.substring(i, min(text.length, i + 3));
+}
+
+int firstNotWhitespace(String text) {
+  return text.indexOf(RegExp('[^\\s]'));
+}
+
+String paragraphOf(String text, int startIndex) {
+  int index = startIndex;
+  List<String> paragraph = [];
+  while (isParagraphChar(text[index])) {
+    if ((paragraph += [text[index++]]).length >= 4) break;
+  }
+  return paragraph.join('');
 }

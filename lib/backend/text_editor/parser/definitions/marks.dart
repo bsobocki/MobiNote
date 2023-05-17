@@ -21,6 +21,9 @@ const List<String> elementPatterns = [
 
 const List<String> paragraphStyleChars = [
   '#',
+  '##',
+  '###',
+  '####',
   '>',
   '%',
 ];
