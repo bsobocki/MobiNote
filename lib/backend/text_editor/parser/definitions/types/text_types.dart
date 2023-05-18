@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 List<String> styleTypes = [
   'bold',
   'italic',
@@ -8,29 +6,16 @@ List<String> styleTypes = [
   'inline_code',
 ];
 
-Map<String, TextStyle> textStyles = {
-  'bold': const TextStyle(
-    fontWeight: FontWeight.bold,
-  ),
-  'italic': const TextStyle(
-    fontStyle: FontStyle.italic,
-  ),
-  'underline': const TextStyle(
-    decoration: TextDecoration.underline,
-  ),
-  'strikethrough': const TextStyle(
-    decoration: TextDecoration.lineThrough,
-  ),
-  'inline_code': TextStyle(
-    fontFamily: 'Courier New',
-    backgroundColor: Colors.grey[300],
-    color: Colors.black,
-  ),
-};
+List<String> paragraphTypes = [
+  'header1',
+  'header2',
+  'header3',
+  'header4',
+  'quote',
+  'latex',
+  'paragraph',
+];
 
-bool isStyledText(String type) {
-  return textStyles.containsKey(type);
-}
 
 /*
 widget tags don't have to check context to find out whether it is start or end

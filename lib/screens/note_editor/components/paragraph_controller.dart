@@ -15,6 +15,7 @@ class ParagraphController extends TextEditingController {
     var markedText = StyledTextConverter().textWithConvertedMarks(markdownText);
     var parsedContent = Parser().parseUnicodeMarkedText(markedText);
     text = parsedContent.rawText;
-    return TextSpan(style: style, children: parsedContent.spans);
+    return parsedContent.span as TextSpan;
   }
 }
+
