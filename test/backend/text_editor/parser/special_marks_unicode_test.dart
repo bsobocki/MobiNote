@@ -23,6 +23,8 @@ void main() {
 
   test("check unicode characters", () {
     expect(isUnicodeStartSyleCharacter('\ue002'), true);
+    expect(isUnicodeStartSyleCharacter('\ue006'), true);
+    expect(isUnicodeStartSyleCharacter('\ue008'), true);
     expect(isUnicodeStartSyleCharacter('\ue001'), false);
     expect(isUnicodeStartSyleCharacter('\ue202'), false);
     expect(isUnicodeStartSyleCharacter('\ue1a1'), false);

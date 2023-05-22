@@ -6,6 +6,9 @@ const List<String> styleChars = [
   '`',
 ];
 
+// start and end style chars
+int styleCharsAmount = styleChars.length * 2;
+
 const List<String> widgetTags = [
   '(w)',
   '(n)',

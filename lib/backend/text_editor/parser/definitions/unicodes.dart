@@ -7,7 +7,7 @@ const paragraphUnicodeNumber = 0xe200;
 
 var styleUnicodeRange = UnicodeRange(
   unicode: styleUnicodeNumber,
-  size: styleChars.length,
+  size: styleCharsAmount,
 );
 
 var paragraphStyleUnicodeRange = UnicodeRange(
