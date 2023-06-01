@@ -1,4 +1,4 @@
-import 'package:mobi_note/backend/text_editor/parser/special_marks_operations/text.dart';
+import 'package:mobi_note/backend/text_editor/special_marks_operations/text.dart';
 import 'package:test/test.dart';
 
 void main() {

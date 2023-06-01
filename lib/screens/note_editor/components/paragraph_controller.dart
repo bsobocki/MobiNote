@@ -4,22 +4,27 @@ import 'package:mobi_note/backend/text_editor/parser/span_info_converterer.dart'
 import '../../../backend/text_editor/parser/mark_text.dart';
 
 class ParagraphController extends TextEditingController {
-  late String markdownText;
+  String markedText = "";
+  String unicodeMarkedText = "";
+  String prevText = "";
+  TextSpan paragraph = const TextSpan(text: "Enter a note");
 
-  ParagraphController() {
-    markdownText = text;
+  ParagraphController();
+
+  void parseMarkdownText() {
+    unicodeMarkedText =
+        StyledTextConverter().textWithConvertedMarks(markedText);
+    var spanInfoParsedContent =
+        UnicodeMarkedTextParser().parseUnicodeMarkedText(unicodeMarkedText);
+    text = spanInfoParsedContent.rawText;
+    prevText = text;
+    paragraph = SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo)
+        as TextSpan;
   }
 
   @override
   TextSpan buildTextSpan(
       {BuildContext? context, TextStyle? style, bool? withComposing}) {
-    var unicodeMarkedText =
-        StyledTextConverter().textWithConvertedMarks(markdownText);
-    var spanInfoParsedContent =
-        UnicodeMarkedTextParser().parseUnicodeMarkedText(unicodeMarkedText);
-    text = spanInfoParsedContent.rawText;
-    var paragraphTextSpan =
-        SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo);
-    return paragraphTextSpan as TextSpan;
+    return paragraph;
   }
 }

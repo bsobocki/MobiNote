@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:mobi_note/backend/text_editor/parser/definitions/types/decode.dart';
 import 'package:mobi_note/backend/text_editor/parser/definitions/types/text_types.dart';
-import 'package:mobi_note/backend/text_editor/parser/special_marks_operations/text.dart';
-import 'package:mobi_note/backend/text_editor/parser/special_marks_operations/unicode.dart';
+import 'package:mobi_note/backend/text_editor/special_marks_operations/text.dart';
+import 'package:mobi_note/backend/text_editor/special_marks_operations/unicode.dart';
 import 'definitions/span_info.dart';
 
 class UnicodeMarkedTextParser {
@@ -16,6 +15,8 @@ class UnicodeMarkedTextParser {
   UnicodeMarkedTextParser();
 
   TextNoteSpanInfoContent parseUnicodeMarkedText(String text) {
+    if (text.isEmpty) return TextNoteSpanInfoContent(rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
+
     init();
     addFirstWhitespacesIntoTextBuffers(text);
 
@@ -39,10 +40,8 @@ class UnicodeMarkedTextParser {
           }
           flushCurrentTextBuff();
           setCurrentSpanAsParentof(decodeWidgetType(char));
-          rawTextBuff.add(char);
         } else if (isUnicodeElementPatternCharacter(char)) {
           addSpan(decodeElementType(char));
-          rawTextBuff.add(char);
         }
       } else {
         if (currentSpan.children.isNotEmpty) addSpan('text');

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobi_note/screens/note_editor/components/content_editor.dart';
 import '../../database/database_def.dart';
-import 'components/paragraph_controller.dart';
 
-class NoteEditorPage extends StatefulWidget {
-  const NoteEditorPage(
+class RawNoteEditorTestPage extends StatefulWidget {
+  const RawNoteEditorTestPage(
       {super.key,
       required this.id,
       required this.title,
@@ -15,11 +13,11 @@ class NoteEditorPage extends StatefulWidget {
   final String content;
 
   @override
-  State<NoteEditorPage> createState() => _NoteEditorPageState();
+  State<RawNoteEditorTestPage> createState() => _RawNoteEditorTestPageState();
 }
 
-class _NoteEditorPageState extends State<NoteEditorPage> {
-  late final contentController = ParagraphController();
+class _RawNoteEditorTestPageState extends State<RawNoteEditorTestPage> {
+  late final contentController = TextEditingController();
   late int id;
   final database = Get.find<MobiNoteDatabase>();
   final titleController = TextEditingController();
@@ -59,8 +57,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   void init() {
     id = widget.id;
     titleController.text = widget.title;
-    contentController.markedText = widget.content;
-    contentController.parseMarkdownText();
+    contentController.text = widget.content;
   }
 
   void onContentChange(value) {
@@ -104,9 +101,14 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: ContentEditor(
-        contentController: contentController,
-        onContentChange: onContentChange,
+      body: TextField(
+        controller: contentController,
+        onChanged: onContentChange,
+        style: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        decoration: const InputDecoration(border: InputBorder.none),
       ),
       backgroundColor: const Color.fromARGB(
         255,

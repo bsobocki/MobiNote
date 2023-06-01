@@ -14,7 +14,7 @@ void main() {
     String text =
         "  Piszę sobie \ue000bold\ue001em i \ue000boldem \ue002italic \ue006strike\ue007 i \ue004underline\ue005\ue003\ue001 tak o a to widget \ue102widget:taki\ue102.";
     String expectedRawText =
-        "  Piszę sobie boldem i boldem italic strike i underline tak o a to widget \ue102.";
+        "  Piszę sobie \u2009bold\u2009em i \u2009boldem \u2009italic \u2009strike\u2009 i \u2009underline\u2009\u2009\u2009 tak o a to widget \u2009.";
     SpanInfo expectedParagraph =
         SpanInfo(type: 'paragraph', text: "  Piszę sobie ");
     expectedParagraph.parent = expectedParagraph;

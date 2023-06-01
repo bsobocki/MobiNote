@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobi_note/screens/test_pages/textspan_test_page.dart';
+import 'package:mobi_note/screens/test_pages/add_raw_text_note_test_page.dart';
 import '../../database/database_def.dart';
 import '../note_editor/note_editor.dart';
 import 'note_button_widget.dart';
@@ -29,15 +29,9 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomPadding(context) -
       listViewPadding;
 
-  // void showDatabasePage() {
-  //   Navigator.of(context).push(MaterialPageRoute(
-  //     builder: (context) => DriftDbViewer(database),
-  //   ));
-  // }
-
   void showTestPage() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const TestPage(),
+      builder: (context) => RawNoteEditorTestPage(id: invalidNote.id, title: invalidNote.title, content: invalidNote.content),
     ));
   }
 

@@ -5,9 +5,10 @@ import 'package:mobi_note/backend/text_editor/parser/span_info_converterer.dart'
 import 'package:test/test.dart';
 
 bool sameChildren(List<InlineSpan>? a, List<InlineSpan>? b) {
-  if (a == null)
+  if (a == null) {
     return b == null ||
         b.isEmpty; //TextSpan have null as uninitialized children
+  }
   if (b == null) return a.isEmpty; // but SpanInfo has empty list
   if (a.length != b.length) return false;
   bool result = true;

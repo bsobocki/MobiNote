@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:mobi_note/backend/text_editor/parser/special_marks_operations/text.dart';
+import 'package:mobi_note/backend/text_editor/special_marks_operations/text.dart';
 
 class SpecialPatternInfo {
   final int indexInText;
@@ -71,6 +71,8 @@ class StyledTextConverter {
   }
 
   String textWithConvertedMarks(String text) {
+    if (text.length <= 1) return text;
+
     clearData();
     startIndex = firstNotWhitespace(text);
     addStringToBuff(text, 0, startIndex);
