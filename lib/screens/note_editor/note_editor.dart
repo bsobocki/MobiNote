@@ -60,7 +60,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
     id = widget.id;
     titleController.text = widget.title;
     contentController.markedText = widget.content;
-    contentController.parseMarkdownText();
+    // contentController.parseMarkdownText();
   }
 
   void onContentChange(value) {

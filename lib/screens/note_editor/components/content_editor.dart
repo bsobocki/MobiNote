@@ -17,7 +17,7 @@ class ContentEditor extends StatefulWidget {
   void onChange(String newText) {
     if (contentController.markedText.isEmpty) {
       contentController.markedText = newText;
-      contentController.parseMarkdownText();
+      // contentController.parseMarkdownText();
       onContentChange(newText);
       return;
     }
@@ -52,6 +52,8 @@ class ContentEditor extends StatefulWidget {
 
     // TextSelection selection =
     //     TextSelection(baseOffset: newText.length, extentOffset: newText.length);
+    contentController.selection =
+        TextSelection(baseOffset: newText.length, extentOffset: newText.length);
     var marked = List.from(contentController.markedText.characters);
     var markedPosition =
         getStyledTextIndexOf(contentController.unicodeMarkedText, position);
@@ -74,13 +76,14 @@ class ContentEditor extends StatefulWidget {
     debugPrint("selection after on: $selection");
 
     contentController.markedText = marked.join('');
-    contentController.parseMarkdownText();
-    // try {
-    //   contentController.selection = selection;
-    // }
-    // catch(e) {
-    //   contentController.selection = TextSelection(baseOffset: contentController.prevText.length, extentOffset: contentController.prevText.length);
-    // }
+    // contentController.parseMarkdownText();
+    try {
+      contentController.selection = selection;
+    } catch (e) {
+      contentController.selection = TextSelection(
+          baseOffset: contentController.prevText.length,
+          extentOffset: contentController.prevText.length);
+    }
     onContentChange(newText);
   }
 
@@ -109,7 +112,7 @@ class _ContentEditorState extends State<ContentEditor> {
                       'selected in ${widget.contentController.selection.baseOffset} -> ${widget.contentController.selection.extentOffset}');
                 },
                 expands: true,
-                onChanged: widget.onChange,
+                // onChanged: widget.onChange,
                 controller: widget.contentController,
                 style: const TextStyle(
                   color: Colors.white,

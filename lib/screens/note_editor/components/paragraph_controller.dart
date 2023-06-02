@@ -11,20 +11,26 @@ class ParagraphController extends TextEditingController {
 
   ParagraphController();
 
-  void parseMarkdownText() {
+  TextSpan parseMarkdownText(String text) {
+    int cursorPosition = selection.baseOffset;
     unicodeMarkedText =
-        StyledTextConverter().textWithConvertedMarks(markedText);
+        StyledTextConverter().textWithConvertedMarks(text, cursorPosition);
+    print("PRINT: Unicode text: $unicodeMarkedText");
+    print("PRINT: cursorPosition: $cursorPosition");
     var spanInfoParsedContent =
         UnicodeMarkedTextParser().parseUnicodeMarkedText(unicodeMarkedText);
     text = spanInfoParsedContent.rawText;
     prevText = text;
-    paragraph = SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo)
+    // paragraph = SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo)
+    //     as TextSpan;
+    return SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo)
         as TextSpan;
   }
 
   @override
   TextSpan buildTextSpan(
       {BuildContext? context, TextStyle? style, bool? withComposing}) {
-    return paragraph;
+    print("PRINT: Raw text: $text|");
+    return parseMarkdownText(text);
   }
 }

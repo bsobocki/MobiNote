@@ -70,7 +70,7 @@ class StyledTextConverter {
     startTags.removeAt(tagIndex);
   }
 
-  String textWithConvertedMarks(String text) {
+  String textWithConvertedMarks(String text, cursorPosition) {
     if (text.length <= 1) return text;
 
     clearData();
@@ -81,14 +81,23 @@ class StyledTextConverter {
       convertParagraph(text);
     }
 
+    int? startContentIndex = null;
     for (int i = startIndex; i < text.length; i++) {
+      if (startContentIndex != null &&
+          startContentIndex <= cursorPosition &&
+          cursorPosition <= i) {
+        addStringToBuff(text, i, 1);
+        continue;
+      }
       var character = text[i];
       if (isStyleBoundaryChar(character)) {
         var context = characterContext(text, i);
+        startContentIndex = i + 1;
         if (matchesStyleEnd(context)) {
           var boundIndex = startBoundIndex(character);
           if (found(boundIndex)) {
             convertStyleBoundary(character, boundIndex);
+            startContentIndex = null;
             continue;
           }
         }
