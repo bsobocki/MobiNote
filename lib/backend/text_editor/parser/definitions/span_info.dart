@@ -15,7 +15,12 @@ class SpanInfo {
   }
 
   String get strWithoutChildren =>
-      '{type: $type, text: $text, children: ${children.isEmpty? "[]": "[...]"} }';
+      '{type: $type, text: $text, children: ${children.isEmpty ? "[]" : "[...]"} }';
 
-  String get str => '\n{type: $type, text: $text, children: [$childrenStr] }';
+  String get str => '{type: $type, text: $text, children: [$childrenStr] }';
+
+  @override
+  String toString() {
+    return str;
+  }
 }

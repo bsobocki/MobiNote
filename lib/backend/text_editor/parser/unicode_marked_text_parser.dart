@@ -15,7 +15,9 @@ class UnicodeMarkedTextParser {
   UnicodeMarkedTextParser();
 
   TextNoteSpanInfoContent parseUnicodeMarkedText(String text) {
-    if (text.isEmpty) return TextNoteSpanInfoContent(rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
+    if (text.isEmpty)
+      return TextNoteSpanInfoContent(
+          rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
 
     init();
     addFirstWhitespacesIntoTextBuffers(text);
@@ -28,6 +30,9 @@ class UnicodeMarkedTextParser {
     for (int i = startIndex; i < text.length; i++) {
       var char = text[i];
       if (isSpecialUnicode(char)) {
+        var addChar = '\u200B';
+        currTextBuff.add(addChar);
+        rawTextBuff.add(addChar);
         if (textInBuffer) flushCurrentTextBuff();
         if (isUnicodeStartSyleCharacter(char)) {
           addSpan(decodeStyleType(char));
@@ -110,6 +115,11 @@ class UnicodeMarkedTextParser {
 class TextNoteSpanInfoContent {
   final String rawText;
   final SpanInfo spanInfo;
+
+  @override
+  String toString() {
+    return 'TextNoteSpanInfoContent{rawText: $rawText, spanInfo: $spanInfo}';
+  }
 
   TextNoteSpanInfoContent({required this.rawText, required this.spanInfo});
 }

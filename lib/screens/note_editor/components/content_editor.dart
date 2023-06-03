@@ -52,8 +52,6 @@ class ContentEditor extends StatefulWidget {
 
     // TextSelection selection =
     //     TextSelection(baseOffset: newText.length, extentOffset: newText.length);
-    contentController.selection =
-        TextSelection(baseOffset: newText.length, extentOffset: newText.length);
     var marked = List.from(contentController.markedText.characters);
     var markedPosition =
         getStyledTextIndexOf(contentController.unicodeMarkedText, position);
