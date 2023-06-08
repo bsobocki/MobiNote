@@ -15,7 +15,9 @@ class UnicodeMarkedTextParser {
   UnicodeMarkedTextParser();
 
   TextNoteSpanInfoContent parseUnicodeMarkedText(String text) {
-    if (text.isEmpty) return TextNoteSpanInfoContent(rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
+    if (text.isEmpty)
+      return TextNoteSpanInfoContent(
+          rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
 
     init();
     addFirstWhitespacesIntoTextBuffers(text);
@@ -28,25 +30,32 @@ class UnicodeMarkedTextParser {
     for (int i = startIndex; i < text.length; i++) {
       var char = text[i];
       if (isSpecialUnicode(char)) {
-        if (textInBuffer) flushCurrentTextBuff();
         if (isUnicodeStartSyleCharacter(char)) {
+          if (textInBuffer) flushCurrentTextBuff();
           addSpan(decodeStyleType(char));
+          currTextBuff.add('\u200B');
         } else if (isUnicodeEndStyleCharacter(char)) {
+          currTextBuff.add('\u200B');
+          if (textInBuffer) flushCurrentTextBuff();
           setCurrentSpanAsParentof(decodeStyleType(char));
         } else if (isUnicodeWidgetCharacter(char)) {
+          if (textInBuffer) flushCurrentTextBuff();
           addSpan(decodeWidgetType(char));
+          currTextBuff.add('\u200B');
           while (++i < text.length && !isUnicodeWidgetCharacter(text[i])) {
             currTextBuff.add(text[i]);
           }
+          currTextBuff.add('\u200B');
           flushCurrentTextBuff();
           setCurrentSpanAsParentof(decodeWidgetType(char));
         } else if (isUnicodeElementPatternCharacter(char)) {
           addSpan(decodeElementType(char));
+          currTextBuff.add('\u200B');
         }
       } else {
         if (currentSpan.children.isNotEmpty) addSpan('text');
-        currTextBuff.add(char);
         rawTextBuff.add(char);
+        currTextBuff.add(char);
       }
     }
     if (textInBuffer) flushCurrentTextBuff();
@@ -102,7 +111,7 @@ class UnicodeMarkedTextParser {
   }
 
   void flushCurrentTextBuff() {
-    currentSpan.text = currTextBuff.join('');
+    currentSpan.text += currTextBuff.join('');
     currTextBuff.clear();
   }
 }

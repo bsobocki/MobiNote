@@ -61,7 +61,7 @@ class _RawNoteEditorTestPageState extends State<RawNoteEditorTestPage> {
   }
 
   void onContentChange(value) {
-    debugPrint(contentController.text);
+    //debugPrint(contentController.text);
     noteChanged = true;
   }
 

@@ -14,25 +14,25 @@ void main() {
     String text =
         "  Piszę sobie \ue000bold\ue001em i \ue000boldem \ue002italic \ue006strike\ue007 i \ue004underline\ue005\ue003\ue001 tak o a to widget \ue102widget:taki\ue102.";
     String expectedRawText =
-        "  Piszę sobie \u2009bold\u2009em i \u2009boldem \u2009italic \u2009strike\u2009 i \u2009underline\u2009\u2009\u2009 tak o a to widget \u2009.";
+        "  Piszę sobie boldem i boldem italic strike i underline tak o a to widget .";
     SpanInfo expectedParagraph =
         SpanInfo(type: 'paragraph', text: "  Piszę sobie ");
     expectedParagraph.parent = expectedParagraph;
-    createChildSpanInfo(expectedParagraph, 'bold', "bold");
+    createChildSpanInfo(expectedParagraph, 'bold', "\u200Bbold\u200B");
     createChildSpanInfo(expectedParagraph, 'text', "em i ");
-    var bold = createChildSpanInfo(expectedParagraph, 'bold', "boldem ");
-    var italic = createChildSpanInfo(bold, 'italic', "italic ");
-    createChildSpanInfo(italic, 'strikethrough', "strike");
+    var bold = createChildSpanInfo(expectedParagraph, 'bold', "\u200Bboldem \u200B");
+    var italic = createChildSpanInfo(bold, 'italic', "\u200Bitalic \u200B");
+    createChildSpanInfo(italic, 'strikethrough', "\u200Bstrike\u200B");
     createChildSpanInfo(italic, 'text', " i ");
-    createChildSpanInfo(italic, 'underline', "underline");
+    createChildSpanInfo(italic, 'underline', "\u200Bunderline\u200B");
     createChildSpanInfo(expectedParagraph, 'text', " tak o a to widget ");
-    createChildSpanInfo(expectedParagraph, 'note_widget', "widget:taki");
+    createChildSpanInfo(expectedParagraph, 'note_widget', "\u200Bwidget:taki\u200B");
     createChildSpanInfo(expectedParagraph, 'text', ".");
 
     UnicodeMarkedTextParser parser = UnicodeMarkedTextParser();
     var result = parser.parseUnicodeMarkedText(text);
 
-    expect(result.rawText == expectedRawText, true);
-    expect(result.spanInfo.str == expectedParagraph.str, true);
+    expect(result.rawText, expectedRawText);
+    expect(result.spanInfo.str, expectedParagraph.str);
   });
 }

@@ -95,6 +95,11 @@ void main() {
           "% And this is LaTeX",
         ),
         "\ue205 And this is LaTeX");
+    expect(
+        converter.textWithConvertedMarks(
+          "This is *bold ^italic ~strike~^*",
+        ),
+        "This is \ue000bold \ue002italic \ue006strike\ue007\ue003\ue001");
   });
 
   test("converted elements and widgets", () {

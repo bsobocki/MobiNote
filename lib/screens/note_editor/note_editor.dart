@@ -59,8 +59,8 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   void init() {
     id = widget.id;
     titleController.text = widget.title;
-    contentController.markedText = widget.content;
-    contentController.parseMarkdownText();
+    contentController.text = widget.content;
+    contentController.parseText();
   }
 
   void onContentChange(value) {
@@ -69,8 +69,14 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     init();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //init();
 
     return Scaffold(
       appBar: AppBar(
