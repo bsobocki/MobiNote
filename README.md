@@ -43,3 +43,14 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+# TO DO
+
+### Few Next steps:
+[ ] fix problem with * b o l d   ^ i t a l i c * ^
+[ ] code refactor
+[ ] handle paragraphs adding
+[ ] handle widgets (remove elements)
+    [ ] create json with widget specification
+    [ ] elements like checkbox as widget
