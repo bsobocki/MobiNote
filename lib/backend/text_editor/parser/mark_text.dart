@@ -29,7 +29,13 @@ class StyledTextConverter {
 
   void addPlaceholders(int times) {
     for (int i = 1; i <= times; i++) {
-      textBuff.add('');
+      textBuff.add('\u200B');
+    }
+  }
+
+  void addChars(String char, int times) {
+    for (int i = 1; i <= times; i++) {
+      textBuff.add(char);
     }
   }
 
@@ -41,8 +47,8 @@ class StyledTextConverter {
 
   void convertParagraph(String text) {
     var paragraph = paragraphOf(text, startIndex);
-    textBuff.add(unicodeOfParagraphChar(paragraph)!);
-    addPlaceholders(paragraph.length - 1);
+    var unicode = unicodeOfParagraphChar(paragraph)!;
+    addChars(unicode, paragraph.length);
     startIndex += paragraph.length;
   }
 
@@ -51,7 +57,7 @@ class StyledTextConverter {
     textBuff[startBoundIndexInText] =
         unicodeOfStyleStartBoundaryChar(boundChar)!;
     textBuff.add(unicodeOfStyleEndBoundaryChar(boundChar)!);
-    startBounds = startBounds.sublist(0, startBoundIndex );
+    startBounds = startBounds.sublist(0, startBoundIndex);
   }
 
   void convertElementPattern(String pattern) {
@@ -74,7 +80,7 @@ class StyledTextConverter {
     if (text.length <= 1) return text;
 
     clearData();
-    startIndex = firstNotWhitespace(text);
+    startIndex = firstNonWhitespace(text);
     addStringToBuff(text, 0, startIndex);
 
     if (isParagraphChar(text[startIndex])) {
@@ -151,7 +157,7 @@ String getTag(String text, int i) {
   return text.substring(i, min(text.length, i + 3));
 }
 
-int firstNotWhitespace(String text) {
+int firstNonWhitespace(String text) {
   return text.indexOf(RegExp('[^\\s]'));
 }
 
@@ -160,6 +166,7 @@ String paragraphOf(String text, int startIndex) {
   List<String> paragraph = [];
   while (isParagraphChar(text[index])) {
     if ((paragraph += [text[index++]]).length >= 4) break;
+    if (index >= text.length) break;
   }
   return paragraph.join('');
 }

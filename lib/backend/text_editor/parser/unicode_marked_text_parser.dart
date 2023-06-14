@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mobi_note/backend/text_editor/parser/definitions/types/decode.dart';
 import 'package:mobi_note/backend/text_editor/parser/definitions/types/text_types.dart';
 import 'package:mobi_note/backend/text_editor/special_marks_operations/text.dart';
@@ -25,7 +26,11 @@ class UnicodeMarkedTextParser {
 
     if (isUnicodeParagraphStyleCharacter(text[startIndex])) {
       setParagraph(decodeParagraphType(text[startIndex]));
-      startIndex++;
+      while (startIndex < text.length &&
+          isUnicodeParagraphStyleCharacter(text[startIndex])) {
+        mainSpan.text += '#';
+        startIndex++;
+      }
     }
 
     for (int i = startIndex; i < text.length; i++) {
@@ -61,6 +66,7 @@ class UnicodeMarkedTextParser {
     }
     if (textInBuffer) flushCurrentTextBuff();
 
+    debugPrint(mainSpan.str);
     return TextNoteSpanInfoContent(rawText: rawText, spanInfo: mainSpan);
   }
 
@@ -92,6 +98,7 @@ class UnicodeMarkedTextParser {
 
   void setParagraph(String type) {
     mainSpan = SpanInfo(type: type);
+    currentSpan = mainSpan;
   }
 
   void setCurrentSpanAsParentof(String type) {

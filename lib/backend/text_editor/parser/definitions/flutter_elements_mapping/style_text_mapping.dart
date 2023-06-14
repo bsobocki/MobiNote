@@ -20,16 +20,16 @@ Map<String, TextStyle> textStyles = {
     color: Colors.black,
   ),
   'header1': const TextStyle(
-    fontSize: 30.0,
+    fontSize: 24.0,
   ),
   'header2': const TextStyle(
-    fontSize: 26.0,
-  ),
-  'header3': const TextStyle(
     fontSize: 22.0,
   ),
-  'header4': const TextStyle(
+  'header3': const TextStyle(
     fontSize: 18.0,
+  ),
+  'header4': const TextStyle(
+    fontSize: 16.0,
   ),
   'quote': TextStyle(
       backgroundColor: Colors.grey[700],

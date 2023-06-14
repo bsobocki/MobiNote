@@ -45,10 +45,10 @@ void main() {
   });
 
   test('first not whitespace', () {
-    expect(firstNotWhitespace('   sdafdafad'), 3);
-    expect(firstNotWhitespace('   \nsdafdafad'), 4);
-    expect(firstNotWhitespace('\t\t sdafdafad'), 3);
-    expect(firstNotWhitespace('\n\t  sdafdafad'), 4);
+    expect(firstNonWhitespace('   sdafdafad'), 3);
+    expect(firstNonWhitespace('   \nsdafdafad'), 4);
+    expect(firstNonWhitespace('\t\t sdafdafad'), 3);
+    expect(firstNonWhitespace('\n\t  sdafdafad'), 4);
   });
 
   test("check getContext", () {
@@ -72,7 +72,8 @@ void main() {
   test("converted style marks", () {
     var converter = StyledTextConverter();
     expect(
-      converter.textWithConvertedMarks("  this is a *bold ^italic^ text* hihi."),
+      converter
+          .textWithConvertedMarks("  this is a *bold ^italic^ text* hihi."),
       "  this is a \ue000bold \ue002italic\ue003 text\ue001 hihi.",
     );
     expect(
