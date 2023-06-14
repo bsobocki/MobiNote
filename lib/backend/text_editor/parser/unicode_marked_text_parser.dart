@@ -15,9 +15,10 @@ class UnicodeMarkedTextParser {
   UnicodeMarkedTextParser();
 
   TextNoteSpanInfoContent parseUnicodeMarkedText(String text) {
-    if (text.isEmpty)
+    if (text.isEmpty) {
       return TextNoteSpanInfoContent(
           rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
+    }
 
     init();
     addFirstWhitespacesIntoTextBuffers(text);

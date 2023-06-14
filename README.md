@@ -48,7 +48,7 @@ samples, guidance on mobile development, and a full API reference.
 # TO DO
 
 ### Few Next steps:
-[ ] fix problem with * b o l d   ^ i t a l i c * ^
+[x] fix problem with * b o l d   ^ i t a l i c * ^
 [ ] code refactor
 [ ] handle paragraphs adding
 [ ] handle widgets (remove elements)

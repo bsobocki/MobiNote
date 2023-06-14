@@ -51,7 +51,7 @@ class StyledTextConverter {
     textBuff[startBoundIndexInText] =
         unicodeOfStyleStartBoundaryChar(boundChar)!;
     textBuff.add(unicodeOfStyleEndBoundaryChar(boundChar)!);
-    startBounds.removeAt(startBoundIndex);
+    startBounds = startBounds.sublist(0, startBoundIndex );
   }
 
   void convertElementPattern(String pattern) {

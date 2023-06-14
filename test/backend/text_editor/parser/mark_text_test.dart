@@ -97,6 +97,11 @@ void main() {
         "\ue205 And this is LaTeX");
     expect(
         converter.textWithConvertedMarks(
+          "And *bold ^italic*^",
+        ),
+        "And \ue000bold ^italic\ue001^");
+    expect(
+        converter.textWithConvertedMarks(
           "This is *bold ^italic ~strike~^*",
         ),
         "This is \ue000bold \ue002italic \ue006strike\ue007\ue003\ue001");
