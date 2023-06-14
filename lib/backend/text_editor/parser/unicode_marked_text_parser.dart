@@ -5,6 +5,8 @@ import 'package:mobi_note/backend/text_editor/special_marks_operations/text.dart
 import 'package:mobi_note/backend/text_editor/special_marks_operations/unicode.dart';
 import 'definitions/span_info.dart';
 
+String placeholder = '\u200b';
+
 class UnicodeMarkedTextParser {
   SpanInfo mainSpan = SpanInfo(type: 'paragraph');
   late SpanInfo currentSpan;
@@ -28,7 +30,7 @@ class UnicodeMarkedTextParser {
       setParagraph(decodeParagraphType(text[startIndex]));
       while (startIndex < text.length &&
           isUnicodeParagraphStyleCharacter(text[startIndex])) {
-        mainSpan.text += '#';
+        mainSpan.text += placeholder;
         startIndex++;
       }
     }
@@ -38,28 +40,28 @@ class UnicodeMarkedTextParser {
       if (isSpecialUnicode(char)) {
         if (isUnicodeStartSyleCharacter(char)) {
           if (textInBuffer) flushCurrentTextBuff();
-          addSpan(decodeStyleType(char));
-          currTextBuff.add('\u200B');
+          addSpanWithType(decodeStyleType(char));
+          currTextBuff.add(placeholder);
         } else if (isUnicodeEndStyleCharacter(char)) {
-          currTextBuff.add('\u200B');
+          currTextBuff.add(placeholder);
           if (textInBuffer) flushCurrentTextBuff();
           setCurrentSpanAsParentof(decodeStyleType(char));
         } else if (isUnicodeWidgetCharacter(char)) {
           if (textInBuffer) flushCurrentTextBuff();
-          addSpan(decodeWidgetType(char));
-          currTextBuff.add('\u200B');
+          addSpanWithType(decodeWidgetType(char));
+          currTextBuff.add(placeholder);
           while (++i < text.length && !isUnicodeWidgetCharacter(text[i])) {
             currTextBuff.add(text[i]);
           }
-          currTextBuff.add('\u200B');
+          currTextBuff.add(placeholder);
           flushCurrentTextBuff();
           setCurrentSpanAsParentof(decodeWidgetType(char));
         } else if (isUnicodeElementPatternCharacter(char)) {
-          addSpan(decodeElementType(char));
-          currTextBuff.add('\u200B');
+          addSpanWithType(decodeElementType(char));
+          currTextBuff.add(placeholder);
         }
       } else {
-        if (currentSpan.children.isNotEmpty) addSpan('text');
+        if (currentSpan.children.isNotEmpty) addSpanWithType('text');
         rawTextBuff.add(char);
         currTextBuff.add(char);
       }
@@ -109,7 +111,7 @@ class UnicodeMarkedTextParser {
     currentSpan = span.parent;
   }
 
-  void addSpan(String type) {
+  void addSpanWithType(String type) {
     var span = SpanInfo(type: type);
     span.parent = currentParent;
     span.parent.children += [span];
