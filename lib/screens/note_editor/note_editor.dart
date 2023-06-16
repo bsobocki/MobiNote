@@ -64,7 +64,6 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   }
 
   void onContentChange(value) {
-    debugPrint(contentController.text);
     noteChanged = true;
   }
 

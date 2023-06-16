@@ -68,7 +68,6 @@ class UnicodeMarkedTextParser {
     }
     if (textInBuffer) flushCurrentTextBuff();
 
-    debugPrint(mainSpan.str);
     return TextNoteSpanInfoContent(rawText: rawText, spanInfo: mainSpan);
   }
 

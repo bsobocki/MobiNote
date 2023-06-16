@@ -121,7 +121,6 @@ class StyledTextConverter {
   void convertStyleBoundaryMarks(String boundChar, int startBoundIndex) {
     if (boundChar == visibleBoundaryChar) {
       textBuff.add(boundChar);
-      debugPrint("do not convert: $boundChar");
       startBounds.removeWhere((element) => element.character == boundChar);
     } else {
       var startBoundIndexInText = startBounds[startBoundIndex].indexInText;
