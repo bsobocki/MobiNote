@@ -5,26 +5,26 @@ void main() {
   test(
       "check context of middle character to determine whether it is a style end or not",
       () {
-    expect(matchesStyleEnd(" *c"), false);
-    expect(matchesStyleEnd("d*c"), true);
-    expect(matchesStyleEnd(" *^"), false);
-    expect(matchesStyleEnd(" **"), false);
-    expect(matchesStyleEnd("***"), true);
-    expect(matchesStyleEnd("c* "), true);
-    expect(matchesStyleEnd(" * "), false);
-    expect(matchesStyleEnd("a~ "), true);
-    expect(matchesStyleEnd("_^ "), true);
+    expect(matchesStyleBoundaryEnd(" *c"), false);
+    expect(matchesStyleBoundaryEnd("d*c"), true);
+    expect(matchesStyleBoundaryEnd(" *^"), false);
+    expect(matchesStyleBoundaryEnd(" **"), false);
+    expect(matchesStyleBoundaryEnd("***"), true);
+    expect(matchesStyleBoundaryEnd("c* "), true);
+    expect(matchesStyleBoundaryEnd(" * "), false);
+    expect(matchesStyleBoundaryEnd("a~ "), true);
+    expect(matchesStyleBoundaryEnd("_^ "), true);
   });
 
   test(
       "check context of middle character to determine whether it is a new style start or not",
       () {
-    expect(matchesStyleStart(" *c"), true);
-    expect(matchesStyleStart("d*c"), true);
-    expect(matchesStyleStart(" *^"), true);
-    expect(matchesStyleStart(" *~"), true);
-    expect(matchesStyleStart(" **"), true);
-    expect(matchesStyleStart("***"), true);
+    expect(matchesStyleBoundaryBeg(" *c"), true);
+    expect(matchesStyleBoundaryBeg("d*c"), true);
+    expect(matchesStyleBoundaryBeg(" *^"), true);
+    expect(matchesStyleBoundaryBeg(" *~"), true);
+    expect(matchesStyleBoundaryBeg(" **"), true);
+    expect(matchesStyleBoundaryBeg("***"), true);
   });
 
   test("check whitespaces", () {

@@ -1,5 +1,5 @@
 import 'package:mobi_note/backend/text_editor/parser/definitions/marks.dart';
-import 'package:mobi_note/backend/text_editor/parser/mark_text.dart';
+import 'package:mobi_note/backend/text_editor/parser/mark_text_converter.dart';
 import 'package:test/test.dart';
 
 void main() {

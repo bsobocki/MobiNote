@@ -28,13 +28,13 @@ bool isStyleBoundaryChar(String char) {
   return styleChars.contains(char);
 }
 
-bool matchesStyleStart(String context) {
+bool matchesStyleBoundaryBeg(String context) {
   return context.length != 2 &&
       isStyleBoundaryChar(context[1]) &&
       !isWhitespace(context[2]);
 }
 
-bool matchesStyleEnd(String context) {
+bool matchesStyleBoundaryEnd(String context) {
   return !isWhitespace(context[0]) && isStyleBoundaryChar(context[1]);
 }
 
