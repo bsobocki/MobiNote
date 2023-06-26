@@ -1,11 +1,13 @@
 // import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/database/database_operations.dart';
 import 'package:mobi_note/screens/homepage/homepage.dart';
 import 'database/database_def.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   Get.put(MobiNoteDatabase());
   runApp(const MyApp());
 }
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
             const FloatingActionButtonThemeData(backgroundColor: themeColor),
         dialogBackgroundColor: themeColor,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: themeColor, 
+            backgroundColor: themeColor,
             unselectedItemColor: Colors.grey,
             selectedItemColor: Colors.white),
       ),

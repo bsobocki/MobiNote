@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants/text_style_properties.dart';
 
 Map<String, TextStyle> textStyles = {
   'bold': const TextStyle(
@@ -20,21 +21,23 @@ Map<String, TextStyle> textStyles = {
     color: Colors.black,
   ),
   'header1': const TextStyle(
-    fontSize: 24.0,
+    fontSize: header1DefaultFontSize,
   ),
   'header2': const TextStyle(
-    fontSize: 22.0,
+    fontSize: header2DefaultFontSize,
   ),
   'header3': const TextStyle(
-    fontSize: 18.0,
+    fontSize: header3DefaultFontSize,
   ),
   'header4': const TextStyle(
-    fontSize: 16.0,
+    fontSize: header4DefaultFontSize,
   ),
   'quote': TextStyle(
       backgroundColor: Colors.grey[700],
       decorationColor: Colors.grey[300]),
-  'paragraph': const TextStyle(),
+  'paragraph': const TextStyle(
+    fontSize: paragraphDefaultFontSize
+  ),
 };
 
 bool isStyledText(String type) {

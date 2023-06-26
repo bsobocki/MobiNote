@@ -1,5 +1,5 @@
-import 'package:mobi_note/backend/text_editor/parser/definitions/unicodes.dart';
-import 'package:mobi_note/backend/text_editor/special_marks_operations/unicode.dart';
+import 'package:mobi_note/logic/text_editor/parser/definitions/unicodes.dart';
+import 'package:mobi_note/logic/text_editor/special_marks_operations/unicode.dart';
 import 'package:test/test.dart';
 
 void main() {

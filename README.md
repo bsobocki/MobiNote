@@ -47,10 +47,21 @@ samples, guidance on mobile development, and a full API reference.
 
 # TO DO
 
+### Fix
+[x] dynamically set fontSize and height of TextFields
+[x] space between TextFields
+[ ] adding a new TextField in the right place with paragraphDefaultFontSize
+
 ### Few Next steps:
 [x] fix problem with * b o l d   ^ i t a l i c * ^
-[ ] code refactor
+[ ] code refactor &&  add UT
 [ ] handle paragraphs adding
+    [ ] move focus to the new one
+    [ ] set TextField size when paragraph is header
+[ ] handle paragraphs removing
+    [ ] catch delete event (cursor on the textfield beggining)
+    [ ] move focus to the one above
 [ ] handle widgets (remove elements)
+    [ ] fix database insertion
     [ ] create json with widget specification
     [ ] elements like checkbox as widget

@@ -9,22 +9,24 @@ class NoteEditorPage extends StatefulWidget {
       {super.key,
       required this.id,
       required this.title,
-      required this.content});
+      required this.content,
+      required this.widgets});
   final int id;
   final String title;
   final String content;
+  final String widgets;
 
   @override
   State<NoteEditorPage> createState() => _NoteEditorPageState();
 }
 
 class _NoteEditorPageState extends State<NoteEditorPage> {
-  late final contentController = ParagraphController();
   late int id;
   final database = Get.find<MobiNoteDatabase>();
   final titleController = TextEditingController();
   bool noteChanged = false;
   bool wantToSaveNote = true;
+  late ContentEditor contentEditor;
 
   Future<void> saveNote() async {
     if (wantToSaveNote && noteChanged) {
@@ -35,11 +37,12 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           final newNote = Note(
               id: id,
               title: titleController.text,
-              content: contentController.text);
+              content: contentEditor.text,
+              widgets: '');
           await database.updateNote(newNote);
         } else {
-          id = await database.addNote(
-              titleController.text, contentController.text);
+          id = await database.addNote(titleController.text, contentEditor.text,
+              contentEditor.initWidgets);
         }
       } catch (e) {
         await showDialog(
@@ -59,8 +62,10 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   void init() {
     id = widget.id;
     titleController.text = widget.title;
-    contentController.text = widget.content;
-    contentController.parseText();
+    contentEditor = ContentEditor(
+        initContent: widget.content,
+        initWidgets: widget.widgets,
+        onContentChange: onContentChange);
   }
 
   void onContentChange(value) {
@@ -75,8 +80,6 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    //init();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 51, 51, 51),
@@ -109,9 +112,9 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: ContentEditor(
-        contentController: contentController,
-        onContentChange: onContentChange,
+      body:  Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: contentEditor,
       ),
       backgroundColor: const Color.fromARGB(
         255,

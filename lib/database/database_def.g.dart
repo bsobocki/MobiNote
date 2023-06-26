@@ -28,8 +28,14 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
   late final GeneratedColumn<String> content = GeneratedColumn<String>(
       'body', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _widgetsMeta =
+      const VerificationMeta('widgets');
   @override
-  List<GeneratedColumn> get $columns => [id, title, content];
+  late final GeneratedColumn<String> widgets = GeneratedColumn<String>(
+      'widgets', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, title, content, widgets];
   @override
   String get aliasedName => _alias ?? 'notes';
   @override
@@ -54,6 +60,12 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
     } else if (isInserting) {
       context.missing(_contentMeta);
     }
+    if (data.containsKey('widgets')) {
+      context.handle(_widgetsMeta,
+          widgets.isAcceptableOrUnknown(data['widgets']!, _widgetsMeta));
+    } else if (isInserting) {
+      context.missing(_widgetsMeta);
+    }
     return context;
   }
 
@@ -69,6 +81,8 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
       content: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
+      widgets: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}widgets'])!,
     );
   }
 
@@ -82,13 +96,19 @@ class Note extends DataClass implements Insertable<Note> {
   final int id;
   final String title;
   final String content;
-  const Note({required this.id, required this.title, required this.content});
+  final String widgets;
+  const Note(
+      {required this.id,
+      required this.title,
+      required this.content,
+      required this.widgets});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
     map['body'] = Variable<String>(content);
+    map['widgets'] = Variable<String>(widgets);
     return map;
   }
 
@@ -97,6 +117,7 @@ class Note extends DataClass implements Insertable<Note> {
       id: Value(id),
       title: Value(title),
       content: Value(content),
+      widgets: Value(widgets),
     );
   }
 
@@ -107,6 +128,7 @@ class Note extends DataClass implements Insertable<Note> {
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       content: serializer.fromJson<String>(json['body']),
+      widgets: serializer.fromJson<String>(json['widgets']),
     );
   }
   @override
@@ -116,68 +138,83 @@ class Note extends DataClass implements Insertable<Note> {
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
       'body': serializer.toJson<String>(content),
+      'widgets': serializer.toJson<String>(widgets),
     };
   }
 
-  Note copyWith({int? id, String? title, String? content}) => Note(
+  Note copyWith({int? id, String? title, String? content, String? widgets}) =>
+      Note(
         id: id ?? this.id,
         title: title ?? this.title,
         content: content ?? this.content,
+        widgets: widgets ?? this.widgets,
       );
   @override
   String toString() {
     return (StringBuffer('Note(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('content: $content')
+          ..write('content: $content, ')
+          ..write('widgets: $widgets')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, content);
+  int get hashCode => Object.hash(id, title, content, widgets);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Note &&
           other.id == this.id &&
           other.title == this.title &&
-          other.content == this.content);
+          other.content == this.content &&
+          other.widgets == this.widgets);
 }
 
 class NotesCompanion extends UpdateCompanion<Note> {
   final Value<int> id;
   final Value<String> title;
   final Value<String> content;
+  final Value<String> widgets;
   const NotesCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.content = const Value.absent(),
+    this.widgets = const Value.absent(),
   });
   NotesCompanion.insert({
     this.id = const Value.absent(),
     required String title,
     required String content,
+    required String widgets,
   })  : title = Value(title),
-        content = Value(content);
+        content = Value(content),
+        widgets = Value(widgets);
   static Insertable<Note> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? content,
+    Expression<String>? widgets,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (content != null) 'body': content,
+      if (widgets != null) 'widgets': widgets,
     });
   }
 
   NotesCompanion copyWith(
-      {Value<int>? id, Value<String>? title, Value<String>? content}) {
+      {Value<int>? id,
+      Value<String>? title,
+      Value<String>? content,
+      Value<String>? widgets}) {
     return NotesCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       content: content ?? this.content,
+      widgets: widgets ?? this.widgets,
     );
   }
 
@@ -193,6 +230,9 @@ class NotesCompanion extends UpdateCompanion<Note> {
     if (content.present) {
       map['body'] = Variable<String>(content.value);
     }
+    if (widgets.present) {
+      map['widgets'] = Variable<String>(widgets.value);
+    }
     return map;
   }
 
@@ -201,7 +241,8 @@ class NotesCompanion extends UpdateCompanion<Note> {
     return (StringBuffer('NotesCompanion(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('content: $content')
+          ..write('content: $content, ')
+          ..write('widgets: $widgets')
           ..write(')'))
         .toString();
   }

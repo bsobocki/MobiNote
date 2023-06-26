@@ -1,6 +1,6 @@
-import 'dart:math';
-import 'package:flutter/widgets.dart';
-import 'package:mobi_note/backend/text_editor/special_marks_operations/text.dart';
+import 'package:mobi_note/logic/text_editor/special_marks_operations/text.dart';
+
+import 'mark_text_helpers/paragraph_analyze.dart';
 
 class SpecialPatternInfo {
   final int indexInText;
@@ -146,40 +146,4 @@ class StyledTextConverter {
     addPlaceholders(tag.length - 1);
     startTags.removeAt(tagIndex);
   }
-}
-
-bool found(int index) {
-  return index != -1;
-}
-
-String firstMatch(String text, int i, Iterable<String> patterns) {
-  return patterns.firstWhere(
-    (element) => element == text.substring(i, i + element.length),
-    orElse: () => '',
-  );
-}
-
-String characterContext(String text, int i) {
-  return text.substring(
-    max(0, i - 1),
-    min(text.length, i + 2),
-  );
-}
-
-String getTag(String text, int i) {
-  return text.substring(i, min(text.length, i + 3));
-}
-
-int firstNonWhitespace(String text) {
-  return text.indexOf(RegExp('[^\\s]'));
-}
-
-String paragraphOf(String text, int startIndex) {
-  int index = startIndex;
-  List<String> paragraph = [];
-  while (isParagraphChar(text[index])) {
-    if ((paragraph += [text[index++]]).length >= 4) break;
-    if (index >= text.length) break;
-  }
-  return paragraph.join('');
 }

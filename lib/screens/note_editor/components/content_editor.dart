@@ -1,21 +1,38 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:mobi_note/backend/text_editor/special_marks_operations/unicode.dart';
-import 'package:mobi_note/screens/note_editor/components/paragraph_controller.dart';
-
-import '../../../backend/text_editor/diff/text_operations.dart';
+import 'package:mobi_note/screens/note_editor/components/paragraph_editor.dart';
 
 int change = 1;
 String lastNewText = "";
 
 class ContentEditor extends StatefulWidget {
-  final ParagraphController contentController;
   final Function(String value) onContentChange;
-  const ContentEditor(
+  final String initContent;
+  final String initWidgets;
+  List<NoteParagraph> paragraphs = [];
+
+  ContentEditor(
       {super.key,
-      required this.contentController,
-      required this.onContentChange});
+      required this.initContent,
+      required this.onContentChange,
+      required this.initWidgets});
+
+  int paragraphIndexOf(int paragraphId) =>
+      paragraphs.indexWhere((element) => element.id == paragraphId);
+
+  String get text {
+    String returnText = '';
+    if (paragraphs.isNotEmpty) {
+      int i = 0;
+      for (; i < paragraphs.length; i++) {
+        returnText += "${paragraphs[i].text}\n";
+      }
+      returnText += paragraphs.last.text;
+    }
+
+    return returnText;
+  }
+
+  String get widgets => '';
 
   @override
   State<ContentEditor> createState() => _ContentEditorState();
@@ -23,58 +40,93 @@ class ContentEditor extends StatefulWidget {
 
 class _ContentEditorState extends State<ContentEditor> {
   bool contentChanged = false;
-  late ParagraphController contentController;
   late Function(String value) onContentChange;
 
   @override
   void dispose() {
-    contentController.dispose();
     super.dispose();
   }
 
-  String get text => widget.contentController.text;
-  set text(String newText) => widget.contentController.text = newText;
-
   void onChange(String newText) {
-    onContentChange(newText);
+    setState(() {
+      onContentChange(newText);
+    });
+  }
+
+  void createParagraphs(String text) {
+    debugPrint('TEXT---');
+    debugPrint(text);
+    debugPrint('---TEXT');
+    debugPrint("creating paragraphs:");
+    if (text.isEmpty) {
+      addParagraph(-1, '');
+    } else {
+      int index = 0;
+      String currText = '';
+      for (int i = 0; i < text.length; i++) {
+        if (text[i] == '\n') {
+          debugPrint('add paragraph: $currText');
+          addParagraph(-1, currText);
+          currText = '';
+        } else {
+          currText += text[i];
+        }
+      }
+
+      if (currText.isNotEmpty) {
+        addParagraph(index, currText);
+      }
+    }
+  }
+
+  void addParagraph(int prevParagraphId, String text) {
+    debugPrint('-----------------------------------');
+
+    var newParagraph = NoteParagraph(
+      paragraphText: text,
+      onChange: onChange,
+      addParagraph: addParagraph,
+    );
+
+    if (widget.paragraphs.isEmpty || prevParagraphId == -1) {
+      widget.paragraphs.add(newParagraph);
+    } else {
+      int index = widget.paragraphs.length - 1;
+      int prevParagraphIndex = widget.paragraphIndexOf(prevParagraphId);
+
+      if (prevParagraphIndex != -1) {
+        index = prevParagraphIndex + 1;
+      }
+
+      debugPrint("Paragraphs before change:");
+      for (var element in widget.paragraphs) debugPrint(element.str);
+
+      widget.paragraphs.insert(index, newParagraph);
+
+      debugPrint("Paragraphs after change:");
+      for (var element in widget.paragraphs) debugPrint(element.str);
+    }
+  }
+
+  @override
+  void initState() {
+    createParagraphs(widget.initContent);
+    for (var element in widget.paragraphs) {
+      debugPrint(element.str);
+    }
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    contentController = widget.contentController;
     onContentChange = widget.onContentChange;
-
-    return LayoutBuilder(
-      builder: (BuildContext constext, BoxConstraints constraints) {
-        return ListView(
-          padding: const EdgeInsets.all(8.0),
-          children: [
-            SizedBox(
-              height: constraints.maxHeight,
-              child: TextField(
-                onTap: () {
-                  debugPrint(
-                      'selected in ${widget.contentController.selection.baseOffset} -> ${widget.contentController.selection.extentOffset}');
-                },
-                expands: true,
-                onChanged: onChange,
-                controller: contentController,
-                style: const TextStyle(
-                  color: Colors.white,
-                  decorationColor: Colors.amber,
-                ),
-                maxLines: null,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0),
-                  hintText: 'Enter a note',
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+    return Scrollbar(
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: widget.paragraphs.length,
+          itemBuilder: (BuildContext context, int index) {
+            return widget.paragraphs[index];
+          }),
     );
   }
 }

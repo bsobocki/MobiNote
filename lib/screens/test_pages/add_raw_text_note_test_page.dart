@@ -33,11 +33,12 @@ class _RawNoteEditorTestPageState extends State<RawNoteEditorTestPage> {
           final newNote = Note(
               id: id,
               title: titleController.text,
-              content: contentController.text);
+              content: contentController.text,
+              widgets: '');
           await database.updateNote(newNote);
         } else {
           id = await database.addNote(
-              titleController.text, contentController.text);
+              titleController.text, contentController.text, '');
         }
       } catch (e) {
         await showDialog(

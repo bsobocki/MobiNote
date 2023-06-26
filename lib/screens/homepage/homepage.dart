@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobi_note/screens/test_pages/add_raw_text_note_test_page.dart';
 import '../../database/database_def.dart';
+import '../../database/database_operations.dart';
 import '../note_editor/note_editor.dart';
 import 'note_button_widget.dart';
+
+const Note invalidNote = Note(id: -1, title: '', content: '', widgets: '');
 
 const double listViewPadding = 30.0;
 const double listDivideSpaceSize = 15;
@@ -47,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
             id: note.id,
             title: note.title,
             content: note.content,
+            widgets: note.widgets
           );
         },
       ),
@@ -109,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: 'Show Database',
             icon: const Icon(Icons.storage),
           ),
+          IconButton(onPressed: () => rebuildDatabase(), icon: const Icon(Icons.skateboarding_outlined))
         ],
       ),
       body: Container(

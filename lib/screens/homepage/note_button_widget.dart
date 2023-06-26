@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 
 import '../../database/database_def.dart';
 
-const Note invalidNote = Note(id: -1, title: '', content: '');
-
 const int maxLines = 4;
 const double padding = 15.0;
 const double titleFontSize = 15.0;

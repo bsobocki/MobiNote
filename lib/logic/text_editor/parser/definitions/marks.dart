@@ -29,4 +29,5 @@ const List<String> paragraphStyleChars = [
   '####',
   '>',
   '%',
+  ''
 ];

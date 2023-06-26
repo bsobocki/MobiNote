@@ -1,5 +1,7 @@
-import 'package:mobi_note/backend/text_editor/parser/definitions/marks.dart';
-import 'package:mobi_note/backend/text_editor/parser/mark_text_converter.dart';
+import 'package:mobi_note/logic/text_editor/parser/definitions/marks.dart';
+import 'package:mobi_note/logic/text_editor/parser/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
+import 'package:mobi_note/logic/text_editor/parser/mark_text_converter.dart';
+import 'package:mobi_note/logic/text_editor/parser/mark_text_helpers/paragraph_analyze.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -67,6 +69,15 @@ void main() {
     expect(paragraphOf('  ### some text', 2), '###');
     expect(paragraphOf(' ########## some text', 1), '####');
     expect(paragraphOf('   ####### some text', 3), '####');
+  });
+
+  test("get font size of text", () {
+    expect(
+        paragraphFontSize('# This is text'), textStyles['header1']!.fontSize!);
+    expect(
+        paragraphFontSize('   This is text'), textStyles['paragraph']!.fontSize!);
+    expect(
+        paragraphFontSize('  ## This is text'), textStyles['header2']!.fontSize!);
   });
 
   test("converted style marks", () {

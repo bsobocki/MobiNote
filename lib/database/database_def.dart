@@ -32,6 +32,7 @@ class Notes extends Table {
 
   @JsonKey('body') //This is required for the drift_db_viewer.
   TextColumn get content => text().named('body')();
+  TextColumn get widgets => text()();
 }
 
 @DataClassName('Tag')
@@ -61,8 +62,8 @@ class MobiNoteDatabase extends _$MobiNoteDatabase {
   Future<int> deleteNote(int id) =>
       (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
 
-  Future<int> addNote(String title, String content) =>
-      into(notes).insert(NotesCompanion.insert(title: title, content: content));
+  Future<int> addNote(String title, String content, String widgets) =>
+      into(notes).insert(NotesCompanion.insert(title: title, content: content, widgets: widgets));
 
   @override
   int get schemaVersion => 1;
