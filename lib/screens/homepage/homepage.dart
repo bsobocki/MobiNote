@@ -33,9 +33,14 @@ class _MyHomePageState extends State<MyHomePage> {
       listViewPadding;
 
   void showTestPage() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => RawNoteEditorTestPage(id: invalidNote.id, title: invalidNote.title, content: invalidNote.content),
-    ));
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+          builder: (context) => RawNoteEditorTestPage(
+              id: invalidNote.id,
+              title: invalidNote.title,
+              content: invalidNote.content),
+        ))
+        .then((value) => updateNotesListView());
   }
 
   void createNewNotePage() {
@@ -47,11 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
       MaterialPageRoute(
         builder: (BuildContext context) {
           return NoteEditorPage(
-            id: note.id,
-            title: note.title,
-            content: note.content,
-            widgets: note.widgets
-          );
+              id: note.id,
+              title: note.title,
+              content: note.content,
+              widgets: note.widgets);
         },
       ),
     ).then((value) => updateNotesListView());
@@ -113,7 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: 'Show Database',
             icon: const Icon(Icons.storage),
           ),
-          IconButton(onPressed: () => rebuildDatabase(), icon: const Icon(Icons.skateboarding_outlined))
+          IconButton(
+              onPressed: () => rebuildDatabase(),
+              icon: const Icon(Icons.skateboarding_outlined))
         ],
       ),
       body: Container(

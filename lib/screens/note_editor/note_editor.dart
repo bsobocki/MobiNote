@@ -37,11 +37,11 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           final newNote = Note(
               id: id,
               title: titleController.text,
-              content: contentEditor.text,
+              content: contentEditor.text(),
               widgets: '');
           await database.updateNote(newNote);
         } else {
-          id = await database.addNote(titleController.text, contentEditor.text,
+          id = await database.addNote(titleController.text, contentEditor.text(),
               contentEditor.initWidgets);
         }
       } catch (e) {
@@ -79,6 +79,12 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   }
 
   @override
+  void dispose() {
+    titleController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -112,7 +118,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body:  Padding(
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: contentEditor,
       ),

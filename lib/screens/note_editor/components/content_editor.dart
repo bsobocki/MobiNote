@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/paragraph_editor.dart';
 
+import '../../../logic/text_editor/id/paragraph_id_generator.dart';
+
 int change = 1;
 String lastNewText = "";
 
@@ -8,29 +10,13 @@ class ContentEditor extends StatefulWidget {
   final Function(String value) onContentChange;
   final String initContent;
   final String initWidgets;
-  List<NoteParagraph> paragraphs = [];
+  late String Function() text;
 
   ContentEditor(
       {super.key,
       required this.initContent,
       required this.onContentChange,
       required this.initWidgets});
-
-  int paragraphIndexOf(int paragraphId) =>
-      paragraphs.indexWhere((element) => element.id == paragraphId);
-
-  String get text {
-    String returnText = '';
-    if (paragraphs.isNotEmpty) {
-      int i = 0;
-      for (; i < paragraphs.length; i++) {
-        returnText += "${paragraphs[i].text}\n";
-      }
-      returnText += paragraphs.last.text;
-    }
-
-    return returnText;
-  }
 
   String get widgets => '';
 
@@ -40,7 +26,24 @@ class ContentEditor extends StatefulWidget {
 
 class _ContentEditorState extends State<ContentEditor> {
   bool contentChanged = false;
-  late Function(String value) onContentChange;
+  List<NoteParagraph> paragraphs = [];
+
+  String text() {
+    String returnText = '';
+    if (paragraphs.isNotEmpty) {
+      if (paragraphs.length == 1) {
+        return paragraphs.last.text;
+      }
+      for (int i = 0; i < paragraphs.length - 1; i++) {
+        returnText += "${paragraphs[i].text}\n";
+      }
+      returnText += paragraphs.last.text;
+    }
+    return returnText;
+  }
+
+  int paragraphIndexOf(int paragraphId) =>
+      paragraphs.indexWhere((element) => element.id == paragraphId);
 
   @override
   void dispose() {
@@ -48,25 +51,17 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void onChange(String newText) {
-    setState(() {
-      onContentChange(newText);
-    });
+    widget.onContentChange(newText);
   }
 
   void createParagraphs(String text) {
-    debugPrint('TEXT---');
-    debugPrint(text);
-    debugPrint('---TEXT');
-    debugPrint("creating paragraphs:");
     if (text.isEmpty) {
-      addParagraph(-1, '');
+      addNewParagraph('');
     } else {
-      int index = 0;
       String currText = '';
       for (int i = 0; i < text.length; i++) {
         if (text[i] == '\n') {
-          debugPrint('add paragraph: $currText');
-          addParagraph(-1, currText);
+          addNewParagraph(currText);
           currText = '';
         } else {
           currText += text[i];
@@ -74,59 +69,59 @@ class _ContentEditorState extends State<ContentEditor> {
       }
 
       if (currText.isNotEmpty) {
-        addParagraph(index, currText);
+        addNewParagraph(currText);
       }
     }
   }
 
-  void addParagraph(int prevParagraphId, String text) {
-    debugPrint('-----------------------------------');
-
+  void addNewParagraph(String text) {
     var newParagraph = NoteParagraph(
+      id: paragraphIdGenerator.nextId,
       paragraphText: text,
       onChange: onChange,
       addParagraph: addParagraph,
     );
+    paragraphs.add(newParagraph);
+  }
 
-    if (widget.paragraphs.isEmpty || prevParagraphId == -1) {
-      widget.paragraphs.add(newParagraph);
-    } else {
-      int index = widget.paragraphs.length - 1;
-      int prevParagraphIndex = widget.paragraphIndexOf(prevParagraphId);
+  void addParagraph(int prevParagraphId, String text) {
+    setState(() {
+      var newParagraph = NoteParagraph(
+        id: paragraphIdGenerator.nextId,
+        paragraphText: text,
+        onChange: onChange,
+        addParagraph: addParagraph,
+      );
 
-      if (prevParagraphIndex != -1) {
-        index = prevParagraphIndex + 1;
+      if (paragraphs.isEmpty || prevParagraphId == -1) {
+        paragraphs.add(newParagraph);
+      } else {
+        int index = paragraphs.length - 1;
+        int prevParagraphIndex = paragraphIndexOf(prevParagraphId);
+
+        if (prevParagraphIndex != -1) {
+          index = prevParagraphIndex + 1;
+        }
+
+        paragraphs.insert(index, newParagraph);
       }
-
-      debugPrint("Paragraphs before change:");
-      for (var element in widget.paragraphs) debugPrint(element.str);
-
-      widget.paragraphs.insert(index, newParagraph);
-
-      debugPrint("Paragraphs after change:");
-      for (var element in widget.paragraphs) debugPrint(element.str);
-    }
+    });
   }
 
   @override
   void initState() {
+    widget.text = text;
     createParagraphs(widget.initContent);
-    for (var element in widget.paragraphs) {
-      debugPrint(element.str);
-    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    onContentChange = widget.onContentChange;
-    return Scrollbar(
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: widget.paragraphs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return widget.paragraphs[index];
-          }),
+    return ListView.builder(
+      itemCount: paragraphs.length,
+      itemBuilder: (context, index) {
+        return paragraphs[index];
+      },
     );
   }
 }

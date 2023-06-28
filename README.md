@@ -55,9 +55,9 @@ samples, guidance on mobile development, and a full API reference.
 ### Few Next steps:
 [x] fix problem with * b o l d   ^ i t a l i c * ^
 [ ] code refactor &&  add UT
-[ ] handle paragraphs adding
-    [ ] move focus to the new one
-    [ ] set TextField size when paragraph is header
+[x] handle paragraphs adding
+    [x] move focus to the new one
+    [x] set TextField size when paragraph is header
 [ ] handle paragraphs removing
     [ ] catch delete event (cursor on the textfield beggining)
     [ ] move focus to the one above

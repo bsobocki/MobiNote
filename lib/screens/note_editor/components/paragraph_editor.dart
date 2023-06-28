@@ -5,21 +5,20 @@ import 'package:mobi_note/logic/text_editor/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/text_editor/parser/mark_text_helpers/paragraph_analyze.dart';
 import 'package:mobi_note/screens/note_editor/components/paragraph_controller.dart';
 
-int change = 0;
-
 class NoteParagraph extends StatefulWidget {
   double fontSize = 12;
   String paragraphText;
   int cursor = 0;
   void Function(String) onChange;
   void Function(int, String) addParagraph;
-  final int id = paragraphIdGenerator.nextId;
+  final int id;
+  FocusNode focusNode = FocusNode();
 
   NoteParagraph(
-      {super.key,
+      {required this.id,
       required this.paragraphText,
       required this.onChange,
-      required this.addParagraph});
+      required this.addParagraph}): super(key: ValueKey('NoteParagraph_$id'));
 
   String get text => paragraphText;
   String get widgets => '';
@@ -33,29 +32,23 @@ class _NoteParagraphState extends State<NoteParagraph> {
   late ParagraphController controller;
 
   void onChange(String newText) {
-    widget.cursor = controller.selection.baseOffset;
-    setState(() {
-      widget.fontSize = paragraphFontSize(newText);
-      controller.selection =
-          TextSelection(baseOffset: widget.cursor, extentOffset: widget.cursor);
-    });
+    if (widget.focusNode.hasFocus) {
+      setState(() {
+        widget.fontSize = paragraphFontSize(newText);
+      });
+      int i = newText.indexOf('\n');
+      if (i != -1) {
+        controller.text = newText.substring(0, i);
+        widget.addParagraph(widget.id, newText.substring(i + 1));
+        widget.focusNode.unfocus();
+      }
 
-    int i = 0;
-    for (; i < newText.length; i++) {
-      if (newText[i] == '\n') break;
+      widget.paragraphText = controller.text;
+      widget.onChange(newText);
     }
-
-    if (i < newText.length) {
-      controller.text = newText.substring(0, i);
-      widget.addParagraph(widget.id, newText.substring(i).replaceAll('\n', ''));
-    }
-
-    widget.paragraphText = controller.text;
-    widget.onChange(newText);
   }
 
   void resizeTextField(double newSize) {
-    debugPrint('resized from ${widget.fontSize} to $newSize');
     widget.fontSize = newSize;
   }
 
@@ -64,6 +57,7 @@ class _NoteParagraphState extends State<NoteParagraph> {
     controller = ParagraphController(resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
     widget.fontSize = paragraphFontSize(widget.paragraphText);
+    widget.focusNode.requestFocus();
     super.initState();
   }
 
@@ -73,19 +67,16 @@ class _NoteParagraphState extends State<NoteParagraph> {
     super.dispose();
   }
 
+  // IF FOCUS THEN SHOW TRANSPARENT PARAGRAPH CHARS
+
   @override
   Widget build(BuildContext context) {
-    //return IntrinsicHeight(
-    return SizedBox(
-      height: widget.fontSize * 1.4,
+    return IntrinsicHeight(
       child: TextField(
-        onTap: () {
-          // debugPrint(
-          //     'selected in ${widget.contentController.selection.baseOffset} -> ${widget.contentController.selection.extentOffset}');
-        },
         expands: true,
         onChanged: onChange,
         controller: controller,
+        focusNode: widget.focusNode,
         style: TextStyle(
             color: Colors.white,
             decorationColor: Colors.amber,

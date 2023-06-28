@@ -103,6 +103,7 @@ class _RawNoteEditorTestPageState extends State<RawNoteEditorTestPage> {
       ),
       body: TextField(
         controller: contentController,
+        maxLines: null,
         onChanged: onContentChange,
         style: const TextStyle(
             fontSize: 20,
