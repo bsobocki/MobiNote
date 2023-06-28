@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/text_editor/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/text_editor/parser/mark_text_helpers/paragraph_analyze.dart';
 import 'package:mobi_note/screens/note_editor/components/paragraph_controller.dart';
 
@@ -18,7 +15,8 @@ class NoteParagraph extends StatefulWidget {
       {required this.id,
       required this.paragraphText,
       required this.onChange,
-      required this.addParagraph}): super(key: ValueKey('NoteParagraph_$id'));
+      required this.addParagraph})
+      : super(key: ValueKey('NoteParagraph_$id'));
 
   String get text => paragraphText;
   String get widgets => '';
@@ -42,7 +40,6 @@ class _NoteParagraphState extends State<NoteParagraph> {
         widget.addParagraph(widget.id, newText.substring(i + 1));
         widget.focusNode.unfocus();
       }
-
       widget.paragraphText = controller.text;
       widget.onChange(newText);
     }
@@ -56,8 +53,8 @@ class _NoteParagraphState extends State<NoteParagraph> {
   void initState() {
     controller = ParagraphController(resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
-    widget.fontSize = paragraphFontSize(widget.paragraphText);
-    widget.focusNode.requestFocus();
+    controller.selection = const TextSelection(baseOffset: 0, extentOffset: 0);
+    widget.fontSize = paragraphFontSize(controller.text);
     super.initState();
   }
 
@@ -74,6 +71,17 @@ class _NoteParagraphState extends State<NoteParagraph> {
     return IntrinsicHeight(
       child: TextField(
         expands: true,
+        // autofocus: true,
+        // onTap: () {
+        //   if (controller.selection.extentOffset == 0 &&
+        //       controller.text.isNotEmpty) {
+        //     controller.selection =
+        //         const TextSelection(baseOffset: 1, extentOffset: 1);
+        //   }
+        // },
+        // onTapOutside: (event) {
+        //   widget.focusNode.unfocus();
+        // },
         onChanged: onChange,
         controller: controller,
         focusNode: widget.focusNode,

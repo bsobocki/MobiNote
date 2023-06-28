@@ -46,9 +46,11 @@ double paragraphFontSize(String text) {
   var startIndex = firstNonWhitespace(text);
   if (startIndex != -1 && isParagraphChar(text[startIndex])) {
     var paragraph = paragraphOf(text, startIndex);
-    var paragraphType = paragraphCharsToType(paragraph);
-    var fontSize = textStyles[paragraphType]!.fontSize;
-    return fontSize ?? paragraphDefaultFontSize;
+    if (text.substring(startIndex + paragraph.length).isNotEmpty) {
+      var paragraphType = paragraphCharsToType(paragraph);
+      var fontSize = textStyles[paragraphType]!.fontSize;
+      return fontSize ?? paragraphDefaultFontSize;
+    }
   }
   return paragraphDefaultFontSize;
 }

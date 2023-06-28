@@ -105,6 +105,8 @@ class _ContentEditorState extends State<ContentEditor> {
 
         paragraphs.insert(index, newParagraph);
       }
+
+      newParagraph.focusNode.requestFocus();
     });
   }
 
