@@ -1,5 +1,6 @@
 import '../parser/definitions/unicodes.dart';
 import '../parser/definitions/marks.dart';
+import '../parser/unicode_marked_text_parser.dart';
 
 String? unicodeOfStyleStartBoundaryChar(String char) {
   return String.fromCharCode(styleChars.indexOf(char) * 2 + styleUnicodeNumber);
@@ -51,7 +52,7 @@ bool isParagraphChar(String char) {
 }
 
 bool isWhitespace(String c) {
-  return RegExp(r'\s').hasMatch(c);
+  return c==placeholder || RegExp(r'\s').hasMatch(c);
 }
 
 class StyleInfo {

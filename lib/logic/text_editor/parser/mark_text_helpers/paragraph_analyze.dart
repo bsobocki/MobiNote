@@ -6,9 +6,6 @@ import 'package:mobi_note/logic/text_editor/parser/definitions/paragraph_textsty
 import '../../special_marks_operations/text.dart';
 import '../definitions/paragraph_textstyle_mapping/paragraph_to_type.dart';
 
-bool found(int index) {
-  return index != -1;
-}
 
 String firstMatch(String text, int i, Iterable<String> patterns) {
   return patterns.firstWhere(
@@ -29,7 +26,7 @@ String getTag(String text, int i) {
 }
 
 int firstNonWhitespace(String text) {
-  return text.indexOf(RegExp('[^\\s]'));
+  return text.replaceAll('\u200B', ' ').indexOf(RegExp('[^\\s]'));
 }
 
 String paragraphOf(String text, int startIndex) {

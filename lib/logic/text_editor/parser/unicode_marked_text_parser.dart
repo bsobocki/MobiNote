@@ -18,13 +18,18 @@ class UnicodeMarkedTextParser {
   UnicodeMarkedTextParser();
 
   TextNoteSpanInfoContent parseUnicodeMarkedText(String text) {
-    if (text.isEmpty) {
+    if (text.isEmpty || text == placeholder) {
       return TextNoteSpanInfoContent(
           rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
     }
 
     init();
     addFirstWhitespacesIntoTextBuffers(text);
+
+    if (startIndex >= text.length) {
+      return TextNoteSpanInfoContent(
+          rawText: text, spanInfo: SpanInfo(type: 'paragraph'));;
+    }
 
     if (isUnicodeParagraphStyleCharacter(text[startIndex])) {
       setParagraph(decodeParagraphType(text[startIndex]));
@@ -80,7 +85,7 @@ class UnicodeMarkedTextParser {
   }
 
   void addFirstWhitespacesIntoTextBuffers(String text) {
-    while (isWhitespace(text[startIndex])) {
+    while (startIndex < text.length && isWhitespace(text[startIndex])) {
       currTextBuff.add(text[startIndex]);
       rawTextBuff.add(text[startIndex]);
       startIndex++;

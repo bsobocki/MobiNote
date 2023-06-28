@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/paragraph_editor.dart';
 
+import '../../../logic/helpers/list_helpers.dart';
 import '../../../logic/text_editor/id/paragraph_id_generator.dart';
 
 int change = 1;
@@ -80,35 +81,44 @@ class _ContentEditorState extends State<ContentEditor> {
       paragraphText: text,
       onChange: onChange,
       addParagraph: addParagraph,
+      deleteParagraph: deleteParagraph,
     );
     paragraphs.add(newParagraph);
   }
 
-  void addParagraph(int prevParagraphId, String text) {
-    setState(() {
-      var newParagraph = NoteParagraph(
-        id: paragraphIdGenerator.nextId,
-        paragraphText: text,
-        onChange: onChange,
-        addParagraph: addParagraph,
-      );
+  void addParagraph(int prevParagraphId, String text) => setState(() {
+        var newParagraph = NoteParagraph(
+          id: paragraphIdGenerator.nextId,
+          paragraphText: text,
+          onChange: onChange,
+          addParagraph: addParagraph,
+          deleteParagraph: deleteParagraph,
+        );
 
-      if (paragraphs.isEmpty || prevParagraphId == -1) {
-        paragraphs.add(newParagraph);
-      } else {
-        int index = paragraphs.length - 1;
-        int prevParagraphIndex = paragraphIndexOf(prevParagraphId);
+        if (paragraphs.isEmpty || prevParagraphId == -1) {
+          paragraphs.add(newParagraph);
+        } else {
+          int index = paragraphs.length - 1;
+          int prevParagraphIndex = paragraphIndexOf(prevParagraphId);
 
-        if (prevParagraphIndex != -1) {
-          index = prevParagraphIndex + 1;
+          if (found(prevParagraphIndex)) {
+            index = prevParagraphIndex + 1;
+          }
+
+          paragraphs.insert(index, newParagraph);
         }
 
-        paragraphs.insert(index, newParagraph);
-      }
+        newParagraph.focusNode.requestFocus();
+      });
 
-      newParagraph.focusNode.requestFocus();
-    });
-  }
+  void deleteParagraph(int paragraphId) => setState(() {
+        int index = paragraphIndexOf(paragraphId);
+        if (found(index) && index > 0) {
+          paragraphs[index - 1].appendText(paragraphs[index].text);
+          paragraphs.removeAt(index);
+          paragraphs[index - 1].focusNode.requestFocus();
+        }
+      });
 
   @override
   void initState() {

@@ -1,5 +1,6 @@
 import 'package:mobi_note/logic/text_editor/special_marks_operations/text.dart';
 
+import '../../helpers/list_helpers.dart';
 import 'mark_text_helpers/paragraph_analyze.dart';
 
 class SpecialPatternInfo {
@@ -27,6 +28,10 @@ class StyledTextConverter {
     startIndex = firstNonWhitespace(text);
     addStringToBuff(text, 0, startIndex);
 
+    if (!found(startIndex)) {
+      return text;
+    }
+
     if (isParagraphChar(text[startIndex])) {
       convertParagraph(text);
     }
@@ -34,7 +39,7 @@ class StyledTextConverter {
     for (int i = startIndex; i < text.length; i++) {
       var character = text[i];
 
-      if (i == cursorPosition && startBounds.isNotEmpty){
+      if (i == cursorPosition && startBounds.isNotEmpty) {
         visibleBoundaryChar = startBounds.last.character;
       }
 

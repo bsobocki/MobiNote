@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/text_editor/parser/mark_text_helpers/paragraph_analyze.dart';
+import 'package:mobi_note/logic/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/screens/note_editor/components/paragraph_controller.dart';
 
 class NoteParagraph extends StatefulWidget {
+  FocusNode focusNode = FocusNode();
   double fontSize = 12;
-  String paragraphText;
   int cursor = 0;
+  final int id;
+  String paragraphText;
   void Function(String) onChange;
   void Function(int, String) addParagraph;
-  final int id;
-  FocusNode focusNode = FocusNode();
+  void Function(int) deleteParagraph;
+  late Function(String) appendText;
 
   NoteParagraph(
       {required this.id,
       required this.paragraphText,
       required this.onChange,
-      required this.addParagraph})
+      required this.addParagraph,
+      required this.deleteParagraph})
       : super(key: ValueKey('NoteParagraph_$id'));
 
-  String get text => paragraphText;
+  String get text {
+    if (paragraphText.isNotEmpty && paragraphText != placeholder) {
+      if (paragraphText[0] == placeholder) {
+        return paragraphText.substring(1);
+      }
+      return paragraphText;
+    }
+    return '';
+  }
+
   String get widgets => '';
   String get str => '$id: $paragraphText';
 
@@ -31,6 +44,9 @@ class _NoteParagraphState extends State<NoteParagraph> {
 
   void onChange(String newText) {
     if (widget.focusNode.hasFocus) {
+      if (newText.isEmpty || newText.isNotEmpty && newText[0] != placeholder) {
+        widget.deleteParagraph(widget.id);
+      }
       setState(() {
         widget.fontSize = paragraphFontSize(newText);
       });
@@ -45,6 +61,10 @@ class _NoteParagraphState extends State<NoteParagraph> {
     }
   }
 
+  void appendText(String text) {
+    controller.text += text;
+  }
+
   void resizeTextField(double newSize) {
     widget.fontSize = newSize;
   }
@@ -52,9 +72,10 @@ class _NoteParagraphState extends State<NoteParagraph> {
   @override
   void initState() {
     controller = ParagraphController(resizeTextField: resizeTextField);
-    controller.text = widget.paragraphText;
-    controller.selection = const TextSelection(baseOffset: 0, extentOffset: 0);
+    controller.text = '\u200B${widget.paragraphText}';
+    controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);
+    widget.appendText = appendText;
     super.initState();
   }
 
@@ -72,13 +93,13 @@ class _NoteParagraphState extends State<NoteParagraph> {
       child: TextField(
         expands: true,
         // autofocus: true,
-        // onTap: () {
-        //   if (controller.selection.extentOffset == 0 &&
-        //       controller.text.isNotEmpty) {
-        //     controller.selection =
-        //         const TextSelection(baseOffset: 1, extentOffset: 1);
-        //   }
-        // },
+        onTap: () {
+          if (controller.selection.extentOffset == 0 &&
+              controller.text.isNotEmpty) {
+            controller.selection =
+                const TextSelection(baseOffset: 1, extentOffset: 1);
+          }
+        },
         // onTapOutside: (event) {
         //   widget.focusNode.unfocus();
         // },

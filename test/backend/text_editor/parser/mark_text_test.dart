@@ -47,7 +47,7 @@ void main() {
   });
 
   test('first not whitespace', () {
-    expect(firstNonWhitespace('   sdafdafad'), 3);
+    expect(firstNonWhitespace('\u200B   sdafdafad'), 4);
     expect(firstNonWhitespace('   \nsdafdafad'), 4);
     expect(firstNonWhitespace('\t\t sdafdafad'), 3);
     expect(firstNonWhitespace('\n\t  sdafdafad'), 4);
@@ -62,7 +62,7 @@ void main() {
     expect(paragraphOf('    ## to jest con*text', 4), '##');
     expect(paragraphOf('    # to jest con*text', 4), '#');
     expect(paragraphOf('  \n\t### some text', 4), '###');
-    expect(paragraphOf(' \t\t#### some text', 3), '####');
+    expect(paragraphOf('\u200B \t\t#### some text', 4), '####');
     expect(paragraphOf('  \n\n#### some text', 4), '####');
     expect(paragraphOf('  ## to jest con*text', 2), '##');
     expect(paragraphOf(' # to jest con*text', 1), '#');
