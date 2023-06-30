@@ -80,18 +80,28 @@ class _ContentEditorState extends State<ContentEditor> {
       id: paragraphIdGenerator.nextId,
       paragraphText: text,
       onChange: onChange,
-      addParagraph: addParagraph,
+      addParagraph: addParagraphAfter,
       deleteParagraph: deleteParagraph,
     );
     paragraphs.add(newParagraph);
   }
 
-  void addParagraph(int prevParagraphId, String text) => setState(() {
+  NoteParagraph createParagraph(text) {
+    return NoteParagraph(
+      id: paragraphIdGenerator.nextId,
+      paragraphText: text,
+      onChange: onChange,
+      addParagraph: addParagraphAfter,
+      deleteParagraph: deleteParagraph,
+    );
+  }
+
+  void addParagraphAfter(int prevParagraphId, String text) => setState(() {
         var newParagraph = NoteParagraph(
           id: paragraphIdGenerator.nextId,
           paragraphText: text,
           onChange: onChange,
-          addParagraph: addParagraph,
+          addParagraph: addParagraphAfter,
           deleteParagraph: deleteParagraph,
         );
 
@@ -107,16 +117,16 @@ class _ContentEditorState extends State<ContentEditor> {
 
           paragraphs.insert(index, newParagraph);
         }
-
-        newParagraph.focusNode.requestFocus();
       });
 
   void deleteParagraph(int paragraphId) => setState(() {
         int index = paragraphIndexOf(paragraphId);
         if (found(index) && index > 0) {
-          paragraphs[index - 1].appendText(paragraphs[index].text);
+          int cursor = paragraphs[index - 1].rawLength;
+          String newText = paragraphs[index - 1].text + paragraphs[index].text;
+          paragraphs[index - 1] = createParagraph(newText);
+          paragraphs[index - 1].cursor = cursor;
           paragraphs.removeAt(index);
-          paragraphs[index - 1].focusNode.requestFocus();
         }
       });
 

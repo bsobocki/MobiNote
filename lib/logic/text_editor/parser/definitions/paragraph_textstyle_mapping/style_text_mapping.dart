@@ -22,15 +22,19 @@ Map<String, TextStyle> textStyles = {
   ),
   'header1': const TextStyle(
     fontSize: header1DefaultFontSize,
+    fontWeight: FontWeight.w600
   ),
   'header2': const TextStyle(
     fontSize: header2DefaultFontSize,
+    fontWeight: FontWeight.w600
   ),
   'header3': const TextStyle(
     fontSize: header3DefaultFontSize,
+    fontWeight: FontWeight.w500
   ),
   'header4': const TextStyle(
     fontSize: header4DefaultFontSize,
+    fontWeight: FontWeight.w500
   ),
   'quote': TextStyle(
       backgroundColor: Colors.grey[700],

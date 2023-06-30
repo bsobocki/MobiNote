@@ -5,7 +5,7 @@ import 'package:mobi_note/logic/text_editor/special_marks_operations/text.dart';
 import 'package:mobi_note/logic/text_editor/special_marks_operations/unicode.dart';
 import 'definitions/span_info.dart';
 
-String placeholder = '\u200b';
+const String placeholder = '\u200b';
 
 class UnicodeMarkedTextParser {
   SpanInfo mainSpan = SpanInfo(type: 'paragraph');
