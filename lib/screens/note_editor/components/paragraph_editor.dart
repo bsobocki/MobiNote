@@ -15,7 +15,7 @@ class NoteParagraph extends StatefulWidget {
   void Function(String) onChange;
   void Function(int, String) addParagraph;
   void Function(int) deleteParagraph;
-  late Function(String) appendControllerText;
+  late Function(String)? appendControllerText;
 
   NoteParagraph(
       {required this.id,
@@ -38,10 +38,10 @@ class NoteParagraph extends StatefulWidget {
   }
 
   void append(String text) {
-    if (!isInitialized) {
+    if (appendControllerText == null) {
       paragraphText += text;
     } else {
-      appendControllerText(text);
+      appendControllerText!(text);
     }
   }
 
@@ -93,7 +93,8 @@ class _NoteParagraphState extends State<NoteParagraph> {
   @override
   void initState() {
     super.initState();
-    controller = ParagraphController(id: widget.id, resizeTextField: resizeTextField);
+    controller =
+        ParagraphController(id: widget.id, resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
     controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);
@@ -115,6 +116,7 @@ class _NoteParagraphState extends State<NoteParagraph> {
   void dispose() {
     controller.dispose();
     focusNode.dispose();
+    widget.appendControllerText = null;
     super.dispose();
   }
 
