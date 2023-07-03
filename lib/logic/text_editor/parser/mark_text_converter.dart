@@ -20,7 +20,8 @@ class StyledTextToUtfConverter {
   List<String> textBuff = [];
   int startIndex = 0;
 
-  String textWithConvertedMarks(String text, {bool showParagraphChars = false, int cursorPosition = -1}) {
+  String textWithConvertedMarks(String text,
+      {bool showParagraphChars = false, int cursorPosition = -1}) {
     if (text.length <= 1) return text;
     if (cursorPosition == -1) cursorPosition = text.length;
 
@@ -127,6 +128,7 @@ class StyledTextToUtfConverter {
     if (boundChar == visibleBoundaryChar) {
       textBuff.add(boundChar);
       startBounds.removeWhere((element) => element.character == boundChar);
+      visibleBoundaryChar = '';
     } else {
       var startBoundIndexInText = startBounds[startBoundIndex].indexInText;
       textBuff[startBoundIndexInText] =
