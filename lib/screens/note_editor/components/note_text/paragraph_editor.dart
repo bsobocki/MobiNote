@@ -59,6 +59,29 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
 
   void resizeTextField(double newSize) => widget.fontSize = newSize;
 
+  void appendText(String text) {
+    setState(() {
+      debugPrint('appending curr: "${controller.text}" with text "$text" ');
+      controller.text += text;
+      debugPrint('new Text is : ${controller.text}');
+    });
+  }
+
+  void foucusAction() {
+      if (focusNode.hasFocus) {
+        if (widget.cursor != textBegginingOffset) {
+          controller.selection = TextSelection(
+              baseOffset: widget.cursor, extentOffset: widget.cursor);
+          widget.cursor = textBegginingOffset;
+        }
+      } else {
+        int len = controller.text.length;
+        controller.selection = TextSelection(
+            baseOffset: len, extentOffset: len);
+      }
+      controller.isFocused = focusNode.hasFocus;
+    }
+
   void onChange(String newText) {
     var no200bchar = newText.replaceAll(placeholder, "+");
     if (focusNode.hasFocus) {
@@ -82,14 +105,6 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
     }
   }
 
-  void appendText(String text) {
-    setState(() {
-      debugPrint('appending curr: "${controller.text}" with text "$text" ');
-      controller.text += text;
-      debugPrint('new Text is : ${controller.text}');
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -99,20 +114,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
     controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);
     widget.appendControllerText = appendText;
-    focusNode.addListener(() {
-      if (focusNode.hasFocus) {
-        if (widget.cursor != textBegginingOffset) {
-          controller.selection = TextSelection(
-              baseOffset: widget.cursor, extentOffset: widget.cursor);
-          widget.cursor = textBegginingOffset;
-        }
-      } else {
-        int len = controller.text.length;
-        controller.selection = TextSelection(
-            baseOffset: len, extentOffset: len);
-      }
-      controller.isFocused = focusNode.hasFocus;
-    });
+    focusNode.addListener(foucusAction);
     if (!widget.isInitialized) {
       focusNode.requestFocus();
       widget.isInitialized = true;
