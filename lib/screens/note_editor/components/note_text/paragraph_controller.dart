@@ -9,19 +9,15 @@ class ParagraphController extends TextEditingController {
   void Function(double) resizeTextField;
   bool isFocused = false;
 
-  StyledTextToUtfConverter textToUtfConverter = StyledTextToUtfConverter();
-  UnicodeMarkedTextParser utfTextParser = UnicodeMarkedTextParser();
-  SpanInfoConverter spanInfoConverter = SpanInfoConverter();
-
   ParagraphController({required this.id, required this.resizeTextField});
 
   TextSpan parseText() {
     int cursorPosition = selection.baseOffset;
     var unicodeMarkedText = 
-        textToUtfConverter.textWithConvertedMarks(text, cursorPosition: cursorPosition, showParagraphChars: isFocused);
+        StyledTextToUtfConverter().textWithConvertedMarks(text, cursorPosition: cursorPosition, showParagraphChars: isFocused);
     var spanInfoParsedContent =
-        utfTextParser.parseUnicodeMarkedText(unicodeMarkedText, showParagraphChars: isFocused);
-    var spanTree = spanInfoConverter.getSpans(spanInfoParsedContent.spanInfo)
+        UnicodeMarkedTextParser().parseUnicodeMarkedText(unicodeMarkedText, showParagraphChars: isFocused);
+    var spanTree = SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo)
         as TextSpan;
     resizeTextField(spanTree.style!.fontSize!);
     return spanTree;

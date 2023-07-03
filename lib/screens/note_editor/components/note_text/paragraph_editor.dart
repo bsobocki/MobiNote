@@ -124,8 +124,6 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
     super.dispose();
   }
 
-  // IF FOCUS THEN SHOW TRANSPARENT PARAGRAPH CHARS
-
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
@@ -138,9 +136,6 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
               baseOffset: textBegginingOffset,
               extentOffset: textBegginingOffset,
             );
-            setState(() {
-              controller.isFocused = true;
-            });
           }
         },
         onChanged: onChange,
