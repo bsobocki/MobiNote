@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:mobi_note/logic/text_editor/parser/definitions/constants/text_style_properties.dart';
+import 'package:mobi_note/logic/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/text_editor/parser/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
 
 import '../../special_marks_operations/text.dart';

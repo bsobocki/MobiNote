@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/paragraph_controller.dart';
 
@@ -68,19 +69,18 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
   }
 
   void foucusAction() {
-      if (focusNode.hasFocus) {
-        if (widget.cursor != textBegginingOffset) {
-          controller.selection = TextSelection(
-              baseOffset: widget.cursor, extentOffset: widget.cursor);
-          widget.cursor = textBegginingOffset;
-        }
-      } else {
-        int len = controller.text.length;
+    if (focusNode.hasFocus) {
+      if (widget.cursor != textBegginingOffset) {
         controller.selection = TextSelection(
-            baseOffset: len, extentOffset: len);
+            baseOffset: widget.cursor, extentOffset: widget.cursor);
+        widget.cursor = textBegginingOffset;
       }
-      controller.isFocused = focusNode.hasFocus;
+    } else {
+      int len = controller.text.length;
+      controller.selection = TextSelection(baseOffset: len, extentOffset: len);
     }
+    controller.isFocused = focusNode.hasFocus;
+  }
 
   void onChange(String newText) {
     var no200bchar = newText.replaceAll(placeholder, "+");
@@ -131,31 +131,41 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
 
   @override
   Widget build(BuildContext context) {
+    double paddingVertical = (widget.fontSize - paragraphDefaultFontSize) / 2.3;
+    double paddingHorizontal = 4;
     return IntrinsicHeight(
-      child: TextField(
-        expands: true,
-        onTap: () {
-          if (controller.text.isNotEmpty &&
-              controller.selection.extentOffset == 0) {
-            controller.selection = const TextSelection(
-              baseOffset: textBegginingOffset,
-              extentOffset: textBegginingOffset,
-            );
-          }
-        },
-        onChanged: onChange,
-        controller: controller,
-        focusNode: focusNode,
-        style: TextStyle(
-            color: Colors.white,
-            decorationColor: Colors.amber,
-            fontSize: widget.fontSize),
-        maxLines: null,
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          isDense: true,
-          contentPadding: EdgeInsets.zero,
-          hintText: '',
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: paddingVertical,
+          bottom: paddingVertical,
+          left: paddingHorizontal,
+          right: paddingHorizontal,
+        ),
+        child: TextField(
+          expands: true,
+          onTap: () {
+            if (controller.text.isNotEmpty &&
+                controller.selection.extentOffset == 0) {
+              controller.selection = const TextSelection(
+                baseOffset: textBegginingOffset,
+                extentOffset: textBegginingOffset,
+              );
+            }
+          },
+          onChanged: onChange,
+          controller: controller,
+          focusNode: focusNode,
+          style: TextStyle(
+              color: Colors.white,
+              decorationColor: Colors.amber,
+              fontSize: widget.fontSize),
+          maxLines: null,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            isDense: true,
+            contentPadding: EdgeInsets.zero,
+            hintText: '',
+          ),
         ),
       ),
     );

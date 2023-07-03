@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/text_style_properties.dart';
+import '../../../constants/text_style_properties.dart';
 
 Map<String, TextStyle> textStyles = {
   'bold': const TextStyle(
@@ -21,19 +21,19 @@ Map<String, TextStyle> textStyles = {
     color: Colors.black,
   ),
   'header1': const TextStyle(
-      fontSize: header1DefaultFontSize, fontWeight: FontWeight.w600),
+      fontSize: header1DefaultFontSize, fontWeight: FontWeight.w700),
   'header2': const TextStyle(
-      fontSize: header2DefaultFontSize, fontWeight: FontWeight.w600),
+      fontSize: header2DefaultFontSize, fontWeight: FontWeight.w700),
   'header3': const TextStyle(
-      fontSize: header3DefaultFontSize, fontWeight: FontWeight.w500),
+      fontSize: header3DefaultFontSize, fontWeight: FontWeight.w700),
   'header4': const TextStyle(
-      fontSize: header4DefaultFontSize, fontWeight: FontWeight.w500),
+      fontSize: header4DefaultFontSize, fontWeight: FontWeight.w700),
   'quote': TextStyle(
     backgroundColor: Colors.grey[700],
     decorationColor: Colors.grey[300],
   ),
   'paragraph': const TextStyle(fontSize: paragraphDefaultFontSize),
-  'paragraph_chars' : TextStyle(color: Colors.grey.withOpacity(0.6))
+  'paragraph_chars': TextStyle(color: Colors.grey.withOpacity(0.6))
 };
 
 bool isStyledText(String type) {

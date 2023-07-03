@@ -58,10 +58,14 @@ samples, guidance on mobile development, and a full API reference.
 [x] handle paragraphs adding
     [x] move focus to the new one
     [x] set TextField size when paragraph is header
-[ ] handle paragraphs removing
-    [ ] catch delete event (cursor on the textfield beggining)
-    [ ] move focus to the one above
+[x] handle paragraphs removing
+    [x] catch delete event (cursor on the textfield beggining)
+    [x] move focus to the one above
+[x] show paragraph characters on focus
 [ ] handle widgets (remove elements)
     [ ] fix database insertion
     [ ] create json with widget specification
     [ ] elements like checkbox as widget
+[ ] add colors
+    [ ] define hex for utf character describing colors
+        \ u F [color num] - for example
