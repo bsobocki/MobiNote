@@ -131,7 +131,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
 
   @override
   Widget build(BuildContext context) {
-    double paddingVertical = (widget.fontSize - paragraphDefaultFontSize) / 2.3;
+    double paddingVertical = (widget.fontSize - paragraphDefaultFontSize) / 2.5 + 1;
     double paddingHorizontal = 4;
     return IntrinsicHeight(
       child: Padding(
