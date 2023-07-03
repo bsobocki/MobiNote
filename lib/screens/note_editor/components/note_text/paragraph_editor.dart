@@ -100,14 +100,17 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
     widget.fontSize = paragraphFontSize(controller.text);
     widget.appendControllerText = appendText;
     focusNode.addListener(() {
-      if (focusNode.hasFocus && widget.cursor != textBegginingOffset) {
+      if (focusNode.hasFocus) {
+        if (widget.cursor != textBegginingOffset) {
+          controller.selection = TextSelection(
+              baseOffset: widget.cursor, extentOffset: widget.cursor);
+          widget.cursor = textBegginingOffset;
+        }
+      } else {
+        int len = controller.text.length;
         controller.selection = TextSelection(
-            baseOffset: widget.cursor, extentOffset: widget.cursor);
-        widget.cursor = textBegginingOffset;
-        controller.isFocused = true;
-        debugPrint('${controller.text} has a focus!');
+            baseOffset: len, extentOffset: len);
       }
-      else debugPrint('${controller.text} dont has a focus!');
       controller.isFocused = focusNode.hasFocus;
     });
     if (!widget.isInitialized) {
