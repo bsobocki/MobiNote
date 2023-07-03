@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/text_editor/parser/definitions/types/decode.dart';
+import 'package:mobi_note/logic/text_editor/parser/helpers/decode.dart';
 import 'package:mobi_note/logic/text_editor/parser/definitions/types/text_types.dart';
 import 'package:mobi_note/logic/text_editor/special_marks_operations/text.dart';
 import 'package:mobi_note/logic/text_editor/special_marks_operations/unicode.dart';
 import 'definitions/span_info.dart';
+import 'helpers/paragraph_analyze.dart';
 
 const String placeholder = '\u200b';
 
 class UnicodeMarkedTextParser {
-  SpanInfo mainSpan = SpanInfo(type: 'paragraph');
+  late SpanInfo mainSpan;
   late SpanInfo currentSpan;
   List<String> rawTextBuff = [];
   List<SpanInfo> spansInfos = [];
@@ -17,7 +18,8 @@ class UnicodeMarkedTextParser {
 
   UnicodeMarkedTextParser();
 
-  TextNoteSpanInfoContent parseUnicodeMarkedText(String text) {
+  TextNoteSpanInfoContent parseUnicodeMarkedText(String text,
+      {bool showParagraphChars = false}) {
     if (text.isEmpty || text == placeholder) {
       return TextNoteSpanInfoContent(
           rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
@@ -28,15 +30,25 @@ class UnicodeMarkedTextParser {
 
     if (startIndex >= text.length) {
       return TextNoteSpanInfoContent(
-          rawText: text, spanInfo: SpanInfo(type: 'paragraph'));;
+          rawText: text, spanInfo: SpanInfo(type: 'paragraph'));
+      ;
     }
 
     if (isUnicodeParagraphStyleCharacter(text[startIndex])) {
       setParagraph(decodeParagraphType(text[startIndex]));
-      while (startIndex < text.length &&
-          isUnicodeParagraphStyleCharacter(text[startIndex])) {
-        mainSpan.text += placeholder;
-        startIndex++;
+      if (showParagraphChars) {
+        flushCurrentTextBuff();
+        addSpanWithType('paragraph_chars');
+        var paragraphChars = decodeParagraphStyleChars(text[startIndex]);
+        currentSpan.text += paragraphChars;
+        currentSpan = currentParent.parent;
+        startIndex += paragraphChars.length;
+      } else {
+        while (startIndex < text.length &&
+            isUnicodeParagraphStyleCharacter(text[startIndex])) {
+          mainSpan.text += placeholder;
+          startIndex++;
+        }
       }
     }
 
@@ -77,6 +89,7 @@ class UnicodeMarkedTextParser {
   }
 
   void init() {
+    mainSpan = SpanInfo(type: 'paragraph');
     currentSpan = mainSpan;
     startIndex = 0;
     rawTextBuff.clear();

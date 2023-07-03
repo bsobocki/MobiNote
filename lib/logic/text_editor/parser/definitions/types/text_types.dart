@@ -13,7 +13,7 @@ List<String> paragraphTypes = [
   'header4',
   'quote',
   'latex',
-  'paragraph',
+  'paragraph'
 ];
 
 

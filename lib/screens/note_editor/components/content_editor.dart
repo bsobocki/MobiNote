@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/screens/note_editor/components/paragraph_editor.dart';
+import 'package:mobi_note/screens/note_editor/components/note_text/paragraph_editor.dart';
 
 import '../../../logic/helpers/list_helpers.dart';
 import '../../../logic/text_editor/id/paragraph_id_generator.dart';
@@ -27,7 +27,7 @@ class ContentEditor extends StatefulWidget {
 
 class _ContentEditorState extends State<ContentEditor> {
   bool contentChanged = false;
-  List<NoteParagraph> paragraphs = [];
+  List<NoteParagraphEditor> paragraphs = [];
 
   String text() {
     String returnText = '';
@@ -76,7 +76,7 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void addNewParagraph(String text) {
-    var newParagraph = NoteParagraph(
+    var newParagraph = NoteParagraphEditor(
       id: paragraphIdGenerator.nextId,
       paragraphText: text,
       onChange: onChange,
@@ -86,8 +86,8 @@ class _ContentEditorState extends State<ContentEditor> {
     paragraphs.add(newParagraph);
   }
 
-  NoteParagraph createParagraph(text) {
-    return NoteParagraph(
+  NoteParagraphEditor createParagraph(text) {
+    return NoteParagraphEditor(
       id: paragraphIdGenerator.nextId,
       paragraphText: text,
       onChange: onChange,
@@ -97,7 +97,7 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void addParagraphAfter(int prevParagraphId, String text) => setState(() {
-        var newParagraph = NoteParagraph(
+        var newParagraph = NoteParagraphEditor(
           id: paragraphIdGenerator.nextId,
           paragraphText: text,
           onChange: onChange,

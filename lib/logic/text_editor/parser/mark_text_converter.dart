@@ -1,7 +1,7 @@
 import 'package:mobi_note/logic/text_editor/special_marks_operations/text.dart';
 
 import '../../helpers/list_helpers.dart';
-import 'mark_text_helpers/paragraph_analyze.dart';
+import 'helpers/paragraph_analyze.dart';
 
 class SpecialPatternInfo {
   final int indexInText;
@@ -13,14 +13,14 @@ class SpecialPatternInfo {
   String toString() => "{i: $indexInText, p: $character}";
 }
 
-class StyledTextConverter {
+class StyledTextToUtfConverter {
   String visibleBoundaryChar = '';
   List<SpecialPatternInfo> startBounds = [];
   List<SpecialPatternInfo> startTags = [];
   List<String> textBuff = [];
   int startIndex = 0;
 
-  String textWithConvertedMarks(String text, {int cursorPosition = -1}) {
+  String textWithConvertedMarks(String text, {bool showParagraphChars = false, int cursorPosition = -1}) {
     if (text.length <= 1) return text;
     if (cursorPosition == -1) cursorPosition = text.length;
 

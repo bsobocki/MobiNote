@@ -21,27 +21,19 @@ Map<String, TextStyle> textStyles = {
     color: Colors.black,
   ),
   'header1': const TextStyle(
-    fontSize: header1DefaultFontSize,
-    fontWeight: FontWeight.w600
-  ),
+      fontSize: header1DefaultFontSize, fontWeight: FontWeight.w600),
   'header2': const TextStyle(
-    fontSize: header2DefaultFontSize,
-    fontWeight: FontWeight.w600
-  ),
+      fontSize: header2DefaultFontSize, fontWeight: FontWeight.w600),
   'header3': const TextStyle(
-    fontSize: header3DefaultFontSize,
-    fontWeight: FontWeight.w500
-  ),
+      fontSize: header3DefaultFontSize, fontWeight: FontWeight.w500),
   'header4': const TextStyle(
-    fontSize: header4DefaultFontSize,
-    fontWeight: FontWeight.w500
-  ),
+      fontSize: header4DefaultFontSize, fontWeight: FontWeight.w500),
   'quote': TextStyle(
-      backgroundColor: Colors.grey[700],
-      decorationColor: Colors.grey[300]),
-  'paragraph': const TextStyle(
-    fontSize: paragraphDefaultFontSize
+    backgroundColor: Colors.grey[700],
+    decorationColor: Colors.grey[300],
   ),
+  'paragraph': const TextStyle(fontSize: paragraphDefaultFontSize),
+  'paragraph_chars' : TextStyle(color: Colors.grey.withOpacity(0.6))
 };
 
 bool isStyledText(String type) {

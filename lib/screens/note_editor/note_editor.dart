@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobi_note/screens/note_editor/components/content_editor.dart';
 import '../../database/database_def.dart';
-import 'components/paragraph_controller.dart';
+import 'components/note_text/paragraph_controller.dart';
 
 class NoteEditorPage extends StatefulWidget {
   const NoteEditorPage(

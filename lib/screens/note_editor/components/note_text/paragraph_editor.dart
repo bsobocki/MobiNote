@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:mobi_note/logic/text_editor/parser/mark_text_helpers/paragraph_analyze.dart';
 import 'package:mobi_note/logic/text_editor/parser/unicode_marked_text_parser.dart';
-import 'package:mobi_note/screens/note_editor/components/paragraph_controller.dart';
+import 'package:mobi_note/screens/note_editor/components/note_text/paragraph_controller.dart';
+
+import '../../../../logic/text_editor/parser/helpers/paragraph_analyze.dart';
 
 const int textBegginingOffset = 1;
 
-class NoteParagraph extends StatefulWidget {
+class NoteParagraphEditor extends StatefulWidget {
   bool isInitialized = false;
   double fontSize = 12;
   int cursor = 1;
@@ -17,7 +17,7 @@ class NoteParagraph extends StatefulWidget {
   void Function(int) deleteParagraph;
   late Function(String)? appendControllerText;
 
-  NoteParagraph(
+  NoteParagraphEditor(
       {required this.id,
       required this.paragraphText,
       required this.onChange,
@@ -50,10 +50,10 @@ class NoteParagraph extends StatefulWidget {
   String get str => '$id: $paragraphText';
 
   @override
-  State<NoteParagraph> createState() => _NoteParagraphState();
+  State<NoteParagraphEditor> createState() => _NoteParagraphEditorState();
 }
 
-class _NoteParagraphState extends State<NoteParagraph> {
+class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
   late ParagraphController controller;
   FocusNode focusNode = FocusNode();
 
@@ -104,7 +104,11 @@ class _NoteParagraphState extends State<NoteParagraph> {
         controller.selection = TextSelection(
             baseOffset: widget.cursor, extentOffset: widget.cursor);
         widget.cursor = textBegginingOffset;
+        controller.isFocused = true;
+        debugPrint('${controller.text} has a focus!');
       }
+      else debugPrint('${controller.text} dont has a focus!');
+      controller.isFocused = focusNode.hasFocus;
     });
     if (!widget.isInitialized) {
       focusNode.requestFocus();
@@ -134,6 +138,9 @@ class _NoteParagraphState extends State<NoteParagraph> {
               baseOffset: textBegginingOffset,
               extentOffset: textBegginingOffset,
             );
+            setState(() {
+              controller.isFocused = true;
+            });
           }
         },
         onChanged: onChange,

@@ -1,7 +1,7 @@
 import 'package:mobi_note/logic/text_editor/parser/definitions/marks.dart';
 import 'package:mobi_note/logic/text_editor/parser/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
 import 'package:mobi_note/logic/text_editor/parser/mark_text_converter.dart';
-import 'package:mobi_note/logic/text_editor/parser/mark_text_helpers/paragraph_analyze.dart';
+import 'package:mobi_note/logic/text_editor/parser/helpers/paragraph_analyze.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -74,14 +74,14 @@ void main() {
   test("get font size of text", () {
     expect(
         paragraphFontSize('# This is text'), textStyles['header1']!.fontSize!);
-    expect(
-        paragraphFontSize('   This is text'), textStyles['paragraph']!.fontSize!);
-    expect(
-        paragraphFontSize('  ## This is text'), textStyles['header2']!.fontSize!);
+    expect(paragraphFontSize('   This is text'),
+        textStyles['paragraph']!.fontSize!);
+    expect(paragraphFontSize('  ## This is text'),
+        textStyles['header2']!.fontSize!);
   });
 
   test("converted style marks", () {
-    var converter = StyledTextConverter();
+    var converter = StyledTextToUtfConverter();
     expect(
       converter
           .textWithConvertedMarks("  this is a *bold ^italic^ text* hihi."),
@@ -120,7 +120,7 @@ void main() {
   });
 
   test("converted elements and widgets", () {
-    var converter = StyledTextConverter();
+    var converter = StyledTextToUtfConverter();
     expect(
       converter.textWithConvertedMarks(
           "this is a [ ] unselected checkbox and this is [x] checked."),

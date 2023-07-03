@@ -1,8 +1,9 @@
 import 'package:mobi_note/logic/text_editor/parser/definitions/types/text_types.dart';
 import 'package:mobi_note/logic/text_editor/parser/definitions/unicodes.dart';
 import 'package:mobi_note/logic/text_editor/special_marks_operations/unicode.dart';
-import 'widget_types.dart';
-import 'element_types.dart';
+import '../definitions/marks.dart';
+import '../definitions/types/widget_types.dart';
+import '../definitions/types/element_types.dart';
 
 String decodeStyleType(String unicode) {
   int index = (unicodeNumber(unicode) - styleUnicodeNumber) ~/ 2;
@@ -22,4 +23,9 @@ String decodeElementType(String unicode) {
 String decodeParagraphType(String unicode) {
   int index = unicodeNumber(unicode) - paragraphUnicodeNumber;
   return paragraphTypes[index];
+}
+
+String decodeParagraphStyleChars(String unicode) {
+  int index = unicodeNumber(unicode) - paragraphUnicodeNumber;
+  return paragraphStyleChars[index];
 }
