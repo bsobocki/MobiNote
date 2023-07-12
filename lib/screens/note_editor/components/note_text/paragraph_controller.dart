@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/text_editor/parser/unicode_marked_text_parser.dart';
-import 'package:mobi_note/logic/text_editor/parser/span_info_converterer.dart';
-import '../../../../logic/text_editor/parser/mark_text_converter.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/span_info_converterer.dart';
+import '../../../../logic/note_editor/text_editor/parser/mark_text_converter.dart';
 
 class ParagraphController extends TextEditingController {
   final int id;

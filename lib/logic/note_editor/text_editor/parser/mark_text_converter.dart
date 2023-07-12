@@ -1,6 +1,6 @@
-import 'package:mobi_note/logic/text_editor/special_marks_operations/text.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/special_marks_operations/text.dart';
 
-import '../../helpers/list_helpers.dart';
+import '../../../helpers/list_helpers.dart';
 import 'helpers/paragraph_analyze.dart';
 
 class SpecialPatternInfo {

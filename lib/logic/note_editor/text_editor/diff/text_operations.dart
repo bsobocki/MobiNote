@@ -1,4 +1,4 @@
-import 'package:mobi_note/logic/text_editor/special_marks_operations/unicode.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/special_marks_operations/unicode.dart';
 
 int getStyledTextIndexOf(String unicodeMarkedText, int rawTextIndex) {
   int textCharCounter = 0;

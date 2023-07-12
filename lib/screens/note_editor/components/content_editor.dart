@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/screens/note_editor/components/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/paragraph_editor.dart';
 
 import '../../../logic/helpers/list_helpers.dart';
-import '../../../logic/text_editor/id/paragraph_id_generator.dart';
+import '../../../logic/helpers/id/paragraph_id_generator.dart';
 
 int change = 1;
 String lastNewText = "";
@@ -27,7 +28,8 @@ class ContentEditor extends StatefulWidget {
 
 class _ContentEditorState extends State<ContentEditor> {
   bool contentChanged = false;
-  List<NoteParagraphEditor> paragraphs = [];
+  List<NoteParagraph> paragraphs = [];
+  int focusedParagraphId = -1;
 
   String text() {
     String returnText = '';
@@ -57,12 +59,12 @@ class _ContentEditorState extends State<ContentEditor> {
 
   void createParagraphs(String text) {
     if (text.isEmpty) {
-      addNewParagraph('');
+      addNewNoteParagraphEditor('');
     } else {
       String currText = '';
       for (int i = 0; i < text.length; i++) {
         if (text[i] == '\n') {
-          addNewParagraph(currText);
+          addNewNoteParagraphEditor(currText);
           currText = '';
         } else {
           currText += text[i];
@@ -70,40 +72,39 @@ class _ContentEditorState extends State<ContentEditor> {
       }
 
       if (currText.isNotEmpty) {
-        addNewParagraph(currText);
+        addNewNoteParagraphEditor(currText);
       }
     }
   }
 
-  void addNewParagraph(String text) {
-    var newParagraph = NoteParagraphEditor(
-      id: paragraphIdGenerator.nextId,
-      paragraphText: text,
-      onChange: onChange,
-      addParagraph: addParagraphAfter,
-      deleteParagraph: deleteParagraph,
-    );
+  void reportFocusParagraph(int paragraphId) {
+    focusedParagraphId = paragraphId;
+    debugPrint("Now, the paragraph $focusedParagraphId is focuded one.");
+  }
+
+  int indexOfFocusedParagraph() {
+    return 0;
+  }
+
+  void addNewNoteParagraphEditor(String text) {
+    var newParagraph = createNoteParagraphEditor(text);
     paragraphs.add(newParagraph);
   }
 
-  NoteParagraphEditor createParagraph(text) {
+  NoteParagraphEditor createNoteParagraphEditor(text) {
     return NoteParagraphEditor(
       id: paragraphIdGenerator.nextId,
       paragraphText: text,
       onChange: onChange,
-      addParagraph: addParagraphAfter,
-      deleteParagraph: deleteParagraph,
+      addParagraph: addNoteParagraphEditorAfter,
+      deleteParagraph: deleteNoteParagraphEditor,
+      reportFocusParagraph: reportFocusParagraph,
     );
   }
 
-  void addParagraphAfter(int prevParagraphId, String text) => setState(() {
-        var newParagraph = NoteParagraphEditor(
-          id: paragraphIdGenerator.nextId,
-          paragraphText: text,
-          onChange: onChange,
-          addParagraph: addParagraphAfter,
-          deleteParagraph: deleteParagraph,
-        );
+  void addNoteParagraphEditorAfter(int prevParagraphId, String text) =>
+      setState(() {
+        var newParagraph = createNoteParagraphEditor(text);
 
         if (paragraphs.isEmpty || prevParagraphId == -1) {
           paragraphs.add(newParagraph);
@@ -119,13 +120,15 @@ class _ContentEditorState extends State<ContentEditor> {
         }
       });
 
-  void deleteParagraph(int paragraphId) => setState(() {
+  void deleteNoteParagraphEditor(int paragraphId) => setState(() {
         int index = paragraphIndexOf(paragraphId);
         if (found(index) && index > 0) {
-          int cursor = paragraphs[index - 1].rawLength;
-          String newText = paragraphs[index - 1].text + paragraphs[index].text;
-          paragraphs[index - 1] = createParagraph(newText);
-          paragraphs[index - 1].cursor = cursor;
+          var foundParagraphEditor =
+              paragraphs[index - 1] as NoteParagraphEditor;
+          int cursor = foundParagraphEditor.rawLength;
+          String newText = foundParagraphEditor.text + paragraphs[index].text;
+          paragraphs[index - 1] = createNoteParagraphEditor(newText);
+          (paragraphs[index - 1] as NoteParagraphEditor).cursor = cursor;
           paragraphs.removeAt(index);
         }
       });

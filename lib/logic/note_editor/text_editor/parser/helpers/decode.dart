@@ -1,6 +1,6 @@
-import 'package:mobi_note/logic/text_editor/parser/definitions/types/text_types.dart';
-import 'package:mobi_note/logic/text_editor/parser/definitions/unicodes.dart';
-import 'package:mobi_note/logic/text_editor/special_marks_operations/unicode.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/types/text_types.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/unicodes.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/special_marks_operations/unicode.dart';
 import '../definitions/marks.dart';
 import '../definitions/types/widget_types.dart';
 import '../definitions/types/element_types.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/list_element.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/list/list_element.dart';
 
 class NoteListWidget extends StatefulWidget {
   const NoteListWidget({super.key});

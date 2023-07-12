@@ -1,7 +1,7 @@
-import 'package:mobi_note/logic/text_editor/parser/definitions/marks.dart';
-import 'package:mobi_note/logic/text_editor/parser/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
-import 'package:mobi_note/logic/text_editor/parser/mark_text_converter.dart';
-import 'package:mobi_note/logic/text_editor/parser/helpers/paragraph_analyze.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/marks.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/mark_text_converter.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 import 'package:test/test.dart';
 
 void main() {

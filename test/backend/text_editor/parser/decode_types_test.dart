@@ -1,4 +1,4 @@
-import 'package:mobi_note/logic/text_editor/parser/helpers/decode.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/helpers/decode.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/text_editor/constants/text_style_properties.dart';
-import 'package:mobi_note/logic/text_editor/parser/unicode_marked_text_parser.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
+import 'package:mobi_note/screens/note_editor/components/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/paragraph_controller.dart';
 
-import '../../../../logic/text_editor/parser/helpers/paragraph_analyze.dart';
+import '../../../../logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 
 const int textBegginingOffset = 1;
 
-class NoteParagraphEditor extends StatefulWidget {
+// ignore: must_be_immutable
+class NoteParagraphEditor extends NoteParagraph {
   bool isInitialized = false;
   double fontSize = 12;
   int cursor = 1;
-  final int id;
   String paragraphText;
   void Function(String) onChange;
   void Function(int, String) addParagraph;
@@ -19,7 +20,8 @@ class NoteParagraphEditor extends StatefulWidget {
   late Function(String)? appendControllerText;
 
   NoteParagraphEditor(
-      {required this.id,
+      {required super.id,
+      required super.reportFocusParagraph,
       required this.paragraphText,
       required this.onChange,
       required this.addParagraph,
@@ -28,6 +30,7 @@ class NoteParagraphEditor extends StatefulWidget {
     paragraphText = '$placeholder$paragraphText';
   }
 
+  @override
   String get text {
     if (paragraphText.isNotEmpty && paragraphText != placeholder) {
       if (paragraphText[0] == placeholder) {
@@ -46,8 +49,11 @@ class NoteParagraphEditor extends StatefulWidget {
     }
   }
 
+  @override
   int get rawLength => paragraphText.length;
+  @override
   String get widgets => '';
+  @override
   String get str => '$id: $paragraphText';
 
   @override
@@ -70,6 +76,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
 
   void foucusAction() {
     if (focusNode.hasFocus) {
+      widget.reportFocusParagraph(widget.id);
       if (widget.cursor != textBegginingOffset) {
         controller.selection = TextSelection(
             baseOffset: widget.cursor, extentOffset: widget.cursor);
@@ -131,7 +138,8 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
 
   @override
   Widget build(BuildContext context) {
-    double paddingVertical = (widget.fontSize - paragraphDefaultFontSize) / 2.5 + 1;
+    double paddingVertical =
+        (widget.fontSize - paragraphDefaultFontSize) / 2.5 + 1;
     double paddingHorizontal = 4;
     return IntrinsicHeight(
       child: Padding(

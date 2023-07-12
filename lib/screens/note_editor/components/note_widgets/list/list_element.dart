@@ -7,9 +7,16 @@ class NoteListElement extends StatefulWidget {
   State<NoteListElement> createState() => _NoteListElementState();
 }
 
+
 class _NoteListElementState extends State<NoteListElement> {
+  List<Widget> widgets = [
+    //Checkbox(value: value, onChanged: onChanged)
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Row(
+      children: widgets,
+    );
   }
 }
