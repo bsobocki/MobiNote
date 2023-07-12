@@ -21,13 +21,13 @@ Map<String, TextStyle> textStyles = {
     color: Colors.black,
   ),
   'header1': const TextStyle(
-      fontSize: header1DefaultFontSize, fontWeight: FontWeight.w700),
+      fontSize: header1DefaultFontSize, fontWeight: FontWeight.w800),
   'header2': const TextStyle(
-      fontSize: header2DefaultFontSize, fontWeight: FontWeight.w700),
+      fontSize: header2DefaultFontSize, fontWeight: FontWeight.w800),
   'header3': const TextStyle(
-      fontSize: header3DefaultFontSize, fontWeight: FontWeight.w700),
+      fontSize: header3DefaultFontSize, fontWeight: FontWeight.w800),
   'header4': const TextStyle(
-      fontSize: header4DefaultFontSize, fontWeight: FontWeight.w700),
+      fontSize: header4DefaultFontSize, fontWeight: FontWeight.w800),
   'quote': TextStyle(
     backgroundColor: Colors.grey[700],
     decorationColor: Colors.grey[300],

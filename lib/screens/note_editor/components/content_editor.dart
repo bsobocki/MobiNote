@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/paragraph_editor.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/paragraph_widget.dart';
 
 import '../../../logic/helpers/list_helpers.dart';
 import '../../../logic/helpers/id/paragraph_id_generator.dart';
@@ -84,6 +85,19 @@ class _ContentEditorState extends State<ContentEditor> {
 
   int indexOfFocusedParagraph() {
     return 0;
+  }
+
+  void addNewNoteParagraphWidget(String type) {
+    var newParagraph = createNoteParagraphWidget(type);
+    paragraphs.add(newParagraph);
+  }
+
+  NoteParagraphWidget createNoteParagraphWidget(String type) {
+    return NoteParagraphWidget(
+      id: paragraphIdGenerator.nextId,
+      reportFocusParagraph: reportFocusParagraph,
+      widgetJSON: '',
+    );
   }
 
   void addNewNoteParagraphEditor(String text) {

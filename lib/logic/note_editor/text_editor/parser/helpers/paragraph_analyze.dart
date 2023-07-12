@@ -9,7 +9,7 @@ import '../definitions/paragraph_textstyle_mapping/paragraph_to_type.dart';
 
 String firstMatch(String text, int i, Iterable<String> patterns) {
   return patterns.firstWhere(
-    (element) => element == text.substring(i, i + element.length),
+    (element) => i + element.length <= text.length && element == text.substring(i, i + element.length),
     orElse: () => '',
   );
 }
