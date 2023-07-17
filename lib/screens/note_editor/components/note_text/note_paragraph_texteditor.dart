@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph.dart';
-import 'package:mobi_note/screens/note_editor/components/note_text/paragraph_controller.dart';
+import 'package:mobi_note/screens/note_editor/components/note_text/note_paragraph_controller.dart';
 
 import '../../../../logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 

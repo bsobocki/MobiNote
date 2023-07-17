@@ -35,6 +35,6 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row();
+    return Row(children: elements,);
   }
 }
