@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteParagraphWidget extends NoteParagraph {
   String widgetJSON;
+  final List<NoteEditorWidget> elements;
 
   NoteParagraphWidget(
       {required super.id,
       required super.reportFocusParagraph,
-      required this.widgetJSON})
+      required this.widgetJSON,
+      this.elements = const []})
       : super(key: ValueKey("NoteParagraphWidget_$id"));
 
   @override
@@ -15,21 +18,19 @@ class NoteParagraphWidget extends NoteParagraph {
 }
 
 class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
-  List<Widget> elements = [];
+  late List<Widget> elements;
   FocusNode focusNode = FocusNode();
 
   void foucusAction() {
     if (focusNode.hasFocus) {
       widget.reportFocusParagraph(widget.id);
-      
-    } else {
-
-    }
+    } else {}
   }
 
   @override
   void initState() {
     super.initState();
+    elements = widget.elements;
   }
 
   @override

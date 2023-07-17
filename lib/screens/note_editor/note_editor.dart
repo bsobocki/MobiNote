@@ -27,6 +27,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   bool noteChanged = false;
   bool wantToSaveNote = true;
   late ContentEditor contentEditor;
+  FocusNode titleFocusNode = FocusNode();
 
   Future<void> saveNote() async {
     if (wantToSaveNote && noteChanged) {
@@ -41,8 +42,8 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
               widgets: '');
           await database.updateNote(newNote);
         } else {
-          id = await database.addNote(titleController.text, contentEditor.text(),
-              contentEditor.initWidgets);
+          id = await database.addNote(titleController.text,
+              contentEditor.text(), contentEditor.initWidgets);
         }
       } catch (e) {
         await showDialog(
@@ -74,8 +75,8 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 
   @override
   void initState() {
-    init();
     super.initState();
+    init();
   }
 
   @override
@@ -104,6 +105,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           ),
         ],
         title: TextField(
+          focusNode: titleFocusNode,
           controller: titleController,
           onChanged: (value) => noteChanged = true,
           cursorColor: Colors.white,

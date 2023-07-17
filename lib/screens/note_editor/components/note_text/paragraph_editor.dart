@@ -9,7 +9,7 @@ import '../../../../logic/note_editor/text_editor/parser/helpers/paragraph_analy
 const int textBegginingOffset = 1;
 
 // ignore: must_be_immutable
-class NoteParagraphEditor extends NoteParagraph {
+class NoteParagraphTextEditor extends NoteParagraph {
   bool isInitialized = false;
   double fontSize = 12;
   int cursor = 1;
@@ -19,7 +19,7 @@ class NoteParagraphEditor extends NoteParagraph {
   void Function(int) deleteParagraph;
   late Function(String)? appendControllerText;
 
-  NoteParagraphEditor(
+  NoteParagraphTextEditor(
       {required super.id,
       required super.reportFocusParagraph,
       required this.paragraphText,
@@ -57,10 +57,10 @@ class NoteParagraphEditor extends NoteParagraph {
   String get str => '$id: $paragraphText';
 
   @override
-  State<NoteParagraphEditor> createState() => _NoteParagraphEditorState();
+  State<NoteParagraphTextEditor> createState() => _NoteParagraphEditorState();
 }
 
-class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
+class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   late ParagraphController controller;
   FocusNode focusNode = FocusNode();
 
@@ -138,8 +138,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphEditor> {
 
   @override
   Widget build(BuildContext context) {
-    double paddingVertical =
-        (widget.fontSize - paragraphDefaultFontSize) + 2;
+    double paddingVertical = (widget.fontSize - paragraphDefaultFontSize) + 2;
     double paddingHorizontal = 4;
     return IntrinsicHeight(
       child: Padding(

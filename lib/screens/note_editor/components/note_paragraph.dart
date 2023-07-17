@@ -4,8 +4,12 @@ class NoteParagraph extends StatefulWidget {
   final int id;
   void Function(int id) reportFocusParagraph;
 
-  NoteParagraph(
-      {super.key, required this.id, required this.reportFocusParagraph});
+  NoteParagraph({
+    super.key,
+    required this.id,
+    required this.reportFocusParagraph,
+  });
+
   String get text => '';
   int get rawLength => 0;
   String get widgets => '';
