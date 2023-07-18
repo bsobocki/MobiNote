@@ -1,5 +1,1 @@
-enum WidgetMode {
-  edit,
-  read,
-  invisible
-}
+enum WidgetMode { edit, show, invisible }

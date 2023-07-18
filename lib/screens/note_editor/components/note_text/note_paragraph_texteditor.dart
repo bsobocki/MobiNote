@@ -17,7 +17,9 @@ class NoteParagraphTextEditor extends NoteParagraph {
   void Function(String) onChange;
   void Function(int, String) addParagraph;
   void Function(int) deleteParagraph;
+
   late Function(String)? appendControllerText;
+  late Function()? addPlaceholder;
 
   NoteParagraphTextEditor(
       {required super.id,
@@ -112,6 +114,15 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
     }
   }
 
+  void addPlaceholder() {
+    var no200bchar = controller.text.replaceAll(placeholder, "+");
+    debugPrint("we want to add placeholder to '$no200bchar'");
+    if (controller.text.isEmpty || controller.text[0] != placeholder) {
+      controller.text = placeholder + controller.text;
+      debugPrint("placeholder added! for '${controller.text.replaceAll(placeholder, '+')}");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -121,6 +132,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
     controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);
     widget.appendControllerText = appendText;
+    widget.addPlaceholder = addPlaceholder;
     focusNode.addListener(foucusAction);
     if (!widget.isInitialized) {
       focusNode.requestFocus();
