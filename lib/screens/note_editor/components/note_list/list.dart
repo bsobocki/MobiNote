@@ -8,6 +8,11 @@ class NoteListWidget extends NoteEditorWidget {
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
+  
+  @override
+  void setMode(WidgetMode mode) {
+    // TODO: implement setMode
+  }
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NoteParagraph extends StatefulWidget {
+abstract class NoteParagraph extends StatefulWidget {
   final int id;
   void Function(int id) reportFocusParagraph;
 
@@ -10,10 +10,10 @@ class NoteParagraph extends StatefulWidget {
     required this.reportFocusParagraph,
   });
 
-  String get text => '';
-  int get rawLength => 0;
-  String get widgets => '';
-  String get str => '$id: ';
+  String get text;
+  int get rawLength;
+  String get widgetTree;
+  String get str;
 
   @override
   State<NoteParagraph> createState() => _NoteParagraphState();

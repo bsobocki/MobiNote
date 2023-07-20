@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
-import 'package:mobi_note/screens/note_editor/components/note_paragraph.dart';
+import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/note_paragraph_controller.dart';
 
 import '../../../../logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
@@ -18,8 +18,8 @@ class NoteParagraphTextEditor extends NoteParagraph {
   void Function(int, String) addParagraph;
   void Function(int) deleteParagraph;
 
-  late Function(String)? appendControllerText;
-  late Function()? addPlaceholder;
+  late Function(String)? _appendTextInState;
+  late Function()? _addPlaceholderInState;
 
   NoteParagraphTextEditor(
       {required super.id,
@@ -43,18 +43,26 @@ class NoteParagraphTextEditor extends NoteParagraph {
     return '';
   }
 
+  void addPlaceholder() {
+    if (_addPlaceholderInState == null) {
+      paragraphText = placeholder + paragraphText;
+    } else {
+      _addPlaceholderInState!();
+    }
+  }
+
   void append(String text) {
-    if (appendControllerText == null) {
+    if (_appendTextInState == null) {
       paragraphText += text;
     } else {
-      appendControllerText!(text);
+      _appendTextInState!(text);
     }
   }
 
   @override
   int get rawLength => paragraphText.length;
   @override
-  String get widgets => '';
+  String get widgetTree => '';
   @override
   String get str => '$id: $paragraphText';
 
@@ -119,7 +127,8 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
     debugPrint("we want to add placeholder to '$no200bchar'");
     if (controller.text.isEmpty || controller.text[0] != placeholder) {
       controller.text = placeholder + controller.text;
-      debugPrint("placeholder added! for '${controller.text.replaceAll(placeholder, '+')}");
+      debugPrint(
+          "placeholder added! for '${controller.text.replaceAll(placeholder, '+')}");
     }
   }
 
@@ -131,8 +140,8 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
     controller.text = widget.paragraphText;
     controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);
-    widget.appendControllerText = appendText;
-    widget.addPlaceholder = addPlaceholder;
+    widget._appendTextInState = appendText;
+    widget._addPlaceholderInState = addPlaceholder;
     focusNode.addListener(foucusAction);
     if (!widget.isInitialized) {
       focusNode.requestFocus();
@@ -144,7 +153,8 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   void dispose() {
     controller.dispose();
     focusNode.dispose();
-    widget.appendControllerText = null;
+    widget._appendTextInState = null;
+    widget._addPlaceholderInState = null;
     super.dispose();
   }
 

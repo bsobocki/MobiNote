@@ -4,10 +4,15 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/definition
 abstract class NoteEditorWidget extends StatefulWidget {
   WidgetMode mode = WidgetMode.show;
   List<NoteEditorWidget> elements = [];
+  void Function()? focusOnAction;
+  void Function()? focusOffAction;
+  void Function()? onTap;
+  void Function(WidgetMode)? setModeInState;
 
   void setMode(WidgetMode mode) {
-    debugPrint('i changed mode to: ${mode == WidgetMode.edit ? 'edit' : 'other'}');
-    this.mode = mode;
+    if (setModeInState != null) {
+      setModeInState!(mode);
+    }
   }
 
   NoteEditorWidget({super.key});

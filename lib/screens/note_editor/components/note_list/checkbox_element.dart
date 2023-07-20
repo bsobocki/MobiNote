@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteCheckboxWidget extends NoteEditorWidget {
@@ -10,6 +11,11 @@ class NoteCheckboxWidget extends NoteEditorWidget {
 
   @override
   State<NoteCheckboxWidget> createState() => _NoteCheckboxWidgetState();
+
+  @override
+  void setMode(WidgetMode mode) {
+    // TODO: implement setMode
+  }
 }
 
 class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {

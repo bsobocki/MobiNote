@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+
 void callIfNotNull(Function()? foo) {
-  foo ?? () {}();
+  if (foo != null) {
+    foo();
+  } else {
+    debugPrint('cannot call foo!!');
+  }
 }

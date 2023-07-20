@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/screens/note_editor/components/note_paragraphs.dart';
+import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraphs.dart';
 import 'package:image_picker/image_picker.dart';
 
 int change = 1;

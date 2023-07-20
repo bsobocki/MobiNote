@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteCheckboxWidget extends NoteEditorWidget {
