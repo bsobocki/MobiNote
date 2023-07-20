@@ -90,13 +90,14 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   void onTap() {
     debugPrint("WIDGET PARAGRAPH: onTap action is called!!!");
     FocusScope.of(context).requestFocus(focusNode);
-    if (focusNode.hasFocus) debugPrint( "WIDGET PARAGRAPH:  no focus to on maa...");
+    if (focusNode.hasFocus)
+      debugPrint("WIDGET PARAGRAPH:  no focus to on maa...");
   }
 
   @override
   void initState() {
     super.initState();
-    focusNode  = FocusNode();
+    focusNode = FocusNode();
     debugPrint("init state of note widget paragraph!!!");
     widget.addWidget = addWidget;
     for (var elem in widget.elements) {
@@ -118,8 +119,16 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Row(
-        children: elements,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 8.0,
+          bottom: 8.0,
+          left: 4.0,
+          right: 4.0,
+        ),
+        child: Row(
+          children: elements,
+        ),
       ),
     );
   }
