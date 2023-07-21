@@ -16,7 +16,6 @@ class NoteParagraphTextEditor extends NoteParagraph {
   String paragraphText;
   void Function(String) onChange;
   void Function(int, String) addParagraph;
-  void Function(int) deleteParagraph;
 
   late Function(String)? _appendTextInState;
   late Function()? _addPlaceholderInState;
@@ -27,7 +26,7 @@ class NoteParagraphTextEditor extends NoteParagraph {
       required this.paragraphText,
       required this.onChange,
       required this.addParagraph,
-      required this.deleteParagraph})
+      required super.deleteParagraph})
       : super(key: ValueKey('NoteParagraph_$id')) {
     paragraphText = '$placeholder$paragraphText';
   }

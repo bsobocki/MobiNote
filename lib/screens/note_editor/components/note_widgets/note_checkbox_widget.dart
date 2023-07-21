@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteCheckboxWidget extends NoteEditorWidget {
   bool value = false;
-  void Function() onTrue;
-  void Function() onFalse;
+  void Function()? onTrue;
+  void Function()? onFalse;
 
-  NoteCheckboxWidget({super.key, required this.onTrue, required this.onFalse});
+  NoteCheckboxWidget({super.key, required this.onTrue, required this.onFalse, required super.id, super.type = 'checkbox'});
 
   @override
   State<NoteCheckboxWidget> createState() => _NoteCheckboxWidgetState();
@@ -19,9 +20,9 @@ class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
       widget.value = newValue;
 
       if (newValue) {
-        widget.onTrue();
+        callIfNotNull(widget.onTrue);
       } else {
-        widget.onFalse();
+        callIfNotNull(widget.onFalse);
       }
     }
   }

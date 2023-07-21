@@ -1,14 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
+import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 
 import 'definitions/widget_mode.dart';
 
 class NoteImageWidget extends NoteEditorWidget {
-  NoteImageWidget({super.key, required this.path});
-  final String path;
+  NoteImageWidget(
+      {super.key, required this.path, required super.id, super.type = 'image'});
+  String path;
 
   @override
   State<NoteImageWidget> createState() => _NoteImageWidgetState();
@@ -16,8 +19,7 @@ class NoteImageWidget extends NoteEditorWidget {
 
 class _NoteImageWidgetState extends State<NoteImageWidget> {
   void setMode(WidgetMode mode) => setState(() {
-        debugPrint(
-            "Image mode set to: ${mode == WidgetMode.edit ? 'edit' : 'other'}");
+        debugPrint("Image mode set to: $mode");
         widget.mode = mode;
         for (var elem in widget.elements) {
           elem.setMode(mode);
@@ -25,12 +27,16 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       });
 
   BoxDecoration getBoxDecorationForMode(WidgetMode mode) {
-    debugPrint(
-        "building image in mode: ${mode == WidgetMode.edit ? 'edit' : 'other'}");
-    if (mode == WidgetMode.edit) {
-      return BoxDecoration(border: Border.all(color: Colors.white, width: 4.0), color: Colors.white);
+    debugPrint("building image in mode: $mode");
+    switch (mode) {
+      case WidgetMode.edit:
+      case WidgetMode.selected:
+        return BoxDecoration(
+            border: Border.all(color: Colors.white, width: 4.0),
+            color: Colors.white);
+      default:
+        return const BoxDecoration(border: Border(), color: Colors.white);
     }
-    return const BoxDecoration(border: Border(), color: Colors.white);
   }
 
   @override
@@ -40,11 +46,17 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   }
 
   Widget getWidgetBasedOnMode() {
-    if (widget.mode == WidgetMode.edit) return editModeWidget();
-    return showModeWidget();
+    switch (widget.mode) {
+      case WidgetMode.edit:
+        return editModeWidget();
+      case WidgetMode.selected:
+        return selectedModeWidget();
+      default:
+        return showModeWidget();
+    }
   }
 
-  Widget getWidget(double opacity) {
+  Widget getWidget({double opacity = 1.0}) {
     return Container(
       decoration: getBoxDecorationForMode(widget.mode),
       child: Opacity(
@@ -57,12 +69,16 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   }
 
   Widget showModeWidget() {
-    return getWidget(1.0);
+    return getWidget();
   }
 
   Widget editModeWidget() {
+    return getWidget();
+  }
+
+  Widget selectedModeWidget() {
     return Stack(children: [
-      getWidget(0.8),
+      getWidget(opacity: 0.8),
       Center(
         child: Align(
           alignment: Alignment.center,
@@ -71,7 +87,9 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
             children: [
               IconButton(
                 onPressed: () {
-                  debugPrint('need to remove!!!!!!!!');
+                  if (widget.removeFromParent != null) {
+                    widget.removeFromParent!(widget.id);
+                  }
                 },
                 icon: const Icon(
                   Icons.disabled_by_default_rounded,
@@ -79,8 +97,13 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                 ),
               ),
               IconButton(
-                onPressed: () {
-                  debugPrint('EDIT THIS IMAGE!!! ');
+                onPressed: () async {
+                  String newPath = await chooseImage();
+                  if (newPath.isNotEmpty) {
+                    setState(() {
+                      widget.path = newPath;
+                    });
+                  }
                 },
                 icon: const Icon(
                   Icons.edit_square,
@@ -98,9 +121,13 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () {
-          callIfNotNull(widget.onTap);
+        onDoubleTap: () {
+          callIfNotNull(widget.onInteract);
           setMode(WidgetMode.edit);
+        },
+        onLongPress: () {
+          setMode(WidgetMode.selected);
+          callIfNotNull(widget.onInteract);
         },
         child: getWidgetBasedOnMode(),
       ),

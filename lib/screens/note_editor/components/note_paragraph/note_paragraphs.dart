@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
@@ -8,7 +7,6 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_image
 
 import 'note_paragraph_texteditor.dart';
 import 'note_paragraph_widget.dart';
-import '../note_widgets/note_widget.dart';
 
 class NoteParagraphs {
   IdGenerator paragraphIdGenerator = IdGenerator();
@@ -55,7 +53,8 @@ class NoteParagraphs {
 
   void reportFocusParagraph(int paragraphId) {
     focusedParagraphId = paragraphId;
-    debugPrint("== REPORT FOCUS === Now, the paragraph $focusedParagraphId is focuded one.");
+    debugPrint(
+        "== REPORT FOCUS === Now, the paragraph $focusedParagraphId is focuded one.");
   }
 
   void createParagraphs(String text) {
@@ -83,10 +82,10 @@ class NoteParagraphs {
     paragraphs.add(newParagraph);
   }
 
-  void addNoteImageWidget(String path) {
+  Future<void> addParagraphWithImage() async {
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
-    noteParagraphWidget.addWidget(NoteImageWidget(path: path));
+    await noteParagraphWidget.addWidgetByType('image');
     paragraphs.insert(
       focusedParagraphIndex + 1,
       noteParagraphWidget,
@@ -123,20 +122,24 @@ class NoteParagraphs {
         var currParagraph = paragraphs[index];
         String newText = currParagraph.text;
         if (found(index) && prevIndex >= 0) {
-          var prevParagraph = paragraphs[prevIndex];
-          if (prevParagraph is NoteParagraphTextEditor) {
-            var foundedParagraphEditor =
-                paragraphs[prevIndex] as NoteParagraphTextEditor;
-            newText = foundedParagraphEditor.text + paragraphs[index].text;
-            int cursor = foundedParagraphEditor.rawLength;
-            paragraphs[prevIndex] = createNoteParagraphTextEditor(newText)
-              ..cursor = cursor;
+          if (currParagraph is NoteParagraphWidget) {
             paragraphs.removeAt(index);
-          } else if (prevParagraph is NoteParagraphWidget) {
-            prevParagraph.setMode!(WidgetMode.edit);
-            prevParagraph.requestFocus();
-            if (currParagraph is NoteParagraphTextEditor) {
-              currParagraph.addPlaceholder();
+          } else {
+            var prevParagraph = paragraphs[prevIndex];
+            if (prevParagraph is NoteParagraphTextEditor) {
+              var foundedParagraphEditor =
+                  paragraphs[prevIndex] as NoteParagraphTextEditor;
+              newText = foundedParagraphEditor.text + paragraphs[index].text;
+              int cursor = foundedParagraphEditor.rawLength;
+              paragraphs[prevIndex] = createNoteParagraphTextEditor(newText)
+                ..cursor = cursor;
+              paragraphs.removeAt(index);
+            } else if (prevParagraph is NoteParagraphWidget) {
+              prevParagraph.setMode!(WidgetMode.edit);
+              prevParagraph.requestFocus();
+              if (currParagraph is NoteParagraphTextEditor) {
+                currParagraph.addPlaceholder();
+              }
             }
           }
         }
@@ -147,6 +150,7 @@ class NoteParagraphs {
     return NoteParagraphWidget(
       id: paragraphIdGenerator.nextId,
       reportFocusParagraph: reportFocusParagraph,
+      deleteParagraph: deleteNoteParagraph,
       widgetJSON: '',
     );
   }

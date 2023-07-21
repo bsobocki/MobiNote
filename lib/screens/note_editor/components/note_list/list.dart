@@ -4,15 +4,10 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import '../note_widgets/definitions/widget_mode.dart';
 
 class NoteListWidget extends NoteEditorWidget {
-  NoteListWidget({super.key});
+  NoteListWidget({super.key, required super.id, super.type = 'list'});
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
-  
-  @override
-  void setMode(WidgetMode mode) {
-    // TODO: implement setMode
-  }
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {

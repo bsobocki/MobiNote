@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraphs.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 
 int change = 1;
 String lastNewText = "";
@@ -25,7 +26,6 @@ class ContentEditor extends StatefulWidget {
 }
 
 class _ContentEditorState extends State<ContentEditor> {
-  ImagePicker picker = ImagePicker();
   bool contentChanged = false;
   late NoteParagraphs paragraphs;
   int focusedParagraphId = -1;
@@ -38,17 +38,13 @@ class _ContentEditorState extends State<ContentEditor> {
     });
   }
 
-  void chooseAndAddImage() async {
-    XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        debugPrint("add image from: ${image.path}");
-        paragraphs.addNoteImageWidget(image.path);
-        for (var p in paragraphs.paragraphs) {
-          debugPrint(p.str);
-        }
-      });
-    }
+  void addParagraphWithImage() async {
+    await paragraphs.addParagraphWithImage();
+    setState(() {
+      for (var p in paragraphs.paragraphs) {
+        debugPrint(p.str);
+      }
+    });
   }
 
   void onChange(String newText) => widget.onContentChange(newText);
@@ -72,7 +68,7 @@ class _ContentEditorState extends State<ContentEditor> {
         toolbarHeight: 30,
         actions: [
           IconButton(
-              onPressed: chooseAndAddImage, icon: const Icon(Icons.image))
+              onPressed: addParagraphWithImage, icon: const Icon(Icons.image))
         ],
       ),
       body: Padding(
