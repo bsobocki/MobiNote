@@ -72,13 +72,14 @@ class _ContentEditorState extends State<ContentEditor> {
         ],
       ),
       body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemCount: paragraphs.length,
-            itemBuilder: (context, index) {
-              return paragraphs.at(index);
-            },
-          )),
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: paragraphs.length,
+          itemBuilder: (context, index) {
+            return paragraphs.at(index);
+          },
+        ),
+      ),
       backgroundColor: const Color.fromARGB(
         255,
         75,

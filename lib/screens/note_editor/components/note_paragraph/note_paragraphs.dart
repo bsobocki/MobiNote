@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
+import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph_placeholder.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/note_image_widget.dart';
 
 import 'note_paragraph_texteditor.dart';
 import 'note_paragraph_widget.dart';
@@ -37,7 +38,6 @@ class NoteParagraphs {
       for (int i = 0; i < paragraphs.length - 1; i++) {
         returnText += "${paragraphs[i].text}\n";
       }
-      returnText += paragraphs.last.text;
     }
     return returnText;
   }
@@ -75,6 +75,15 @@ class NoteParagraphs {
         addNewNoteParagraphEditor(currText);
       }
     }
+    paragraphs.add(
+      NoteParagraphPlaceholder(
+        id: paragraphIdGenerator.nextId,
+        onTap: () {
+          var lastValidParagraph = paragraphs[paragraphs.length - 2];
+          lastValidParagraph.requestFocus();
+        },
+      ),
+    );
   }
 
   void addNewNoteParagraphEditor(String text) {

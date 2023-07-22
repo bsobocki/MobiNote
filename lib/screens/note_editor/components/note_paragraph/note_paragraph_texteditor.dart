@@ -134,6 +134,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   @override
   void initState() {
     super.initState();
+    widget.requestFocusInState = () => focusNode.requestFocus();
     controller =
         ParagraphController(id: widget.id, resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;

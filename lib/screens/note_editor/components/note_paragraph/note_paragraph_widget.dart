@@ -29,11 +29,6 @@ class NoteParagraphWidget extends NoteParagraph {
   void Function(WidgetMode mode)? setMode;
   void Function(int)? removeFromParent;
 
-  void Function()? requestFocusInState;
-
-  void requestFocus() {
-    callIfNotNull(requestFocusInState);
-  }
 
   void _addWidget(NoteEditorWidget widget) {
     debugPrint("noteparagraphwidget: add widget: $widget");
