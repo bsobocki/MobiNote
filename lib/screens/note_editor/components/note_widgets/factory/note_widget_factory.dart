@@ -7,8 +7,11 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 
 class NoteEditorWidgetFactory {
-  IdGenerator stateIdGenerator = IdGenerator();
-  NoteEditorWidgetFactory();
+  final int startId;
+  late IdGenerator stateIdGenerator;
+  NoteEditorWidgetFactory({this.startId = 0}) {
+    stateIdGenerator = IdGenerator(currId: startId);
+  }
 
   Future<NoteEditorWidget> create(String type) async {
     int id = stateIdGenerator.nextId;
@@ -17,7 +20,7 @@ class NoteEditorWidgetFactory {
         String path = await chooseImage();
         return NoteImageWidget(path: path, id: id);
       case 'checkbox':
-        return NoteCheckboxWidget(onTrue: null, onFalse: null, id: id);
+        return NoteCheckboxWidget(id: id);
       default:
         return NoteListWidget(id: id);
     }

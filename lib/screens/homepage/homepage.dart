@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           IconButton(
               onPressed: () => rebuildDatabase(),
-              icon: const Icon(Icons.skateboarding_outlined))
+              icon: const Icon(Icons.build_circle_sharp))
         ],
       ),
       body: Container(

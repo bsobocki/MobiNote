@@ -1,5 +1,5 @@
 class IdGenerator {
-  int currId = 0;
+  int currId;
   int get nextId => currId++;
-  IdGenerator();
+  IdGenerator({this. currId = 0});
 }

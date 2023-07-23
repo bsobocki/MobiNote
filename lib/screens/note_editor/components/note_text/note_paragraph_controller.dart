@@ -4,12 +4,12 @@ import 'package:mobi_note/logic/note_editor/text_editor/parser/span_info_convert
 import '../../../../logic/note_editor/text_editor/parser/mark_text_converter.dart';
 
 class ParagraphController extends TextEditingController {
-  final int id;
+  
   TextSpan paragraph = const TextSpan(text: "Enter a note");
   void Function(double) resizeTextField;
   bool isFocused = false;
 
-  ParagraphController({required this.id, required this.resizeTextField});
+  ParagraphController({required this.resizeTextField});
 
   TextSpan parseText() {
     int cursorPosition = selection.baseOffset;

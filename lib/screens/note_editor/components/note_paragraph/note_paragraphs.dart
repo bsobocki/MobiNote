@@ -91,10 +91,10 @@ class NoteParagraphs {
     paragraphs.add(newParagraph);
   }
 
-  Future<void> addParagraphWithImage() async {
+  Future<void> addParagraphWithWidget(String type) async {
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
-    await noteParagraphWidget.addWidgetByType('image');
+    await noteParagraphWidget.addWidgetByType(type);
     paragraphs.insert(
       focusedParagraphIndex + 1,
       noteParagraphWidget,

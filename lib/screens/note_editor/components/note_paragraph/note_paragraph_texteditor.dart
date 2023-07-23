@@ -136,7 +136,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
     super.initState();
     widget.requestFocusInState = () => focusNode.requestFocus();
     controller =
-        ParagraphController(id: widget.id, resizeTextField: resizeTextField);
+        ParagraphController(resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
     controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);

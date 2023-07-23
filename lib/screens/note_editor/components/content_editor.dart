@@ -39,13 +39,17 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void addParagraphWithImage() async {
-    await paragraphs.addParagraphWithImage();
+    await paragraphs.addParagraphWithWidget('image');
     setState(() {
       for (var p in paragraphs.paragraphs) {
         debugPrint(p.str);
       }
     });
   }
+
+  void addParagraphWithList() => setState(() {
+        paragraphs.addParagraphWithWidget('list');
+      });
 
   void onChange(String newText) => widget.onContentChange(newText);
 
@@ -54,9 +58,10 @@ class _ContentEditorState extends State<ContentEditor> {
     super.initState();
     widget.text = text;
     paragraphs = NoteParagraphs(
-        onChange: onChange,
-        initContent: widget.initContent,
-        setContentEditorState: setContentEditorState);
+      onChange: onChange,
+      initContent: widget.initContent,
+      setContentEditorState: setContentEditorState,
+    );
   }
 
   @override
@@ -68,7 +73,9 @@ class _ContentEditorState extends State<ContentEditor> {
         toolbarHeight: 30,
         actions: [
           IconButton(
-              onPressed: addParagraphWithImage, icon: const Icon(Icons.image))
+              onPressed: addParagraphWithImage, icon: const Icon(Icons.image)),
+          IconButton(
+              onPressed: addParagraphWithList, icon: const Icon(Icons.list))
         ],
       ),
       body: Padding(

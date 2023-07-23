@@ -29,7 +29,6 @@ class NoteParagraphWidget extends NoteParagraph {
   void Function(WidgetMode mode)? setMode;
   void Function(int)? removeFromParent;
 
-
   void _addWidget(NoteEditorWidget widget) {
     debugPrint("noteparagraphwidget: add widget: $widget");
     elements.add(widget);
@@ -37,7 +36,7 @@ class NoteParagraphWidget extends NoteParagraph {
 
   Future<void> _addWidgetByType(String type) async {
     var widget = await widgetFactory.create(type);
-    debugPrint("noteparagraphwidget: add widget: $type");
+    debugPrint("noteparagraphwidget: add widget by type: $type");
     elements.add(widget);
   }
 

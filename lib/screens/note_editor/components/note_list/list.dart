@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/note_list/list_element.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 import '../note_widgets/definitions/widget_mode.dart';
 
@@ -11,25 +12,37 @@ class NoteListWidget extends NoteEditorWidget {
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {
-  WidgetMode mode = WidgetMode.edit;
+  NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory(startId: 1);
+
+  void addElement() async {
+    NoteListElement elem =
+        await widgetFactory.create('list_element') as NoteListElement;
+    setState(() {
+      widget.elements.add(elem);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    widget.elements = [NoteListElement(id: 0)];
   }
 
   Widget createEditMode() {
-    return Column(
-      children: [
-        
-      ]
-    );
+    return Column(children: []);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: widget.elements,
+    return Expanded(
+      child: IntrinsicHeight(
+        child: Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Column(
+            children: widget.elements,
+          ),
+        ),
+      ),
     );
   }
 }

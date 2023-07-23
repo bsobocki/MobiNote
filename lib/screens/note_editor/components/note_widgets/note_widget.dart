@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 
 abstract class NoteEditorWidget extends StatefulWidget {
   final int id;
   final String type;
+  
   WidgetMode mode = WidgetMode.show;
   List<NoteEditorWidget> elements = [];
   void Function()? focusOnAction;
