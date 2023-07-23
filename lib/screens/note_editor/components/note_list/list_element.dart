@@ -27,11 +27,8 @@ class _NoteListElementState extends State<NoteListElement> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(1.0),
-      child: Row(
-        children: widget.elements,
-      ),
+    return Row(
+      children: widget.elements,
     );
   }
 }

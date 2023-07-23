@@ -31,6 +31,10 @@ class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Checkbox(value: widget.value, onChanged: onChanged);
+    return SizedBox(
+      width: paragraphDefaultFontSize,
+      height: paragraphDefaultFontSize,
+      child: Checkbox(value: widget.value, onChanged: onChanged),
+    );
   }
 }

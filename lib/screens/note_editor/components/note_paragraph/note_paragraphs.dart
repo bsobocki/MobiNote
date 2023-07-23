@@ -95,12 +95,21 @@ class NoteParagraphs {
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
     await noteParagraphWidget.addWidgetByType(type);
+    int newItemIndex = focusedParagraphIndex + 1;
+
+    if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor) {
+      if (paragraphs[focusedParagraphIndex].text.isEmpty) {
+        paragraphs.removeAt(focusedParagraphIndex);
+        newItemIndex = focusedParagraphIndex;
+      }
+    }
+
     paragraphs.insert(
-      focusedParagraphIndex + 1,
+      newItemIndex,
       noteParagraphWidget,
     );
-    paragraphs.insert(
-        focusedParagraphIndex + 2, createNoteParagraphTextEditor(''));
+
+    paragraphs.insert(newItemIndex + 1, createNoteParagraphTextEditor(''));
   }
 
   void addEmptyNoteParagraphWidget() {

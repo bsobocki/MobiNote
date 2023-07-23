@@ -36,11 +36,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: IntrinsicHeight(
-        child: Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: Column(
-            children: widget.elements,
-          ),
+        child: Column(
+          children: widget.elements,
         ),
       ),
     );

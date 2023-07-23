@@ -48,7 +48,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.all(1.0),
+        padding: const EdgeInsets.only(left: 10.0),
         child: IntrinsicHeight(
           child: TextField(
             expands: true,
