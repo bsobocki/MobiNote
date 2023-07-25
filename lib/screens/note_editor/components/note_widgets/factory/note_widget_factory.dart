@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/screens/note_editor/components/note_list/list.dart';
+import 'package:mobi_note/screens/note_editor/components/note_list/list_element.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_checkbox_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_image_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';

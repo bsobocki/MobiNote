@@ -5,17 +5,17 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 
 class NoteTextEditorWidget extends NoteEditorWidget {
   NoteTextEditorWidget(
-      {super.key, required super.id, super.type = 'text_editor'});
+      {super.key, required super.id, super.widgetType = 'text_editor'});
   double fontSize = paragraphDefaultFontSize;
   bool isTextStrike = false;
 
-  void Function()? setState;
+  void Function(String)? setControllerTextType;
 
   void strikeText() {
     isTextStrike = true;
     debugPrint('TEXT EDITOR WIDGET: set strike to $isTextStrike');
-    if (setState != null) {
-      setState!();
+    if (setControllerTextType != null) {
+      setControllerTextType!('strikethrough');
     } else {
       debugPrint('setState is NULL!!!!!!!!!!!');
     }
@@ -24,8 +24,8 @@ class NoteTextEditorWidget extends NoteEditorWidget {
   void unStrikeText() {
     isTextStrike = false;
     debugPrint('TEXT EDITOR WIDGET: set strike to $isTextStrike');
-    if (setState != null) {
-      setState!();
+    if (setControllerTextType != null) {
+      setControllerTextType!('');
     }
   }
 
@@ -40,9 +40,13 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
   @override
   void initState() {
     super.initState();
-    widget.setState = () => setState(() {});
+    widget.setControllerTextType = setControllerTextType;
     controller = ParagraphController(resizeTextField: resizeTextField);
   }
+
+  void setControllerTextType(String newType) => setState(() {
+        controller.setMainType(newType);
+      });
 
   @override
   Widget build(BuildContext context) {

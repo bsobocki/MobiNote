@@ -4,22 +4,38 @@ import 'package:mobi_note/logic/note_editor/text_editor/parser/span_info_convert
 import '../../../../logic/note_editor/text_editor/parser/mark_text_converter.dart';
 
 class ParagraphController extends TextEditingController {
-  
-  TextSpan paragraph = const TextSpan(text: "Enter a note");
+  String mainType = '';
   void Function(double) resizeTextField;
   bool isFocused = false;
 
   ParagraphController({required this.resizeTextField});
 
+  void setMainType(String newType) {
+    mainType = newType;
+  }
+
   TextSpan parseText() {
     int cursorPosition = selection.baseOffset;
-    var unicodeMarkedText = 
-        StyledTextToUtfConverter().textWithConvertedMarks(text, cursorPosition: cursorPosition, showParagraphChars: isFocused);
-    var spanInfoParsedContent =
-        UnicodeMarkedTextParser().parseUnicodeMarkedText(unicodeMarkedText, showParagraphChars: isFocused);
+
+    var unicodeMarkedText = StyledTextToUtfConverter().textWithConvertedMarks(
+        text,
+        cursorPosition: cursorPosition,
+        showParagraphChars: isFocused);
+
+    var spanInfoParsedContent = UnicodeMarkedTextParser()
+        .parseUnicodeMarkedText(unicodeMarkedText,
+            showParagraphChars: isFocused);
+
+    if (mainType.isNotEmpty) {
+      spanInfoParsedContent.spanInfo.type = mainType;
+    }
+
     var spanTree = SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo)
         as TextSpan;
-    resizeTextField(spanTree.style!.fontSize!);
+
+    if (spanTree.style!.fontSize != null) {
+      resizeTextField(spanTree.style!.fontSize!);
+    }
     return spanTree;
   }
 

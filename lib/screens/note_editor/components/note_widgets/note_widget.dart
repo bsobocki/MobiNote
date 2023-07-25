@@ -4,8 +4,8 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/no
 
 abstract class NoteEditorWidget extends StatefulWidget {
   final int id;
-  final String type;
-  
+  final String widgetType;
+
   WidgetMode mode = WidgetMode.show;
   List<NoteEditorWidget> elements = [];
   void Function()? focusOnAction;
@@ -21,7 +21,7 @@ abstract class NoteEditorWidget extends StatefulWidget {
     }
   }
 
-  NoteEditorWidget({super.key, required this.id, required this.type});
+  NoteEditorWidget({super.key, required this.id, required this.widgetType});
 
   void addWidget(NoteEditorWidget widget) {
     elements.add(widget);

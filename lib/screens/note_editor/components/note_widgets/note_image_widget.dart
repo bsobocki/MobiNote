@@ -10,7 +10,7 @@ import 'definitions/widget_mode.dart';
 
 class NoteImageWidget extends NoteEditorWidget {
   NoteImageWidget(
-      {super.key, required this.path, required super.id, super.type = 'image'});
+      {super.key, required this.path, required super.id, super.widgetType = 'image'});
   String path;
 
   @override

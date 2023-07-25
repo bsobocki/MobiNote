@@ -1,28 +1,64 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_checkbox_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_text_editor_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
+import '../note_widgets/note_label_widget.dart';
+
+enum ElementType { checkbox, number, marks, custom }
+
 class NoteListElement extends NoteEditorWidget {
-  NoteListElement({super.key, required super.id, super.type = 'list'});
+  final int depth;
+  final ElementType elemType;
+  final int initCounterValue;
+  final int infoPageId;
+
+  NoteListElement(
+      {super.key,
+      required super.id,
+      required this.depth,
+      required this.elemType,
+      this.initCounterValue = -1,
+      this.infoPageId = -1,
+      super.widgetType = 'list_element'});
 
   @override
   State<NoteListElement> createState() => _NoteListElementState();
 }
 
 class _NoteListElementState extends State<NoteListElement> {
-  NoteCheckboxWidget checkbox = NoteCheckboxWidget(id: 0);
   NoteTextEditorWidget textEditor = NoteTextEditorWidget(id: 1);
+
+  void setMode(WidgetMode mode) => setState(() {
+        widget.mode = mode;
+      });
+
+  NoteEditorWidget getLabel() {
+    int id = 0;
+    switch (widget.elemType) {
+      case ElementType.checkbox:
+        return NoteCheckboxWidget(
+          id: id,
+          onTrue: () => setState(() => textEditor.strikeText()),
+          onFalse: () => setState(() => textEditor.unStrikeText()),
+        );
+      case ElementType.marks:
+        return NoteLabelWidget(id: id, label: '-');
+      case ElementType.number:
+        return NoteLabelWidget(id: id, label: id.toString());
+      default:
+        return NoteLabelWidget(id: id, label: '*');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    checkbox.onTrue = () => setState(() => textEditor.strikeText());
-    checkbox.onFalse =() => setState(() => textEditor.unStrikeText());
-    widget.elements = [
-      checkbox,
-      textEditor
-    ];
+
+    widget.elements = [getLabel(), textEditor];
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteCheckboxWidget extends NoteEditorWidget {
@@ -9,13 +8,20 @@ class NoteCheckboxWidget extends NoteEditorWidget {
   void Function()? onTrue;
   void Function()? onFalse;
 
-  NoteCheckboxWidget({super.key, required super.id, super.type = 'checkbox'});
+  NoteCheckboxWidget(
+      {super.key,
+      required super.id,
+      this.onTrue,
+      this.onFalse,
+      super.widgetType = 'checkbox'});
 
   @override
   State<NoteCheckboxWidget> createState() => _NoteCheckboxWidgetState();
 }
 
 class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
+  Color color = Colors.white;
+
   void onChanged(bool? newValue) => setState(() {
         if (newValue != null) {
           widget.value = newValue;
@@ -34,7 +40,7 @@ class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
     return SizedBox(
       width: paragraphDefaultFontSize,
       height: paragraphDefaultFontSize,
-      child: Checkbox(value: widget.value, onChanged: onChanged),
+      child: Checkbox(value: widget.value, onChanged: onChanged, checkColor: Colors.grey, overlayColor: const MaterialStatePropertyAll(Colors.white),),
     );
   }
 }
