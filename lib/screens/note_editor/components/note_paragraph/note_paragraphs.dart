@@ -126,7 +126,7 @@ class NoteParagraphs {
           int index = paragraphs.length - 1;
           int prevParagraphIndex = paragraphIndexOf(prevParagraphId);
 
-          if (found(prevParagraphIndex)) {
+          if (exists(prevParagraphIndex)) {
             index = prevParagraphIndex + 1;
           }
 
@@ -139,7 +139,7 @@ class NoteParagraphs {
         int prevIndex = index - 1;
         var currParagraph = paragraphs[index];
         String newText = currParagraph.text;
-        if (found(index) && prevIndex >= 0) {
+        if (exists(index) && prevIndex >= 0) {
           if (currParagraph is NoteParagraphWidget) {
             paragraphs.removeAt(index);
           } else {

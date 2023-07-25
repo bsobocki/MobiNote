@@ -29,7 +29,7 @@ class StyledTextToUtfConverter {
     startIndex = firstNonWhitespace(text);
     addStringToBuff(text, 0, startIndex);
 
-    if (!found(startIndex)) {
+    if (!exists(startIndex)) {
       return text;
     }
 
@@ -48,7 +48,7 @@ class StyledTextToUtfConverter {
         var context = characterContext(text, i);
         if (matchesStyleBoundaryEnd(context)) {
           var boundIndex = startBoundIndex(character);
-          if (found(boundIndex)) {
+          if (exists(boundIndex)) {
             convertStyleBoundaryMarks(character, boundIndex);
             continue;
           }
@@ -73,7 +73,7 @@ class StyledTextToUtfConverter {
           var tag = firstMatch(text, i, tags);
           if (tag.isNotEmpty) {
             var tagIndex = startTags.indexWhere((e) => e.character == tag);
-            if (found(tagIndex)) {
+            if (exists(tagIndex)) {
               convertWidgetTags(tag, tagIndex);
               i += tag.length - 1;
               continue;

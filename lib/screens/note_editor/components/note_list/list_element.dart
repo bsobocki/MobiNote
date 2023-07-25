@@ -14,27 +14,32 @@ class NoteListElement extends NoteEditorWidget {
   final int depth;
   final ElementType elemType;
   final int initCounterValue;
+  final String initText;
   final int infoPageId;
 
+  void Function(int, String) addNewElement;
+
   NoteListElement(
-      {super.key,
-      required super.id,
+      {required super.id,
       required this.depth,
       required this.elemType,
+      required this.addNewElement,
+      this.initText = '',
       this.initCounterValue = -1,
       this.infoPageId = -1,
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
       super.removeFromParent,
-      super.widgetType = 'list_element'});
+      super.widgetType = 'list_element'})
+      : super(key: ValueKey('ListElement_$id'));
 
   @override
   State<NoteListElement> createState() => _NoteListElementState();
 }
 
 class _NoteListElementState extends State<NoteListElement> {
-  NoteTextEditorWidget textEditor = NoteTextEditorWidget(id: 1);
+  late NoteTextEditorWidget textEditor;
 
   void setMode(WidgetMode mode) => setState(() {
         widget.mode = mode;
@@ -50,18 +55,32 @@ class _NoteListElementState extends State<NoteListElement> {
           onFalse: () => setState(() => textEditor.unStrikeText()),
         );
       case ElementType.marks:
-        return NoteLabelWidget(id: id, label: '-');
+        return NoteLabelWidget(
+          id: id,
+          label: '-',
+        );
       case ElementType.number:
-        return NoteLabelWidget(id: id, label: id.toString());
+        return NoteLabelWidget(
+          id: id,
+          label: id.toString(),
+        );
       default:
-        return NoteLabelWidget(id: id, label: '*');
+        return NoteLabelWidget(
+          id: id,
+          label: '*',
+        );
     }
   }
 
   @override
   void initState() {
     super.initState();
-
+    textEditor = NoteTextEditorWidget(
+      id: 1,
+      onInteract: widget.onInteract,
+      addNewElement: widget.addNewElement,
+      elementText: widget.initText,
+    );
     widget.elements = [getLabel(), textEditor];
   }
 

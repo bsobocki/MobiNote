@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
@@ -75,13 +76,15 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
 
   void resizeTextField(double newSize) => widget.fontSize = newSize;
 
-  void appendText(String text) {
-    setState(() {
+  bool needToDelete(String text) {
+    return text.isEmpty || (text.isNotEmpty && text[0] != placeholder);
+  }
+
+  void appendText(String text) => setState(() {
       debugPrint('appending curr: "${controller.text}" with text "$text" ');
       controller.text += text;
       debugPrint('new Text is : ${controller.text}');
     });
-  }
 
   void foucusAction() {
     if (focusNode.hasFocus) {
@@ -99,31 +102,32 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   }
 
   void onChange(String newText) {
-    var no200bchar = newText.replaceAll(placeholder, "+");
+    var replacedPlaceholder = newText.replaceAll(placeholder, "+");
+
     if (focusNode.hasFocus) {
-      if (newText.isEmpty ||
-          (newText.isNotEmpty && newText[0] != placeholder)) {
+      if (needToDelete(newText)) {
         widget.deleteParagraph(widget.id);
       } else {
-        debugPrint("in $no200bchar there is \\u200b");
+        debugPrint("in $replacedPlaceholder there is \\u200b");
       }
-      setState(() {
-        widget.fontSize = paragraphFontSize(newText);
-      });
-      int i = newText.indexOf('\n');
-      if (i != -1) {
-        controller.text = newText.substring(0, i);
-        widget.addParagraph(widget.id, newText.substring(i + 1));
+
+      setState(() => widget.fontSize = paragraphFontSize(newText));
+
+      int newLineIndex = newText.indexOf('\n');
+      if (exists(newLineIndex)) {
+        controller.text = newText.substring(0, newLineIndex);
+        widget.addParagraph(widget.id, newText.substring(newLineIndex + 1));
         focusNode.unfocus();
       }
+
       widget.paragraphText = controller.text;
       widget.onChange(newText);
     }
   }
 
   void addPlaceholder() {
-    var no200bchar = controller.text.replaceAll(placeholder, "+");
-    debugPrint("we want to add placeholder to '$no200bchar'");
+    var replacedPlaceholder = controller.text.replaceAll(placeholder, "+");
+    debugPrint("we want to add placeholder to '$replacedPlaceholder'");
     if (controller.text.isEmpty || controller.text[0] != placeholder) {
       controller.text = placeholder + controller.text;
       debugPrint(
@@ -135,8 +139,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   void initState() {
     super.initState();
     widget.requestFocusInState = () => focusNode.requestFocus();
-    controller =
-        ParagraphController(resizeTextField: resizeTextField);
+    controller = ParagraphController(resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
     controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);
