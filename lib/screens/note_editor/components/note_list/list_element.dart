@@ -23,6 +23,10 @@ class NoteListElement extends NoteEditorWidget {
       required this.elemType,
       this.initCounterValue = -1,
       this.infoPageId = -1,
+      super.focusOffAction,
+      super.focusOnAction,
+      super.onInteract,
+      super.removeFromParent,
       super.widgetType = 'list_element'});
 
   @override

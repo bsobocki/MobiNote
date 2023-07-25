@@ -13,6 +13,10 @@ class NoteCheckboxWidget extends NoteEditorWidget {
       required super.id,
       this.onTrue,
       this.onFalse,
+      super.focusOffAction,
+      super.focusOnAction,
+      super.onInteract,
+      super.removeFromParent,
       super.widgetType = 'checkbox'});
 
   @override

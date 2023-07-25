@@ -9,8 +9,16 @@ import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 import 'definitions/widget_mode.dart';
 
 class NoteImageWidget extends NoteEditorWidget {
-  NoteImageWidget(
-      {super.key, required this.path, required super.id, super.widgetType = 'image'});
+  NoteImageWidget({
+    super.key,
+    required this.path,
+    required super.id,
+    super.focusOffAction,
+    super.focusOnAction,
+    super.onInteract,
+    super.removeFromParent,
+    super.widgetType = 'image',
+  });
   String path;
 
   @override

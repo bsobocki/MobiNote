@@ -4,8 +4,16 @@ import 'package:mobi_note/screens/note_editor/components/note_text/note_paragrap
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteTextEditorWidget extends NoteEditorWidget {
-  NoteTextEditorWidget(
-      {super.key, required super.id, super.widgetType = 'text_editor'});
+  NoteTextEditorWidget({
+    super.key,
+    required super.id,
+    super.focusOffAction,
+    super.focusOnAction,
+    super.onInteract,
+    super.removeFromParent,
+    super.widgetType = 'text_editor',
+  });
+
   double fontSize = paragraphDefaultFontSize;
   bool isTextStrike = false;
 

@@ -21,7 +21,15 @@ abstract class NoteEditorWidget extends StatefulWidget {
     }
   }
 
-  NoteEditorWidget({super.key, required this.id, required this.widgetType});
+  NoteEditorWidget({
+    super.key,
+    required this.id,
+    required this.widgetType,
+    this.focusOnAction,
+    this.focusOffAction,
+    this.onInteract,
+    this.removeFromParent
+  });
 
   void addWidget(NoteEditorWidget widget) {
     elements.add(widget);

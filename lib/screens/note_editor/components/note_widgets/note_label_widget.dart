@@ -7,11 +7,16 @@ class NoteLabelWidget extends NoteEditorWidget {
   bool value = false;
   final String label;
 
-  NoteLabelWidget(
-      {super.key,
-      required super.id,
-      required this.label,
-      super.widgetType = 'label'});
+  NoteLabelWidget({
+    super.key,
+    required super.id,
+    required this.label,
+    super.focusOffAction,
+    super.focusOnAction,
+    super.onInteract,
+    super.removeFromParent,
+    super.widgetType = 'label',
+  });
 
   @override
   State<NoteLabelWidget> createState() => _NoteLabelWidgetState();
