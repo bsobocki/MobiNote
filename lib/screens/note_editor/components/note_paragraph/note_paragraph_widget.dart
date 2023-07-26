@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/note_image_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 // ignore: must_be_immutable
@@ -21,12 +21,12 @@ class NoteParagraphWidget extends NoteParagraph {
       required this.widgetJSON})
       : super(key: ValueKey("NoteParagraphWidget_$id")) {
     addWidget = _addWidget;
-    addWidgetByType = _addWidgetByType;
+    addWidgetByData = _addWidgetByData;
   }
 
-  late void Function(NoteEditorWidget widget) addWidget;
-  late Future<void> Function(String type) addWidgetByType;
-  void Function(WidgetMode mode)? setMode;
+  late void Function(NoteEditorWidget) addWidget;
+  late void Function(NoteWidgetData) addWidgetByData;
+  void Function(WidgetMode)? setMode;
   void Function(int)? removeFromParent;
 
   void _addWidget(NoteEditorWidget widget) {
@@ -34,9 +34,9 @@ class NoteParagraphWidget extends NoteParagraph {
     elements.add(widget);
   }
 
-  Future<void> _addWidgetByType(String type) async {
-    var widget = await widgetFactory.create(type);
-    debugPrint("noteparagraphwidget: add widget by type: $type");
+  void _addWidgetByData(NoteWidgetData data) {
+    var widget = widgetFactory.create(data);
+    debugPrint("noteparagraphwidget: add widget by type: ${data.type}");
     elements.add(widget);
   }
 
@@ -97,9 +97,10 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
         widget.elements.add(noteEditorWidget);
       });
 
-  Future<void> addWidgetByType(String type) async {
-    var newWidget = await widget.widgetFactory.create(type);
-    debugPrint("noteparagraphwidget: add widget: $type");
+  void addWidgetByData(NoteWidgetData data) {
+    var newWidget = widget.widgetFactory.create(data);
+    debugPrint(
+        "---------+++++++++++ noteparagraphwidget: add widget: ${data.type}");
     setCallbacks(newWidget);
     setState(() {
       widget.elements.add(newWidget);
@@ -124,14 +125,14 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
 
   void addSetStateToWidgetMethods() {
     widget.addWidget = addWidget;
-    widget.addWidgetByType = addWidgetByType;
+    widget.addWidgetByData = addWidgetByData;
   }
 
   @override
   void initState() {
     super.initState();
     debugPrint("init state of note widget paragraph!!!");
-    widget.addWidget = addWidget;
+    addSetStateToWidgetMethods();
     for (var elem in widget.elements) {
       setCallbacks(elem);
     }
@@ -144,6 +145,7 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   @override
   void dispose() {
     focusNode.dispose();
+    widget.addWidgetByData = widget._addWidgetByData;
     super.dispose();
   }
 

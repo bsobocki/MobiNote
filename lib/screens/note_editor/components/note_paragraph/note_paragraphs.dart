@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph_placeholder.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
@@ -91,10 +92,10 @@ class NoteParagraphs {
     paragraphs.add(newParagraph);
   }
 
-  Future<void> addParagraphWithWidget(String type) async {
+  void addParagraphWithWidget(NoteWidgetData data) {
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
-    await noteParagraphWidget.addWidgetByType(type);
+    noteParagraphWidget.addWidgetByData(data);
     int newItemIndex = focusedParagraphIndex + 1;
 
     if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor) {

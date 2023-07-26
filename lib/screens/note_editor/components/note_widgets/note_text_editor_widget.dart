@@ -3,27 +3,27 @@ import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/note_paragraph_controller.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteTextEditorWidget extends NoteEditorWidget {
-  String elementText;
-  void Function(String) addNewElement;
+  NoteTextEditorData data;
+  void Function(String)? addNewElement;
   void Function(String)? onChange;
   late Function(String)? _appendTextInState;
 
   NoteTextEditorWidget({
     super.key,
     required super.id,
-    required this.elementText,
-    required this.addNewElement,
+    required this.data,
+    this.addNewElement,
     super.focusOffAction,
     super.focusOnAction,
     super.onInteract,
     super.removeFromParent,
-    super.widgetType = 'text_editor',
   }) {
-    elementText = '$placeholder$elementText';
+    data.text = '$placeholder${data.text}';
   }
 
   double fontSize = paragraphDefaultFontSize;
@@ -51,27 +51,24 @@ class NoteTextEditorWidget extends NoteEditorWidget {
 
   void append(String text) {
     if (_appendTextInState == null) {
-      elementText += text;
+      data.text += text;
     } else {
       _appendTextInState!(text);
     }
   }
 
   String get text {
-    if (elementText.isNotEmpty && elementText != placeholder) {
-      if (elementText[0] == placeholder) {
-        return elementText.substring(1);
+    if (data.text.isNotEmpty && data.text != placeholder) {
+      if (data.text[0] == placeholder) {
+        return data.text.substring(1);
       }
-      return elementText;
+      return data.text;
     }
     return '';
   }
 
   @override
   State<NoteTextEditorWidget> createState() => _NoteTextEditorWidgetState();
-
-  @override
-  String get str => '{$id: $text}';
 }
 
 class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
@@ -99,12 +96,14 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
 
       int newLineIndex = newText.indexOf('\n');
       if (exists(newLineIndex)) {
-        controller.text = newText.substring(0, newLineIndex);
-        widget.addNewElement(newText.substring(newLineIndex + 1));
+        if (widget.addNewElement != null) {
+          controller.text = newText.substring(0, newLineIndex);
+          widget.addNewElement!(newText.substring(newLineIndex + 1));
+        }
         focusNode.unfocus();
       }
 
-      widget.elementText = controller.text;
+      widget.data.text = controller.text;
       if (widget.onChange != null) {
         widget.onChange!(newText);
       }
@@ -123,7 +122,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
     widget.setControllerTextType = setControllerTextType;
     widget._appendTextInState = appendText;
     controller = ParagraphController(resizeTextField: resizeTextField);
-    controller.text = widget.elementText;
+    controller.text = widget.data.text;
     focusNode.addListener(() {
       debugPrint("TextField with text: ${controller.text}");
       if (focusNode.hasFocus) {

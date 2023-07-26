@@ -3,38 +3,33 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 
 import 'definitions/widget_mode.dart';
 
 class NoteImageWidget extends NoteEditorWidget {
+  NoteImageData data;
+
   NoteImageWidget({
     super.key,
-    required this.path,
     required super.id,
+    required this.data,
     super.focusOffAction,
     super.focusOnAction,
     super.onInteract,
     super.removeFromParent,
-    super.widgetType = 'image',
   });
-  String path;
 
   @override
   State<NoteImageWidget> createState() => _NoteImageWidgetState();
-  
-  @override
-  String get str => '{$id: image: $path}';
 }
 
 class _NoteImageWidgetState extends State<NoteImageWidget> {
   void setMode(WidgetMode mode) => setState(() {
         debugPrint("Image mode set to: $mode");
         widget.mode = mode;
-        for (var elem in widget.elements) {
-          elem.setMode(mode);
-        }
       });
 
   BoxDecoration getBoxDecorationForMode(WidgetMode mode) {
@@ -73,7 +68,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       child: Opacity(
         opacity: opacity,
         child: Image.file(
-          File(widget.path),
+          File(widget.data.path!),
         ),
       ),
     );
@@ -112,7 +107,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                   String newPath = await chooseImage();
                   if (newPath.isNotEmpty) {
                     setState(() {
-                      widget.path = newPath;
+                      widget.data.path = newPath;
                     });
                   }
                 },

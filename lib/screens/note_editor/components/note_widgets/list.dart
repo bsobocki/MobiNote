@@ -1,83 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
-import 'package:mobi_note/screens/note_editor/components/note_list/list_element.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/list_element.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
-import '../note_widgets/definitions/widget_mode.dart';
+import 'definitions/widget_mode.dart';
 
 class NoteListWidget extends NoteEditorWidget {
-  IdGenerator idGen = IdGenerator();
+  NoteListData data;
 
   NoteListWidget({
     super.key,
     required super.id,
+    required this.data,
     super.focusOffAction,
     super.focusOnAction,
     super.onInteract,
     super.removeFromParent,
-    super.widgetType = 'list',
   });
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
-
-  @override
-  String get str {
-    String s = '{$id: list:\n';
-    for (var elem in elements) {
-      s += '${elem.str}\n';
-    }
-    s += '}';
-    return s;
-  }
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {
+  List<NoteEditorWidget> elements = [];
+  NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory();
   int currDepth = 0;
 
   void setMode(WidgetMode mode) => setState(() {
         debugPrint("List mode set to: $mode");
         widget.mode = mode;
-        for (var elem in widget.elements) {
+        for (var elem in elements) {
           elem.setMode(mode);
         }
       });
 
   void _addElement({int prevElemId = -1, String initText = ''}) {
-    int index = widget.elements.length;
+    int index = elements.length;
     if (exists(prevElemId)) {
-      debugPrint('===== ID: $prevElemId EXISTS!!!');
       var prevElemIndex =
-          widget.elements.indexWhere((element) => element.id == prevElemId);
+          elements.indexWhere((element) => element.id == prevElemId);
       if (exists(prevElemIndex)) {
-        debugPrint(
-            '((((((((((((((((FOUND $prevElemId on $prevElemIndex))))))))))))))))');
         index = prevElemIndex + 1;
       }
-    } else {
-      debugPrint('===== ID: $prevElemId DONT EXISTS!!!');
     }
 
-    int newId = widget.idGen.nextId;
-    widget.elements.insert(
-      index,
-      NoteListElement(
-        id: newId,
-        depth: currDepth,
-        elemType: ElementType.checkbox,
-        onInteract: () => setMode(WidgetMode.edit),
-        addNewElement: addElement,
-        initText: initText,
-      ),
+    NoteListElementData newElemData = NoteListElementData(
+      id: -1,
+      depth: currDepth,
+      elemType: ElementType.checkbox,
+    );
+    newElemData.textEditorData = NoteTextEditorData(id: -1, text: initText);
+    widget.data.addElement(newElemData);
+
+    NoteListElementWidget newElem = NoteListElementWidget(
+      id: widgetFactory.nextId,
+      data: newElemData,
+      addNewListElement: addElement,
+      onInteract: () => setMode(WidgetMode.edit),
     );
 
-    debugPrint(
-        '================ Added ${newId} : "$initText" at position: $index');
-
-    debugPrint('LIST NOW:');
-    debugPrint(widget.str);
-    debugPrint('===================================');
+    elements.insert(index, newElem);
   }
 
   void addElement(int prevElemId, String initText) => setState(() {
@@ -87,12 +74,17 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   void addEmptyElement() => _addElement();
 
+  void createWidgets() {
+    if (widget.data.isListEmpty) {
+      addEmptyElement();
+    }
+    for (var data in widget.data.elements!) {}
+  }
+
   @override
   void initState() {
     super.initState();
-    if (widget.elements.isEmpty) {
-      addEmptyElement();
-    }
+    createWidgets();
   }
 
   Widget createEditModeWidget() {
@@ -111,12 +103,12 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   Widget createShowModeWidget() {
     return IntrinsicHeight(
       child: Column(
-        children: widget.elements,
+        children: elements,
       ),
     );
   }
 
-  Widget createWidget() {
+  Widget createListWidget() {
     switch (widget.mode) {
       case WidgetMode.edit:
         return createEditModeWidget();
@@ -127,6 +119,6 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: createWidget());
+    return Expanded(child: createListWidget());
   }
 }

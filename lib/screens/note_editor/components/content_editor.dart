@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraphs.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobi_note/screens/note_editor/helpers/images.dart';
@@ -39,7 +41,9 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void addParagraphWithImage() async {
-    await paragraphs.addParagraphWithWidget('image');
+    String path = await chooseImage();
+    NoteImageData data = NoteImageData(id: -1, path: path);
+    paragraphs.addParagraphWithWidget(data);
     setState(() {
       for (var p in paragraphs.paragraphs) {
         debugPrint(p.str);
@@ -48,7 +52,8 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void addParagraphWithList() => setState(() {
-        paragraphs.addParagraphWithWidget('list');
+        NoteListData data = NoteListData(id: -1);
+        paragraphs.addParagraphWithWidget(data);
       });
 
   void onChange(String newText) => widget.onContentChange(newText);

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 
 abstract class NoteEditorWidget extends StatefulWidget {
   final int id;
-  final String widgetType;
   WidgetMode mode = WidgetMode.show;
-  List<NoteEditorWidget> elements = [];
 
   void Function()? focusOnAction;
   void Function()? focusOffAction;
@@ -14,8 +13,6 @@ abstract class NoteEditorWidget extends StatefulWidget {
   void Function(int)? removeFromParent;
 
   void Function(WidgetMode)? setModeInState;
-
-  String get str;
 
   void setMode(WidgetMode mode) {
     if (setModeInState != null) {
@@ -26,13 +23,8 @@ abstract class NoteEditorWidget extends StatefulWidget {
   NoteEditorWidget(
       {super.key,
       required this.id,
-      required this.widgetType,
       this.focusOnAction,
       this.focusOffAction,
       this.onInteract,
       this.removeFromParent});
-
-  void addWidget(NoteEditorWidget widget) {
-    elements.add(widget);
-  }
 }
