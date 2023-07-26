@@ -21,6 +21,9 @@ class NoteCheckboxWidget extends NoteEditorWidget {
 
   @override
   State<NoteCheckboxWidget> createState() => _NoteCheckboxWidgetState();
+
+  @override
+  String get str => '{$id: checkbox: $value}';
 }
 
 class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {

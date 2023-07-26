@@ -19,6 +19,8 @@ class NoteListElement extends NoteEditorWidget {
 
   void Function(int, String) addNewElement;
 
+  String Function()? strFromState;
+
   NoteListElement(
       {required super.id,
       required this.depth,
@@ -36,6 +38,16 @@ class NoteListElement extends NoteEditorWidget {
 
   @override
   State<NoteListElement> createState() => _NoteListElementState();
+
+  @override
+  String get str {
+    String s = '${'  ' * (depth + 1)}{$id: ';
+    if (strFromState != null) {
+      s += strFromState!();
+    }
+    s += '}';
+    return s;
+  }
 }
 
 class _NoteListElementState extends State<NoteListElement> {
@@ -72,16 +84,23 @@ class _NoteListElementState extends State<NoteListElement> {
     }
   }
 
+  String strFromState() => '${getLabel().str} | ${textEditor.str}';
+
+  void addNewElement(String text) {
+    widget.addNewElement(widget.id, text);
+  }
+
   @override
   void initState() {
     super.initState();
     textEditor = NoteTextEditorWidget(
       id: 1,
       onInteract: widget.onInteract,
-      addNewElement: widget.addNewElement,
+      addNewElement: addNewElement,
       elementText: widget.initText,
     );
     widget.elements = [getLabel(), textEditor];
+    widget.strFromState = strFromState;
   }
 
   @override

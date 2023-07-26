@@ -8,7 +8,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 
 class NoteTextEditorWidget extends NoteEditorWidget {
   String elementText;
-  void Function(int, String) addNewElement;
+  void Function(String) addNewElement;
   void Function(String)? onChange;
   late Function(String)? _appendTextInState;
 
@@ -57,7 +57,6 @@ class NoteTextEditorWidget extends NoteEditorWidget {
     }
   }
 
-  @override
   String get text {
     if (elementText.isNotEmpty && elementText != placeholder) {
       if (elementText[0] == placeholder) {
@@ -70,6 +69,9 @@ class NoteTextEditorWidget extends NoteEditorWidget {
 
   @override
   State<NoteTextEditorWidget> createState() => _NoteTextEditorWidgetState();
+
+  @override
+  String get str => '{$id: $text}';
 }
 
 class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
@@ -98,7 +100,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
       int newLineIndex = newText.indexOf('\n');
       if (exists(newLineIndex)) {
         controller.text = newText.substring(0, newLineIndex);
-        widget.addNewElement(widget.id, newText.substring(newLineIndex + 1));
+        widget.addNewElement(newText.substring(newLineIndex + 1));
         focusNode.unfocus();
       }
 
@@ -123,10 +125,14 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
     controller = ParagraphController(resizeTextField: resizeTextField);
     controller.text = widget.elementText;
     focusNode.addListener(() {
+      debugPrint("TextField with text: ${controller.text}");
       if (focusNode.hasFocus) {
+        debugPrint('Has FOCUS!!!');
         if (widget.onInteract != null) {
           widget.onInteract!();
         }
+      } else {
+        debugPrint("Doesn't have FOCUS!! :(");
       }
     });
   }

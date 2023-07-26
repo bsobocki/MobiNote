@@ -23,6 +23,9 @@ class NoteImageWidget extends NoteEditorWidget {
 
   @override
   State<NoteImageWidget> createState() => _NoteImageWidgetState();
+  
+  @override
+  String get str => '{$id: image: $path}';
 }
 
 class _NoteImageWidgetState extends State<NoteImageWidget> {

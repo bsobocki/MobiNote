@@ -4,7 +4,6 @@ import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_pro
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteLabelWidget extends NoteEditorWidget {
-  bool value = false;
   final String label;
 
   NoteLabelWidget({
@@ -20,6 +19,9 @@ class NoteLabelWidget extends NoteEditorWidget {
 
   @override
   State<NoteLabelWidget> createState() => _NoteLabelWidgetState();
+
+  @override
+  String get str => '{$id: label: $label}';
 }
 
 class _NoteLabelWidgetState extends State<NoteLabelWidget> {

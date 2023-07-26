@@ -7,6 +7,8 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import '../note_widgets/definitions/widget_mode.dart';
 
 class NoteListWidget extends NoteEditorWidget {
+  IdGenerator idGen = IdGenerator();
+
   NoteListWidget({
     super.key,
     required super.id,
@@ -19,10 +21,19 @@ class NoteListWidget extends NoteEditorWidget {
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
+
+  @override
+  String get str {
+    String s = '{$id: list:\n';
+    for (var elem in elements) {
+      s += '${elem.str}\n';
+    }
+    s += '}';
+    return s;
+  }
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {
-  IdGenerator idGen = IdGenerator();
   int currDepth = 0;
 
   void setMode(WidgetMode mode) => setState(() {
@@ -40,14 +51,15 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       var prevElemIndex =
           widget.elements.indexWhere((element) => element.id == prevElemId);
       if (exists(prevElemIndex)) {
-        debugPrint('((((((((((((((((FOUND $prevElemId on $prevElemIndex))))))))))))))))');
+        debugPrint(
+            '((((((((((((((((FOUND $prevElemId on $prevElemIndex))))))))))))))))');
         index = prevElemIndex + 1;
       }
-    } else { 
+    } else {
       debugPrint('===== ID: $prevElemId DONT EXISTS!!!');
     }
 
-int newId =  idGen.nextId;
+    int newId = widget.idGen.nextId;
     widget.elements.insert(
       index,
       NoteListElement(
@@ -60,11 +72,16 @@ int newId =  idGen.nextId;
       ),
     );
 
-    debugPrint('================ Added ${newId} : "$initText" at position: $index');
+    debugPrint(
+        '================ Added ${newId} : "$initText" at position: $index');
+
+    debugPrint('LIST NOW:');
+    debugPrint(widget.str);
+    debugPrint('===================================');
   }
 
   void addElement(int prevElemId, String initText) => setState(() {
-    debugPrint('run _addElement($prevElemId, $initText)');
+        debugPrint('run _addElement($prevElemId, $initText)');
         _addElement(prevElemId: prevElemId, initText: initText);
       });
 
@@ -73,16 +90,19 @@ int newId =  idGen.nextId;
   @override
   void initState() {
     super.initState();
-    addEmptyElement();
+    if (widget.elements.isEmpty) {
+      addEmptyElement();
+    }
   }
 
   Widget createEditModeWidget() {
     return Column(children: [
       createShowModeWidget(),
-      Center(
-        child: IconButton(
-          onPressed: addEmptyElement,
-          icon: const Icon(Icons.add_circle_sharp),
+      IconButton(
+        onPressed: addEmptyElement,
+        icon: const Icon(
+          Icons.add_circle_sharp,
+          color: Colors.white,
         ),
       )
     ]);
