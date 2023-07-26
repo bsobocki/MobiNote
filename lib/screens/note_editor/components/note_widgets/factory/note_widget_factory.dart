@@ -5,8 +5,8 @@ import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_dat
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/list.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/list_element.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/note_list_widget.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/note_list_element_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_checkbox_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_image_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_text_editor_widget.dart';

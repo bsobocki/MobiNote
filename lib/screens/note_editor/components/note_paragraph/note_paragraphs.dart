@@ -88,11 +88,13 @@ class NoteParagraphs {
   }
 
   void addNewNoteParagraphEditor(String text) {
+    debugPrint('CALL: addNewNoteParagraphEditor');
     var newParagraph = createNoteParagraphTextEditor(text);
     paragraphs.add(newParagraph);
   }
 
   void addParagraphWithWidget(NoteWidgetData data) {
+    debugPrint('CALL: addParagraphWithWidget');
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
     noteParagraphWidget.addWidgetByData(data);
@@ -119,6 +121,7 @@ class NoteParagraphs {
 
   void addNoteParagraphEditorAfter(int prevParagraphId, String text) =>
       setContentEditorState(() {
+        debugPrint('CALL: addNoteParagraphEditorAfter');                         //  NEED TO FIX : znikanie Listy jak tworzony jest paragraf przed nią - prawdopodobnie zanika state i nie odtwarza go już - warto zapisać Data object
         var newParagraph = createNoteParagraphTextEditor(text);
 
         if (paragraphs.isEmpty || prevParagraphId == -1) {
@@ -132,6 +135,8 @@ class NoteParagraphs {
           }
 
           paragraphs.insert(index, newParagraph);
+        debugPrint('paragraphs:');
+        debugPrint(paragraphs.toString());
         }
       });
 

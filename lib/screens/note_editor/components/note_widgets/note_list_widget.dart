@@ -4,7 +4,7 @@ import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/list_element.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/note_list_element_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 import 'definitions/widget_mode.dart';
@@ -39,7 +39,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
         }
       });
 
-  void _addElement({int prevElemId = -1, String initText = ''}) {
+  void _addNewElement({int prevElemId = -1, String initText = ''}) {
     int index = elements.length;
     if (exists(prevElemId)) {
       var prevElemIndex =
@@ -56,29 +56,35 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     );
     newElemData.textEditorData = NoteTextEditorData(id: -1, text: initText);
     widget.data.addElement(newElemData);
-
-    NoteListElementWidget newElem = NoteListElementWidget(
-      id: widgetFactory.nextId,
-      data: newElemData,
-      addNewListElement: addElement,
-      onInteract: () => setMode(WidgetMode.edit),
-    );
-
-    elements.insert(index, newElem);
+    addElement(index, newElemData);
   }
 
-  void addElement(int prevElemId, String initText) => setState(() {
+  void addNewElement(int prevElemId, String initText) => setState(() {
         debugPrint('run _addElement($prevElemId, $initText)');
-        _addElement(prevElemId: prevElemId, initText: initText);
+        _addNewElement(prevElemId: prevElemId, initText: initText);
       });
 
-  void addEmptyElement() => _addElement();
+  void addElement(int index, NoteListElementData data) => elements.insert(
+        index,
+        NoteListElementWidget(
+          id: widgetFactory.nextId,
+          data: data,
+          addNewListElement: addNewElement,
+          onInteract: () => setMode(WidgetMode.edit),
+        ),
+      );
+
+  void addEmptyElement() => _addNewElement();
 
   void createWidgets() {
     if (widget.data.isListEmpty) {
       addEmptyElement();
+    } else {
+      int index = 0;
+      for (var data in widget.data.elements!) {
+        addElement(index++, data);
+      }
     }
-    for (var data in widget.data.elements!) {}
   }
 
   @override
