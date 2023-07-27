@@ -183,8 +183,19 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
               fontSize: widget.fontSize,
             ),
             decoration: InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(vertical: padding)),
+              isDense: true,
+              contentPadding: EdgeInsets.symmetric(vertical: padding),
+              enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.grey,
+                ),
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
+              ),
+            ),
             controller: controller,
           ),
         ),
