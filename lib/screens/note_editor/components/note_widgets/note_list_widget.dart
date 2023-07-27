@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_widget.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/note_icon_button_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_list_element_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
@@ -74,7 +76,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       depth: currDepth,
       elemType: ElementType.checkbox,
       checkboxData: NoteCheckboxData(id: -1, value: false),
-      textEditorData: NoteTextEditorData(id: -1, text: initText)
+      textEditorData: NoteTextEditorData(id: -1, text: initText),
     );
     widget.data.addElement(newElemData);
     addElement(index, newElemData);
@@ -88,12 +90,12 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   void addElement(int index, NoteListElementData data) => elements.insert(
         index,
         NoteListElementWidget(
-          id: widgetFactory.nextId,
-          data: data,
-          addNewListElement: addNewElement,
-          onInteract: () => setState(() => setMode(WidgetMode.edit)),
-          removeFromParent: deleteElement,
-        ),
+            id: widgetFactory.nextId,
+            data: data,
+            addNewListElement: addNewElement,
+            onInteract: () => setState(() => setMode(WidgetMode.edit)),
+            removeFromParent: deleteElement,
+            mode: widget.mode),
       );
 
   void addEmptyElement() => _addNewElement();
@@ -124,16 +126,21 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   }
 
   Widget createSelectedModeWidget() {
-    return Column(children: [
-      createShowModeWidget(),
-      IconButton(
-        onPressed: () => setState(addEmptyElement),
-        icon: const Icon(
-          Icons.add_circle_sharp,
-          color: Colors.white,
-        ),
-      )
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        createShowModeWidget(),
+        widgetFactory.create(
+          NoteIconButtonData(
+            id: -1,
+            paddingTop: 6.0,
+            icon: Icons.add_circle_sharp,
+            color: Colors.white,
+          ),
+        ) as NoteIconButtonWidget
+          ..onPressed = () => setState(addEmptyElement),
+      ],
+    );
   }
 
   Widget createShowModeWidget() {
@@ -158,9 +165,12 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     return Expanded(
       child: GestureDetector(
         onLongPress: () {
-          elements.last.requestFocus?.call();
+          WidgetMode newMode = WidgetMode.selected;
+          if (widget.mode == WidgetMode.selected) {
+            newMode = WidgetMode.edit;
+          }
           setState(() {
-            setMode(WidgetMode.selected);
+            setMode(newMode);
           });
         },
         child: createListWidget(),

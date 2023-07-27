@@ -18,7 +18,8 @@ class NoteCheckboxWidget extends NoteEditorWidget {
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
-      super.removeFromParent});
+      super.removeFromParent,
+      super.mode});
 
   @override
   State<NoteCheckboxWidget> createState() => _NoteCheckboxWidgetState();

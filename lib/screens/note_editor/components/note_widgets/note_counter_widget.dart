@@ -6,15 +6,15 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 class NoteCounterWidget extends NoteEditorWidget {
   NoteCounterData data;
 
-  NoteCounterWidget({
-    super.key,
-    required super.id,
-    required this.data,
-    super.focusOffAction,
-    super.focusOnAction,
-    super.onInteract,
-    super.removeFromParent,
-  });
+  NoteCounterWidget(
+      {super.key,
+      required super.id,
+      required this.data,
+      super.focusOffAction,
+      super.focusOnAction,
+      super.onInteract,
+      super.removeFromParent,
+      super.mode});
 
   @override
   State<NoteCounterWidget> createState() => _NoteCounterWidgetState();

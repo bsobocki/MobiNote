@@ -26,7 +26,8 @@ class NoteListElementWidget extends NoteEditorWidget {
       super.focusOnAction,
       super.onInteract,
       super.removeFromParent,
-      super.reportEditMode})
+      super.reportEditMode,
+      super.mode})
       : super(key: ValueKey('ListElement_$id')) {
     data.checkboxData ??= NoteCheckboxData(id: -1, value: false);
     data.textEditorData ??= NoteTextEditorData(id: -1, text: '');

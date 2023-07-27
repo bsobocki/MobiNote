@@ -15,16 +15,16 @@ class NoteTextEditorWidget extends NoteEditorWidget {
   late Function(String)? _appendTextInState;
   void Function()? _requestFocus;
 
-  NoteTextEditorWidget({
-    super.key,
-    required super.id,
-    required this.data,
-    this.addNewElement,
-    super.focusOffAction,
-    super.focusOnAction,
-    super.onInteract,
-    super.removeFromParent,
-  }) {
+  NoteTextEditorWidget(
+      {super.key,
+      required super.id,
+      required this.data,
+      this.addNewElement,
+      super.focusOffAction,
+      super.focusOnAction,
+      super.onInteract,
+      super.removeFromParent,
+      super.mode}) {
     data.text = '$placeholder${data.text}';
     requestFocus = () => _requestFocus?.call();
   }
@@ -38,7 +38,7 @@ class NoteTextEditorWidget extends NoteEditorWidget {
     isTextStrike = true;
     debugPrint('TEXT EDITOR WIDGET: set strike to $isTextStrike');
     if (setControllerTextType != null) {
-      setControllerTextType!('strikethrough');
+      setControllerTextType!('text_done');
     } else {
       debugPrint('setState is NULL!!!!!!!!!!!');
     }
@@ -181,13 +181,14 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
             maxLines: null,
             style: TextStyle(
               fontSize: widget.fontSize,
+              color: widget.isTextStrike? Colors.grey : Colors.white,
             ),
             decoration: InputDecoration(
               isDense: true,
               contentPadding: EdgeInsets.symmetric(vertical: padding),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.grey,
+                  color: Colors.transparent,
                 ),
               ),
               focusedBorder: const UnderlineInputBorder(

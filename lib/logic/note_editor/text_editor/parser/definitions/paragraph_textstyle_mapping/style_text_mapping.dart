@@ -33,7 +33,11 @@ Map<String, TextStyle> textStyles = {
     decorationColor: Colors.grey[300],
   ),
   'paragraph': const TextStyle(fontSize: paragraphDefaultFontSize),
-  'paragraph_chars': TextStyle(color: Colors.grey.withOpacity(0.6))
+  'paragraph_chars': TextStyle(color: Colors.grey.withOpacity(0.6)),
+  'text_done' : const TextStyle(
+    decoration: TextDecoration.lineThrough,
+    color: Colors.grey
+  )
 };
 
 bool isStyledText(String type) {

@@ -6,15 +6,15 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 class NoteLabelWidget extends NoteEditorWidget {
   final NoteLabelData data;
 
-  NoteLabelWidget({
-    super.key,
-    required super.id,
-    required this.data,
-    super.focusOffAction,
-    super.focusOnAction,
-    super.onInteract,
-    super.removeFromParent,
-  });
+  NoteLabelWidget(
+      {super.key,
+      required super.id,
+      required this.data,
+      super.focusOffAction,
+      super.focusOnAction,
+      super.onInteract,
+      super.removeFromParent,
+      super.mode});
 
   @override
   State<NoteLabelWidget> createState() => _NoteLabelWidgetState();

@@ -3,7 +3,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/definition
 
 abstract class NoteEditorWidget extends StatefulWidget {
   final int id;
-  WidgetMode mode = WidgetMode.show;
+  WidgetMode mode;
 
   void Function()? focusOnAction;
   void Function()? focusOffAction;
@@ -36,5 +36,6 @@ abstract class NoteEditorWidget extends StatefulWidget {
       this.focusOffAction,
       this.onInteract,
       this.reportEditMode,
-      this.removeFromParent});
+      this.removeFromParent,
+      this.mode = WidgetMode.show});
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/span_info_converterer.dart';
 import '../../../../logic/note_editor/text_editor/parser/mark_text_converter.dart';
@@ -26,12 +27,16 @@ class ParagraphController extends TextEditingController {
         .parseUnicodeMarkedText(unicodeMarkedText,
             showParagraphChars: isFocused);
 
-    if (mainType.isNotEmpty) {
-      spanInfoParsedContent.spanInfo.type = mainType;
-    }
-
     var spanTree = SpanInfoConverter().getSpans(spanInfoParsedContent.spanInfo)
         as TextSpan;
+
+    if (mainType.isNotEmpty) {
+      spanTree = TextSpan(
+        style: spanTree.style!.merge(textStyles[mainType]),
+        children: spanTree.children,
+        text: spanTree.text
+      );
+    }
 
     if (spanTree.style!.fontSize != null) {
       resizeTextField(spanTree.style!.fontSize!);

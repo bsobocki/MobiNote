@@ -6,13 +6,23 @@ class NoteIconButtonData extends NoteWidgetData {
   IconData? icon;
   double width;
   double height;
+  double paddingLeft;
+  double paddingRight;
+  double paddingTop;
+  double paddingBottom;
+  Color? color;
 
   NoteIconButtonData({
     required super.id,
     this.icon,
     this.height = paragraphDefaultFontSize,
     this.width = paragraphDefaultFontSize,
-    super.type = 'image',
+    this.paddingLeft = 0.0,
+    this.paddingRight = 0.0,
+    this.paddingTop = 0.0,
+    this.paddingBottom = 0.0,
+    this.color,
+    super.type = 'icon_button',
   });
 
   @override
