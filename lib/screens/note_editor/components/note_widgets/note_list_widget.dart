@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
@@ -72,8 +73,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       id: -1,
       depth: currDepth,
       elemType: ElementType.checkbox,
+      checkboxData: NoteCheckboxData(id: -1, value: false),
+      textEditorData: NoteTextEditorData(id: -1, text: initText)
     );
-    newElemData.textEditorData = NoteTextEditorData(id: -1, text: initText);
     widget.data.addElement(newElemData);
     addElement(index, newElemData);
   }

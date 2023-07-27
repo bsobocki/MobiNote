@@ -3,6 +3,7 @@ import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_widget.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_label_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_checkbox_widget.dart';
@@ -26,7 +27,10 @@ class NoteListElementWidget extends NoteEditorWidget {
       super.onInteract,
       super.removeFromParent,
       super.reportEditMode})
-      : super(key: ValueKey('ListElement_$id'));
+      : super(key: ValueKey('ListElement_$id')) {
+    data.checkboxData ??= NoteCheckboxData(id: -1, value: false);
+    data.textEditorData ??= NoteTextEditorData(id: -1, text: '');
+  }
 
   @override
   void setDefaultCallbacks() {
@@ -63,7 +67,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
       case ElementType.checkbox:
         return NoteCheckboxWidget(
           id: id,
-          data: NoteCheckboxData(id: -1, value: false),
+          data: widget.data.checkboxData!,
           onTrue: () => setState(() => textEditor.strikeText()),
           onFalse: () => setState(() => textEditor.unStrikeText()),
         );
@@ -97,21 +101,17 @@ class _NoteListElementState extends State<NoteListElementWidget> {
   @override
   void initState() {
     super.initState();
-    debugPrint('!!!! init state of list element !!!!');
     textEditor = widgetFactory.create(widget.data.textEditorData!)
         as NoteTextEditorWidget;
     textEditor.addNewElement = addNewListElement;
     textEditor.focusOnAction = widget.focusOnAction;
     widget.setModeInState = setModeInState;
     widget.requestFocus = textEditor.requestFocus;
-    debugPrint('!!!! widget.setModeInState SET !!!!');
   }
 
   @override
   void dispose() {
-    debugPrint('!!!!!! dispose state of list element !!!!');
     widget.setDefaultCallbacks();
-    debugPrint('!!!! widget.setModeInState UNSET !!!!');
     super.dispose();
   }
 
