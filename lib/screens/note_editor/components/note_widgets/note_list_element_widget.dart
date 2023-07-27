@@ -14,13 +14,16 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import 'note_label_widget.dart';
 
 class NoteListElementWidget extends NoteEditorWidget {
+  int indexInList;
   NoteListElementData data;
 
+  void Function()? _requestFocus;
   void Function(int, String)? addNewListElement;
 
   NoteListElementWidget(
       {required super.id,
       required this.data,
+      this.indexInList = 0,
       this.addNewListElement,
       super.focusOffAction,
       super.focusOnAction,
@@ -31,12 +34,14 @@ class NoteListElementWidget extends NoteEditorWidget {
       : super(key: ValueKey('ListElement_$id')) {
     data.checkboxData ??= NoteCheckboxData(id: -1, value: false);
     data.textEditorData ??= NoteTextEditorData(id: -1, text: '');
+    requestFocus = () => _requestFocus?.call();
   }
 
   @override
   void setDefaultCallbacks() {
-    addNewListElement = null;
     super.setDefaultCallbacks();
+    _requestFocus = null;
+    requestFocus = () => _requestFocus?.call();
   }
 
   @override
@@ -78,9 +83,10 @@ class _NoteListElementState extends State<NoteListElementWidget> {
           data: NoteLabelData(id: -1, label: '-'),
         );
       case ElementType.number:
+      int num = widget.indexInList + 1;
         return NoteLabelWidget(
           id: id,
-          data: NoteLabelData(id: -1, label: id.toString()),
+          data: NoteLabelData(id: -1, label: '$num.'),
         );
       default:
         return NoteLabelWidget(
@@ -91,7 +97,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
   }
 
   void addNewListElement(String text) {
-    widget.addNewListElement!(widget.id, text);
+    widget.addNewListElement?.call(widget.id, text);
   }
 
   void focusOnAction() {

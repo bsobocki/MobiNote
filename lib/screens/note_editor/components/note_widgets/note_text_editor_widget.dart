@@ -14,6 +14,7 @@ class NoteTextEditorWidget extends NoteEditorWidget {
   void Function(String)? onChange;
   late Function(String)? _appendTextInState;
   void Function()? _requestFocus;
+  void Function(String)? setControllerTextType;
 
   NoteTextEditorWidget(
       {super.key,
@@ -31,8 +32,6 @@ class NoteTextEditorWidget extends NoteEditorWidget {
 
   double fontSize = paragraphDefaultFontSize;
   bool isTextStrike = false;
-
-  void Function(String)? setControllerTextType;
 
   void strikeText() {
     isTextStrike = true;
@@ -73,8 +72,10 @@ class NoteTextEditorWidget extends NoteEditorWidget {
   @override
   void setDefaultCallbacks() {
     super.setDefaultCallbacks();
+    requestFocus = () => _requestFocus?.call();
     _appendTextInState = null;
     _requestFocus = null;
+    setControllerTextType = null;
   }
 
   @override
@@ -152,8 +153,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
 
   @override
   void dispose() {
-    widget.setControllerTextType = null;
-    widget._appendTextInState = null;
+    widget.setDefaultCallbacks();
     super.dispose();
   }
 
@@ -181,7 +181,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
             maxLines: null,
             style: TextStyle(
               fontSize: widget.fontSize,
-              color: widget.isTextStrike? Colors.grey : Colors.white,
+              color: widget.isTextStrike ? Colors.grey : Colors.white,
             ),
             decoration: InputDecoration(
               isDense: true,
