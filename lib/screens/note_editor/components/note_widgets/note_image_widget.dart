@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
@@ -49,6 +48,12 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   void initState() {
     super.initState();
     widget.setModeInState = setMode;
+  }
+
+  @override
+  void dispose() {
+    widget.setModeInState = null;
+    super.dispose();
   }
 
   Widget getWidgetBasedOnMode() {

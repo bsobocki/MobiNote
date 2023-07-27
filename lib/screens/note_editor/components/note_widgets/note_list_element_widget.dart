@@ -1,12 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_widget.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_label_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_checkbox_widget.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/note_icon_button_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_text_editor_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
@@ -24,8 +24,15 @@ class NoteListElementWidget extends NoteEditorWidget {
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
-      super.removeFromParent})
+      super.removeFromParent,
+      super.reportEditMode})
       : super(key: ValueKey('ListElement_$id'));
+
+  @override
+  void setDefaultCallbacks() {
+    addNewListElement = null;
+    super.setDefaultCallbacks();
+  }
 
   @override
   State<NoteListElementWidget> createState() => _NoteListElementState();
@@ -33,16 +40,25 @@ class NoteListElementWidget extends NoteEditorWidget {
 
 class _NoteListElementState extends State<NoteListElementWidget> {
   late NoteTextEditorWidget textEditor;
-  WidgetMode mode = WidgetMode.show;
-  List<NoteEditorWidget> elements = [];
   NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory();
 
-  void setMode(WidgetMode mode) => setState(() {
-        this.mode = mode;
+  void setModeInState(WidgetMode mode) => setState(() {
+        widget.mode = mode;
+        textEditor.setMode(mode);
+        debugPrint("LIST ELEMENT mode set to: $mode");
       });
 
   NoteEditorWidget getLabel() {
     int id = 0;
+    if (widget.mode == WidgetMode.selected) {
+      return NoteIconButtonWidget(
+        id: id,
+        data: NoteIconButtonData(
+          id: -1,
+          icon: Icons.disabled_by_default_rounded,
+        ),
+      )..onPressed = () => widget.removeFromParent?.call(widget.id);
+    }
     switch (widget.data.elemType) {
       case ElementType.checkbox:
         return NoteCheckboxWidget(
@@ -73,13 +89,34 @@ class _NoteListElementState extends State<NoteListElementWidget> {
     widget.addNewListElement!(widget.id, text);
   }
 
+  void focusOnAction() {
+    widget.focusOnAction?.call();
+    widget.reportEditMode?.call();
+  }
+
   @override
   void initState() {
     super.initState();
+    debugPrint('!!!! init state of list element !!!!');
     textEditor = widgetFactory.create(widget.data.textEditorData!)
         as NoteTextEditorWidget;
     textEditor.addNewElement = addNewListElement;
-    elements = [getLabel(), textEditor];
+    textEditor.focusOnAction = widget.focusOnAction;
+    widget.setModeInState = setModeInState;
+    widget.requestFocus = textEditor.requestFocus;
+    debugPrint('!!!! widget.setModeInState SET !!!!');
+  }
+
+  @override
+  void dispose() {
+    debugPrint('!!!!!! dispose state of list element !!!!');
+    widget.setDefaultCallbacks();
+    debugPrint('!!!! widget.setModeInState UNSET !!!!');
+    super.dispose();
+  }
+
+  List<NoteEditorWidget> get elements {
+    return [getLabel(), textEditor];
   }
 
   @override

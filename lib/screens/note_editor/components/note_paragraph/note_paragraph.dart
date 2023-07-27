@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 
 // ignore: must_be_immutable
 abstract class NoteParagraph extends StatefulWidget {
   final int id;
-  void Function()? requestFocusInState;
   void Function(int) reportFocusParagraph;
   void Function(int) deleteParagraph;
+
+  void Function()? requestFocusInState;
 
   void requestFocus() {
     if (requestFocusInState != null) {
       requestFocusInState!();
+    } else {
+      debugPrint('requestFocus in state id NULL!!!!!!!');
     }
+  }
+
+  void setDefaultCallbacks() {
+    requestFocusInState = null;
   }
 
   NoteParagraph({

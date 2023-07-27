@@ -5,6 +5,7 @@ import 'package:mobi_note/logic/note_editor/text_editor/parser/helpers/paragraph
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/note_paragraph_controller.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
 class NoteTextEditorWidget extends NoteEditorWidget {
@@ -12,6 +13,7 @@ class NoteTextEditorWidget extends NoteEditorWidget {
   void Function(String)? addNewElement;
   void Function(String)? onChange;
   late Function(String)? _appendTextInState;
+  void Function()? _requestFocus;
 
   NoteTextEditorWidget({
     super.key,
@@ -24,6 +26,7 @@ class NoteTextEditorWidget extends NoteEditorWidget {
     super.removeFromParent,
   }) {
     data.text = '$placeholder${data.text}';
+    requestFocus = () => _requestFocus?.call();
   }
 
   double fontSize = paragraphDefaultFontSize;
@@ -65,6 +68,13 @@ class NoteTextEditorWidget extends NoteEditorWidget {
       return data.text;
     }
     return '';
+  }
+
+  @override
+  void setDefaultCallbacks() {
+    super.setDefaultCallbacks();
+    _appendTextInState = null;
+    _requestFocus = null;
   }
 
   @override
@@ -119,6 +129,10 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
   @override
   void initState() {
     super.initState();
+    widget._requestFocus = () {
+      debugPrint("request focus on the textfield");
+      focusNode.requestFocus();
+    };
     widget.setControllerTextType = setControllerTextType;
     widget._appendTextInState = appendText;
     controller = ParagraphController(resizeTextField: resizeTextField);
@@ -134,6 +148,13 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
         debugPrint("Doesn't have FOCUS!! :(");
       }
     });
+  }
+
+  @override
+  void dispose() {
+    widget.setControllerTextType = null;
+    widget._appendTextInState = null;
+    super.dispose();
   }
 
   void setControllerTextType(String newType) => setState(() {
@@ -152,6 +173,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
           child: TextField(
             key: ValueKey('ListElement_TextEditor_${widget.id}'),
             autofocus: true,
+            readOnly: widget.mode == WidgetMode.selected,
             onTap: widget.onInteract,
             onChanged: onChange,
             focusNode: focusNode,

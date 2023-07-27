@@ -60,6 +60,13 @@ class NoteParagraphTextEditor extends NoteParagraph {
   }
 
   @override
+  void setDefaultCallbacks() {
+    _appendTextInState = null;
+    _addPlaceholderInState = null;
+    super.setDefaultCallbacks();
+  }
+
+  @override
   int get rawLength => paragraphText.length;
   @override
   String get widgetTree => '';
@@ -81,10 +88,10 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   }
 
   void appendText(String text) => setState(() {
-      debugPrint('appending curr: "${controller.text}" with text "$text" ');
-      controller.text += text;
-      debugPrint('new Text is : ${controller.text}');
-    });
+        debugPrint('appending curr: "${controller.text}" with text "$text" ');
+        controller.text += text;
+        debugPrint('new Text is : ${controller.text}');
+      });
 
   void foucusAction() {
     if (focusNode.hasFocus) {
@@ -138,6 +145,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   @override
   void initState() {
     super.initState();
+    debugPrint('initStatee!!!!!!!');
     widget.requestFocusInState = () => focusNode.requestFocus();
     controller = ParagraphController(resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
@@ -154,10 +162,9 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
 
   @override
   void dispose() {
+    debugPrint('dispose!!!!!!!');
     controller.dispose();
-    focusNode.dispose();
-    widget._appendTextInState = null;
-    widget._addPlaceholderInState = null;
+    widget.setDefaultCallbacks();
     super.dispose();
   }
 

@@ -1,7 +1,6 @@
 // import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobi_note/database/database_operations.dart';
 import 'package:mobi_note/screens/homepage/homepage.dart';
 import 'database/database_def.dart';
 

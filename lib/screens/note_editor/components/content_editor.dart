@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraphs.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 
 int change = 1;

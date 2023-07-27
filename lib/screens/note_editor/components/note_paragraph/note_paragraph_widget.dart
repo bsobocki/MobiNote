@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
@@ -20,8 +19,7 @@ class NoteParagraphWidget extends NoteParagraph {
       required super.deleteParagraph,
       required this.widgetJSON})
       : super(key: ValueKey("NoteParagraphWidget_$id")) {
-    addWidget = _addWidget;
-    addWidgetByData = _addWidgetByData;
+    setDefaultCallbacks();
   }
 
   late void Function(NoteEditorWidget) addWidget;
@@ -38,6 +36,17 @@ class NoteParagraphWidget extends NoteParagraph {
     var widget = widgetFactory.create(data);
     debugPrint("noteparagraphwidget: add widget by type: ${data.type}");
     elements.add(widget);
+  }
+
+  void _setMode(WidgetMode mode) {
+    this.mode = mode;
+  }
+
+  void setDefaultCallbacks() {
+    addWidget = _addWidget;
+    addWidgetByData = _addWidgetByData;
+    setMode = _setMode;
+    requestFocusInState = null;
   }
 
   @override
@@ -61,8 +70,7 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   FocusNode focusNode = FocusNode();
 
   void setMode(WidgetMode mode) => setState(() {
-        debugPrint(
-            "mode set to: ${mode == WidgetMode.edit ? 'edit' : 'other'}");
+        debugPrint("mode set to: $mode");
         widget.mode = mode;
         for (var elem in widget.elements) {
           elem.setMode(mode);
@@ -109,6 +117,7 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
 
   void onInteract() {
     debugPrint("WIDGET PARAGRAPH: ON INTERACT");
+    widget.reportFocusParagraph(widget.id);
     FocusScope.of(context).requestFocus(focusNode);
     debugPrint("WIDGET PARAGRAPH: HAS FOCUS? ${focusNode.hasFocus}");
   }
@@ -144,15 +153,17 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
 
   @override
   void dispose() {
-    focusNode.dispose();
-    widget.addWidgetByData = widget._addWidgetByData;
+    widget.setDefaultCallbacks();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onInteract,
+      onTap: () {
+        debugPrint('gesture detector!!!!!!!!!!!!!!!');
+        onInteract();
+      },
       child: Padding(
         padding: const EdgeInsets.only(
           top: 8.0,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
@@ -82,6 +81,8 @@ class NoteParagraphs {
         onTap: () {
           var lastValidParagraph = paragraphs[paragraphs.length - 2];
           lastValidParagraph.requestFocus();
+          reportFocusParagraph(lastValidParagraph.id);
+          debugPrint("FocusRequested on ${lastValidParagraph.str}");
         },
       ),
     );
@@ -121,7 +122,7 @@ class NoteParagraphs {
 
   void addNoteParagraphEditorAfter(int prevParagraphId, String text) =>
       setContentEditorState(() {
-        debugPrint('CALL: addNoteParagraphEditorAfter');                         //  NEED TO FIX : znikanie Listy jak tworzony jest paragraf przed nią - prawdopodobnie zanika state i nie odtwarza go już - warto zapisać Data object
+        debugPrint('CALL: addNoteParagraphEditorAfter');
         var newParagraph = createNoteParagraphTextEditor(text);
 
         if (paragraphs.isEmpty || prevParagraphId == -1) {
@@ -135,8 +136,8 @@ class NoteParagraphs {
           }
 
           paragraphs.insert(index, newParagraph);
-        debugPrint('paragraphs:');
-        debugPrint(paragraphs.toString());
+          debugPrint('paragraphs:');
+          debugPrint(paragraphs.toString());
         }
       });
 
@@ -147,7 +148,11 @@ class NoteParagraphs {
         String newText = currParagraph.text;
         if (exists(index) && prevIndex >= 0) {
           if (currParagraph is NoteParagraphWidget) {
+            debugPrint('remove noteparagraphwidget: ${currParagraph.str}');
             paragraphs.removeAt(index);
+            if (paragraphs.length < index) {
+              paragraphs[index].requestFocus();
+            }
           } else {
             var prevParagraph = paragraphs[prevIndex];
             if (prevParagraph is NoteParagraphTextEditor) {
@@ -166,6 +171,10 @@ class NoteParagraphs {
               }
             }
           }
+        }
+        debugPrint("AFTER REMOVING PARAGRAPH $paragraphId:");
+        for (var p in paragraphs) {
+          debugPrint(p.str);
         }
       });
 

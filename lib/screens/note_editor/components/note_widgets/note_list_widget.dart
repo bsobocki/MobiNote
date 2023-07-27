@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
@@ -19,6 +18,7 @@ class NoteListWidget extends NoteEditorWidget {
     super.focusOffAction,
     super.focusOnAction,
     super.onInteract,
+    super.reportEditMode,
     super.removeFromParent,
   });
 
@@ -27,17 +27,36 @@ class NoteListWidget extends NoteEditorWidget {
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {
-  List<NoteEditorWidget> elements = [];
+  List<NoteListElementWidget> elements = [];
   NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory();
   int currDepth = 0;
 
-  void setMode(WidgetMode mode) => setState(() {
-        debugPrint("List mode set to: $mode");
-        widget.mode = mode;
-        for (var elem in elements) {
-          elem.setMode(mode);
-        }
+  void setMode(WidgetMode mode) {
+    debugPrint("List mode set to: $mode");
+    widget.mode = mode;
+    for (var elem in elements) {
+      elem.setMode(mode);
+    }
+    if (mode == WidgetMode.edit) {
+      if (elements.last.requestFocus != null) {
+        elements.last.requestFocus!();
+      } else {
+        debugPrint('cannot request focus of the last element from list');
+      }
+    }
+  }
+
+  void resetView() => setState(() {
+        setMode(WidgetMode.show);
       });
+
+  void deleteElement(int id) {
+    elements.removeWhere((elem) => elem.id == id);
+    if (elements.isEmpty) {
+      widget.removeFromParent?.call(widget.id);
+    }
+    setState(() {});
+  }
 
   void _addNewElement({int prevElemId = -1, String initText = ''}) {
     int index = elements.length;
@@ -70,7 +89,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
           id: widgetFactory.nextId,
           data: data,
           addNewListElement: addNewElement,
-          onInteract: () => setMode(WidgetMode.edit),
+          onInteract: () => setState(() => setMode(WidgetMode.edit)),
+          removeFromParent: deleteElement,
         ),
       );
 
@@ -90,14 +110,22 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   @override
   void initState() {
     super.initState();
+    setMode(WidgetMode.show);
+    widget.setModeInState = (mode) => setState(() => setMode(mode));
     createWidgets();
   }
 
-  Widget createEditModeWidget() {
+  @override
+  void dispose() {
+    widget.setDefaultCallbacks();
+    super.dispose();
+  }
+
+  Widget createSelectedModeWidget() {
     return Column(children: [
       createShowModeWidget(),
       IconButton(
-        onPressed: addEmptyElement,
+        onPressed: () => setState(addEmptyElement),
         icon: const Icon(
           Icons.add_circle_sharp,
           color: Colors.white,
@@ -116,8 +144,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   Widget createListWidget() {
     switch (widget.mode) {
-      case WidgetMode.edit:
-        return createEditModeWidget();
+      case WidgetMode.selected:
+        return createSelectedModeWidget();
       default:
         return createShowModeWidget();
     }
@@ -125,6 +153,16 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: createListWidget());
+    return Expanded(
+      child: GestureDetector(
+        onLongPress: () {
+          elements.last.requestFocus?.call();
+          setState(() {
+            setMode(WidgetMode.selected);
+          });
+        },
+        child: createListWidget(),
+      ),
+    );
   }
 }

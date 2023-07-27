@@ -58,7 +58,7 @@ void main() {
       text: "",
       style: textStyles['header3'],
       children: [
-        TextSpan(text: "to text"),
+        const TextSpan(text: "to text"),
         TextSpan(
           text: "",
           style: textStyles["bold"],
@@ -66,11 +66,11 @@ void main() {
             TextSpan(
               text: "",
               style: textStyles['italic'],
-              children: [
+              children: const [
                 TextSpan(text: "italic text"),
               ],
             ),
-            TextSpan(text: "only bold text")
+            const TextSpan(text: "only bold text")
           ],
         )
       ],

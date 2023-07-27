@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_label_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
