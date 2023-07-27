@@ -48,7 +48,15 @@ class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
       child: Checkbox(
         value: widget.data.value,
         onChanged: onChanged,
-        checkColor: Colors.grey,
+        checkColor: Colors.white,
+        activeColor: Colors.white,
+        fillColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.grey;
+          }
+          return Colors.white;
+        }),
         overlayColor: const MaterialStatePropertyAll(Colors.white),
       ),
     );
