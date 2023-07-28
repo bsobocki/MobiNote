@@ -33,47 +33,50 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
   TextEditingController controller = TextEditingController();
 
   Widget get counterWidget {
-    return ElevatedButton(
-      onPressed: () => setState(() {
-        widget.data.count++;
-        if (widget.targetReached) {
-          widget.onTargetReached?.call();
-        }
-      }),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+      child: ElevatedButton(
+        onPressed: () => setState(() {
+          widget.data.count++;
+          if (widget.targetReached) {
+            widget.onTargetReached?.call();
+          }
+        }),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.grey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          padding: const EdgeInsets.all(0)
         ),
-        padding: const EdgeInsets.all(0)
-      ),
-      onLongPress: () => setState(() => widget.mode = WidgetMode.selected),
-      child: Row(
-        children: [
-          Text(
-            '${widget.data.count} / ',
-            style: TextStyle(
-              color: widget.targetReached? Colors.grey[700]: Colors.white,
+        onLongPress: () => setState(() => widget.mode = WidgetMode.selected),
+        child: Row(
+          children: [
+            Text(
+              '${widget.data.count} / ',
+              style: TextStyle(
+                color: widget.targetReached? Colors.grey[700]: Colors.white,
+              ),
             ),
-          ),
-          IntrinsicWidth(
-            child: TextField(
-                onTap: () => controller.text = '',
-                controller: controller
-                  ..text = widget.data.targetValue.toString(),
-                onSubmitted: (text) => setState(() {
-                      widget.data.targetValue =
-                          int.tryParse(text) ?? widget.data.targetValue;
-                      widget.data.count = 0;
-                      widget.mode = WidgetMode.edit;
-                    }),
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.grey[700]),
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ]),
-          ),
-        ],
+            IntrinsicWidth(
+              child: TextField(
+                  onTap: () => controller.text = '',
+                  controller: controller
+                    ..text = widget.data.targetValue.toString(),
+                  onSubmitted: (text) => setState(() {
+                        widget.data.targetValue =
+                            int.tryParse(text) ?? widget.data.targetValue;
+                        widget.data.count = 0;
+                        widget.mode = WidgetMode.edit;
+                      }),
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.grey[700]),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ]),
+            ),
+          ],
+        ),
       ),
     );
   }
