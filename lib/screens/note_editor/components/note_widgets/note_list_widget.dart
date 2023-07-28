@@ -161,6 +161,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
             onPressed: () => setElementType(ElementType.custom),
             icon: const Icon(Icons.location_history),
           ),
+          IconButton(
+            onPressed: () => setElementType(ElementType.counter),
+            icon: const Icon(Icons.numbers_rounded),
+          ),
         ],
       ),
     );

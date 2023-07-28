@@ -4,7 +4,7 @@ import 'note_info_page_data.dart';
 import 'note_text_editor_data.dart';
 import 'note_widget_data.dart';
 
-enum ElementType { checkbox, number, marks, custom }
+enum ElementType { checkbox, number, marks, counter, custom }
 
 class NoteListElementData extends NoteWidgetData {
   int depth;

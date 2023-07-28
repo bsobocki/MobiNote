@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_counter_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_widget.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_label_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
@@ -7,6 +8,7 @@ import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_edi
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_checkbox_widget.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/note_counter_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_icon_button_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_text_editor_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
@@ -33,6 +35,7 @@ class NoteListElementWidget extends NoteEditorWidget {
       super.mode})
       : super(key: ValueKey('ListElement_$id')) {
     data.checkboxData ??= NoteCheckboxData(id: -1, value: false);
+    data.counterData ??= NoteCounterData(id: -1, targetValue: 10);
     data.textEditorData ??= NoteTextEditorData(id: -1, text: '');
     requestFocus = () => _requestFocus?.call();
   }
@@ -77,13 +80,19 @@ class _NoteListElementState extends State<NoteListElementWidget> {
           onTrue: () => setState(() => textEditor.strikeText()),
           onFalse: () => setState(() => textEditor.unStrikeText()),
         );
+      case ElementType.counter:
+        return NoteCounterWidget(
+          id: id,
+          data: widget.data.counterData!,
+          onTargetReached: () => setState(() => textEditor.strikeText()),
+        );
       case ElementType.marks:
         return NoteLabelWidget(
           id: id,
           data: NoteLabelData(id: -1, label: '-'),
         );
       case ElementType.number:
-      int num = widget.indexInList + 1;
+        int num = widget.indexInList + 1;
         return NoteLabelWidget(
           id: id,
           data: NoteLabelData(id: -1, label: '$num.'),
