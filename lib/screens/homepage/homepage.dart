@@ -99,9 +99,61 @@ class _MyHomePageState extends State<MyHomePage> {
       noteListWidgets.add(const SizedBox(height: listDivideSpaceSize));
     }
 
-    return ListView(
-      padding: const EdgeInsets.all(listViewPadding),
-      children: noteListWidgets,
+    return Expanded(
+      child: ListView(
+        padding: const EdgeInsets.only(
+          top: 14,
+          left: listViewPadding,
+          right: listViewPadding,
+          bottom: listViewPadding,
+        ),
+        children: noteListWidgets,
+      ),
+    );
+  }
+
+  Widget get notebooksWidget {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30.0, right: 30),
+      child: SizedBox(
+        height: 170,
+        child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[700],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                    minimumSize: Size(double.infinity, 150),
+                  ),
+                  onPressed: () {},
+                  child: const Text('Trainings'),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[700],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                    minimumSize: Size(double.infinity, 150),
+                  ),
+                  onPressed: () {},
+                  child: const Text('Diet'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -122,13 +174,6 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.build_circle_sharp))
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(color: pageBackgroundColor),
-        child: FutureBuilder<List<Note>>(
-          future: _notesFuture,
-          builder: noteListViewBuilder,
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewNotePage,
         tooltip: 'Create a new Note',
@@ -141,6 +186,39 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
+      ),
+      body: Container(
+        decoration: const BoxDecoration(color: pageBackgroundColor),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 20.0, left: 30.0),
+              child: Text(
+                "Notebooks:",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            notebooksWidget,
+            const Padding(
+              padding: EdgeInsets.only(top: 10.0, left: 30.0),
+              child: Text(
+                "Recent Notes:",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            FutureBuilder<List<Note>>(
+              future: _notesFuture,
+              builder: noteListViewBuilder,
+            ),
+          ],
+        ),
       ),
     );
   }
