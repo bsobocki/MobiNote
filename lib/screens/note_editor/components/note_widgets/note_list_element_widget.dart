@@ -27,6 +27,7 @@ class NoteListElementWidget extends NoteEditorWidget {
       required this.data,
       this.indexInList = 0,
       this.addNewListElement,
+      super.onLongPress,
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
@@ -85,6 +86,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
           id: id,
           data: widget.data.counterData!,
           onTargetReached: () => setState(() => textEditor.strikeText()),
+          onLongPress: widget.onLongPress,
         );
       case ElementType.marks:
         return NoteLabelWidget(

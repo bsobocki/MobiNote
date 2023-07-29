@@ -6,12 +6,12 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 class NoteIconButtonWidget extends NoteEditorWidget {
   final NoteIconButtonData data;
 
-  void Function()? onPressed;
-
   NoteIconButtonWidget(
       {super.key,
       required super.id,
       required this.data,
+      super.onPressed,
+      super.onLongPress,
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,

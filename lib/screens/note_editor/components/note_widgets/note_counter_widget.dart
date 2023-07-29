@@ -8,6 +8,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 class NoteCounterWidget extends NoteEditorWidget {
   NoteCounterData data;
 
+  void Function()? onLongPress;
   void Function()? onTargetReached;
 
   NoteCounterWidget(
@@ -15,6 +16,8 @@ class NoteCounterWidget extends NoteEditorWidget {
       required super.id,
       required this.data,
       this.onTargetReached,
+      this.onLongPress,
+
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
@@ -49,7 +52,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
           ),
           padding: const EdgeInsets.all(0)
         ),
-        onLongPress: () => setState(() => widget.mode = WidgetMode.selected),
+        onLongPress: widget.onLongPress,
         child: Row(
           children: [
             Text(

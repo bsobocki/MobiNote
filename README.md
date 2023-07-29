@@ -48,11 +48,13 @@ samples, guidance on mobile development, and a full API reference.
 # TO DO
 
 ### Fix
+
 [x] dynamically set fontSize and height of TextFields
 [x] space between TextFields
 [ ] adding a new TextField in the right place with paragraphDefaultFontSize
 
 ### Few Next steps:
+
 [x] fix problem with * b o l d   ^ i t a l i c * ^
 [ ] code refactor &&  add UT
 [x] handle paragraphs adding
@@ -62,8 +64,10 @@ samples, guidance on mobile development, and a full API reference.
     [x] catch delete event (cursor on the textfield beggining)
     [x] move focus to the one above
 [x] show paragraph characters on focus
-[ ] handle widgets (remove elements)
-    [ ] fix database insertion
+[ ] handle widgets
+    [x] fix database insertion bug
+    [x] add/remove widgets with buttons
+    [ ] remove widgets from List by deleting (remove last item -> add NoteParagraphTextEditor)
     [ ] create json with widget specification
     [ ] elements like checkbox as widget
 [ ] add colors

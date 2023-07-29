@@ -58,6 +58,16 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     }
   }
 
+  void onLongPress() {
+    WidgetMode newMode = WidgetMode.selected;
+    if (widget.mode == WidgetMode.selected) {
+      newMode = WidgetMode.edit;
+    }
+    setState(() {
+      setMode(newMode);
+    });
+  }
+
   void resetView() => setState(() {
         setMode(WidgetMode.show);
       });
@@ -100,6 +110,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
           data: data,
           addNewListElement: addNewElement,
           onInteract: () => setState(() => setMode(WidgetMode.edit)),
+          onLongPress: onLongPress,
           removeFromParent: deleteElement,
           mode: widget.mode),
     );
@@ -210,15 +221,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onLongPress: () {
-          WidgetMode newMode = WidgetMode.selected;
-          if (widget.mode == WidgetMode.selected) {
-            newMode = WidgetMode.edit;
-          }
-          setState(() {
-            setMode(newMode);
-          });
-        },
+        onLongPress: onLongPress,
         child: createListWidget(),
       ),
     );

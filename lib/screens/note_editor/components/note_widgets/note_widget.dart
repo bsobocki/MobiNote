@@ -5,6 +5,8 @@ abstract class NoteEditorWidget extends StatefulWidget {
   final int id;
   WidgetMode mode;
 
+  void Function()? onPressed;
+  void Function()? onLongPress;
   void Function()? focusOnAction;
   void Function()? focusOffAction;
   void Function()? onInteract;
@@ -17,8 +19,7 @@ abstract class NoteEditorWidget extends StatefulWidget {
   void setMode(WidgetMode mode) {
     if (setModeInState != null) {
       setModeInState!(mode);
-    }
-    else {
+    } else {
       debugPrint('setModeInState is null so need to chenge outside to $mode');
       this.mode = mode;
     }
@@ -32,6 +33,8 @@ abstract class NoteEditorWidget extends StatefulWidget {
   NoteEditorWidget(
       {super.key,
       required this.id,
+      this.onPressed,
+      this.onLongPress,
       this.focusOnAction,
       this.focusOffAction,
       this.onInteract,
