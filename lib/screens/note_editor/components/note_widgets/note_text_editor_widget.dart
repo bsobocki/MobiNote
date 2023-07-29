@@ -43,7 +43,7 @@ class NoteTextEditorWidget extends NoteEditorWidget {
     }
   }
 
-  void unStrikeText() {
+  void unstrikeText() {
     isTextStrike = false;
     debugPrint('TEXT EDITOR WIDGET: set strike to $isTextStrike');
     if (setControllerTextType != null) {
@@ -149,6 +149,11 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
         debugPrint("Doesn't have FOCUS!! :(");
       }
     });
+    if (widget.isTextStrike) {
+      setControllerTextType('text_done');
+    } else {
+      setControllerTextType('');
+    }
   }
 
   @override

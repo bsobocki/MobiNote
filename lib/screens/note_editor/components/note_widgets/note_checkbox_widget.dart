@@ -28,16 +28,20 @@ class NoteCheckboxWidget extends NoteEditorWidget {
 class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
   Color color = Colors.white;
 
+  void callValueCallback() {
+    if (widget.data.value) {
+      callIfNotNull(widget.onTrue);
+    } else {
+      callIfNotNull(widget.onFalse);
+    }
+  }
+
   void onChanged(bool? newValue) => setState(() {
         if (newValue != null) {
           widget.data.value = newValue;
           debugPrint('CHECKBOX WIDGET: set value to ${widget.data.value}');
 
-          if (widget.data.value) {
-            callIfNotNull(widget.onTrue);
-          } else {
-            callIfNotNull(widget.onFalse);
-          }
+          callValueCallback();
         }
       });
 

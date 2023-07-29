@@ -8,16 +8,16 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 class NoteCounterWidget extends NoteEditorWidget {
   NoteCounterData data;
 
-  void Function()? onLongPress;
+  void Function()? onResetCounter;
   void Function()? onTargetReached;
 
   NoteCounterWidget(
       {super.key,
       required super.id,
       required this.data,
+      this.onResetCounter,
       this.onTargetReached,
-      this.onLongPress,
-
+      super.onLongPress,
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
@@ -35,6 +35,11 @@ class NoteCounterWidget extends NoteEditorWidget {
 class _NoteCounterWidgetState extends State<NoteCounterWidget> {
   TextEditingController controller = TextEditingController();
 
+  void resetCounter() {
+    widget.onResetCounter?.call();
+    widget.data.count = 0;
+  }
+
   Widget get counterWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
@@ -46,19 +51,18 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
           }
         }),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.grey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          padding: const EdgeInsets.all(0)
-        ),
+            backgroundColor: Colors.grey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            padding: const EdgeInsets.all(0)),
         onLongPress: widget.onLongPress,
         child: Row(
           children: [
             Text(
               '${widget.data.count} / ',
               style: TextStyle(
-                color: widget.targetReached? Colors.grey[700]: Colors.white,
+                color: widget.targetReached ? Colors.grey[700] : Colors.white,
               ),
             ),
             IntrinsicWidth(
@@ -69,7 +73,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
                   onSubmitted: (text) => setState(() {
                         widget.data.targetValue =
                             int.tryParse(text) ?? widget.data.targetValue;
-                        widget.data.count = 0;
+                        resetCounter();
                         widget.mode = WidgetMode.edit;
                       }),
                   keyboardType: TextInputType.number,

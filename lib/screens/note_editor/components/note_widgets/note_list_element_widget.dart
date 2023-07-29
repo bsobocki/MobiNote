@@ -17,6 +17,7 @@ import 'note_label_widget.dart';
 
 class NoteListElementWidget extends NoteEditorWidget {
   int indexInList;
+  bool isChecked = false;
   NoteListElementData data;
 
   void Function()? _requestFocus;
@@ -62,6 +63,19 @@ class _NoteListElementState extends State<NoteListElementWidget> {
         debugPrint("LIST ELEMENT mode set to: $mode");
       });
 
+  void checkElement(bool isChecked) {
+    widget.isChecked = isChecked;
+    widget.data.checkboxData!.value = isChecked;
+
+    if (isChecked) {
+      widget.data.counterData!.count = widget.data.counterData!.targetValue;
+      setState(() => textEditor.strikeText());
+    } else {
+      widget.data.counterData!.count = 0;
+      setState(() => textEditor.unstrikeText());
+    }
+  }
+
   NoteEditorWidget getLabel() {
     int id = 0;
     if (widget.mode == WidgetMode.selected) {
@@ -78,15 +92,16 @@ class _NoteListElementState extends State<NoteListElementWidget> {
         return NoteCheckboxWidget(
           id: id,
           data: widget.data.checkboxData!,
-          onTrue: () => setState(() => textEditor.strikeText()),
-          onFalse: () => setState(() => textEditor.unStrikeText()),
+          onTrue: () => checkElement(true),
+          onFalse: () => checkElement(false),
         );
       case ElementType.counter:
         return NoteCounterWidget(
           id: id,
           data: widget.data.counterData!,
-          onTargetReached: () => setState(() => textEditor.strikeText()),
           onLongPress: widget.onLongPress,
+          onTargetReached: () => checkElement(true),
+          onResetCounter: () => checkElement(false),
         );
       case ElementType.marks:
         return NoteLabelWidget(
@@ -123,6 +138,10 @@ class _NoteListElementState extends State<NoteListElementWidget> {
         as NoteTextEditorWidget;
     textEditor.addNewElement = addNewListElement;
     textEditor.focusOnAction = widget.focusOnAction;
+    if (widget.data.elemType == ElementType.counter ||
+        widget.data.elemType == ElementType.checkbox) {
+      textEditor.isTextStrike = widget.isChecked;
+    }
     widget.setModeInState = setModeInState;
     widget.requestFocus = textEditor.requestFocus;
   }
