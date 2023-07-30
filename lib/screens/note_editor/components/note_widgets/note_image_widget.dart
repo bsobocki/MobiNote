@@ -56,12 +56,17 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   @override
   void initState() {
     super.initState();
+    widget.stateCounter++;
     widget.setModeInState = setMode;
+    if (widget.data.width != -1 && widget.data.height != -1) {
+      _size = Size(widget.data.width, widget.data.height);
+    }
   }
 
   @override
   void dispose() {
-    widget.setModeInState = null;
+    widget.stateCounter--;
+    if (widget.removingState) widget.setDefaultCallbacks();
     super.dispose();
   }
 
