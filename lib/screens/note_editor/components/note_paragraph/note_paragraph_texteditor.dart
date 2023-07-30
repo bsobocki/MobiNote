@@ -3,7 +3,7 @@ import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
-import 'package:mobi_note/screens/note_editor/components/note_text/note_paragraph_controller.dart';
+import 'package:mobi_note/screens/note_editor/components/note_text/note_text_editor_controller.dart';
 
 import '../../../../logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 
@@ -79,7 +79,7 @@ class NoteParagraphTextEditor extends NoteParagraph {
 }
 
 class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
-  late ParagraphController controller;
+  late NoteTextEditingController controller;
   FocusNode focusNode = FocusNode();
 
   void resizeTextField(double newSize) => widget.fontSize = newSize;
@@ -148,7 +148,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
     super.initState();
     debugPrint('initStatee!!!!!!!');
     widget.requestFocusInState = () => focusNode.requestFocus();
-    controller = ParagraphController(resizeTextField: resizeTextField);
+    controller = NoteTextEditingController(resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
     controller.selection = const TextSelection(baseOffset: 1, extentOffset: 1);
     widget.fontSize = paragraphFontSize(controller.text);

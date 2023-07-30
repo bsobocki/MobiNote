@@ -4,7 +4,7 @@ import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_pro
 import 'package:mobi_note/logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
-import 'package:mobi_note/screens/note_editor/components/note_text/note_paragraph_controller.dart';
+import 'package:mobi_note/screens/note_editor/components/note_text/note_text_editor_controller.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
@@ -85,7 +85,7 @@ class NoteTextEditorWidget extends NoteEditorWidget {
 
 class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
   FocusNode focusNode = FocusNode();
-  late ParagraphController controller;
+  late NoteTextEditingController controller;
   void resizeTextField(double newSize) => widget.fontSize = newSize;
 
   bool needToRemove(String text) {
@@ -137,7 +137,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
     };
     widget.setControllerTextType = setControllerTextType;
     widget._appendTextInState = appendText;
-    controller = ParagraphController(resizeTextField: resizeTextField);
+    controller = NoteTextEditingController(resizeTextField: resizeTextField);
     controller.text = widget.data.text;
     focusNode.addListener(() {
       controller.isFocused = focusNode.hasFocus;
@@ -148,6 +148,8 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
           widget.onInteract!();
         }
       } else {
+        int len = controller.text.length;
+        controller.selection = TextSelection(baseOffset: len, extentOffset: len);
         debugPrint("Doesn't have FOCUS!! :(");
       }
     });
