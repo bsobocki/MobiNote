@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 
 abstract class NoteEditorWidget extends StatefulWidget {
+  NoteEditorWidgetFactory? widgetFactory;
   final int id;
   WidgetMode mode;
+  int stateCounter = 0;
+  bool get removingState => stateCounter == 0;
 
   void Function()? onPressed;
   void Function()? onLongPress;
@@ -12,7 +16,9 @@ abstract class NoteEditorWidget extends StatefulWidget {
   void Function()? onInteract;
   void Function()? reportEditMode;
   void Function(int)? removeFromParent;
+  void Function(Function())? setParentState;
 
+  void Function()? forceSetState;
   void Function()? requestFocus;
   void Function(WidgetMode)? setModeInState;
 
@@ -28,11 +34,13 @@ abstract class NoteEditorWidget extends StatefulWidget {
   void setDefaultCallbacks() {
     requestFocus = null;
     setModeInState = null;
+    forceSetState = null;
   }
 
   NoteEditorWidget(
       {super.key,
       required this.id,
+      this.widgetFactory,
       this.onPressed,
       this.onLongPress,
       this.focusOnAction,
@@ -40,5 +48,6 @@ abstract class NoteEditorWidget extends StatefulWidget {
       this.onInteract,
       this.reportEditMode,
       this.removeFromParent,
+      this.setParentState,
       this.mode = WidgetMode.show});
 }

@@ -5,12 +5,14 @@ import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_d
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph_placeholder.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 
 import 'note_paragraph_texteditor.dart';
 import 'note_paragraph_widget.dart';
 
 class NoteParagraphs {
   IdGenerator paragraphIdGenerator = IdGenerator();
+  NoteEditorWidgetFactory widgetFactory;
   int focusedParagraphId = 0;
   List<NoteParagraph> paragraphs = [];
 
@@ -19,6 +21,7 @@ class NoteParagraphs {
   final void Function(String) onChange;
 
   NoteParagraphs({
+    required this.widgetFactory,
     required this.onChange,
     required this.initContent,
     required this.setContentEditorState,
@@ -78,6 +81,7 @@ class NoteParagraphs {
     paragraphs.add(
       NoteParagraphPlaceholder(
         id: paragraphIdGenerator.nextId,
+        widgetFactory: widgetFactory,
         onTap: () {
           var lastValidParagraph = paragraphs[paragraphs.length - 2];
           lastValidParagraph.requestFocus();
@@ -182,6 +186,7 @@ class NoteParagraphs {
     debugPrint("create note widget paragraph!!!");
     return NoteParagraphWidget(
       id: paragraphIdGenerator.nextId,
+        widgetFactory: widgetFactory,
       reportFocusParagraph: reportFocusParagraph,
       deleteParagraph: deleteNoteParagraph,
       widgetJSON: '',
@@ -191,6 +196,7 @@ class NoteParagraphs {
   NoteParagraphTextEditor createNoteParagraphTextEditor(text) {
     return NoteParagraphTextEditor(
       id: paragraphIdGenerator.nextId,
+        widgetFactory: widgetFactory,
       paragraphText: text,
       onChange: onChange,
       addParagraph: addNoteParagraphEditorAfter,

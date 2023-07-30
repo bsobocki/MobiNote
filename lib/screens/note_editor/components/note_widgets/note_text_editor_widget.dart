@@ -16,16 +16,17 @@ class NoteTextEditorWidget extends NoteEditorWidget {
   void Function()? _requestFocus;
   void Function(String)? setControllerTextType;
 
-  NoteTextEditorWidget(
-      {super.key,
-      required super.id,
-      required this.data,
-      this.addNewElement,
-      super.focusOffAction,
-      super.focusOnAction,
-      super.onInteract,
-      super.removeFromParent,
-      super.mode}) {
+  NoteTextEditorWidget({
+    super.key,
+    required super.id,
+    required this.data,
+    this.addNewElement,
+    super.focusOffAction,
+    super.focusOnAction,
+    super.onInteract,
+    super.removeFromParent,
+    super.mode,
+  }) {
     data.text = '$placeholder${data.text}';
     requestFocus = () => _requestFocus?.call();
   }

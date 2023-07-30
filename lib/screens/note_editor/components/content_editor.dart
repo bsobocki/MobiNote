@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraphs.dart';
+import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 
 int change = 1;
@@ -27,6 +29,7 @@ class ContentEditor extends StatefulWidget {
 }
 
 class _ContentEditorState extends State<ContentEditor> {
+  NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory();
   bool contentChanged = false;
   late NoteParagraphs paragraphs;
   int focusedParagraphId = -1;
@@ -51,7 +54,7 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void addParagraphWithList() => setState(() {
-        NoteListData data = NoteListData(id: -1);
+        NoteListData data = NoteListData(id: -1, elemType: ElementType.checkbox);
         paragraphs.addParagraphWithWidget(data);
       });
 
@@ -62,6 +65,7 @@ class _ContentEditorState extends State<ContentEditor> {
     super.initState();
     widget.text = text;
     paragraphs = NoteParagraphs(
+      widgetFactory: widgetFactory,
       onChange: onChange,
       initContent: widget.initContent,
       setContentEditorState: setContentEditorState,

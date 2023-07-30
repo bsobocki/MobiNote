@@ -16,7 +16,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import 'note_label_widget.dart';
 
 class NoteListElementWidget extends NoteEditorWidget {
-  int indexInList;
+  int number;
   bool isChecked = false;
   NoteListElementData data;
 
@@ -26,7 +26,8 @@ class NoteListElementWidget extends NoteEditorWidget {
   NoteListElementWidget(
       {required super.id,
       required this.data,
-      this.indexInList = 0,
+      required super.widgetFactory,
+      this.number = 0,
       this.addNewListElement,
       super.onLongPress,
       super.focusOffAction,
@@ -40,6 +41,7 @@ class NoteListElementWidget extends NoteEditorWidget {
     data.counterData ??= NoteCounterData(id: -1, targetValue: 10);
     data.textEditorData ??= NoteTextEditorData(id: -1, text: '');
     requestFocus = () => _requestFocus?.call();
+    widgetFactory ??= NoteEditorWidgetFactory();
   }
 
   @override
@@ -55,7 +57,6 @@ class NoteListElementWidget extends NoteEditorWidget {
 
 class _NoteListElementState extends State<NoteListElementWidget> {
   late NoteTextEditorWidget textEditor;
-  NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory();
 
   void setModeInState(WidgetMode mode) => setState(() {
         widget.mode = mode;
@@ -77,6 +78,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
   }
 
   NoteEditorWidget getLabel() {
+    debugPrint('DATA LABEL CREATION!!!');
     int id = 0;
     if (widget.mode == WidgetMode.selected) {
       return NoteIconButtonWidget(
@@ -107,17 +109,19 @@ class _NoteListElementState extends State<NoteListElementWidget> {
         return NoteLabelWidget(
           id: id,
           data: NoteLabelData(id: -1, label: '-'),
+          widgetFactory: widget.widgetFactory,
         );
       case ElementType.number:
-        int num = widget.indexInList + 1;
         return NoteLabelWidget(
           id: id,
-          data: NoteLabelData(id: -1, label: '$num.'),
+          data: NoteLabelData(id: -1, label: '${widget.data.number}.'),
+          widgetFactory: widget.widgetFactory,
         );
       default:
         return NoteLabelWidget(
           id: id,
           data: NoteLabelData(id: -1, label: '*'),
+          widgetFactory: widget.widgetFactory,
         );
     }
   }
@@ -134,7 +138,8 @@ class _NoteListElementState extends State<NoteListElementWidget> {
   @override
   void initState() {
     super.initState();
-    textEditor = widgetFactory.create(widget.data.textEditorData!)
+    widget.stateCounter++;
+    textEditor = widget.widgetFactory!.create(widget.data.textEditorData!)
         as NoteTextEditorWidget;
     textEditor.addNewElement = addNewListElement;
     textEditor.focusOnAction = widget.focusOnAction;
@@ -144,11 +149,14 @@ class _NoteListElementState extends State<NoteListElementWidget> {
     }
     widget.setModeInState = setModeInState;
     widget.requestFocus = textEditor.requestFocus;
+    debugPrint('ListElement => SET IT');
+    widget.forceSetState = () => setState(() {});
   }
 
   @override
   void dispose() {
-    widget.setDefaultCallbacks();
+    widget.stateCounter--;
+    if (widget.removingState) widget.setDefaultCallbacks();
     super.dispose();
   }
 

@@ -7,14 +7,15 @@ class NoteLabelWidget extends NoteEditorWidget {
   final NoteLabelData data;
 
   NoteLabelWidget(
-      {super.key,
-      required super.id,
+      {required super.id,
       required this.data,
+      required super.widgetFactory,
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
       super.removeFromParent,
-      super.mode});
+      super.mode})
+      : super(key: ValueKey('NoteLabelWidget_$id'));
 
   @override
   State<NoteLabelWidget> createState() => _NoteLabelWidgetState();
@@ -23,6 +24,7 @@ class NoteLabelWidget extends NoteEditorWidget {
 class _NoteLabelWidgetState extends State<NoteLabelWidget> {
   @override
   Widget build(BuildContext context) {
+    debugPrint('NoteLabelWidget: build!!!!');
     return Text(
       widget.data.label,
       style: const TextStyle(

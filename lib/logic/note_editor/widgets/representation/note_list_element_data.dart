@@ -8,6 +8,7 @@ enum ElementType { checkbox, number, marks, counter, custom }
 
 class NoteListElementData extends NoteWidgetData {
   int depth;
+  int number;
   ElementType elemType;
   NoteCheckboxData? checkboxData;
   NoteTextEditorData? textEditorData;
@@ -18,6 +19,7 @@ class NoteListElementData extends NoteWidgetData {
     required super.id,
     required this.depth,
     required this.elemType,
+    required this.number,
     this.checkboxData,
     this.textEditorData,
     this.counterData,

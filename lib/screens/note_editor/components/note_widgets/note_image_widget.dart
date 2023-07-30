@@ -11,15 +11,16 @@ import 'definitions/widget_mode.dart';
 class NoteImageWidget extends NoteEditorWidget {
   NoteImageData data;
 
-  NoteImageWidget(
-      {super.key,
-      required super.id,
-      required this.data,
-      super.focusOffAction,
-      super.focusOnAction,
-      super.onInteract,
-      super.removeFromParent,
-      super.mode});
+  NoteImageWidget({
+    super.key,
+    required super.id,
+    required this.data,
+    super.focusOffAction,
+    super.focusOnAction,
+    super.onInteract,
+    super.removeFromParent,
+    super.mode,
+  });
 
   @override
   State<NoteImageWidget> createState() => _NoteImageWidgetState();

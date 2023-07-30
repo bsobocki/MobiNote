@@ -18,25 +18,42 @@ class NoteListWidget extends NoteEditorWidget {
     super.key,
     required super.id,
     required this.data,
+    required super.widgetFactory,
     super.focusOffAction,
     super.focusOnAction,
     super.onInteract,
     super.reportEditMode,
     super.removeFromParent,
-  });
+  }) {
+    widgetFactory ??= NoteEditorWidgetFactory();
+  }
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {
-  ElementType elemType = ElementType.checkbox;
   List<NoteListElementWidget> elements = [];
-  NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory();
   int currDepth = 0;
 
+  void setNumbers(int startIndex) {
+    debugPrint('NoteListWidget:  setNumbers!!!!!!');
+    for (int i = startIndex; i < elements.length; i++) {
+      elements[i].data.number = i + 1;
+      if (widget.data.elemType == ElementType.number) {
+        if (elements[i].forceSetState == null) {
+          debugPrint('WHAAAAAAAAAAAAAAAAAAAATTTTT');
+        }
+        elements[i].forceSetState?.call();
+      } else {
+        debugPrint(
+            '************************element type is: ${widget.data.elemType}');
+      }
+    }
+  }
+
   void setElementType(ElementType type) => setState(() {
-        elemType = type;
+        widget.data.elemType = type;
         for (var elem in elements) {
           elem.data.elemType = type;
         }
@@ -73,11 +90,16 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       });
 
   void deleteElement(int id) {
-    elements.removeWhere((elem) => elem.id == id);
+    var index = elements.indexWhere((elem) => elem.id == id);
+    if (exists(index)) {
+      elements.removeAt(index);
+    }
     if (elements.isEmpty) {
       widget.removeFromParent?.call(widget.id);
+    } else {
+      setNumbers(index);
+      setState(() {});
     }
-    setState(() {});
   }
 
   void _addNewElement({int prevElemId = -1, String initText = ''}) {
@@ -93,35 +115,37 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     NoteListElementData newElemData = NoteListElementData(
       id: -1,
       depth: currDepth,
-      elemType: elemType,
+      number: index + 1,
+      elemType: widget.data.elemType,
       checkboxData: NoteCheckboxData(id: -1, value: false),
       textEditorData: NoteTextEditorData(id: -1, text: initText),
     );
     widget.data.addElement(newElemData);
-    addElement(index, newElemData);
+    addElementFromData(index, newElemData);
   }
 
-  void addElement(int index, NoteListElementData data) {
+  void addElementFromData(int index, NoteListElementData data) {
     elements.insert(
       index,
       NoteListElementWidget(
-          id: widgetFactory.nextId,
-          indexInList: index,
-          data: data,
-          addNewListElement: addNewElement,
-          onInteract: () => setState(() => setMode(WidgetMode.edit)),
-          onLongPress: onLongPress,
-          removeFromParent: deleteElement,
-          mode: widget.mode),
+        id: widget.widgetFactory!.nextId('list_element'),
+        number: index + 1,
+        data: data,
+        addNewListElement: addNewElement,
+        removeFromParent: deleteElement,
+        onInteract: () => setState(() => setMode(WidgetMode.edit)),
+        onLongPress: onLongPress,
+        mode: widget.mode,
+        widgetFactory: widget.widgetFactory,
+      ),
     );
-    for (int i = index + 1; i < elements.length; i++) {
-      elements[i].indexInList = i;
-    }
+    setNumbers(index + 1);
   }
 
   void addNewElement(int prevElemId, String initText) => setState(() {
         debugPrint('run _addElement($prevElemId, $initText)');
         _addNewElement(prevElemId: prevElemId, initText: initText);
+        debugPrint('addNewElement: set state!!!!!');
       });
 
   void addEmptyElement() => _addNewElement();
@@ -132,7 +156,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     } else {
       int index = 0;
       for (var data in widget.data.elements!) {
-        addElement(index++, data);
+        addElementFromData(index++, data);
       }
     }
   }
@@ -140,9 +164,11 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   @override
   void initState() {
     super.initState();
+    widget.stateCounter++;
     setMode(WidgetMode.show);
     widget.setModeInState = (mode) => setState(() => setMode(mode));
     createWidgets();
+    widget.forceSetState = () => setState(() {});
   }
 
   @override
@@ -187,7 +213,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       children: [
         elemModeSelectionBar,
         showModeWidget,
-        widgetFactory.create(
+        widget.widgetFactory?.create(
           NoteIconButtonData(
             id: -1,
             paddingTop: 6.0,

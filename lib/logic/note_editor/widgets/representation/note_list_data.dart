@@ -2,9 +2,11 @@ import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_ele
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 
 class NoteListData extends NoteWidgetData {
+  ElementType elemType;
   List<NoteListElementData>? elements;
   NoteListData({
     required super.id,
+    required this.elemType,
     this.elements,
     super.type = 'list',
   }) {

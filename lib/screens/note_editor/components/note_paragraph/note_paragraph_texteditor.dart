@@ -23,6 +23,7 @@ class NoteParagraphTextEditor extends NoteParagraph {
 
   NoteParagraphTextEditor(
       {required super.id,
+      required super.widgetFactory,
       required super.reportFocusParagraph,
       required this.paragraphText,
       required this.onChange,

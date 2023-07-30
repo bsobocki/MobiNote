@@ -4,12 +4,14 @@ import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_par
 void emptyFunction(int id) {}
 
 class NoteParagraphPlaceholder extends NoteParagraph {
-  NoteParagraphPlaceholder(
-      {super.key,
-      required super.id,
-      required this.onTap,
-      super.reportFocusParagraph = emptyFunction,
-      super.deleteParagraph = emptyFunction});
+  NoteParagraphPlaceholder({
+    super.key,
+    required super.id,
+    required super.widgetFactory,
+    required this.onTap,
+    super.reportFocusParagraph = emptyFunction,
+    super.deleteParagraph = emptyFunction,
+  });
 
   void Function() onTap;
 
@@ -36,9 +38,9 @@ class _NoteParagraphPlaceholderState extends State<NoteParagraphPlaceholder> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        color: Colors.transparent,
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height),
+          color: Colors.transparent,
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height),
     );
   }
 }

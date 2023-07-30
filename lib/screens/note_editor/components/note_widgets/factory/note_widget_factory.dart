@@ -18,13 +18,11 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 
 class NoteEditorWidgetFactory {
   final int startId;
-  late IdGenerator idGenerator;
-  NoteEditorWidgetFactory({this.startId = 0}) {
-    idGenerator = IdGenerator(currId: startId);
-  }
+  Map<String, IdGenerator> idGenerator = {};
+  NoteEditorWidgetFactory({this.startId = 0});
 
   NoteEditorWidget create(NoteWidgetData data) {
-    int id = idGenerator.nextId;
+    int id = nextId(data.type);
     switch (data.type) {
       case 'image':
         return NoteImageWidget(
@@ -40,11 +38,13 @@ class NoteEditorWidgetFactory {
         return NoteListElementWidget(
           id: id,
           data: data as NoteListElementData,
+          widgetFactory: this,
         );
       case 'list':
         return NoteListWidget(
           id: id,
           data: data as NoteListData,
+          widgetFactory: this,
         );
       case 'counter':
         return NoteCounterWidget(
@@ -64,5 +64,10 @@ class NoteEditorWidgetFactory {
     }
   }
 
-  int get nextId => idGenerator.nextId;
+  int nextId(String type) {
+    if (!idGenerator.keys.contains(type)) {
+      idGenerator[type] = IdGenerator();
+    }
+    return idGenerator[type]!.nextId;
+  }
 }

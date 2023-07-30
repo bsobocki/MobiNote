@@ -15,6 +15,7 @@ class NoteParagraphWidget extends NoteParagraph {
 
   NoteParagraphWidget(
       {required super.id,
+      required super.widgetFactory,
       required super.reportFocusParagraph,
       required super.deleteParagraph,
       required this.widgetJSON})
@@ -98,6 +99,7 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
     noteEditorWidget.onInteract = onInteract;
     noteEditorWidget.focusOnAction = focusOnAction;
     noteEditorWidget.removeFromParent = removeWidget;
+    noteEditorWidget.setParentState = setState;
   }
 
   void addWidget(NoteEditorWidget noteEditorWidget) => setState(() {
