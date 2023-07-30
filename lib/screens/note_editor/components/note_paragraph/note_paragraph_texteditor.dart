@@ -146,6 +146,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   @override
   void initState() {
     super.initState();
+    widget.stateCounter++;
     debugPrint('initStatee!!!!!!!');
     widget.requestFocusInState = () => focusNode.requestFocus();
     controller = NoteTextEditingController(resizeTextField: resizeTextField);
@@ -165,7 +166,10 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   void dispose() {
     debugPrint('dispose!!!!!!!');
     controller.dispose();
-    widget.setDefaultCallbacks();
+    widget.stateCounter--;
+    if (widget.removingState) {
+      widget.setDefaultCallbacks();
+    }
     super.dispose();
   }
 

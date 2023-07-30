@@ -142,6 +142,7 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   @override
   void initState() {
     super.initState();
+    widget.stateCounter++;
     debugPrint("init state of note widget paragraph!!!");
     addSetStateToWidgetMethods();
     for (var elem in widget.elements) {
@@ -155,7 +156,10 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
 
   @override
   void dispose() {
-    widget.setDefaultCallbacks();
+    widget.stateCounter--;
+    if (widget.removingState) {
+      widget.setDefaultCallbacks();
+    }
     super.dispose();
   }
 

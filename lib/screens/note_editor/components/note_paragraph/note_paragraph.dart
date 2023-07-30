@@ -3,6 +3,9 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/no
 
 // ignore: must_be_immutable
 abstract class NoteParagraph extends StatefulWidget {
+  int stateCounter = 0;
+  bool get removingState => stateCounter == 0;
+
   NoteEditorWidgetFactory widgetFactory;
   final int id;
   void Function(int) reportFocusParagraph;
