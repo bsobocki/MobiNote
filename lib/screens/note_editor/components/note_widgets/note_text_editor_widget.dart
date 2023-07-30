@@ -140,6 +140,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
     controller = ParagraphController(resizeTextField: resizeTextField);
     controller.text = widget.data.text;
     focusNode.addListener(() {
+      controller.isFocused = focusNode.hasFocus;
       debugPrint("TextField with text: ${controller.text}");
       if (focusNode.hasFocus) {
         debugPrint('Has FOCUS!!!');
