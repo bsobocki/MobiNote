@@ -175,6 +175,7 @@ class NoteParagraphs {
               }
             }
           }
+          reportFocusParagraph(paragraphs[prevIndex].id);
         }
         debugPrint("AFTER REMOVING PARAGRAPH $paragraphId:");
         for (var p in paragraphs) {
@@ -186,7 +187,7 @@ class NoteParagraphs {
     debugPrint("create note widget paragraph!!!");
     return NoteParagraphWidget(
       id: paragraphIdGenerator.nextId,
-        widgetFactory: widgetFactory,
+      widgetFactory: widgetFactory,
       reportFocusParagraph: reportFocusParagraph,
       deleteParagraph: deleteNoteParagraph,
       widgetJSON: '',
@@ -196,7 +197,7 @@ class NoteParagraphs {
   NoteParagraphTextEditor createNoteParagraphTextEditor(text) {
     return NoteParagraphTextEditor(
       id: paragraphIdGenerator.nextId,
-        widgetFactory: widgetFactory,
+      widgetFactory: widgetFactory,
       paragraphText: text,
       onChange: onChange,
       addParagraph: addNoteParagraphEditorAfter,
