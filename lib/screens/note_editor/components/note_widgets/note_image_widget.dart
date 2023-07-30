@@ -8,6 +8,8 @@ import 'package:mobi_note/screens/note_editor/helpers/images.dart';
 
 import 'definitions/widget_mode.dart';
 
+const double resizeLimit = 20;
+
 class NoteImageWidget extends NoteEditorWidget {
   NoteImageData data;
 
@@ -34,6 +36,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   void setMode(WidgetMode mode) => setState(() {
         debugPrint("Image mode set to: $mode");
         widget.mode = mode;
+        trytoSaveSize();
       });
 
   BoxDecoration getBoxDecorationForMode(WidgetMode mode) {
@@ -96,14 +99,18 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
     return getWidget();
   }
 
+  void trytoSaveSize() {
+    var renderObject =
+        imageKey.currentContext?.findRenderObject() as RenderBox?;
+    _size = renderObject?.size;
+    if (_size != null) {
+      sizeRatio = _size!.width / _size!.height;
+    }
+  }
+
   Size? get size {
     if (_size == null) {
-      var renderObject =
-          imageKey.currentContext?.findRenderObject() as RenderBox?;
-      _size = renderObject?.size;
-      if (_size != null) {
-        sizeRatio = _size!.width / _size!.height;
-      }
+      trytoSaveSize();
     }
     return _size;
   }
@@ -130,8 +137,11 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                 setState(() {
                   if (size != null) {
                     double movingDelta = details.delta.dy;
-                    size = Size(size!.width + movingDelta * sizeRatio,
-                        size!.height + movingDelta);
+                    double newWidth = size!.width + movingDelta * sizeRatio;
+                    double newHeight = size!.height + movingDelta;
+                    if (newWidth > resizeLimit && newHeight > resizeLimit) {
+                      size = Size(newWidth, newHeight);
+                    }
                   }
                 });
               },
