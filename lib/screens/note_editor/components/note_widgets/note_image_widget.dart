@@ -27,6 +27,10 @@ class NoteImageWidget extends NoteEditorWidget {
 }
 
 class _NoteImageWidgetState extends State<NoteImageWidget> {
+  final GlobalKey imageKey = GlobalKey();
+  Size? _size;
+  double sizeRatio = 1.0;
+
   void setMode(WidgetMode mode) => setState(() {
         debugPrint("Image mode set to: $mode");
         widget.mode = mode;
@@ -38,10 +42,11 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       case WidgetMode.edit:
       case WidgetMode.selected:
         return BoxDecoration(
-            border: Border.all(color: Colors.white, width: 4.0),
-            color: Colors.white);
+            border: Border.all(color: Colors.white, width: 4.0));
       default:
-        return const BoxDecoration(border: Border(), color: Colors.white);
+        return const BoxDecoration(
+          border: Border(),
+        );
     }
   }
 
@@ -70,11 +75,18 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
 
   Widget getWidget({double opacity = 1.0}) {
     return Container(
+      alignment: Alignment.topLeft,
+      width: size?.width,
+      height: size?.height,
       decoration: getBoxDecorationForMode(widget.mode),
       child: Opacity(
         opacity: opacity,
-        child: Image.file(
-          File(widget.data.path!),
+        child: Container(
+          color: Colors.white,
+          child: Image.file(
+            key: imageKey,
+            File(widget.data.path!),
+          ),
         ),
       ),
     );
@@ -84,18 +96,61 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
     return getWidget();
   }
 
+  Size? get size {
+    if (_size == null) {
+      var renderObject =
+          imageKey.currentContext?.findRenderObject() as RenderBox?;
+      _size = renderObject?.size;
+      if (_size != null) {
+        sizeRatio = _size!.width / _size!.height;
+      }
+    }
+    return _size;
+  }
+
+  set size(Size? newSize) {
+    _size = newSize;
+    widget.data.width = newSize?.width ?? widget.data.width;
+    widget.data.height = newSize?.height ?? widget.data.height;
+  }
+
   Widget editModeWidget() {
-    return getWidget();
+    Size? imgSize = size ?? const Size(0, 0);
+    return Container(
+      width: size?.width,
+      height: size?.height,
+      child: Stack(children: [
+        getWidget(),
+        Positioned(
+            bottom: 0,
+            left: imgSize.width / 2,
+            child: GestureDetector(
+              onVerticalDragUpdate: (details) {
+                debugPrint('details: $details');
+                setState(() {
+                  if (size != null) {
+                    double movingDelta = details.delta.dy;
+                    size = Size(size!.width + movingDelta * sizeRatio,
+                        size!.height + movingDelta);
+                  }
+                });
+              },
+              child: const Icon(
+                Icons.arrow_circle_up,
+                color: Colors.white,
+              ),
+            )),
+      ]),
+    );
   }
 
   Widget selectedModeWidget() {
-    return Stack(children: [
-      getWidget(opacity: 0.8),
-      Center(
-        child: Align(
-          alignment: Alignment.center,
+    return Stack(
+      children: [
+        getWidget(opacity: 0.8),
+        Center(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               IconButton(
                 onPressed: () {
@@ -125,15 +180,15 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
             ],
           ),
         ),
-      )
-    ]);
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onDoubleTap: () {
+        onTap: () {
           callIfNotNull(widget.onInteract);
           setMode(WidgetMode.edit);
         },
