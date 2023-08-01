@@ -28,4 +28,16 @@ class NoteListData extends NoteWidgetData {
     s += '}';
     return s;
   }
+
+  List<JSON> get elementsJSON {
+    List<JSON> elems = [];
+    for (var elem in elements!) {
+      elems.add(elem.json);
+    }
+    return elems;
+  }
+
+  @override
+  JSON get jsonAdditionalParameters =>
+      {"elemType": elemType.toString(), "elements": elementsJSON};
 }

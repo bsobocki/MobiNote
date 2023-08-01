@@ -1,7 +1,7 @@
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_counter_data.dart';
-import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_widget.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';

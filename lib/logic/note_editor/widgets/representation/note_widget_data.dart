@@ -1,3 +1,5 @@
+typedef JSON = Map<String, dynamic>;
+
 abstract class NoteWidgetData {
   final int id;
   final String type;
@@ -5,9 +7,24 @@ abstract class NoteWidgetData {
 
   NoteWidgetData({required this.id, required this.type});
 
+  JSON get jsonAdditionalParameters;
+  String get str;
+
   void addChild(NoteWidgetData data) {
     children.add(data);
   }
 
-  String get str;
+  List<JSON> get jsonChildren {
+    List<JSON> childrenJSON = [];
+    for (var elem in children) {
+      childrenJSON.add(elem.json);
+    }
+    return childrenJSON;
+  }
+
+  JSON get json => {
+        "id": id,
+        "type": type,
+        "children": jsonChildren,
+      }..addAll(jsonAdditionalParameters);
 }

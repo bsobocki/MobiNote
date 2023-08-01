@@ -25,7 +25,7 @@ class NoteCounterWidget extends NoteEditorWidget {
       super.mode});
 
   bool get targetReached {
-    return data.count >= data.targetValue;
+    return data.count >= data.target;
   }
 
   @override
@@ -68,11 +68,10 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
             IntrinsicWidth(
               child: TextField(
                   onTap: () => controller.text = '',
-                  controller: controller
-                    ..text = widget.data.targetValue.toString(),
+                  controller: controller..text = widget.data.target.toString(),
                   onSubmitted: (text) => setState(() {
-                        widget.data.targetValue =
-                            int.tryParse(text) ?? widget.data.targetValue;
+                        widget.data.target =
+                            int.tryParse(text) ?? widget.data.target;
                         resetCounter();
                         widget.mode = WidgetMode.edit;
                       }),

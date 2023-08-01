@@ -11,4 +11,7 @@ class NoteTextEditorData extends NoteWidgetData {
 
   @override
   String get str => '{$id : text: $text}';
+  
+  @override
+  JSON get jsonAdditionalParameters => {"text":text};
 }

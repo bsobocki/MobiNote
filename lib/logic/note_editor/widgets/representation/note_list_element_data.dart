@@ -48,4 +48,15 @@ class NoteListElementData extends NoteWidgetData {
     s += getStrIfNotNull(infoPageData);
     return '$s }';
   }
+
+  @override
+  JSON get jsonAdditionalParameters => {
+        "depth": depth,
+        "number": number,
+        "elemType": elemType.toString(),
+        "checkboxData": checkboxData?.json,
+        "textEditorData": textEditorData?.json,
+        "counterData": counterData?.json,
+        "infoPageData": infoPageData?.json,
+      };
 }

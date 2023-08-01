@@ -10,4 +10,7 @@ class NoteLabelData extends NoteWidgetData {
 
   @override
   String get str => '{$id: label: $label}';
+
+  @override
+  JSON get jsonAdditionalParameters => {"label": label};
 }

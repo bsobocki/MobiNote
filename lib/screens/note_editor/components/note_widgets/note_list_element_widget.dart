@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_counter_data.dart';
-import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_widget.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/note_icon_button_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_label_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
@@ -38,7 +38,7 @@ class NoteListElementWidget extends NoteEditorWidget {
       super.mode})
       : super(key: ValueKey('ListElement_$id')) {
     data.checkboxData ??= NoteCheckboxData(id: -1, value: false);
-    data.counterData ??= NoteCounterData(id: -1, targetValue: 10);
+    data.counterData ??= NoteCounterData(id: -1, target: 10);
     data.textEditorData ??= NoteTextEditorData(id: -1, text: '');
     requestFocus = () => _requestFocus?.call();
     widgetFactory ??= NoteEditorWidgetFactory();
@@ -69,7 +69,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
     widget.data.checkboxData!.value = isChecked;
 
     if (isChecked) {
-      widget.data.counterData!.count = widget.data.counterData!.targetValue;
+      widget.data.counterData!.count = widget.data.counterData!.target;
       setState(() => textEditor.strikeText());
     } else {
       widget.data.counterData!.count = 0;

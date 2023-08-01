@@ -8,4 +8,7 @@ class NoteInfoPageData extends NoteWidgetData {
 
   @override
   String get str => '{$id: info page}';
+
+  @override
+  JSON get jsonAdditionalParameters => {};
 }

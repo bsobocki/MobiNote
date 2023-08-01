@@ -11,4 +11,7 @@ class NoteCheckboxData extends NoteWidgetData {
 
   @override
   String get str => '{$id: checkbox: $value}';
+
+  @override
+  JSON get jsonAdditionalParameters => {"value": value};
 }

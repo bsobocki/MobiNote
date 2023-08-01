@@ -27,4 +27,16 @@ class NoteIconButtonData extends NoteWidgetData {
 
   @override
   String get str => '{$id: image: $icon}';
+
+  @override
+  JSON get jsonAdditionalParameters => {
+        "icon": icon?.codePoint,
+        "width": width,
+        "height": height,
+        "paddingLeft": paddingLeft,
+        "paddingRight": paddingRight,
+        "paddingTop": paddingTop,
+        "paddingBottom": paddingBottom,
+        "color": color?.value
+      };
 }
