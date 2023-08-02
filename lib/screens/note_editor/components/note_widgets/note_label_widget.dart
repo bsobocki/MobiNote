@@ -25,12 +25,18 @@ class _NoteLabelWidgetState extends State<NoteLabelWidget> {
   @override
   Widget build(BuildContext context) {
     debugPrint('NoteLabelWidget: build!!!!');
-    return Text(
-      widget.data.label,
-      style: const TextStyle(
-        color: Colors.grey,
-        fontWeight: FontWeight.bold,
-        fontSize: paragraphDefaultFontSize,
+    return SizedBox(
+      width: 30,
+      height: 30,
+      child: Center(
+        child: Text(
+          widget.data.label,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: paragraphDefaultFontSize,
+          ),
+        ),
       ),
     );
   }
