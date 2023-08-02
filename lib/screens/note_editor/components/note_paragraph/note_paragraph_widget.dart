@@ -31,8 +31,6 @@ class NoteParagraphWidget extends NoteParagraph {
   void Function(WidgetMode)? setMode;
   void Function(int)? removeFromParent;
 
-  String Function()? widgetTreeFromState;
-
   void _addWidget(NoteEditorWidget widget) {
     debugPrint("noteparagraphwidget: add widget: $widget");
     elements.add(widget);
@@ -54,7 +52,6 @@ class NoteParagraphWidget extends NoteParagraph {
     addWidgetByData = _addWidgetByData;
     setMode = _setMode;
     requestFocusInState = null;
-    widgetTreeFromState = () => '';
   }
 
   @override
@@ -70,7 +67,13 @@ class NoteParagraphWidget extends NoteParagraph {
   String get content => '!$placeholder:$widgetTree';
 
   @override
-  String get widgetTree => widgetTreeFromState!();
+  String get widgetTree  {
+    List<JSON> tree = [];
+    for (var child in elements) {
+      tree.add(child.data.json);
+    }
+    return jsonEncode(tree);
+  }
 }
 
 class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
@@ -146,14 +149,6 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
     widget.addWidgetByData = addWidgetByData;
   }
 
-  String widgetTree() {
-    List<JSON> tree = [];
-    for (var child in widget.elements) {
-      tree.add(child.data.json);
-    }
-    return jsonEncode(tree);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -163,7 +158,6 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
     for (var elem in widget.elements) {
       setCallbacks(elem);
     }
-    widget.widgetTreeFromState = widgetTree;
     widget.setMode = setMode;
     widget.requestFocusInState =
         () => FocusScope.of(context).requestFocus(focusNode);

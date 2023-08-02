@@ -55,6 +55,7 @@ class NoteParagraphs {
   int indexOfFocusedParagraph() {
     int index =
         paragraphs.indexWhere((element) => element.id == focusedParagraphId);
+    if (index == -1) debugPrint('CANNOT FIND INDEX FOR ID $focusedParagraphId');
     return index == -1 ? paragraphs.length : index;
   }
 
@@ -76,6 +77,9 @@ class NoteParagraphs {
           } else {
             addNewNoteParagraphWidget(currText);
           }
+          focusedParagraphId = paragraphIdGenerator.currId - 1;
+          debugPrint(
+              "FOCUSED PARAGRAPH!!!!!!!!!!!! ID: $focusedParagraphId !!!!!!!!!!!!!");
           currText = '';
         } else {
           currText += text[i];
@@ -104,15 +108,24 @@ class NoteParagraphs {
     debugPrint('CALL: addNewNoteParagraphEditor');
     var newParagraph = createNoteParagraphTextEditor(text);
     paragraphs.add(newParagraph);
+    debugPrint('ADDED TEXT EDITOR: ID: ${newParagraph.id} !!!!!!!!!!');
   }
 
   void addNewNoteParagraphWidget(String text) {
     debugPrint('CALL: addParagraphWithWidget from JSON');
     String jsonStr = text.substring(3);
-    List<dynamic> jsonObjects = jsonDecode(jsonStr);
-    List<NoteWidgetData> widgetsData =
-        jsonObjects.map((e) => createData(e)).toList();
-    addParagraphWithWidgets(widgetsData, addTextEditorAfter: false);
+    try {
+      List<dynamic> jsonObjects = jsonDecode(jsonStr);
+      List<NoteWidgetData> widgetsData =
+          jsonObjects.map((e) => createData(e)).toList();
+      addParagraphWithWidgets(
+        widgetsData,
+        addTextEditorAfter: false,
+        overriteParagraphIfNeeded: false,
+      );
+    } catch (e) {
+      debugPrint('cannot add widget from JSON: $e');
+    }
   }
 
   void addParagraphWithWidget(NoteWidgetData data) {
@@ -120,7 +133,7 @@ class NoteParagraphs {
   }
 
   void addParagraphWithWidgets(List<NoteWidgetData> widgetsData,
-      {bool addTextEditorAfter = true}) {
+      {bool addTextEditorAfter = true, bool overriteParagraphIfNeeded = true}) {
     debugPrint('CALL: addParagraphWithWidgets');
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
@@ -130,20 +143,32 @@ class NoteParagraphs {
     }
 
     int newItemIndex = focusedParagraphIndex + 1;
+    debugPrint('ADDING WIDGET: newItemIndex: $newItemIndex');
 
     if (paragraphs.isEmpty) {
       newItemIndex = 0;
-    } else if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor) {
-      if (paragraphs[focusedParagraphIndex].content.isEmpty) {
+      debugPrint(
+          'ADDING WIDGET: PARAGRAPH IS EMPTY: newItemIndex: $newItemIndex');
+    } else if (overriteParagraphIfNeeded) {
+      if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor &&
+          paragraphs[focusedParagraphIndex].content.isEmpty) {
         paragraphs.removeAt(focusedParagraphIndex);
         newItemIndex = focusedParagraphIndex;
       }
     }
 
-    paragraphs.insert(
-      newItemIndex,
-      noteParagraphWidget,
-    );
+    if (newItemIndex >= paragraphs.length) {
+      paragraphs.add(noteParagraphWidget);
+      newItemIndex = paragraphs.length-1;
+    } else {
+      paragraphs.insert(
+        newItemIndex,
+        noteParagraphWidget,
+      );
+    }
+
+    debugPrint(
+        'ADDED ${noteParagraphWidget.id} WIDGET PARAGRAPH AT $newItemIndex !!!!!!!!!');
 
     if (addTextEditorAfter) {
       paragraphs.insert(newItemIndex + 1, createNoteParagraphTextEditor(''));
