@@ -6,6 +6,9 @@ abstract class NoteWidgetData {
   final List<NoteWidgetData> children = [];
 
   NoteWidgetData({required this.id, required this.type});
+  NoteWidgetData.fromJSON(JSON jsonObj)
+      : id = jsonObj["id"],
+        type = jsonObj["type"];
 
   JSON get jsonAdditionalParameters;
   String get str;

@@ -9,9 +9,13 @@ class NoteTextEditorData extends NoteWidgetData {
     super.type = 'text_editor',
   });
 
+  NoteTextEditorData.fromJSON(JSON jsonObj) : 
+  text = jsonObj["text"],
+  super.fromJSON(jsonObj);
+
   @override
   String get str => '{$id : text: $text}';
-  
+
   @override
-  JSON get jsonAdditionalParameters => {"text":text};
+  JSON get jsonAdditionalParameters => {"text": text};
 }

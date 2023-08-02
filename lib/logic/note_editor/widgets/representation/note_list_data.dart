@@ -1,9 +1,11 @@
+import 'package:mobi_note/logic/note_editor/widgets/representation/all_widget_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 
 class NoteListData extends NoteWidgetData {
   ElementType elemType;
   List<NoteListElementData>? elements;
+
   NoteListData({
     required super.id,
     required this.elemType,
@@ -11,6 +13,22 @@ class NoteListData extends NoteWidgetData {
     super.type = 'list',
   }) {
     elements ??= [];
+  }
+
+  List<NoteListElementData> elementsFromJSON(JSON jsonObj) {
+    List<NoteListElementData> elements = [];
+    for (JSON elem in jsonObj["elements"]) {
+      elements.add(createData(elem) as NoteListElementData);
+    }
+    return elements;
+  }
+
+  NoteListData.fromJSON(JSON jsonObj)
+      : elemType = ElementType.checkbox,
+        elements = [],
+        super.fromJSON(jsonObj) {
+    elemType = decodeElemType(jsonObj);
+    elements = elementsFromJSON(jsonObj);
   }
 
   void addElement(NoteListElementData elem) {

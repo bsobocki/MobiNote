@@ -9,6 +9,10 @@ class NoteCheckboxData extends NoteWidgetData {
     super.type = 'checkbox',
   });
 
+  NoteCheckboxData.fromJSON(JSON jsonObj)
+      : value = jsonObj["value"],
+        super.fromJSON(jsonObj);
+
   @override
   String get str => '{$id: checkbox: $value}';
 

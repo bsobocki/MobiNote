@@ -4,6 +4,7 @@ class NoteImageData extends NoteWidgetData {
   String? path;
   double width;
   double height;
+
   NoteImageData({
     required super.id,
     this.path,
@@ -11,6 +12,12 @@ class NoteImageData extends NoteWidgetData {
     this.height = -1.0,
     super.type = 'image',
   });
+  
+  NoteImageData.fromJSON(JSON jsonObj)
+      : path = jsonObj["path"],
+        width = jsonObj["width"],
+        height = jsonObj["height"],
+        super.fromJSON(jsonObj);
 
   @override
   String get str => '{$id: image: $path}';

@@ -24,6 +24,16 @@ class NoteIconButtonData extends NoteWidgetData {
     this.color,
     super.type = 'icon_button',
   });
+  
+  NoteIconButtonData.fromJSON(JSON jsonObj)
+      : icon = jsonObj["icon"],
+        width = jsonObj["width"],
+        height = jsonObj["height"],
+        paddingLeft = jsonObj["paddingLeft"],
+        paddingRight = jsonObj["paddingRight"],
+        paddingTop = jsonObj["paddingTop"],
+        paddingBottom = jsonObj["paddingBottom"],
+        super.fromJSON(jsonObj);
 
   @override
   String get str => '{$id: image: $icon}';

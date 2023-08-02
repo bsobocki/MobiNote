@@ -15,7 +15,6 @@ class NoteParagraphWidget extends NoteParagraph {
   String widgetJSON;
   WidgetMode mode = WidgetMode.show;
   List<NoteEditorWidget> elements = [];
-  NoteEditorWidgetFactory widgetFactory = NoteEditorWidgetFactory();
 
   NoteParagraphWidget(
       {required super.id,
@@ -49,6 +48,7 @@ class NoteParagraphWidget extends NoteParagraph {
     this.mode = mode;
   }
 
+  @override
   void setDefaultCallbacks() {
     addWidget = _addWidget;
     addWidgetByData = _addWidgetByData;

@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
+import 'package:mobi_note/logic/helpers/text_is_widget.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/all_widget_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph_placeholder.dart';
@@ -67,7 +71,11 @@ class NoteParagraphs {
       String currText = '';
       for (int i = 0; i < text.length; i++) {
         if (text[i] == '\n') {
-          addNewNoteParagraphEditor(currText);
+          if (!isWidget(currText)) {
+            addNewNoteParagraphEditor(currText);
+          } else {
+            addNewNoteParagraphWidget(currText);
+          }
           currText = '';
         } else {
           currText += text[i];
@@ -98,14 +106,33 @@ class NoteParagraphs {
     paragraphs.add(newParagraph);
   }
 
+  void addNewNoteParagraphWidget(String text) {
+    debugPrint('CALL: addParagraphWithWidget from JSON');
+    String jsonStr = text.substring(3);
+    List<dynamic> jsonObjects = jsonDecode(jsonStr);
+    List<NoteWidgetData> widgetsData =
+        jsonObjects.map((e) => createData(e)).toList();
+    addParagraphWithWidgets(widgetsData);
+  }
+
   void addParagraphWithWidget(NoteWidgetData data) {
-    debugPrint('CALL: addParagraphWithWidget');
+    addParagraphWithWidgets([data]);
+  }
+
+  void addParagraphWithWidgets(List<NoteWidgetData> widgetsData) {
+    debugPrint('CALL: addParagraphWithWidgets');
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
-    noteParagraphWidget.addWidgetByData(data);
+
+    for (var data in widgetsData) {
+      noteParagraphWidget.addWidgetByData(data);
+    }
+
     int newItemIndex = focusedParagraphIndex + 1;
 
-    if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor) {
+    if (paragraphs.isEmpty) {
+      newItemIndex = 0;
+    } else if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor) {
       if (paragraphs[focusedParagraphIndex].content.isEmpty) {
         paragraphs.removeAt(focusedParagraphIndex);
         newItemIndex = focusedParagraphIndex;
