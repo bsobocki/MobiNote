@@ -13,6 +13,7 @@ class NoteCheckboxWidget extends NoteEditorWidget {
       {super.key,
       required super.id,
       required this.data,
+      super.onContentChange,
       this.onTrue,
       this.onFalse,
       super.focusOffAction,
@@ -43,6 +44,7 @@ class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
 
           callValueCallback();
         }
+        widget.onContentChange?.call();
       });
 
   @override

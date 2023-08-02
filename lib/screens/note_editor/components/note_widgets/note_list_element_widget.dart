@@ -27,6 +27,7 @@ class NoteListElementWidget extends NoteEditorWidget {
       {required super.id,
       required this.data,
       required super.widgetFactory,
+      super.onContentChange,
       this.number = 0,
       this.addNewListElement,
       super.onLongPress,
@@ -93,6 +94,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
       case ElementType.checkbox:
         return NoteCheckboxWidget(
           id: id,
+          onContentChange: widget.onContentChange,
           data: widget.data.checkboxData!,
           onTrue: () => checkElement(true),
           onFalse: () => checkElement(false),
@@ -100,6 +102,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
       case ElementType.counter:
         return NoteCounterWidget(
           id: id,
+          onContentChange: widget.onContentChange,
           data: widget.data.counterData!,
           onLongPress: widget.onLongPress,
           onTargetReached: () => checkElement(true),
@@ -143,6 +146,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
         as NoteTextEditorWidget;
     textEditor.addNewElement = addNewListElement;
     textEditor.focusOnAction = widget.focusOnAction;
+    textEditor.onContentChange = widget.onContentChange;
     if (widget.data.elemType == ElementType.counter ||
         widget.data.elemType == ElementType.checkbox) {
       textEditor.isTextStrike = widget.isChecked;

@@ -67,7 +67,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
         onContentChange: onContentChange);
   }
 
-  void onContentChange(value) {
+  void onContentChange() {
     noteChanged = true;
   }
 

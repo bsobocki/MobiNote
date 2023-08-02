@@ -8,6 +8,7 @@ abstract class NoteParagraph extends StatefulWidget {
 
   NoteEditorWidgetFactory widgetFactory;
   final int id;
+  void Function() onContentChange;
   void Function(int) reportFocusParagraph;
   void Function(int) deleteParagraph;
 
@@ -29,6 +30,7 @@ abstract class NoteParagraph extends StatefulWidget {
     super.key,
     required this.id,
     required this.widgetFactory,
+    required this.onContentChange,
     required this.reportFocusParagraph,
     required this.deleteParagraph,
   });

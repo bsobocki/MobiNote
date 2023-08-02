@@ -19,6 +19,7 @@ class NoteParagraphWidget extends NoteParagraph {
   NoteParagraphWidget(
       {required super.id,
       required super.widgetFactory,
+      required super.onContentChange,
       required super.reportFocusParagraph,
       required super.deleteParagraph,
       required this.widgetJSON})

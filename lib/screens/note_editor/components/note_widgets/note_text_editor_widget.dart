@@ -12,7 +12,6 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 class NoteTextEditorWidget extends NoteEditorWidget {
   NoteTextEditorData data;
   void Function(String)? addNewElement;
-  void Function(String)? onChange;
   late Function(String)? _appendTextInState;
   void Function()? _requestFocus;
   void Function(String)? setControllerTextType;
@@ -21,6 +20,7 @@ class NoteTextEditorWidget extends NoteEditorWidget {
     super.key,
     required super.id,
     required this.data,
+    super.onContentChange,
     this.addNewElement,
     super.focusOffAction,
     super.focusOnAction,
@@ -117,9 +117,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
       }
 
       widget.data.text = controller.text;
-      if (widget.onChange != null) {
-        widget.onChange!(newText);
-      }
+      widget.onContentChange?.call();
     }
   }
 

@@ -22,11 +22,11 @@ class NoteParagraphs {
 
   final String initContent;
   final void Function(void Function()) setContentEditorState;
-  final void Function(String) onChange;
+  final void Function() onContentChange;
 
   NoteParagraphs({
     required this.widgetFactory,
-    required this.onChange,
+    required this.onContentChange,
     required this.initContent,
     required this.setContentEditorState,
   }) {
@@ -109,6 +109,7 @@ class NoteParagraphs {
     var newParagraph = createNoteParagraphTextEditor(text);
     paragraphs.add(newParagraph);
     debugPrint('ADDED TEXT EDITOR: ID: ${newParagraph.id} !!!!!!!!!!');
+    onContentChange();
   }
 
   void addNewNoteParagraphWidget(String text) {
@@ -159,7 +160,7 @@ class NoteParagraphs {
 
     if (newItemIndex >= paragraphs.length) {
       paragraphs.add(noteParagraphWidget);
-      newItemIndex = paragraphs.length-1;
+      newItemIndex = paragraphs.length - 1;
     } else {
       paragraphs.insert(
         newItemIndex,
@@ -173,10 +174,12 @@ class NoteParagraphs {
     if (addTextEditorAfter) {
       paragraphs.insert(newItemIndex + 1, createNoteParagraphTextEditor(''));
     }
+    onContentChange();
   }
 
   void addEmptyNoteParagraphWidget() {
     paragraphs.add(createNoteParagraphWidget());
+    onContentChange();
   }
 
   void addNoteParagraphEditorAfter(int prevParagraphId, String text) =>
@@ -198,6 +201,7 @@ class NoteParagraphs {
           debugPrint('paragraphs:');
           debugPrint(paragraphs.toString());
         }
+    onContentChange();
       });
 
   void deleteNoteParagraph(int paragraphId) => setContentEditorState(() {
@@ -243,6 +247,7 @@ class NoteParagraphs {
         for (var p in paragraphs) {
           debugPrint(p.str);
         }
+    onContentChange();
       });
 
   NoteParagraphWidget createNoteParagraphWidget() {
@@ -250,6 +255,7 @@ class NoteParagraphs {
     return NoteParagraphWidget(
       id: paragraphIdGenerator.nextId,
       widgetFactory: widgetFactory,
+      onContentChange: onContentChange,
       reportFocusParagraph: reportFocusParagraph,
       deleteParagraph: deleteNoteParagraph,
       widgetJSON: '',
@@ -261,7 +267,7 @@ class NoteParagraphs {
       id: paragraphIdGenerator.nextId,
       widgetFactory: widgetFactory,
       paragraphText: text,
-      onChange: onChange,
+      onContentChange: onContentChange,
       addParagraph: addNoteParagraphEditorAfter,
       deleteParagraph: deleteNoteParagraph,
       reportFocusParagraph: reportFocusParagraph,

@@ -15,7 +15,6 @@ class NoteParagraphTextEditor extends NoteParagraph {
   double fontSize = 12;
   int cursor = 1;
   String paragraphText;
-  void Function(String) onChange;
   void Function(int, String) addParagraph;
 
   late Function(String)? _appendTextInState;
@@ -24,9 +23,9 @@ class NoteParagraphTextEditor extends NoteParagraph {
   NoteParagraphTextEditor(
       {required super.id,
       required super.widgetFactory,
+      required super.onContentChange,
       required super.reportFocusParagraph,
       required this.paragraphText,
-      required this.onChange,
       required this.addParagraph,
       required super.deleteParagraph})
       : super(key: ValueKey('NoteParagraph_$id')) {
@@ -129,7 +128,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
       }
 
       widget.paragraphText = controller.text;
-      widget.onChange(newText);
+      widget.onContentChange();
     }
   }
 

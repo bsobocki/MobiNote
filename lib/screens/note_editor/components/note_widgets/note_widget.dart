@@ -10,6 +10,7 @@ abstract class NoteEditorWidget extends StatefulWidget {
   int stateCounter = 0;
   bool get removingState => stateCounter == 0;
 
+  void Function()? onContentChange;
   void Function()? onPressed;
   void Function()? onLongPress;
   void Function()? focusOnAction;
@@ -43,6 +44,7 @@ abstract class NoteEditorWidget extends StatefulWidget {
   NoteEditorWidget(
       {super.key,
       required this.id,
+      this.onContentChange,
       this.widgetFactory,
       this.onPressed,
       this.onLongPress,

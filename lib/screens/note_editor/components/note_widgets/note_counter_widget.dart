@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_counter_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
@@ -15,6 +14,7 @@ class NoteCounterWidget extends NoteEditorWidget {
       {super.key,
       required super.id,
       required this.data,
+      super.onContentChange,
       this.onResetCounter,
       this.onTargetReached,
       super.onLongPress,
@@ -49,6 +49,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
           if (widget.targetReached) {
             widget.onTargetReached?.call();
           }
+          widget.onContentChange?.call();
         }),
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.grey,
@@ -74,6 +75,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
                             int.tryParse(text) ?? widget.data.target;
                         resetCounter();
                         widget.mode = WidgetMode.edit;
+                        widget.onContentChange?.call();
                       }),
                   keyboardType: TextInputType.number,
                   style: TextStyle(color: Colors.grey[700]),

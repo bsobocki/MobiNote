@@ -11,7 +11,7 @@ String lastNewText = "";
 
 // ignore: must_be_immutable
 class ContentEditor extends StatefulWidget {
-  final Function(String value) onContentChange;
+  final Function() onContentChange;
   final String initContent;
   final String initWidgets;
   String Function()? contentFromState;
@@ -62,14 +62,14 @@ class _ContentEditorState extends State<ContentEditor> {
         paragraphs.addParagraphWithWidget(data);
       });
 
-  void onChange(String newText) => widget.onContentChange(newText);
+  void onChange() => widget.onContentChange();
 
   @override
   void initState() {
     super.initState();
     paragraphs = NoteParagraphs(
       widgetFactory: widgetFactory,
-      onChange: onChange,
+      onContentChange: onChange,
       initContent: widget.initContent,
       setContentEditorState: setContentEditorState,
     );

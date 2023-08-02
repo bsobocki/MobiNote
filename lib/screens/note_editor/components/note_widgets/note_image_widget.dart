@@ -17,6 +17,7 @@ class NoteImageWidget extends NoteEditorWidget {
     super.key,
     required super.id,
     required this.data,
+    super.onContentChange,
     super.focusOffAction,
     super.focusOnAction,
     super.onInteract,
@@ -124,6 +125,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
     _size = newSize;
     widget.data.width = newSize?.width ?? widget.data.width;
     widget.data.height = newSize?.height ?? widget.data.height;
+    widget.onContentChange?.call();
   }
 
   Widget editModeWidget() {
@@ -169,9 +171,8 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
             children: [
               IconButton(
                 onPressed: () {
-                  if (widget.removeFromParent != null) {
-                    widget.removeFromParent!(widget.id);
-                  }
+                  widget.removeFromParent?.call(widget.id);
+                  widget.onContentChange?.call();
                 },
                 icon: const Icon(
                   Icons.disabled_by_default_rounded,
@@ -185,6 +186,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                     setState(() {
                       widget.data.path = newPath;
                     });
+                    widget.onContentChange?.call();
                   }
                 },
                 icon: const Icon(

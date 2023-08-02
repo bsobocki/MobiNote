@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/helpers/empty_functions.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
-
-void emptyFunction(int id) {}
 
 class NoteParagraphPlaceholder extends NoteParagraph {
   NoteParagraphPlaceholder({
@@ -9,8 +8,9 @@ class NoteParagraphPlaceholder extends NoteParagraph {
     required super.id,
     required super.widgetFactory,
     required this.onTap,
-    super.reportFocusParagraph = emptyFunction,
-    super.deleteParagraph = emptyFunction,
+    super.onContentChange = emptyFunction,
+    super.reportFocusParagraph = emptyFunctionInt,
+    super.deleteParagraph = emptyFunctionInt,
   });
 
   void Function() onTap;

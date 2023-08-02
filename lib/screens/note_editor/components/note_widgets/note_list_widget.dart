@@ -19,6 +19,7 @@ class NoteListWidget extends NoteEditorWidget {
     required super.id,
     required this.data,
     required super.widgetFactory,
+    super.onContentChange,
     super.focusOffAction,
     super.focusOnAction,
     super.onInteract,
@@ -50,6 +51,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
             '************************element type is: ${widget.data.elemType}');
       }
     }
+    widget.onContentChange?.call();
   }
 
   void setElementType(ElementType type) => setState(() {
@@ -58,6 +60,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
           elem.data.elemType = type;
         }
         setMode(WidgetMode.edit);
+        widget.onContentChange?.call();
       });
 
   void setMode(WidgetMode mode) {
@@ -94,6 +97,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     if (exists(index)) {
       elements.removeAt(index);
       widget.data.elements!.removeAt(index);
+      widget.onContentChange?.call();
     }
     if (elements.isEmpty) {
       widget.removeFromParent?.call(widget.id);
@@ -130,6 +134,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       index,
       NoteListElementWidget(
         id: widget.widgetFactory!.nextId('list_element'),
+        onContentChange: widget.onContentChange,
         number: index + 1,
         data: data,
         addNewListElement: addNewElement,

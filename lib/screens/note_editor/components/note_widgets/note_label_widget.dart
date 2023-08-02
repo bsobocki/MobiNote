@@ -9,7 +9,8 @@ class NoteLabelWidget extends NoteEditorWidget {
   NoteLabelWidget(
       {required super.id,
       required this.data,
-      required super.widgetFactory,
+      super.widgetFactory,
+      super.onContentChange,
       super.focusOffAction,
       super.focusOnAction,
       super.onInteract,
