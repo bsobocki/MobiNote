@@ -35,6 +35,10 @@ class NoteListData extends NoteWidgetData {
     elements!.add(elem);
   }
 
+  void addElementAt(int index, NoteListElementData elem) {
+    elements!.insert(index, elem);
+  }
+
   bool get isListEmpty => elements!.isEmpty;
 
   @override

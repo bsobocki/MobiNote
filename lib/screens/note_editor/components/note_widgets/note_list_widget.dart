@@ -93,6 +93,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     var index = elements.indexWhere((elem) => elem.id == id);
     if (exists(index)) {
       elements.removeAt(index);
+      widget.data.elements!.removeAt(index);
     }
     if (elements.isEmpty) {
       widget.removeFromParent?.call(widget.id);
@@ -120,7 +121,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       checkboxData: NoteCheckboxData(id: -1, value: false),
       textEditorData: NoteTextEditorData(id: -1, text: initText),
     );
-    widget.data.addElement(newElemData);
+    widget.data.addElementAt(index, newElemData);
     addElementFromData(index, newElemData);
   }
 
