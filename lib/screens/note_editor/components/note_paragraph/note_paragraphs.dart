@@ -112,14 +112,15 @@ class NoteParagraphs {
     List<dynamic> jsonObjects = jsonDecode(jsonStr);
     List<NoteWidgetData> widgetsData =
         jsonObjects.map((e) => createData(e)).toList();
-    addParagraphWithWidgets(widgetsData);
+    addParagraphWithWidgets(widgetsData, addTextEditorAfter: false);
   }
 
   void addParagraphWithWidget(NoteWidgetData data) {
     addParagraphWithWidgets([data]);
   }
 
-  void addParagraphWithWidgets(List<NoteWidgetData> widgetsData) {
+  void addParagraphWithWidgets(List<NoteWidgetData> widgetsData,
+      {bool addTextEditorAfter = true}) {
     debugPrint('CALL: addParagraphWithWidgets');
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
@@ -144,7 +145,9 @@ class NoteParagraphs {
       noteParagraphWidget,
     );
 
-    paragraphs.insert(newItemIndex + 1, createNoteParagraphTextEditor(''));
+    if (addTextEditorAfter) {
+      paragraphs.insert(newItemIndex + 1, createNoteParagraphTextEditor(''));
+    }
   }
 
   void addEmptyNoteParagraphWidget() {
@@ -204,6 +207,12 @@ class NoteParagraphs {
             }
           }
           reportFocusParagraph(paragraphs[prevIndex].id);
+        }
+        if (index == 0 && currParagraph is NoteParagraphWidget) {
+          paragraphs.removeAt(0);
+          if (paragraphs.isEmpty) {
+            addNewNoteParagraphEditor('');
+          }
         }
         debugPrint("AFTER REMOVING PARAGRAPH $paragraphId:");
         for (var p in paragraphs) {
