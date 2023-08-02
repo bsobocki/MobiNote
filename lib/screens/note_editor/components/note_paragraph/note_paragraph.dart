@@ -33,7 +33,7 @@ abstract class NoteParagraph extends StatefulWidget {
     required this.deleteParagraph,
   });
 
-  String get text;
+  String get content;
   int get rawLength;
   String get widgetTree;
   String get str;

@@ -3,6 +3,7 @@ import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/all_widget_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_editor_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/note_text_editor_controller.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
@@ -149,7 +150,8 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
         }
       } else {
         int len = controller.text.length;
-        controller.selection = TextSelection(baseOffset: len, extentOffset: len);
+        controller.selection =
+            TextSelection(baseOffset: len, extentOffset: len);
         debugPrint("Doesn't have FOCUS!! :(");
       }
     });

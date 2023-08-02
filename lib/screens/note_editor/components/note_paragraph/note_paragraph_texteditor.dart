@@ -34,7 +34,7 @@ class NoteParagraphTextEditor extends NoteParagraph {
   }
 
   @override
-  String get text {
+  String get content {
     if (paragraphText.isNotEmpty && paragraphText != placeholder) {
       if (paragraphText[0] == placeholder) {
         return paragraphText.substring(1);

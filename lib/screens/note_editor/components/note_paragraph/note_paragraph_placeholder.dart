@@ -26,7 +26,7 @@ class NoteParagraphPlaceholder extends NoteParagraph {
   String get str => '$id: placeholder';
 
   @override
-  String get text => '';
+  String get content => '';
 
   @override
   String get widgetTree => '';

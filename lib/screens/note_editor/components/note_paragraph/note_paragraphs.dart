@@ -32,14 +32,14 @@ class NoteParagraphs {
   int get length => paragraphs.length;
   NoteParagraph at(int index) => paragraphs[index];
 
-  String text() {
+  String content() {
     String returnText = '';
     if (paragraphs.isNotEmpty) {
       if (paragraphs.length == 1) {
-        return paragraphs.last.text;
+        return paragraphs.last.content;
       }
       for (int i = 0; i < paragraphs.length - 1; i++) {
-        returnText += "${paragraphs[i].text}\n";
+        returnText += "${paragraphs[i].content}\n";
       }
     }
     return returnText;
@@ -106,7 +106,7 @@ class NoteParagraphs {
     int newItemIndex = focusedParagraphIndex + 1;
 
     if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor) {
-      if (paragraphs[focusedParagraphIndex].text.isEmpty) {
+      if (paragraphs[focusedParagraphIndex].content.isEmpty) {
         paragraphs.removeAt(focusedParagraphIndex);
         newItemIndex = focusedParagraphIndex;
       }
@@ -149,7 +149,7 @@ class NoteParagraphs {
         int index = paragraphIndexOf(paragraphId);
         int prevIndex = index - 1;
         var currParagraph = paragraphs[index];
-        String newText = currParagraph.text;
+        String newText = currParagraph.content;
         if (exists(index) && prevIndex >= 0) {
           if (currParagraph is NoteParagraphWidget) {
             debugPrint('remove noteparagraphwidget: ${currParagraph.str}');
@@ -162,7 +162,8 @@ class NoteParagraphs {
             if (prevParagraph is NoteParagraphTextEditor) {
               var foundedParagraphEditor =
                   paragraphs[prevIndex] as NoteParagraphTextEditor;
-              newText = foundedParagraphEditor.text + paragraphs[index].text;
+              newText =
+                  foundedParagraphEditor.content + paragraphs[index].content;
               int cursor = foundedParagraphEditor.rawLength;
               paragraphs[prevIndex] = createNoteParagraphTextEditor(newText)
                 ..cursor = cursor;

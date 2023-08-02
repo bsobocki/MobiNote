@@ -36,12 +36,12 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
           final newNote = Note(
               id: id,
               title: titleController.text,
-              content: contentEditor.text(),
+              content: contentEditor.content,
               widgets: '');
           await database.updateNote(newNote);
         } else {
           id = await database.addNote(titleController.text,
-              contentEditor.text(), contentEditor.initWidgets);
+              contentEditor.content, contentEditor.initWidgets);
         }
       } catch (e) {
         await showDialog(

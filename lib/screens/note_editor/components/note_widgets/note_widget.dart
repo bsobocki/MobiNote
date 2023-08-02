@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/note_editor/widgets/representation/all_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 
@@ -36,6 +37,8 @@ abstract class NoteEditorWidget extends StatefulWidget {
     setModeInState = null;
     forceSetState = null;
   }
+
+  NoteWidgetData get data;
 
   NoteEditorWidget(
       {super.key,

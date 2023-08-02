@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/unicodes.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
@@ -28,6 +32,8 @@ class NoteParagraphWidget extends NoteParagraph {
   void Function(WidgetMode)? setMode;
   void Function(int)? removeFromParent;
 
+  String Function()? widgetTreeFromState;
+
   void _addWidget(NoteEditorWidget widget) {
     debugPrint("noteparagraphwidget: add widget: $widget");
     elements.add(widget);
@@ -48,6 +54,7 @@ class NoteParagraphWidget extends NoteParagraph {
     addWidgetByData = _addWidgetByData;
     setMode = _setMode;
     requestFocusInState = null;
+    widgetTreeFromState = () => '';
   }
 
   @override
@@ -60,10 +67,10 @@ class NoteParagraphWidget extends NoteParagraph {
   String get str => '$id: $mode';
 
   @override
-  String get text => '![widget:$id]';
+  String get content => '!$placeholder:$widgetTree';
 
   @override
-  String get widgetTree => '';
+  String get widgetTree => widgetTreeFromState!();
 }
 
 class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
@@ -139,6 +146,14 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
     widget.addWidgetByData = addWidgetByData;
   }
 
+  String widgetTree() {
+    List<JSON> tree = [];
+    for (var child in widget.elements) {
+      tree.add(child.data.json);
+    }
+    return jsonEncode(tree);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -148,6 +163,7 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
     for (var elem in widget.elements) {
       setCallbacks(elem);
     }
+    widget.widgetTreeFromState = widgetTree;
     widget.setMode = setMode;
     widget.requestFocusInState =
         () => FocusScope.of(context).requestFocus(focusNode);

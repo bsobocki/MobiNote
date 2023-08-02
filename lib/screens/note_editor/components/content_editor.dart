@@ -14,7 +14,7 @@ class ContentEditor extends StatefulWidget {
   final Function(String value) onContentChange;
   final String initContent;
   final String initWidgets;
-  late String Function() text;
+  String Function()? contentFromState;
 
   ContentEditor(
       {super.key,
@@ -22,7 +22,12 @@ class ContentEditor extends StatefulWidget {
       required this.onContentChange,
       required this.initWidgets});
 
-  String get widgets => '';
+  String get content {
+    if (contentFromState != null) {
+      return contentFromState!();
+    }
+    return '';
+  }
 
   @override
   State<ContentEditor> createState() => _ContentEditorState();
@@ -33,8 +38,6 @@ class _ContentEditorState extends State<ContentEditor> {
   bool contentChanged = false;
   late NoteParagraphs paragraphs;
   int focusedParagraphId = -1;
-
-  String text() => paragraphs.text();
 
   void setContentEditorState(void Function() fn) {
     setState(() {
@@ -54,7 +57,8 @@ class _ContentEditorState extends State<ContentEditor> {
   }
 
   void addParagraphWithList() => setState(() {
-        NoteListData data = NoteListData(id: -1, elemType: ElementType.checkbox);
+        NoteListData data =
+            NoteListData(id: -1, elemType: ElementType.checkbox);
         paragraphs.addParagraphWithWidget(data);
       });
 
@@ -63,13 +67,13 @@ class _ContentEditorState extends State<ContentEditor> {
   @override
   void initState() {
     super.initState();
-    widget.text = text;
     paragraphs = NoteParagraphs(
       widgetFactory: widgetFactory,
       onChange: onChange,
       initContent: widget.initContent,
       setContentEditorState: setContentEditorState,
     );
+    widget.contentFromState = paragraphs.content;
   }
 
   @override
