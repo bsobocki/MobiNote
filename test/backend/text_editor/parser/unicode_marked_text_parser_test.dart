@@ -1,4 +1,4 @@
-import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/span_info.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/definitions/span_info.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:test/test.dart';
 

@@ -32,7 +32,7 @@ class _NoteLabelWidgetState extends State<NoteLabelWidget> {
       child: Center(
         child: Text(
           widget.data.label,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.bold,
             fontSize: paragraphDefaultFontSize,

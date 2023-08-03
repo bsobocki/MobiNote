@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
-import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/unicodes.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/definitions/unicodes.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';

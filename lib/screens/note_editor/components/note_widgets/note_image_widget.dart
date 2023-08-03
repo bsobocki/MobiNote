@@ -5,6 +5,7 @@ import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 import 'package:mobi_note/screens/note_editor/helpers/images.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 import 'definitions/widget_mode.dart';
 
@@ -46,7 +47,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       case WidgetMode.edit:
       case WidgetMode.selected:
         return BoxDecoration(
-            border: Border.all(color: Colors.white, width: 4.0));
+            border: Border.all(color: MobiNoteTheme.current.textColor, width: 4.0));
       default:
         return const BoxDecoration(
           border: Border(),
@@ -91,7 +92,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       child: Opacity(
         opacity: opacity,
         child: Container(
-          color: Colors.white,
+          color: MobiNoteTheme.current.textColor,
           child: Image.file(
             key: imageKey,
             File(widget.data.path!),
@@ -152,9 +153,9 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                   }
                 });
               },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_circle_up,
-                color: Colors.white,
+                color: MobiNoteTheme.current.textColor,
               ),
             )),
       ]),
@@ -174,9 +175,9 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                   widget.removeFromParent?.call(widget.id);
                   widget.onContentChange?.call();
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.disabled_by_default_rounded,
-                  color: Colors.white,
+                  color: MobiNoteTheme.current.textColor,
                 ),
               ),
               IconButton(
@@ -189,9 +190,9 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                     widget.onContentChange?.call();
                   }
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.edit_square,
-                  color: Colors.white,
+                  color: MobiNoteTheme.current.textColor,
                 ),
               )
             ],

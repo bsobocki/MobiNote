@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
-import 'definitions/span_info.dart';
-import 'definitions/types/element_types.dart';
-import 'definitions/types/widget_types.dart';
+import '../definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
+import '../definitions/span_info.dart';
+import '../definitions/types/element_types.dart';
+import '../definitions/types/widget_types.dart';
 
 class SpanInfoConverter {
   SpanInfo mainSpan = SpanInfo(type: 'null');

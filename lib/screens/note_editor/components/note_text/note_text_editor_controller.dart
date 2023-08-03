@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/definitions/paragraph_textstyle_mapping/style_text_mapping.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/span_info_converterer.dart';
 import '../../../../logic/note_editor/text_editor/parser/mark_text_converter.dart';

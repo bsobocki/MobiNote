@@ -3,6 +3,7 @@ import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 class NoteCheckboxWidget extends NoteEditorWidget {
   NoteCheckboxData data;
@@ -27,7 +28,7 @@ class NoteCheckboxWidget extends NoteEditorWidget {
 }
 
 class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
-  Color color = Colors.white;
+  Color color = MobiNoteTheme.current.textColor;
 
   void callValueCallback() {
     if (widget.data.value) {
@@ -55,16 +56,16 @@ class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
       child: Checkbox(
         value: widget.data.value,
         onChanged: onChanged,
-        checkColor: Colors.white,
-        activeColor: Colors.white,
+        checkColor: MobiNoteTheme.current.textColor,
+        activeColor: MobiNoteTheme.current.textColor,
         fillColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
           if (states.contains(MaterialState.selected)) {
-            return Colors.grey;
+            return MobiNoteTheme.current.buttonBackgroundColor;
           }
-          return Colors.white;
+          return MobiNoteTheme.current.textColor;
         }),
-        overlayColor: const MaterialStatePropertyAll(Colors.white),
+        overlayColor: MaterialStatePropertyAll(MobiNoteTheme.current.textColor),
       ),
     );
   }

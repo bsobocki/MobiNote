@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/screens/test_pages/add_raw_text_note_test_page.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 import '../../database/database_def.dart';
 import '../../database/database_operations.dart';
 import '../note_editor/note_editor.dart';
@@ -22,6 +24,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int bottomNavigationBarCurrentIndex = 1;
   final database = Get.find<MobiNoteDatabase>();
   late Future<List<Note>> _notesFuture;
   final double appBarHeight = AppBar().preferredSize.height;
@@ -124,14 +127,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[700],
+                    backgroundColor:
+                        MobiNoteTheme.current.buttonBackgroundColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),
-                    minimumSize: Size(double.infinity, 150),
+                    minimumSize: const Size(double.infinity, 150),
                   ),
                   onPressed: () {},
-                  child: const Text('Trainings'),
+                  child: Text(
+                    'Trainings',
+                    style: TextStyle(
+                        color: MobiNoteTheme.current.textColor,
+                        fontSize: paragraphDefaultFontSize +
+                            MobiNoteTheme.current.fontSizeAddVal),
+                  ),
                 ),
               ),
             ),
@@ -140,14 +150,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[700],
+                    backgroundColor:
+                        MobiNoteTheme.current.buttonBackgroundColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),
-                    minimumSize: Size(double.infinity, 150),
+                    minimumSize: const Size(double.infinity, 150),
                   ),
                   onPressed: () {},
-                  child: const Text('Diet'),
+                  child: Text(
+                    'Diet',
+                    style: TextStyle(
+                        color: MobiNoteTheme.current.textColor,
+                        fontSize: paragraphDefaultFontSize +
+                            MobiNoteTheme.current.fontSizeAddVal),
+                  ),
                 ),
               ),
             ),
@@ -157,29 +174,153 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Future<void> rebuildDatabaseDialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Rebuilding Database Confirmation'),
+          backgroundColor: MobiNoteTheme.current.siteBackgroundColor,
+          content: const Text(
+            'Do you want to delete database and rebuild it?\n',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Rebuild'),
+              onPressed: () {
+                rebuildDatabase();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> chooseThemeDialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choose Theme'),
+          backgroundColor: MobiNoteTheme.current.siteBackgroundColor,
+          content: const Text(
+            'Choose theme that you want to use\n',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Dark'),
+              onPressed: () {
+                MobiNoteTheme.setTheme(NoteScreenThemes.dark);
+                setState(() {});
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Light'),
+              onPressed: () {
+                MobiNoteTheme.setTheme(NoteScreenThemes.light);
+                setState(() {});
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Easy'),
+              onPressed: () {
+                MobiNoteTheme.setTheme(NoteScreenThemes.easy);
+                setState(() {});
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: themeColor,
+        title: Text(
+          widget.title,
+          style: TextStyle(color: MobiNoteTheme.current.textColor),
+        ),
+        backgroundColor: MobiNoteTheme.current.barColor,
         actions: [
-          IconButton(
-            onPressed: showTestPage,
-            tooltip: 'Show Database',
-            icon: const Icon(Icons.storage),
-          ),
-          IconButton(
-              onPressed: () => rebuildDatabase(),
-              icon: const Icon(Icons.build_circle_sharp))
+          PopupMenuButton(
+            color: MobiNoteTheme.current.textColor,
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem<int>(
+                  value: 0,
+                  child: Text(
+                    'Choose Theme',
+                    style: TextStyle(
+                      color: MobiNoteTheme.current.siteBackgroundColor,
+                    ),
+                  ),
+                ),
+                PopupMenuItem<int>(
+                  value: 1,
+                  child: Text(
+                    'Rebuild Database',
+                    style: TextStyle(color: MobiNoteTheme.current.siteBackgroundColor),
+                  ),
+                ),
+              ];
+            },
+            onSelected: (value) async {
+              switch (value) {
+                case 0:
+                  await chooseThemeDialogBuilder(context);
+                  break;
+                case 1:
+                  await rebuildDatabaseDialogBuilder(context);
+                  break;
+              }
+            },
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewNotePage,
+        backgroundColor: MobiNoteTheme.current.barColor,
         tooltip: 'Create a new Note',
-        child: const Icon(Icons.create),
+        child: Icon(Icons.create, color: MobiNoteTheme.current.textColor),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: bottomNavigationBarCurrentIndex,
+        onTap: (index) {
+          setState(() {
+            bottomNavigationBarCurrentIndex = index;
+          });
+        },
+        selectedItemColor: MobiNoteTheme.current.textColor,
+        unselectedItemColor: MobiNoteTheme.current.textColor.withOpacity(0.6),
+        backgroundColor: MobiNoteTheme.current.barColor,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.menu_book_rounded), label: "Library"),
@@ -188,29 +329,30 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Container(
-        decoration: const BoxDecoration(color: pageBackgroundColor),
+        decoration:
+            BoxDecoration(color: MobiNoteTheme.current.siteBackgroundColor),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 20.0, left: 30.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, left: 30.0),
               child: Text(
                 "Notebooks:",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16 + MobiNoteTheme.current.fontSizeAddVal,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                    color: MobiNoteTheme.current.textColor),
               ),
             ),
             notebooksWidget,
-            const Padding(
-              padding: EdgeInsets.only(top: 10.0, left: 30.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0, left: 30.0),
               child: Text(
                 "Recent Notes:",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16 + MobiNoteTheme.current.fontSizeAddVal,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                    color: MobiNoteTheme.current.textColor),
               ),
             ),
             FutureBuilder<List<Note>>(

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobi_note/screens/homepage/homepage.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 import 'database/database_def.dart';
 
 void main() {
@@ -19,15 +20,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MobiNote',
       theme: ThemeData(
-        primaryColor: themeColor,
-        unselectedWidgetColor: Colors.white,
-        floatingActionButtonTheme:
-            const FloatingActionButtonThemeData(backgroundColor: themeColor),
-        dialogBackgroundColor: themeColor,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: themeColor,
-            unselectedItemColor: Colors.grey,
-            selectedItemColor: Colors.white),
+        //primaryColor: MobiNoteTheme.current.buttonBackgroundColor,
+        //unselectedWidgetColor: MobiNoteTheme.current.buttonBackgroundColor,
+        //floatingActionButtonTheme:
+        //    FloatingActionButtonThemeData(backgroundColor: MobiNoteTheme.current.buttonBackgroundColor),
+        //dialogBackgroundColor: themeColor,
+        //bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        //    backgroundColor: MobiNoteTheme.current.barColor,
+        //    unselectedItemColor: Colors.grey,
+        //    selectedItemColor: Colors.white),
       ),
       home: const MyHomePage(title: 'MobiNote'),
     );

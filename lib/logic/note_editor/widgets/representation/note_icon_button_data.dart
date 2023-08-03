@@ -4,8 +4,8 @@ import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_d
 
 class NoteIconButtonData extends NoteWidgetData {
   IconData? icon;
-  double width;
-  double height;
+  double width = -1;
+  double height = -1;
   double paddingLeft;
   double paddingRight;
   double paddingTop;
@@ -15,16 +15,19 @@ class NoteIconButtonData extends NoteWidgetData {
   NoteIconButtonData({
     required super.id,
     this.icon,
-    this.height = paragraphDefaultFontSize,
-    this.width = paragraphDefaultFontSize,
+    this.height = -1,
+    this.width = -1,
     this.paddingLeft = 0.0,
     this.paddingRight = 0.0,
     this.paddingTop = 0.0,
     this.paddingBottom = 0.0,
     this.color,
     super.type = 'icon_button',
-  });
-  
+  }) {
+    if (height == -1) height = paragraphDefaultFontSize;
+    if (width == -1) width = paragraphDefaultFontSize;
+  }
+
   NoteIconButtonData.fromJSON(JSON jsonObj)
       : icon = jsonObj["icon"],
         width = jsonObj["width"],

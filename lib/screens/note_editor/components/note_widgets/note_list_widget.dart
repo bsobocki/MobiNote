@@ -9,6 +9,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_icon_
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_list_element_widget.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 import 'definitions/widget_mode.dart';
 
 class NoteListWidget extends NoteEditorWidget {
@@ -224,7 +225,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
             id: -1,
             paddingTop: 6.0,
             icon: Icons.add_circle_sharp,
-            color: Colors.white,
+            color: MobiNoteTheme.current.textColor,
           ),
         ) as NoteIconButtonWidget
           ..onPressed = () => setState(addEmptyElement),

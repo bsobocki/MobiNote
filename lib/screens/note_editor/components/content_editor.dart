@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_image_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_data.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraphs.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/helpers/images.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 int change = 1;
 String lastNewText = "";
@@ -81,13 +83,13 @@ class _ContentEditorState extends State<ContentEditor> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: const Color.fromARGB(255, 51, 51, 51),
-        toolbarHeight: 30,
+        backgroundColor: MobiNoteTheme.current.buttonBackgroundColor,
+        toolbarHeight: 40 + MobiNoteTheme.current.fontSizeAddVal,
         actions: [
           IconButton(
-              onPressed: addParagraphWithImage, icon: const Icon(Icons.image)),
+              onPressed: addParagraphWithImage, icon: Icon(Icons.image, color: MobiNoteTheme.current.textColor, size: paragraphDefaultFontSize * 2,),),
           IconButton(
-              onPressed: addParagraphWithList, icon: const Icon(Icons.list))
+              onPressed: addParagraphWithList, icon: Icon(Icons.list, color: MobiNoteTheme.current.textColor, size: paragraphDefaultFontSize * 2),)
         ],
       ),
       body: Padding(
@@ -99,12 +101,7 @@ class _ContentEditorState extends State<ContentEditor> {
           },
         ),
       ),
-      backgroundColor: const Color.fromARGB(
-        255,
-        75,
-        75,
-        75,
-      ),
+      backgroundColor: MobiNoteTheme.current.siteBackgroundColor,
     );
   }
 }

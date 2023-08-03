@@ -1,4 +1,4 @@
-import '../parser/definitions/unicodes.dart';
+import '../definitions/unicodes.dart';
 
 int unicodeNumber(String char) {
   return char.codeUnitAt(0);

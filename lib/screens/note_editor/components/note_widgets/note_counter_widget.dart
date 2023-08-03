@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_counter_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 class NoteCounterWidget extends NoteEditorWidget {
   NoteCounterData data;
@@ -63,7 +64,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
             Text(
               '${widget.data.count} / ',
               style: TextStyle(
-                color: widget.targetReached ? Colors.grey[700] : Colors.white,
+                color: widget.targetReached ? MobiNoteTheme.current.textColor.withOpacity(0.5) : MobiNoteTheme.current.textColor,
               ),
             ),
             IntrinsicWidth(

@@ -8,6 +8,7 @@ import 'package:mobi_note/logic/note_editor/widgets/representation/note_text_edi
 import 'package:mobi_note/screens/note_editor/components/note_text/note_text_editor_controller.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 class NoteTextEditorWidget extends NoteEditorWidget {
   NoteTextEditorData data;
@@ -190,7 +191,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
             maxLines: null,
             style: TextStyle(
               fontSize: widget.fontSize,
-              color: widget.isTextStrike ? Colors.grey : Colors.white,
+              color: widget.isTextStrike ? MobiNoteTheme.current.textColor.withOpacity(0.5) : MobiNoteTheme.current.textColor,
             ),
             decoration: InputDecoration(
               isDense: true,
@@ -200,9 +201,9 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
                   color: Colors.transparent,
                 ),
               ),
-              focusedBorder: const UnderlineInputBorder(
+              focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.white,
+                  color: MobiNoteTheme.current.textColor,
                 ),
               ),
             ),

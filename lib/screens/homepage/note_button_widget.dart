@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 import '../../database/database_def.dart';
 
@@ -7,7 +8,7 @@ const int maxLines = 4;
 const double padding = 15.0;
 const double titleFontSize = 15.0;
 const double contentFontSize = 11.0;
-const double buttonIconSize = 18.0;
+const double buttonIconSize = 20.0;
 
 class NoteWidget extends StatefulWidget {
   final Note note;
@@ -39,71 +40,82 @@ class _NoteWidgetState extends State<NoteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(
-      opacity: 0.7,
-      child: ElevatedButton(
-        style: OutlinedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(50, 255, 255, 255),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          side: const BorderSide(
-            color: Colors.grey,
-          ),
-          minimumSize: const Size(double.infinity, 20),
-          padding: EdgeInsets.zero,
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          alignment: Alignment.centerLeft,
-          visualDensity: VisualDensity.compact,
+    return ElevatedButton(
+      style: OutlinedButton.styleFrom(
+        backgroundColor: MobiNoteTheme.current.buttonBackgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
-        onPressed: callNoteAction,
-        child: Padding(
-          padding: const EdgeInsets.all(padding),
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: availableSpaceForTitle(constraints),
-                        child: Text(
-                          widget.note.title,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: titleFontSize,
-                            fontWeight: FontWeight.bold,
+        minimumSize:
+            Size(double.infinity, 20 + MobiNoteTheme.current.fontSizeAddVal),
+        padding: EdgeInsets.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        alignment: Alignment.centerLeft,
+        visualDensity: VisualDensity.compact,
+      ),
+      onPressed: callNoteAction,
+      child: Padding(
+        padding: const EdgeInsets.all(padding),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: availableSpaceForTitle(constraints),
+                          child: Text(
+                            widget.note.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: titleFontSize +
+                                  MobiNoteTheme.current.fontSizeAddVal,
+                              fontWeight: FontWeight.w800,
+                              color: MobiNoteTheme.current.textColor,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: buttonIconSize,
-                        height: buttonIconSize,
-                        child: IconButton(
-                          onPressed: deleteNote,
-                          icon: const Icon(Icons.clear_sharp),
-                          iconSize: buttonIconSize,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
+                Divider(
+                  color: MobiNoteTheme.current.textColor,
+                ),
+                Text(
+                  widget.note.content,
+                  maxLines: maxLines,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize:
+                        contentFontSize + MobiNoteTheme.current.fontSizeAddVal,
+                    color: MobiNoteTheme.current.textColor,
                   ),
-                  const Divider(
-                    color: Color.fromARGB(255, 241, 239, 239),
-                  ),
-                  Text(
-                    widget.note.content,
-                    maxLines: maxLines,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: contentFontSize,
+                ),
+              ],
+            ),
+                Positioned(
+                  top: -7,
+                  right: 10,
+                  child: SizedBox(
+                    width: buttonIconSize + MobiNoteTheme.current.fontSizeAddVal,
+                    height: buttonIconSize + MobiNoteTheme.current.fontSizeAddVal,
+                    child: IconButton(
+                      onPressed: deleteNote,
+                      icon: Icon(
+                        Icons.clear_sharp,
+                        color: MobiNoteTheme.current.textColor,
+                      ),
+                      iconSize:
+                          buttonIconSize + MobiNoteTheme.current.fontSizeAddVal,
                     ),
                   ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

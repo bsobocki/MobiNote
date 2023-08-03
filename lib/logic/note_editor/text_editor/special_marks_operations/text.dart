@@ -1,5 +1,5 @@
-import '../parser/definitions/unicodes.dart';
-import '../parser/definitions/marks.dart';
+import '../definitions/unicodes.dart';
+import '../definitions/marks.dart';
 import '../parser/unicode_marked_text_parser.dart';
 
 String? unicodeOfStyleStartBoundaryChar(String char) {

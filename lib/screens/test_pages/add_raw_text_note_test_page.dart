@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 import '../../database/database_def.dart';
 
 class RawNoteEditorTestPage extends StatefulWidget {
@@ -89,10 +90,10 @@ class _RawNoteEditorTestPageState extends State<RawNoteEditorTestPage> {
         title: TextField(
           controller: titleController,
           onChanged: (value) => noteChanged = true,
-          cursorColor: Colors.white,
-          style: const TextStyle(
+          cursorColor: MobiNoteTheme.current.textColor,
+          style: TextStyle(
             fontSize: 20,
-            color: Colors.white,
+            color: MobiNoteTheme.current.textColor,
           ),
           decoration: const InputDecoration(border: InputBorder.none),
         ),
@@ -105,18 +106,13 @@ class _RawNoteEditorTestPageState extends State<RawNoteEditorTestPage> {
         controller: contentController,
         maxLines: null,
         onChanged: onContentChange,
-        style: const TextStyle(
+        style: TextStyle(
             fontSize: 20,
-            color: Colors.white,
+            color: MobiNoteTheme.current.textColor,
           ),
         decoration: const InputDecoration(border: InputBorder.none),
       ),
-      backgroundColor: const Color.fromARGB(
-        255,
-        75,
-        75,
-        75,
-      ),
+      backgroundColor: MobiNoteTheme.current.siteBackgroundColor,
     );
   }
 }

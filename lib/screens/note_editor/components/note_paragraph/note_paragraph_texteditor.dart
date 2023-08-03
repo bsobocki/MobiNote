@@ -4,6 +4,7 @@ import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_pro
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/note_text_editor_controller.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 import '../../../../logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 
@@ -199,8 +200,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
           controller: controller,
           focusNode: focusNode,
           style: TextStyle(
-              color: Colors.white,
-              decorationColor: Colors.amber,
+            color: MobiNoteTheme.current.textColor,
               fontSize: widget.fontSize),
           maxLines: null,
           decoration: const InputDecoration(

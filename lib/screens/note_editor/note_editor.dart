@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobi_note/screens/note_editor/components/content_editor.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 import '../../database/database_def.dart';
 
 class NoteEditorPage extends StatefulWidget {
@@ -87,7 +88,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 51, 51, 51),
+        backgroundColor: MobiNoteTheme.current.barColor,
         actions: [
           Switch(
             value: wantToSaveNote,
@@ -96,34 +97,29 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                 wantToSaveNote = value;
               });
             },
-            activeColor: const Color.fromARGB(255, 133, 226, 26),
-            activeTrackColor: const Color.fromARGB(255, 193, 250, 127),
-            inactiveThumbColor: Colors.grey,
-            inactiveTrackColor: Colors.grey[300],
+            activeColor: MobiNoteTheme.current.buttonBackgroundColor,
+            activeTrackColor: MobiNoteTheme.current.buttonBackgroundColor,
+            inactiveThumbColor: MobiNoteTheme.current.unselectedButtonColor,
+            inactiveTrackColor: MobiNoteTheme.current.unselectedButtonColor,
           ),
         ],
         title: TextField(
           controller: titleController,
           onChanged: (value) => noteChanged = true,
-          cursorColor: Colors.white,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.white,
+          cursorColor: MobiNoteTheme.current.textColor,
+          style: TextStyle(
+            fontSize: 20 + MobiNoteTheme.current.fontSizeAddVal,
+            color: MobiNoteTheme.current.textColor,
           ),
           decoration: const InputDecoration(border: InputBorder.none),
         ),
         leading: IconButton(
           onPressed: saveAndExit,
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back, color: MobiNoteTheme.current.textColor,),
         ),
       ),
       body: contentEditor,
-      backgroundColor: const Color.fromARGB(
-        255,
-        75,
-        75,
-        75,
-      ),
+      backgroundColor: MobiNoteTheme.current.siteBackgroundColor,
     );
   }
 }

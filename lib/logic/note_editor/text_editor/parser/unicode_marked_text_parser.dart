@@ -1,8 +1,8 @@
 import 'package:mobi_note/logic/note_editor/text_editor/parser/helpers/decode.dart';
-import 'package:mobi_note/logic/note_editor/text_editor/parser/definitions/types/text_types.dart';
+import 'package:mobi_note/logic/note_editor/text_editor/definitions/types/text_types.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/special_marks_operations/text.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/special_marks_operations/unicode.dart';
-import 'definitions/span_info.dart';
+import '../definitions/span_info.dart';
 
 const String placeholder = '\u200b';
 

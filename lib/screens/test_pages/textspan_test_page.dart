@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobi_note/screens/theme/themes.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({super.key});
@@ -12,21 +13,16 @@ class _TestPageState extends State<TestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 51, 51, 51),
-        title: const Text(
+        backgroundColor: MobiNoteTheme.current.barColor,
+        title: Text(
           "Test Page",
           style: TextStyle(
             fontSize: 20,
-            color: Colors.white,
+            color: MobiNoteTheme.current.textColor,
           ),
         ),
       ),
-      backgroundColor: const Color.fromARGB(
-        255,
-        75,
-        75,
-        75,
-      ), // _textEditingController.selection.textInside(_textEditingController.text)
+      backgroundColor: MobiNoteTheme.current.siteBackgroundColor, // _textEditingController.selection.textInside(_textEditingController.text)
       body: RichText(
         text: const TextSpan(
           children: [
