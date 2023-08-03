@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobi_note/screens/theme/themes.dart';
 import '../../constants/text_style_properties.dart';
 
-TextStyle textStyle(String style) {
+TextStyle? textStyle(String style) {
   switch (style) {
     case 'bold':
       return TextStyle(
@@ -66,7 +66,6 @@ TextStyle textStyle(String style) {
       return const TextStyle(
           decoration: TextDecoration.lineThrough, color: Colors.grey);
     case 'paragraph':
-    default:
       return TextStyle(
         fontSize: paragraphDefaultFontSize,
         color: MobiNoteTheme.current.textColor,

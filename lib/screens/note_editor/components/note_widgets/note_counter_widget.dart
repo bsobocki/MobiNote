@@ -53,7 +53,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
           widget.onContentChange?.call();
         }),
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.grey,
+            backgroundColor: MobiNoteTheme.current.buttonBackgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
@@ -64,7 +64,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
             Text(
               '${widget.data.count} / ',
               style: TextStyle(
-                color: widget.targetReached ? MobiNoteTheme.current.textColor.withOpacity(0.5) : MobiNoteTheme.current.textColor,
+                color: widget.targetReached ? MobiNoteTheme.current.textColor : MobiNoteTheme.current.textColor,
               ),
             ),
             IntrinsicWidth(
@@ -79,7 +79,7 @@ class _NoteCounterWidgetState extends State<NoteCounterWidget> {
                         widget.onContentChange?.call();
                       }),
                   keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: TextStyle(color: MobiNoteTheme.current.textColor),
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ]),

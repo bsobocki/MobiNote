@@ -22,7 +22,7 @@ class NoteScreenTheme {
 
 NoteScreenTheme darkTheme = NoteScreenTheme(
   siteBackgroundColor: const Color.fromARGB(255, 49, 49, 49),
-  buttonBackgroundColor: const Color.fromARGB(255, 73, 73, 73),
+  buttonBackgroundColor: Color.fromARGB(255, 90, 90, 90),
   unselectedButtonColor: Colors.grey[500]!.withOpacity(0.7),
   barColor: Colors.grey[900]!,
   textColor: Colors.white,

@@ -46,7 +46,7 @@ double paragraphFontSize(String text) {
     var paragraph = paragraphOf(text, startIndex);
     if (text.substring(startIndex + paragraph.length).isNotEmpty) {
       var paragraphType = paragraphCharsToType(paragraph);
-      var fontSize = textStyle(paragraphType).fontSize;
+      var fontSize = textStyle(paragraphType)!.fontSize;
       return fontSize ?? paragraphDefaultFontSize;
     }
   }

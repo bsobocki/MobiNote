@@ -186,7 +186,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   Widget get elemModeSelectionBar {
     return Container(
-      color: Colors.grey,
+      color: MobiNoteTheme.current.barColor,
       child: Row(
         children: [
           IconButton(

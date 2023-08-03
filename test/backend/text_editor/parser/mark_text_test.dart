@@ -73,11 +73,11 @@ void main() {
 
   test("get font size of text", () {
     expect(
-        paragraphFontSize('# This is text'), textStyle['header1']!.fontSize!);
+        paragraphFontSize('# This is text'), textStyle('header1')!.fontSize!);
     expect(paragraphFontSize('   This is text'),
-        textStyle['paragraph']!.fontSize!);
+        textStyle('paragraph')!.fontSize!);
     expect(paragraphFontSize('  ## This is text'),
-        textStyle['header2']!.fontSize!);
+        textStyle('header2')!.fontSize!);
   });
 
   test("converted style marks", () {
