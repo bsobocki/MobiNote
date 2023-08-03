@@ -273,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: MobiNoteTheme.current.barColor,
         actions: [
           PopupMenuButton(
-            color: MobiNoteTheme.current.textColor,
+            color: MobiNoteTheme.current.buttonBackgroundColor,
             itemBuilder: (context) {
               return [
                 PopupMenuItem<int>(
@@ -281,7 +281,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text(
                     'Choose Theme',
                     style: TextStyle(
-                      color: MobiNoteTheme.current.siteBackgroundColor,
+                      color: MobiNoteTheme.current.textColor,
                     ),
                   ),
                 ),
@@ -289,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   value: 1,
                   child: Text(
                     'Rebuild Database',
-                    style: TextStyle(color: MobiNoteTheme.current.siteBackgroundColor),
+                    style: TextStyle(color: MobiNoteTheme.current.textColor),
                   ),
                 ),
               ];
