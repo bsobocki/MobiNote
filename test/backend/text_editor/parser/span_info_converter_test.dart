@@ -56,16 +56,16 @@ void main() {
 
     var result = TextSpan(
       text: "",
-      style: textStyles['header3'],
+      style: textStyle['header3'],
       children: [
         const TextSpan(text: "to text"),
         TextSpan(
           text: "",
-          style: textStyles["bold"],
+          style: textStyle["bold"],
           children: [
             TextSpan(
               text: "",
-              style: textStyles['italic'],
+              style: textStyle['italic'],
               children: const [
                 TextSpan(text: "italic text"),
               ],

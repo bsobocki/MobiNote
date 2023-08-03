@@ -63,7 +63,7 @@ class SpanInfoConverter {
           break;
         case 'image':
           widget = SizedBox(
-            height: textStyles[mainSpan.type]!.fontSize,
+            height: textStyle(mainSpan.type).fontSize,
             child: Image.asset(spanInfo.text),
           );
           break;
@@ -72,6 +72,6 @@ class SpanInfoConverter {
     }
 
     return TextSpan(
-        text: spanInfo.text, style: textStyles[type], children: spanChildren);
+        text: spanInfo.text, style: textStyle(type), children: spanChildren);
   }
 }

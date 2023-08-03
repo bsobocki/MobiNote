@@ -200,7 +200,8 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
           controller: controller,
           focusNode: focusNode,
           style: TextStyle(
-            color: MobiNoteTheme.current.textColor,
+              color: Colors.green,
+              decorationColor: Colors.amber,
               fontSize: widget.fontSize),
           maxLines: null,
           decoration: const InputDecoration(

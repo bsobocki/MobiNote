@@ -217,6 +217,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return AlertDialog(
           title: const Text('Choose Theme'),
           backgroundColor: MobiNoteTheme.current.siteBackgroundColor,
+          titleTextStyle: TextStyle(color: MobiNoteTheme.current.textColor, fontSize: header3DefaultFontSize),
+          contentTextStyle: TextStyle(color: MobiNoteTheme.current.textColor, fontSize: paragraphDefaultFontSize),
           content: const Text(
             'Choose theme that you want to use\n',
           ),

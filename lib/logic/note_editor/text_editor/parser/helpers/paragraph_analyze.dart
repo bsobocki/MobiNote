@@ -6,10 +6,11 @@ import 'package:mobi_note/logic/note_editor/text_editor/definitions/paragraph_te
 import '../../special_marks_operations/text.dart';
 import '../../definitions/paragraph_textstyle_mapping/paragraph_to_type.dart';
 
-
 String firstMatch(String text, int i, Iterable<String> patterns) {
   return patterns.firstWhere(
-    (element) => i + element.length <= text.length && element == text.substring(i, i + element.length),
+    (element) =>
+        i + element.length <= text.length &&
+        element == text.substring(i, i + element.length),
     orElse: () => '',
   );
 }
@@ -45,7 +46,7 @@ double paragraphFontSize(String text) {
     var paragraph = paragraphOf(text, startIndex);
     if (text.substring(startIndex + paragraph.length).isNotEmpty) {
       var paragraphType = paragraphCharsToType(paragraph);
-      var fontSize = textStyles[paragraphType]!.fontSize;
+      var fontSize = textStyle(paragraphType).fontSize;
       return fontSize ?? paragraphDefaultFontSize;
     }
   }

@@ -32,7 +32,7 @@ class NoteTextEditingController extends TextEditingController {
 
     if (mainType.isNotEmpty) {
       spanTree = TextSpan(
-          style: spanTree.style!.merge(textStyles[mainType]),
+          style: spanTree.style!.merge(textStyle(mainType)),
           children: spanTree.children,
           text: spanTree.text);
     }
