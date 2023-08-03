@@ -47,7 +47,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       case WidgetMode.edit:
       case WidgetMode.selected:
         return BoxDecoration(
-            border: Border.all(color: MobiNoteTheme.current.textColor, width: 4.0));
+            border: Border.all(color: MobiNoteTheme.current.buttonBackgroundColor, width: 4.0));
       default:
         return const BoxDecoration(
           border: Border(),
@@ -155,7 +155,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
               },
               child: Icon(
                 Icons.arrow_circle_up,
-                color: MobiNoteTheme.current.textColor,
+                color: MobiNoteTheme.current.buttonBackgroundColor,
               ),
             )),
       ]),
@@ -177,7 +177,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                 },
                 icon: Icon(
                   Icons.disabled_by_default_rounded,
-                  color: MobiNoteTheme.current.textColor,
+                  color: MobiNoteTheme.current.buttonBackgroundColor,
                 ),
               ),
               IconButton(
@@ -192,7 +192,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                 },
                 icon: Icon(
                   Icons.edit_square,
-                  color: MobiNoteTheme.current.textColor,
+                  color: MobiNoteTheme.current.buttonBackgroundColor,
                 ),
               )
             ],
