@@ -77,7 +77,7 @@
 
 \DeclareOption*{\ClassWarningNoLine{iithesis}{Unknown option `\CurrentOption'}}
 
-\ExecuteOptions{polish,lic,longabstract}
+\ExecuteOptions{polish,inz,longabstract}
 \ProcessOptions\relax
 
 \RequirePackage[OT4]{fontenc}
