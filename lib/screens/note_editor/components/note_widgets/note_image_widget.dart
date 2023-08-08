@@ -47,7 +47,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       case WidgetMode.edit:
       case WidgetMode.selected:
         return BoxDecoration(
-            border: Border.all(color: MobiNoteTheme.current.buttonBackgroundColor, width: 4.0));
+            border: Border.all(color: MobiNoteTheme.current.textColor, width: 4.0));
       default:
         return const BoxDecoration(
           border: Border(),
@@ -138,7 +138,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
         getWidget(),
         Positioned(
             bottom: 0,
-            left: imgSize.width / 2,
+            left: (imgSize.width / 2) - 12 ,
             child: GestureDetector(
               onVerticalDragUpdate: (details) {
                 debugPrint('details: $details');
@@ -155,7 +155,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
               },
               child: Icon(
                 Icons.arrow_circle_up,
-                color: MobiNoteTheme.current.buttonBackgroundColor,
+                color: MobiNoteTheme.current.textColor,
               ),
             )),
       ]),
@@ -177,7 +177,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                 },
                 icon: Icon(
                   Icons.disabled_by_default_rounded,
-                  color: MobiNoteTheme.current.buttonBackgroundColor,
+                  color: MobiNoteTheme.current.textColor,
                 ),
               ),
               IconButton(
@@ -192,7 +192,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
                 },
                 icon: Icon(
                   Icons.edit_square,
-                  color: MobiNoteTheme.current.buttonBackgroundColor,
+                  color: MobiNoteTheme.current.textColor,
                 ),
               )
             ],
