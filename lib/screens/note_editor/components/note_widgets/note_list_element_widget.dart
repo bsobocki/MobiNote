@@ -18,6 +18,8 @@ import 'note_label_widget.dart';
 class NoteListElementWidget extends NoteEditorWidget {
   int number;
   bool isChecked = false;
+
+  @override
   NoteListElementData data;
 
   void Function()? _requestFocus;
@@ -138,19 +140,36 @@ class _NoteListElementState extends State<NoteListElementWidget> {
     widget.reportEditMode?.call();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    widget.stateCounter++;
+  void setCheckState() {
+    switch (widget.data.elemType) {
+      case ElementType.checkbox:
+        widget.isChecked = widget.data.checkboxData!.value;
+        break;
+      case ElementType.counter:
+        widget.isChecked =
+            widget.data.counterData!.count == widget.data.counterData!.target;
+        break;
+      default:
+        widget.isChecked = false;
+        break;
+    }
+  }
+
+  void createTextEditor() {
     textEditor = widget.noteWidgetFactory!.create(widget.data.textEditorData!)
         as NoteTextEditorWidget;
     textEditor.addNewElement = addNewListElement;
     textEditor.focusOnAction = widget.focusOnAction;
     textEditor.onContentChange = widget.onContentChange;
-    if (widget.data.elemType == ElementType.counter ||
-        widget.data.elemType == ElementType.checkbox) {
-      textEditor.isTextStrike = widget.isChecked;
-    }
+    textEditor.isTextStrike = widget.isChecked;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.stateCounter++;
+    setCheckState();
+    createTextEditor();
     widget.setModeInState = setModeInState;
     widget.requestFocus = textEditor.requestFocus;
     debugPrint('ListElement => SET IT');
