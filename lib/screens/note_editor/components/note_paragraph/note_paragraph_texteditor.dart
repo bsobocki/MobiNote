@@ -200,9 +200,8 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
           controller: controller,
           focusNode: focusNode,
           style: TextStyle(
-              color: Colors.green,
-              decorationColor: Colors.amber,
               fontSize: widget.fontSize),
+          cursorHeight: widget.fontSize,
           maxLines: null,
           decoration: const InputDecoration(
             border: InputBorder.none,
