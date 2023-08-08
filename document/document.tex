@@ -3,14 +3,14 @@
 \documentclass[shortabstract]{iithesis}
 
 \usepackage[utf8]{inputenc}
-
+\usepackage{hyperref}
 %%%%% DANE DO STRONY TYTUĹOWEJ
 % Niezaleznie od jezyka pracy wybranego w opcjach klasy, tytul i streszczenie
 % pracy nalezy podac zarowno w jezyku polskim, jak i angielskim.
 % Pamietaj o madrym (zgodnym z logicznym rozbiorem zdania oraz estetyka) recznym
 % zlamaniu wierszy w temacie pracy, zwlaszcza tego w jezyku pracy. Uzyj do tego
 % polecenia \fmlinebreak.
-\polishtitle    {Aplikacja mobilna do zarządzania i tworzenia\fmlinebreak interaktywnych notatek}
+\polishtitle    {Aplikacja mobilna do zarządzania i tworzenia\fmlinebreak  interaktywnych notatek}
 \englishtitle   {A mobile application to manage and create interactive notes}
 \polishabstract {TODO: streszczenie po polsku\ldots}
 \englishabstract{TODO: streszczenie po angielsku\ldots}
@@ -68,6 +68,41 @@ Dodawając odpowiednie znaczniki w tekście można ustawić wielkość czcionki 
 Tekst jest automatycznie dostosowywany wraz z dodaniem znaczników, co pozawala na bierząco obserwować i dostosowywać style i wielkości czcionki do potrzeb użytkownika.
 
 Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny(dark), jasny(light) oraz ułatwiający użytkowanie(easy) dla osób widzących słabiej.
+
+\chapter{Instalacja}
+
+Kod żródłowy aplikacji wraz plikiem \textbf{.apk} można uzyskać pobierając repozytorium \textbf{MobiNote} pod linkiem:
+\url{https://github.com/bsobocki/MobiNote}.
+
+\section{Aplikacje z nieznanych źródeł}
+Do zaintalowania aplikacji potrzbujemy włączyć możliwość instalowania nieznanych aplikacji za pomocą menadżera plików.
+Aby to zrobić, należy:
+\begin{itemize}
+    \item otworzyć \textbf{Ustawienia}
+    \item w \textbf{Ustawieniach} przejść do sekcji \textbf{Aplikacje}
+    \item następnie kliknąć na ikone menu (trzy kropki w prawym górnym rogu)
+    \item przejść do opcji \textbf{Dostęp specjalny}
+    \item następnie \textbf{Zainstaluj nieznane aplikacje}
+    \item wybrać menadżera plików i włączyć dla niego tę opcję
+\end{itemize}
+
+\textbf{Ważne!} Dla bezpieczeństwa po zainstalowaniu aplikacji warto ponownie wyłączyć możliwość instalowania aplikacji z nienzanych źródeł, jeśli nie chcemy instalować więcej aplikacji w ten sposób.
+
+\section{Instalacja z pliku apk-release.apk}
+Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
+
+\begin{itemize}
+    \item pobirać repozytorium za pomocą polecenia
+
+    \verb|git clone git@github.com:bsobocki/MobiNote.git|
+    \item podłączyć urządzenie i przenieść pliki \textbf{apk-release.apk} do wybranego przez siebie miejsca docelowego na urządzeniu
+    \item włączyć możliwość instalacji nienzanych aplikacji (szczegóły powyżej)
+    \item w menagerze plików znaleźć miejsce docelowe pliku \textbf{apk-release.apk} i uruchomić
+    \item kliknąć \textbf{Zaintaluj}
+\end{itemize}
+
+
+
 \chapter{Implementacja}
 
 %%%%% BIBLIOGRAFIA
