@@ -6,7 +6,7 @@ class NoteParagraphPlaceholder extends NoteParagraph {
   NoteParagraphPlaceholder({
     super.key,
     required super.id,
-    required super.widgetFactory,
+    required super.noteWidgetFactory,
     required this.onTap,
     super.onContentChange = emptyFunction,
     super.reportFocusParagraph = emptyFunctionInt,

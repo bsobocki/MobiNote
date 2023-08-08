@@ -26,7 +26,7 @@ class NoteListElementWidget extends NoteEditorWidget {
   NoteListElementWidget(
       {required super.id,
       required this.data,
-      required super.widgetFactory,
+      required super.noteWidgetFactory,
       super.onContentChange,
       this.number = 0,
       this.addNewListElement,
@@ -42,7 +42,7 @@ class NoteListElementWidget extends NoteEditorWidget {
     data.counterData ??= NoteCounterData(id: -1, target: 10);
     data.textEditorData ??= NoteTextEditorData(id: -1, text: '');
     requestFocus = () => _requestFocus?.call();
-    widgetFactory ??= NoteEditorWidgetFactory();
+    noteWidgetFactory ??= NoteEditorWidgetFactory();
   }
 
   @override
@@ -112,19 +112,19 @@ class _NoteListElementState extends State<NoteListElementWidget> {
         return NoteLabelWidget(
           id: id,
           data: NoteLabelData(id: -1, label: '-'),
-          widgetFactory: widget.widgetFactory,
+          noteWidgetFactory: widget.noteWidgetFactory,
         );
       case ElementType.number:
         return NoteLabelWidget(
           id: id,
           data: NoteLabelData(id: -1, label: '${widget.data.number}.'),
-          widgetFactory: widget.widgetFactory,
+          noteWidgetFactory: widget.noteWidgetFactory,
         );
       default:
         return NoteLabelWidget(
           id: id,
           data: NoteLabelData(id: -1, label: '*'),
-          widgetFactory: widget.widgetFactory,
+          noteWidgetFactory: widget.noteWidgetFactory,
         );
     }
   }
@@ -142,7 +142,7 @@ class _NoteListElementState extends State<NoteListElementWidget> {
   void initState() {
     super.initState();
     widget.stateCounter++;
-    textEditor = widget.widgetFactory!.create(widget.data.textEditorData!)
+    textEditor = widget.noteWidgetFactory!.create(widget.data.textEditorData!)
         as NoteTextEditorWidget;
     textEditor.addNewElement = addNewListElement;
     textEditor.focusOnAction = widget.focusOnAction;

@@ -19,7 +19,7 @@ class NoteListWidget extends NoteEditorWidget {
     super.key,
     required super.id,
     required this.data,
-    required super.widgetFactory,
+    required super.noteWidgetFactory,
     super.onContentChange,
     super.focusOffAction,
     super.focusOnAction,
@@ -27,7 +27,7 @@ class NoteListWidget extends NoteEditorWidget {
     super.reportEditMode,
     super.removeFromParent,
   }) {
-    widgetFactory ??= NoteEditorWidgetFactory();
+    noteWidgetFactory ??= NoteEditorWidgetFactory();
   }
 
   @override
@@ -134,7 +134,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     elements.insert(
       index,
       NoteListElementWidget(
-        id: widget.widgetFactory!.nextId('list_element'),
+        id: widget.noteWidgetFactory!.nextId('list_element'),
         onContentChange: widget.onContentChange,
         number: index + 1,
         data: data,
@@ -143,7 +143,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
         onInteract: () => setState(() => setMode(WidgetMode.edit)),
         onLongPress: onLongPress,
         mode: widget.mode,
-        widgetFactory: widget.widgetFactory,
+        noteWidgetFactory: widget.noteWidgetFactory,
       ),
     );
     setNumbers(index + 1);
@@ -220,7 +220,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       children: [
         elemModeSelectionBar,
         showModeWidget,
-        widget.widgetFactory?.create(
+        widget.noteWidgetFactory?.create(
           NoteIconButtonData(
             id: -1,
             paddingTop: 6.0,

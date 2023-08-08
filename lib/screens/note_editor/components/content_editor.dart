@@ -70,7 +70,7 @@ class _ContentEditorState extends State<ContentEditor> {
   void initState() {
     super.initState();
     paragraphs = NoteParagraphs(
-      widgetFactory: widgetFactory,
+      noteWidgetFactory: widgetFactory,
       onContentChange: onChange,
       initContent: widget.initContent,
       setContentEditorState: setContentEditorState,
@@ -87,9 +87,19 @@ class _ContentEditorState extends State<ContentEditor> {
         toolbarHeight: 40 + MobiNoteTheme.current.fontSizeAddVal,
         actions: [
           IconButton(
-              onPressed: addParagraphWithImage, icon: Icon(Icons.image, color: MobiNoteTheme.current.textColor, size: paragraphDefaultFontSize * 2,),),
+            onPressed: addParagraphWithImage,
+            icon: Icon(
+              Icons.image,
+              color: MobiNoteTheme.current.textColor,
+              size: paragraphDefaultFontSize * 2,
+            ),
+          ),
           IconButton(
-              onPressed: addParagraphWithList, icon: Icon(Icons.list, color: MobiNoteTheme.current.textColor, size: paragraphDefaultFontSize * 2),)
+            onPressed: addParagraphWithList,
+            icon: Icon(Icons.list,
+                color: MobiNoteTheme.current.textColor,
+                size: paragraphDefaultFontSize * 2),
+          )
         ],
       ),
       body: Padding(

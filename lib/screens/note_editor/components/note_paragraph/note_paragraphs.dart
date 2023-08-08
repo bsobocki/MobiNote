@@ -16,7 +16,7 @@ import 'note_paragraph_widget.dart';
 
 class NoteParagraphs {
   IdGenerator paragraphIdGenerator = IdGenerator();
-  NoteEditorWidgetFactory widgetFactory;
+  NoteEditorWidgetFactory noteWidgetFactory;
   int focusedParagraphId = 0;
   List<NoteParagraph> paragraphs = [];
 
@@ -25,7 +25,7 @@ class NoteParagraphs {
   final void Function() onContentChange;
 
   NoteParagraphs({
-    required this.widgetFactory,
+    required this.noteWidgetFactory,
     required this.onContentChange,
     required this.initContent,
     required this.setContentEditorState,
@@ -93,7 +93,7 @@ class NoteParagraphs {
     paragraphs.add(
       NoteParagraphPlaceholder(
         id: paragraphIdGenerator.nextId,
-        widgetFactory: widgetFactory,
+        noteWidgetFactory: noteWidgetFactory,
         onTap: () {
           var lastValidParagraph = paragraphs[paragraphs.length - 2];
           lastValidParagraph.requestFocus();
@@ -201,7 +201,7 @@ class NoteParagraphs {
           debugPrint('paragraphs:');
           debugPrint(paragraphs.toString());
         }
-    onContentChange();
+        onContentChange();
       });
 
   void deleteNoteParagraph(int paragraphId) => setContentEditorState(() {
@@ -247,14 +247,14 @@ class NoteParagraphs {
         for (var p in paragraphs) {
           debugPrint(p.str);
         }
-    onContentChange();
+        onContentChange();
       });
 
   NoteParagraphWidget createNoteParagraphWidget() {
     debugPrint("create note widget paragraph!!!");
     return NoteParagraphWidget(
       id: paragraphIdGenerator.nextId,
-      widgetFactory: widgetFactory,
+      noteWidgetFactory: noteWidgetFactory,
       onContentChange: onContentChange,
       reportFocusParagraph: reportFocusParagraph,
       deleteParagraph: deleteNoteParagraph,
@@ -265,7 +265,7 @@ class NoteParagraphs {
   NoteParagraphTextEditor createNoteParagraphTextEditor(text) {
     return NoteParagraphTextEditor(
       id: paragraphIdGenerator.nextId,
-      widgetFactory: widgetFactory,
+      noteWidgetFactory: noteWidgetFactory,
       paragraphText: text,
       onContentChange: onContentChange,
       addParagraph: addNoteParagraphEditorAfter,

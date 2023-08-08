@@ -4,7 +4,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/definition
 import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 
 abstract class NoteEditorWidget extends StatefulWidget {
-  NoteEditorWidgetFactory? widgetFactory;
+  NoteEditorWidgetFactory? noteWidgetFactory;
   final int id;
   WidgetMode mode;
   int stateCounter = 0;
@@ -45,7 +45,7 @@ abstract class NoteEditorWidget extends StatefulWidget {
       {super.key,
       required this.id,
       this.onContentChange,
-      this.widgetFactory,
+      this.noteWidgetFactory,
       this.onPressed,
       this.onLongPress,
       this.focusOnAction,

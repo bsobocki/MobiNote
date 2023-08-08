@@ -39,13 +39,13 @@ class NoteEditorWidgetFactory {
         return NoteListElementWidget(
           id: id,
           data: data as NoteListElementData,
-          widgetFactory: this,
+          noteWidgetFactory: this,
         );
       case 'list':
         return NoteListWidget(
           id: id,
           data: data as NoteListData,
-          widgetFactory: this,
+          noteWidgetFactory: this,
         );
       case 'counter':
         return NoteCounterWidget(

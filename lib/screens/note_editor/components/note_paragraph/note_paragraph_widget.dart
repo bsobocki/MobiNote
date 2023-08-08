@@ -18,7 +18,7 @@ class NoteParagraphWidget extends NoteParagraph {
 
   NoteParagraphWidget(
       {required super.id,
-      required super.widgetFactory,
+      required super.noteWidgetFactory,
       required super.onContentChange,
       required super.reportFocusParagraph,
       required super.deleteParagraph,
@@ -38,7 +38,7 @@ class NoteParagraphWidget extends NoteParagraph {
   }
 
   void _addWidgetByData(NoteWidgetData data) {
-    var widget = widgetFactory.create(data);
+    var widget = noteWidgetFactory.create(data);
     debugPrint("noteparagraphwidget: add widget by type: ${data.type}");
     elements.add(widget);
   }
@@ -68,7 +68,7 @@ class NoteParagraphWidget extends NoteParagraph {
   String get content => '!$placeholder:$widgetTree';
 
   @override
-  String get widgetTree  {
+  String get widgetTree {
     List<JSON> tree = [];
     for (var child in elements) {
       tree.add(child.data.json);
@@ -119,7 +119,7 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
       });
 
   void addWidgetByData(NoteWidgetData data) {
-    var newWidget = widget.widgetFactory.create(data);
+    var newWidget = widget.noteWidgetFactory.create(data);
     debugPrint(
         "---------+++++++++++ noteparagraphwidget: add widget: ${data.type}");
     setCallbacks(newWidget);
