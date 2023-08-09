@@ -202,7 +202,7 @@ Edytor strony zajmuje reszę powierzchni ekranu. Jest polem, w którym następuj
 \subsection{Paragrafy}
 
 Notatki w aplikacji składają się z paragrafów, które dzielimy na paragrafy tekstowe i paragrafy widgetów.
-Każdy paragraf może przechodzić w tryby.
+Każdy paragraf może przechodzić w jedne z dostępnych trybów.
 Obecnie wyróżnione są tryby:
 
 \begin{itemize}
@@ -212,7 +212,23 @@ Obecnie wyróżnione są tryby:
     \item niewidoczny
 \end{itemize}
 
+\subsubsection{tryb widoku}
 
+Paragraf istnieje w trybie widoku, kiedy nie jest aktywny.
+Paragraf przechodzi w tryb widoku, w momencie przeniesienia aktywności na inny paragraf(na przykład poprzez kliknięcie).
+
+\subsubsection{tryb edycji}
+
+Paragraf przechodzi w tryb edycji, w momencie przeniesienia na niego aktywności.
+Aktywność ta może zostać przeniesiona poprzez kliknięcie na elementy paragrafu, lub w przypadku, gdy jest to paragraf widgetów, a jego następnikiem jest paragraf tekstowy, którego edytujący stara się usunąć.
+
+\subsubsection{tryb zanzaczenia}
+
+Paragraf widgetów przechodzi w tryb zaznaczenia poprzez przytrzymanie jego elementów niebędących polem tekstowym(poniważ pole tekstowe ma już zarezerwowany ten gest na zaznaczanie tekstu).
+
+\subsubsection{tryb niewidoczny}
+
+Paragraf przestaje być widoczny w momencie przejścia edytora w kierunku pionowym wystarczająco do wysunięcia paragrafu poza edytor.
 
 \subsection{Edycja Paragrafów Tekstowych}
 
