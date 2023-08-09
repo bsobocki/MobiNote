@@ -154,14 +154,6 @@ Po wybraniu notatki, lub przejściu do tworzenia nowej, na ekranie pojawi się s
 
 \subsection{Pasek Strony}
 
-\subsubsection{Zawiera}
-
-\begin{itemize}
-    \item przyciski zapisu i powrotu(ikona strzałki w lewo)
-    \item edytora tytułu
-    \item przycisku typu \textbf{\textit{switch}}
-\end{itemize}
-
 \subsubsection{Przycisk Zapisu i Powrotu}
 
 Aby wyjść i zapisać notatkę korzystający używa przycisku powrotu.
@@ -174,7 +166,7 @@ Za zmianę notatki uważamy:
     \item edycję widgetu w paragrafie widgetu
 \end{itemize}
 
-\textbf{WAŻNE!} Nowa notatka nie zostaje utworzona w momencie otwarcia okna edycji, a dopiero poprzez użycie przycisku powrotu pod warunkiem, ze jej tytuł lub zawartość uległy edycji. Oznacza to, że przejście do edycji nowej notatki, a następnie powrót, nie zapiszą pustej notatki, jednak dodanie i usunięcie znaku, tak.
+\textbf{WAŻNE!} Nowa notatka nie zostaje utworzona w momencie otwarcia okna edycji, a dopiero poprzez użycie przycisku powrotu pod warunkiem, ze jej tytuł lub zawartość uległy edycji. Oznacza to, że przejście do edycji nowej notatki, a następnie powrót, nie zapiszą pustej notatki, jednak dodanie i usunięcie znaku umożliwią zapis przy powrocie.
 
 \subsubsection{Edytor tytułu}
 
@@ -182,15 +174,25 @@ Jest to pole tekstowe widniejące zaraz obok \textbf{Przycisku zapisu i powrotu}
 
 \subsubsection{Przycisk zmiany opcji zapisu}
 
-Ostatnim elementem paska jest \textbf{przycisk zmiany opcji zapisu}. Jest to przycisk typu \textbf{switch} domyślnie ustawiony na true, czyli zapis notatki w przypadku edycji. Jego kliknięcie zmienia wartość. Ustawienie tego elementu na false oznacza brak zapisu stanu notatki nawet jeśli została ona zmieniona.
+Ostatnim elementem paska jest \textbf{przycisk zmiany opcji zapisu}. Jest to przycisk typu \textbf{switch} domyślnie ustawiony na true. Każdorazowe kliknięcie zmienia jego logiczną wartość.
+Wartość \textbf{true} oznacza zapis notatki w przypadku jej edycji, natomiast \textbf{false} oznacza brak zapisu stanu notatki, nawet jeśli została ona zmieniona.
 
 \subsection{Pasek Narzędzi}
 
+W tym pasku znajdują się przyciski oznaczone ikonami.
+W aktualnej wersji aplikacji dostępne są dwa przyciski: dodanie obrazu(ikona obrazu), oraz dodanie listy(ikona listy).
 
+\subsubsection{Dodanie obrazu}
+
+Do zawartości notatki można dodawać również obrazy. Aby to zrobić należy kliknąć przycisk z ikoną obrazu na pasku narzędzi edytora notatki, a następnie wybrać z urządzenia zdjęcie, które ma zostać użyte. Zdjęcie zostanie dodane do notatki.
+
+\textbf{Dodanie listy}
+
+Po wybraniu tej opcji na ekranie pojawi się lista złożona początkowo z jednego elementu typu checkbox zawierające również puste pole tekstowe.
 
 \subsection{Edytor Strony}
 
-
+Edytor strony zajmuje reszę powierzchni ekranu. Jest polem, w którym następuje edycja tekst oraz widgetu. Aktualny stan wizualny jest odświeżany na bieżąco, dzięki czemu użytkownik obserwuje zmiany jako efekt końcowy w czasie rzeczywistym.
 
 
 \chapter{Implementacja}
