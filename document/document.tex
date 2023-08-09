@@ -56,7 +56,7 @@ Do przechowywania zawartości notatek powinna zostać użyta baza danych, jak r�
 \section{Opis Aplikacji}
 
 Aplikacja MobiNote służy do zarządzania notatkami w sposób opisany powyżej.
-Głównym zamysłem aplikacji jest pomoc użytkownikowi w prowadzeniu, tworzeniu i zapisywaniu notatek, w których skład wchodzi nie tylko tekst, ale również przyciski, obrazy, listy, liczniki i różnego rodzaju pomocne widgety.
+Głównym zamysłem aplikacji jest pomoc korzystającemu w prowadzeniu, tworzeniu i zapisywaniu notatek, w których skład wchodzi nie tylko tekst, ale również przyciski, obrazy, listy, liczniki i różnego rodzaju pomocne widgety.
 Aplikacja umożliwia tworzenie i utrzymywanie brudnopisu używanego podczas codziennych czynności, jak również przejrzystych, dopracowanych i przystępnych  notatek.
 
 Wytworzone notatki mogą być używane w formie brudnopisu, między innymi podczas: treningu na siłowni, organizacji przyjęcia, nauki z wykorzystaniem sesji pomodoro, tworzeniu listy zakupów oraz wielu innych codziennych czynności.
@@ -66,7 +66,7 @@ Mogą także w przyjemny dla oka sposób przechowywać i wyświetlać informacje
 Interaktywność notatki jest zapewniana poprzez możliwość tworzenia zawartości na bierząco za pomocą klawiatury i dostępnego interfejsu użytkownika.
 Uzytkownik może tworzyć styl tekstu za pomocą znaczników dodawanych wewnątrz tekstu w odpowiednich miejscach, podobnie do języka znaczników Markdown.
 Dodawając odpowiednie znaczniki w tekście można ustawić wielkość czcionki w danym paragrafie, kursywe, podkreślenie, przekreślenie, a także pogrubienie.
-Tekst jest automatycznie dostosowywany wraz z dodaniem znaczników, co pozawala na bierząco obserwować i dostosowywać style i wielkości czcionki do potrzeb użytkownika.
+Tekst jest automatycznie dostosowywany wraz z dodaniem znaczników, co pozawala na bierząco obserwować i dostosowywać style i wielkości czcionki do potrzeb korzystającego.
 
 Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny(dark), jasny(light) oraz ułatwiający użytkowanie(easy) dla osób widzących słabiej.
 
@@ -76,8 +76,8 @@ Kod żródłowy aplikacji wraz plikiem \textbf{.apk} można uzyskać pobierając
 \url{https://github.com/bsobocki/MobiNote}.
 
 \section{Aplikacje z nieznanych źródeł}
-Do zaintalowania aplikacji potrzbujemy włączyć możliwość instalowania nieznanych aplikacji za pomocą menadżera plików.
-Aby to zrobić, należy:
+Do zaintalowania aplikacji potrzbna jest możliwość instalowania nieznanych aplikacji za pomocą menadżera plików.
+Aby ją uruchomić, należy:
 \begin{itemize}
     \item otworzyć \textbf{Ustawienia}
     \item w \textbf{Ustawieniach} przejść do sekcji \textbf{Aplikacje}
@@ -87,7 +87,7 @@ Aby to zrobić, należy:
     \item wybrać menadżera plików i włączyć dla niego tę opcję
 \end{itemize}
 
-\textbf{Ważne!} Dla bezpieczeństwa po zainstalowaniu aplikacji warto ponownie wyłączyć możliwość instalowania aplikacji z nienzanych źródeł, jeśli nie chcemy instalować więcej aplikacji w ten sposób.
+\textbf{Ważne!} Dla bezpieczeństwa po zainstalowaniu aplikacji warto ponownie wyłączyć możliwość instalowania aplikacji z nienzanych źródeł, jeśli więcej aplikacji nie będzie w ten sposób instalowane.
 
 \section{Instalacja z pliku apk-release.apk}
 Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
@@ -126,9 +126,72 @@ Motyw ten cechują kontrastujące ze sobą kolory, jak również zwiększone roz
 
 \begin{figure}[h]
     \centering
-    \includegraphics[height=9cm]{images/motywy_notatka.png}
-    \caption{Porównanie motywów na tej samej notatce.}
+    \includegraphics[height=8.5cm]{images/strona_domowa_motywy.png}
+    \caption{Porównanie motywów na tej samej stronie domowej.}
 \end{figure}
+
+\subsection{Opcja \textit{Rebuild Database}}
+
+Opcja ta otwiera okno dialogowe z pytaniem o to, czy na pewno chcemy wykonać tę przebudowanie bazy danych. Po zatwierdzeniu baza danych jest usuwana i budowana.
+
+\subsection{Zeszyty}
+
+Pod etykietą \textbf{\textit{Notebooks:}} widnieją dwa przyciski \textbf{Trainings} oraz \textbf{Diet}. Są to roboczo dodane przyciski, które są przygotowane pod rozszerzenie aplikacji w przyszłości o możliwość układania notatek w zeszyty, dla lepszej organizacji, a także wprowadzać etykiety.
+Pomysł ten zostanie omówiony w rozdziale \textbf{Rozszerzenie Funkcjonalnosći aplikacji}.
+
+\subsection{Notatki}
+
+Kolejnym elementem strony domowej jest lista notatek znajdująca się pod etykietą \textbf{\textit{Recent Notes:}}. Każdy element zawiera tytuł oraz pierwsze cztery surowe linie tekstu(zawierające znaki specjalne styli w przypadku paragrafu będącego tekstem, lub string w formacie JSON reprezentujący widget zawarty w danym paragrafie).
+W prawym górnym rogu elementów znajduje się przycisk \textbf{X} służący do usunięcia danej notatki z bazy danych.
+Po naciśnięciu na dany element użytkownik zostaje przeniesiony do ekranu wyświetlania i edycji wybranej notatki.
+
+W prawym dolnym rogu ekranu widnieje okrągły przycisk z ikoną ołówka.
+Po jego naciśnięciu korzystający zostaje przeniesiony do ekranu edycji, gdzie może stworzyć i zapisać nową notatkę.
+
+\section{Strona Edycji Notatki}
+
+Po wybraniu notatki, lub przejściu do tworzenia nowej, na ekranie pojawi się strona edycji notatki. Składa się ona z głównego paska strony, paska narzędzi, oraz edytora.
+
+\subsection{Pasek Strony}
+
+\subsubsection{Zawiera}
+
+\begin{itemize}
+    \item przyciski zapisu i powrotu(ikona strzałki w lewo)
+    \item edytora tytułu
+    \item przycisku typu \textbf{\textit{switch}}
+\end{itemize}
+
+\subsubsection{Przycisk Zapisu i Powrotu}
+
+Aby wyjść i zapisać notatkę korzystający używa przycisku powrotu.
+Ważnym jest, aby zamiast systemowych przycisków nawigacyjnych użyć właśnie tego przycisku nawigacyjnego, ponieważ wraz z powrotem do strony domowej zapisuje on notatkę, jeśli ta uległa zmianie.
+
+Za zmianę notatki uważamy:
+
+\begin{itemize}
+    \item edycję tekstu w paragrafie tekstowym
+    \item edycję widgetu w paragrafie widgetu
+\end{itemize}
+
+\textbf{WAŻNE!} Nowa notatka nie zostaje utworzona w momencie otwarcia okna edycji, a dopiero poprzez użycie przycisku powrotu pod warunkiem, ze jej tytuł lub zawartość uległy edycji. Oznacza to, że przejście do edycji nowej notatki, a następnie powrót, nie zapiszą pustej notatki, jednak dodanie i usunięcie znaku, tak.
+
+\subsubsection{Edytor tytułu}
+
+Jest to pole tekstowe widniejące zaraz obok \textbf{Przycisku zapisu i powrotu}. Służy ono do edycji tytułu notatki.
+
+\subsubsection{Przycisk zmiany opcji zapisu}
+
+Ostatnim elementem paska jest \textbf{przycisk zmiany opcji zapisu}. Jest to przycisk typu \textbf{switch} domyślnie ustawiony na true, czyli zapis notatki w przypadku edycji. Jego kliknięcie zmienia wartość. Ustawienie tego elementu na false oznacza brak zapisu stanu notatki nawet jeśli została ona zmieniona.
+
+\subsection{Pasek Narzędzi}
+
+
+
+\subsection{Edytor Strony}
+
+
+
 
 \chapter{Implementacja}
 
