@@ -46,7 +46,8 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
       case WidgetMode.edit:
       case WidgetMode.selected:
         return BoxDecoration(
-            border: Border.all(color: MobiNoteTheme.current.textColor, width: 4.0));
+            border:
+                Border.all(color: MobiNoteTheme.current.textColor, width: 4.0));
       default:
         return const BoxDecoration(
           border: Border(),
@@ -83,6 +84,13 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   }
 
   Widget getWidget({double opacity = 1.0}) {
+    Image image;
+    String path = widget.data.path!;
+    if (path.isEmpty || !File(path).existsSync()) {
+      image = Image.asset("images/no_image.png");
+    } else {
+      image = Image.file(key: imageKey, File(path));
+    }
     return Container(
       alignment: Alignment.topLeft,
       width: size?.width,
@@ -92,10 +100,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
         opacity: opacity,
         child: Container(
           color: MobiNoteTheme.current.textColor,
-          child: Image.file(
-            key: imageKey,
-            File(widget.data.path!),
-          ),
+          child: image,
         ),
       ),
     );
@@ -137,7 +142,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
         getWidget(),
         Positioned(
             bottom: 0,
-            left: (imgSize.width / 2) - 12 ,
+            left: (imgSize.width / 2) - 12,
             child: GestureDetector(
               onVerticalDragUpdate: (details) {
                 setState(() {
