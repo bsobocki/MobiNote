@@ -4,13 +4,11 @@ import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_pro
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_text/note_text_editor_controller.dart';
-import 'package:mobi_note/screens/theme/themes.dart';
 
 import '../../../../logic/note_editor/text_editor/parser/helpers/paragraph_analyze.dart';
 
 const int textBegginingOffset = 1;
 
-// ignore: must_be_immutable
 class NoteParagraphTextEditor extends NoteParagraph {
   bool isInitialized = false;
   double fontSize = 12;
@@ -89,9 +87,7 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   }
 
   void appendText(String text) => setState(() {
-        debugPrint('appending curr: "${controller.text}" with text "$text" ');
         controller.text += text;
-        debugPrint('new Text is : ${controller.text}');
       });
 
   void foucusAction() {
@@ -110,13 +106,9 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   }
 
   void onChange(String newText) {
-    var replacedPlaceholder = newText.replaceAll(placeholder, "+");
-
     if (focusNode.hasFocus) {
       if (needToDelete(newText)) {
         widget.deleteParagraph(widget.id);
-      } else {
-        debugPrint("in $replacedPlaceholder there is \\u200b");
       }
 
       setState(() => widget.fontSize = paragraphFontSize(newText));
@@ -135,11 +127,8 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
 
   void addPlaceholder() {
     var replacedPlaceholder = controller.text.replaceAll(placeholder, "+");
-    debugPrint("we want to add placeholder to '$replacedPlaceholder'");
     if (controller.text.isEmpty || controller.text[0] != placeholder) {
       controller.text = placeholder + controller.text;
-      debugPrint(
-          "placeholder added! for '${controller.text.replaceAll(placeholder, '+')}");
     }
   }
 
@@ -147,7 +136,6 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   void initState() {
     super.initState();
     widget.stateCounter++;
-    debugPrint('initStatee!!!!!!!');
     widget.requestFocusInState = () => focusNode.requestFocus();
     controller = NoteTextEditingController(resizeTextField: resizeTextField);
     controller.text = widget.paragraphText;
@@ -164,7 +152,6 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
 
   @override
   void dispose() {
-    debugPrint('dispose!!!!!!!');
     controller.dispose();
     widget.stateCounter--;
     if (widget.removingState) {

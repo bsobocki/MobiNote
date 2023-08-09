@@ -64,7 +64,6 @@ class _NoteListElementState extends State<NoteListElementWidget> {
   void setModeInState(WidgetMode mode) => setState(() {
         widget.mode = mode;
         textEditor.setMode(mode);
-        debugPrint("LIST ELEMENT mode set to: $mode");
       });
 
   void checkElement(bool isChecked) {
@@ -81,7 +80,6 @@ class _NoteListElementState extends State<NoteListElementWidget> {
   }
 
   NoteEditorWidget getLabel() {
-    debugPrint('DATA LABEL CREATION!!!');
     int id = 0;
     if (widget.mode == WidgetMode.selected) {
       return NoteIconButtonWidget(
@@ -172,7 +170,6 @@ class _NoteListElementState extends State<NoteListElementWidget> {
     createTextEditor();
     widget.setModeInState = setModeInState;
     widget.requestFocus = textEditor.requestFocus;
-    debugPrint('ListElement => SET IT');
     widget.forceSetState = () => setState(() {});
   }
 

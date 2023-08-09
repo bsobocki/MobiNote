@@ -5,6 +5,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import 'package:mobi_note/screens/theme/themes.dart';
 
 class NoteLabelWidget extends NoteEditorWidget {
+  @override
   final NoteLabelData data;
 
   NoteLabelWidget(
@@ -26,7 +27,6 @@ class NoteLabelWidget extends NoteEditorWidget {
 class _NoteLabelWidgetState extends State<NoteLabelWidget> {
   @override
   Widget build(BuildContext context) {
-    debugPrint('NoteLabelWidget: build!!!!');
     return SizedBox(
       width: 30,
       height: 30,

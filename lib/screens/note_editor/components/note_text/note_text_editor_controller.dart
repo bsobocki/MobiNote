@@ -37,9 +37,7 @@ class NoteTextEditingController extends TextEditingController {
           text: spanTree.text);
     }
 
-    debugPrint("=-=-=-=-=-= FONT SIZE: ${spanTree.style!.fontSize} --=-=-=-=-=---------");
     if (spanTree.style!.fontSize != null) {
-      debugPrint('SET THIS SIZE!!!!!!!!!!!');
       resizeTextField(spanTree.style!.fontSize!);
     }
     return spanTree;

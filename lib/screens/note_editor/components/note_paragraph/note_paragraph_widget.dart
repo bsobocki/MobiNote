@@ -2,15 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
-import 'package:mobi_note/logic/note_editor/text_editor/definitions/unicodes.dart';
 import 'package:mobi_note/logic/note_editor/text_editor/parser/unicode_marked_text_parser.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
-import 'package:mobi_note/screens/note_editor/components/note_widgets/factory/note_widget_factory.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 
-// ignore: must_be_immutable
 class NoteParagraphWidget extends NoteParagraph {
   String widgetJSON;
   WidgetMode mode = WidgetMode.show;
@@ -33,13 +30,11 @@ class NoteParagraphWidget extends NoteParagraph {
   void Function(int)? removeFromParent;
 
   void _addWidget(NoteEditorWidget widget) {
-    debugPrint("noteparagraphwidget: add widget: $widget");
     elements.add(widget);
   }
 
   void _addWidgetByData(NoteWidgetData data) {
     var widget = noteWidgetFactory.create(data);
-    debugPrint("noteparagraphwidget: add widget by type: ${data.type}");
     elements.add(widget);
   }
 
@@ -82,7 +77,6 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   FocusNode focusNode = FocusNode();
 
   void setMode(WidgetMode mode) => setState(() {
-        debugPrint("mode set to: $mode");
         widget.mode = mode;
         for (var elem in widget.elements) {
           elem.setMode(mode);
@@ -95,11 +89,9 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
 
   void focusAction() => setState(() {
         if (focusNode.hasFocus) {
-          debugPrint("WIDGET PARAGRAPH: focus action is called!!!");
           focusOnAction();
           widget.setMode!(WidgetMode.edit);
         } else {
-          debugPrint("WIDGET PARAGRAPH: UNFOCUS action is called!!!");
           widget.setMode!(WidgetMode.show);
         }
       });
@@ -120,8 +112,6 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
 
   void addWidgetByData(NoteWidgetData data) {
     var newWidget = widget.noteWidgetFactory.create(data);
-    debugPrint(
-        "---------+++++++++++ noteparagraphwidget: add widget: ${data.type}");
     setCallbacks(newWidget);
     setState(() {
       widget.elements.add(newWidget);
@@ -129,10 +119,8 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   }
 
   void onInteract() {
-    debugPrint("WIDGET PARAGRAPH: ON INTERACT");
     widget.reportFocusParagraph(widget.id);
     FocusScope.of(context).requestFocus(focusNode);
-    debugPrint("WIDGET PARAGRAPH: HAS FOCUS? ${focusNode.hasFocus}");
   }
 
   void removeWidget(int widgetId) {
@@ -154,7 +142,6 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   void initState() {
     super.initState();
     widget.stateCounter++;
-    debugPrint("init state of note widget paragraph!!!");
     addSetStateToWidgetMethods();
     for (var elem in widget.elements) {
       setCallbacks(elem);
@@ -178,7 +165,6 @@ class _NoteParagraphWidgetState extends State<NoteParagraphWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        debugPrint('gesture detector!!!!!!!!!!!!!!!');
         onInteract();
       },
       child: Padding(

@@ -51,11 +51,7 @@ class _ContentEditorState extends State<ContentEditor> {
     String path = await chooseImage();
     NoteImageData data = NoteImageData(id: -1, path: path);
     paragraphs.addParagraphWithWidget(data);
-    setState(() {
-      for (var p in paragraphs.paragraphs) {
-        debugPrint(p.str);
-      }
-    });
+    setState(() {});
   }
 
   void addParagraphWithList() => setState(() {

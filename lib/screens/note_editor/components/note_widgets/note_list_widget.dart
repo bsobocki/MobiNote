@@ -13,6 +13,7 @@ import 'package:mobi_note/screens/theme/themes.dart';
 import 'definitions/widget_mode.dart';
 
 class NoteListWidget extends NoteEditorWidget {
+  @override
   NoteListData data;
 
   NoteListWidget({
@@ -39,17 +40,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   int currDepth = 0;
 
   void setNumbers(int startIndex) {
-    debugPrint('NoteListWidget:  setNumbers!!!!!!');
     for (int i = startIndex; i < elements.length; i++) {
       elements[i].data.number = i + 1;
       if (widget.data.elemType == ElementType.number) {
-        if (elements[i].forceSetState == null) {
-          debugPrint('WHAAAAAAAAAAAAAAAAAAAATTTTT');
-        }
         elements[i].forceSetState?.call();
-      } else {
-        debugPrint(
-            '************************element type is: ${widget.data.elemType}');
       }
     }
     widget.onContentChange?.call();
@@ -65,7 +59,6 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       });
 
   void setMode(WidgetMode mode) {
-    debugPrint("List mode set to: $mode");
     widget.mode = mode;
     for (var elem in elements) {
       elem.setMode(mode);
@@ -73,8 +66,6 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     if (mode == WidgetMode.edit) {
       if (elements.last.requestFocus != null) {
         elements.last.requestFocus!();
-      } else {
-        debugPrint('cannot request focus of the last element from list');
       }
     }
   }
@@ -150,9 +141,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   }
 
   void addNewElement(int prevElemId, String initText) => setState(() {
-        debugPrint('run _addElement($prevElemId, $initText)');
         _addNewElement(prevElemId: prevElemId, initText: initText);
-        debugPrint('addNewElement: set state!!!!!');
       });
 
   void addEmptyElement() => _addNewElement();

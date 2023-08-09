@@ -5,7 +5,6 @@ import 'package:mobi_note/logic/helpers/id/paragraph_id_generator.dart';
 import 'package:mobi_note/logic/helpers/list_helpers.dart';
 import 'package:mobi_note/logic/helpers/text_is_widget.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/all_widget_data.dart';
-import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph.dart';
 import 'package:mobi_note/screens/note_editor/components/note_paragraph/note_paragraph_placeholder.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/definitions/widget_mode.dart';
@@ -55,14 +54,11 @@ class NoteParagraphs {
   int indexOfFocusedParagraph() {
     int index =
         paragraphs.indexWhere((element) => element.id == focusedParagraphId);
-    if (index == -1) debugPrint('CANNOT FIND INDEX FOR ID $focusedParagraphId');
     return index == -1 ? paragraphs.length : index;
   }
 
   void reportFocusParagraph(int paragraphId) {
     focusedParagraphId = paragraphId;
-    debugPrint(
-        "== REPORT FOCUS === Now, the paragraph $focusedParagraphId is focuded one.");
   }
 
   void createParagraphs(String text) {
@@ -78,8 +74,6 @@ class NoteParagraphs {
             addNewNoteParagraphWidget(currText);
           }
           focusedParagraphId = paragraphIdGenerator.currId - 1;
-          debugPrint(
-              "FOCUSED PARAGRAPH!!!!!!!!!!!! ID: $focusedParagraphId !!!!!!!!!!!!!");
           currText = '';
         } else {
           currText += text[i];
@@ -98,22 +92,18 @@ class NoteParagraphs {
           var lastValidParagraph = paragraphs[paragraphs.length - 2];
           lastValidParagraph.requestFocus();
           reportFocusParagraph(lastValidParagraph.id);
-          debugPrint("FocusRequested on ${lastValidParagraph.str}");
         },
       ),
     );
   }
 
   void addNewNoteParagraphEditor(String text) {
-    debugPrint('CALL: addNewNoteParagraphEditor');
     var newParagraph = createNoteParagraphTextEditor(text);
     paragraphs.add(newParagraph);
-    debugPrint('ADDED TEXT EDITOR: ID: ${newParagraph.id} !!!!!!!!!!');
     onContentChange();
   }
 
   void addNewNoteParagraphWidget(String text) {
-    debugPrint('CALL: addParagraphWithWidget from JSON');
     String jsonStr = text.substring(3);
     try {
       List<dynamic> jsonObjects = jsonDecode(jsonStr);
@@ -135,7 +125,6 @@ class NoteParagraphs {
 
   void addParagraphWithWidgets(List<NoteWidgetData> widgetsData,
       {bool addTextEditorAfter = true, bool overriteParagraphIfNeeded = true}) {
-    debugPrint('CALL: addParagraphWithWidgets');
     int focusedParagraphIndex = indexOfFocusedParagraph();
     var noteParagraphWidget = createNoteParagraphWidget();
 
@@ -144,12 +133,9 @@ class NoteParagraphs {
     }
 
     int newItemIndex = focusedParagraphIndex + 1;
-    debugPrint('ADDING WIDGET: newItemIndex: $newItemIndex');
 
     if (paragraphs.isEmpty) {
       newItemIndex = 0;
-      debugPrint(
-          'ADDING WIDGET: PARAGRAPH IS EMPTY: newItemIndex: $newItemIndex');
     } else if (overriteParagraphIfNeeded) {
       if (paragraphs[focusedParagraphIndex] is NoteParagraphTextEditor &&
           paragraphs[focusedParagraphIndex].content.isEmpty) {
@@ -168,9 +154,6 @@ class NoteParagraphs {
       );
     }
 
-    debugPrint(
-        'ADDED ${noteParagraphWidget.id} WIDGET PARAGRAPH AT $newItemIndex !!!!!!!!!');
-
     if (addTextEditorAfter) {
       paragraphs.insert(newItemIndex + 1, createNoteParagraphTextEditor(''));
     }
@@ -184,7 +167,6 @@ class NoteParagraphs {
 
   void addNoteParagraphEditorAfter(int prevParagraphId, String text) =>
       setContentEditorState(() {
-        debugPrint('CALL: addNoteParagraphEditorAfter');
         var newParagraph = createNoteParagraphTextEditor(text);
 
         if (paragraphs.isEmpty || prevParagraphId == -1) {
@@ -198,8 +180,6 @@ class NoteParagraphs {
           }
 
           paragraphs.insert(index, newParagraph);
-          debugPrint('paragraphs:');
-          debugPrint(paragraphs.toString());
         }
         onContentChange();
       });
@@ -211,7 +191,6 @@ class NoteParagraphs {
         String newText = currParagraph.content;
         if (exists(index) && prevIndex >= 0) {
           if (currParagraph is NoteParagraphWidget) {
-            debugPrint('remove noteparagraphwidget: ${currParagraph.str}');
             paragraphs.removeAt(index);
             if (paragraphs.length < index) {
               paragraphs[index].requestFocus();
@@ -243,15 +222,10 @@ class NoteParagraphs {
             addNewNoteParagraphEditor('');
           }
         }
-        debugPrint("AFTER REMOVING PARAGRAPH $paragraphId:");
-        for (var p in paragraphs) {
-          debugPrint(p.str);
-        }
         onContentChange();
       });
 
   NoteParagraphWidget createNoteParagraphWidget() {
-    debugPrint("create note widget paragraph!!!");
     return NoteParagraphWidget(
       id: paragraphIdGenerator.nextId,
       noteWidgetFactory: noteWidgetFactory,

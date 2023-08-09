@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/helpers/call_if_not_null.dart';
-import 'package:mobi_note/logic/note_editor/text_editor/constants/text_style_properties.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/note_checkbox_data.dart';
 import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widget.dart';
 import 'package:mobi_note/screens/theme/themes.dart';
 
 class NoteCheckboxWidget extends NoteEditorWidget {
+  @override
   NoteCheckboxData data;
+
   void Function()? onTrue;
   void Function()? onFalse;
 
@@ -41,7 +42,6 @@ class _NoteCheckboxWidgetState extends State<NoteCheckboxWidget> {
   void onChanged(bool? newValue) => setState(() {
         if (newValue != null) {
           widget.data.value = newValue;
-          debugPrint('CHECKBOX WIDGET: set value to ${widget.data.value}');
 
           callValueCallback();
         }

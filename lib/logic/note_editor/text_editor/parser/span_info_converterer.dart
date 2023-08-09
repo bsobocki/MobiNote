@@ -20,7 +20,7 @@ class SpanInfoConverter {
       switch (type) {
         case 'web_link':
           widget = TextButton(
-            onPressed: () => debugPrint("${spanInfo.text} clicked"),
+            onPressed: null,
             child: Text(
               spanInfo.text,
             ),
@@ -29,24 +29,22 @@ class SpanInfoConverter {
 
         case 'note_link':
           widget = TextButton(
-            onPressed: () => debugPrint(
-                "note with id: ${spanInfo.text} should be opened :D"),
+            onPressed: null,
             child: Text(spanInfo.text),
           );
           break;
 
         case 'note_widget':
           widget = ElevatedButton(
+            onPressed: null,
             child: Text(spanInfo.text),
-            onPressed: () =>
-                debugPrint("this is note ${spanInfo.text} button!"),
           );
           break;
 
         case 'inline_Latex':
-          widget = ElevatedButton(
-              onPressed: () => debugPrint("not implemented latex widget"),
-              child: const Text("LaTeX"));
+          widget = const ElevatedButton(
+              onPressed: null,
+              child: Text("LaTeX"));
           break;
       }
       return WidgetSpan(child: widget);

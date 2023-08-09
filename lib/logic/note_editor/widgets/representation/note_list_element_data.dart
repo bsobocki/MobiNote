@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:mobi_note/logic/note_editor/widgets/representation/all_widget_data.dart';
-
-import 'note_checkbox_data.dart';
-import 'note_counter_data.dart';
-import 'note_info_page_data.dart';
-import 'note_text_editor_data.dart';
-import 'note_widget_data.dart';
 
 enum ElementType { checkbox, number, marks, counter, custom }
 

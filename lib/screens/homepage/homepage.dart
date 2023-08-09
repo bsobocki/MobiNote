@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return const Center(child: Text("No notes found"));
     }
     List<Widget> noteListWidgets = [];
-    for (var note in snapshot.data!.toList()) {
+    for (var note in snapshot.data!.toList().reversed) {
       noteListWidgets.add(
         NoteWidget(
           note: note,

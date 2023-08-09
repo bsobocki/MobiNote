@@ -12,6 +12,7 @@ import 'definitions/widget_mode.dart';
 const double resizeLimit = 20;
 
 class NoteImageWidget extends NoteEditorWidget {
+  @override
   NoteImageData data;
 
   NoteImageWidget({
@@ -36,13 +37,11 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
   double sizeRatio = 1.0;
 
   void setMode(WidgetMode mode) => setState(() {
-        debugPrint("Image mode set to: $mode");
         widget.mode = mode;
         trytoSaveSize();
       });
 
   BoxDecoration getBoxDecorationForMode(WidgetMode mode) {
-    debugPrint("building image in mode: $mode");
     switch (mode) {
       case WidgetMode.edit:
       case WidgetMode.selected:
@@ -131,7 +130,7 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
 
   Widget editModeWidget() {
     Size? imgSize = size ?? const Size(0, 0);
-    return Container(
+    return SizedBox(
       width: size?.width,
       height: size?.height,
       child: Stack(children: [
@@ -141,7 +140,6 @@ class _NoteImageWidgetState extends State<NoteImageWidget> {
             left: (imgSize.width / 2) - 12 ,
             child: GestureDetector(
               onVerticalDragUpdate: (details) {
-                debugPrint('details: $details');
                 setState(() {
                   if (size != null) {
                     double movingDelta = details.delta.dy;

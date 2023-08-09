@@ -71,4 +71,5 @@ TextStyle? textStyle(String style) {
         color: MobiNoteTheme.current.textColor,
       );
   }
+  return null;
 }

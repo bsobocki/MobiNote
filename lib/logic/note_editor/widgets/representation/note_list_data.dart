@@ -1,6 +1,4 @@
 import 'package:mobi_note/logic/note_editor/widgets/representation/all_widget_data.dart';
-import 'package:mobi_note/logic/note_editor/widgets/representation/note_list_element_data.dart';
-import 'package:mobi_note/logic/note_editor/widgets/representation/note_widget_data.dart';
 
 class NoteListData extends NoteWidgetData {
   ElementType elemType;

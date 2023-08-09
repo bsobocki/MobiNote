@@ -6,6 +6,7 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import 'package:mobi_note/screens/theme/themes.dart';
 
 class NoteCounterWidget extends NoteEditorWidget {
+  @override
   NoteCounterData data;
 
   void Function()? onResetCounter;

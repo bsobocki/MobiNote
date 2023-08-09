@@ -28,7 +28,6 @@ abstract class NoteEditorWidget extends StatefulWidget {
     if (setModeInState != null) {
       setModeInState!(mode);
     } else {
-      debugPrint('setModeInState is null so need to chenge outside to $mode');
       this.mode = mode;
     }
   }

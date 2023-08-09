@@ -11,7 +11,9 @@ import 'package:mobi_note/screens/note_editor/components/note_widgets/note_widge
 import 'package:mobi_note/screens/theme/themes.dart';
 
 class NoteTextEditorWidget extends NoteEditorWidget {
+  @override
   NoteTextEditorData data;
+
   void Function(String)? addNewElement;
   late Function(String)? _appendTextInState;
   void Function()? _requestFocus;
@@ -38,17 +40,13 @@ class NoteTextEditorWidget extends NoteEditorWidget {
 
   void strikeText() {
     isTextStrike = true;
-    debugPrint('TEXT EDITOR WIDGET: set strike to $isTextStrike');
     if (setControllerTextType != null) {
       setControllerTextType!('text_done');
-    } else {
-      debugPrint('setState is NULL!!!!!!!!!!!');
     }
   }
 
   void unstrikeText() {
     isTextStrike = false;
-    debugPrint('TEXT EDITOR WIDGET: set strike to $isTextStrike');
     if (setControllerTextType != null) {
       setControllerTextType!('');
     }
@@ -95,15 +93,11 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
   }
 
   void onChange(String newText) {
-    var replacedPlaceholder = newText.replaceAll(placeholder, "+");
-
     if (focusNode.hasFocus) {
       if (needToRemove(newText)) {
         if (widget.removeFromParent != null) {
           widget.removeFromParent!(widget.id);
         }
-      } else {
-        debugPrint("in $replacedPlaceholder there is \\u200b");
       }
 
       setState(() => widget.fontSize = paragraphFontSize(newText));
@@ -123,16 +117,13 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
   }
 
   void appendText(String text) => setState(() {
-        debugPrint('appending curr: "${controller.text}" with text "$text" ');
         controller.text += text;
-        debugPrint('new Text is : ${controller.text}');
       });
 
   @override
   void initState() {
     super.initState();
     widget._requestFocus = () {
-      debugPrint("request focus on the textfield");
       focusNode.requestFocus();
     };
     widget.setControllerTextType = setControllerTextType;
@@ -141,9 +132,7 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
     controller.text = widget.data.text;
     focusNode.addListener(() {
       controller.isFocused = focusNode.hasFocus;
-      debugPrint("TextField with text: ${controller.text}");
       if (focusNode.hasFocus) {
-        debugPrint('Has FOCUS!!!');
         if (widget.onInteract != null) {
           widget.onInteract!();
         }
@@ -151,7 +140,6 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
         int len = controller.text.length;
         controller.selection =
             TextSelection(baseOffset: len, extentOffset: len);
-        debugPrint("Doesn't have FOCUS!! :(");
       }
     });
     if (widget.isTextStrike) {
@@ -174,8 +162,6 @@ class _NoteTextEditorWidgetState extends State<NoteTextEditorWidget> {
   @override
   Widget build(BuildContext context) {
     var padding = 4 + (widget.fontSize - paragraphDefaultFontSize) / 5;
-    debugPrint(
-        'BUILD TEXTFIELD: padding = $padding, widget.font size = ${widget.fontSize}');
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0),

@@ -17,8 +17,6 @@ abstract class NoteParagraph extends StatefulWidget {
   void requestFocus() {
     if (requestFocusInState != null) {
       requestFocusInState!();
-    } else {
-      debugPrint('requestFocus in state id NULL!!!!!!!');
     }
   }
 
