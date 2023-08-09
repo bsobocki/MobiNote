@@ -4,6 +4,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{graphicx}
 %%%%% DANE DO STRONY TYTUĹOWEJ
 % Niezaleznie od jezyka pracy wybranego w opcjach klasy, tytul i streszczenie
 % pracy nalezy podac zarowno w jezyku polskim, jak i angielskim.
@@ -55,7 +56,7 @@ Do przechowywania zawartości notatek powinna zostać użyta baza danych, jak r�
 \section{Opis Aplikacji}
 
 Aplikacja MobiNote służy do zarządzania notatkami w sposób opisany powyżej.
-Głównym zamysłem aplikacji jest pomoc użytkownikowi w prowadzeniu, tworzeniu i zapisywaniu notatek, w których skład wchodzi nie tylko tekst, ale również przyciski, obrazy, listy, liczniki, alarmy, powiadomienia i różnego rodzaju pomocne widgety.
+Głównym zamysłem aplikacji jest pomoc użytkownikowi w prowadzeniu, tworzeniu i zapisywaniu notatek, w których skład wchodzi nie tylko tekst, ale również przyciski, obrazy, listy, liczniki i różnego rodzaju pomocne widgety.
 Aplikacja umożliwia tworzenie i utrzymywanie brudnopisu używanego podczas codziennych czynności, jak również przejrzystych, dopracowanych i przystępnych  notatek.
 
 Wytworzone notatki mogą być używane w formie brudnopisu, między innymi podczas: treningu na siłowni, organizacji przyjęcia, nauki z wykorzystaniem sesji pomodoro, tworzeniu listy zakupów oraz wielu innych codziennych czynności.
@@ -101,7 +102,32 @@ Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
     \item kliknąć \textbf{Zaintaluj}
 \end{itemize}
 
+\chapter{Podręcznik Użytkownika}
 
+\section{Strona Domowa}
+
+Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę domową. Znajdzie swoje notatki i zeszyty, jak również dodatkowe elementy w menu górnego paska, pozwalające na utowrzenie nowej notatki, zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=10cm]{images/strona_domowa.png}
+    \quad\quad
+    \includegraphics[height=10cm]{images/strona_domowa_opcje.png}
+    \caption{Strona domowa aplikacji MobiNote z wybranym motywem \textbf{dark}.}
+\end{figure}
+
+\subsection{Opcja \textit{Choose Theme}}
+
+Po uruchomieniu tej opcji wyświetli się okienko dialogowe z wyborem motywu, jakiego użytkownik chciałby użyć. Do wyboru mamy trzy mowtywy: \textbf{dark}, \textbf{light} oraz \textbf{easy}.
+
+Motywy \textbf{dark} oraz \textbf{light} służą, jako główne motywy aplikacji, zachowując te same wielkości elementów tekstu i całej aplikacji.
+Dla osób, które mogę mieć problemy z widocznością tekstu przy głównych ustawieniach wielkości i kolorów aplikacji przygotowany został mowtyw \textbf{easy}, którego kolory bardziej ze sobą kontrastują, jak również rozmiary czcionek, ikon, przycisków i paska narzędzi notatek zwiększają się.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=9cm]{images/motywy_notatka.png}
+    \caption{Porównanie motywów na tej samej notatce.}
+\end{figure}
 
 \chapter{Implementacja}
 
