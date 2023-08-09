@@ -180,23 +180,38 @@ class _NoteListWidgetState extends State<NoteListWidget> {
         children: [
           IconButton(
             onPressed: () => setElementType(ElementType.checkbox),
-            icon: const Icon(Icons.check_box_rounded),
+            icon: Icon(
+              Icons.check_box_rounded,
+              color: MobiNoteTheme.current.textColor,
+            ),
           ),
           IconButton(
             onPressed: () => setElementType(ElementType.number),
-            icon: const Icon(Icons.format_list_numbered),
+            icon: Icon(
+              Icons.format_list_numbered,
+              color: MobiNoteTheme.current.textColor,
+            ),
           ),
           IconButton(
             onPressed: () => setElementType(ElementType.marks),
-            icon: const Icon(Icons.format_list_bulleted_outlined),
+            icon: Icon(
+              Icons.format_list_bulleted_outlined,
+              color: MobiNoteTheme.current.textColor,
+            ),
           ),
           IconButton(
             onPressed: () => setElementType(ElementType.custom),
-            icon: const Icon(Icons.location_history),
+            icon: Icon(
+              Icons.location_history,
+              color: MobiNoteTheme.current.textColor,
+            ),
           ),
           IconButton(
             onPressed: () => setElementType(ElementType.counter),
-            icon: const Icon(Icons.numbers_rounded),
+            icon: Icon(
+              Icons.numbers_rounded,
+              color: MobiNoteTheme.current.textColor,
+            ),
           ),
         ],
       ),
