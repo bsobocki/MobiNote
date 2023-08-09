@@ -186,13 +186,38 @@ W aktualnej wersji aplikacji dostępne są dwa przyciski: dodanie obrazu(ikona o
 
 Do zawartości notatki można dodawać również obrazy. Aby to zrobić należy kliknąć przycisk z ikoną obrazu na pasku narzędzi edytora notatki, a następnie wybrać z urządzenia zdjęcie, które ma zostać użyte. Zdjęcie zostanie dodane do notatki.
 
-\textbf{Dodanie listy}
+\subsubsection{Dodanie listy}
 
-Po wybraniu tej opcji na ekranie pojawi się lista złożona początkowo z jednego elementu typu checkbox zawierające również puste pole tekstowe.
+Po wybraniu tej opcji na ekranie pojawi się lista złożona początkowo z jednego elementu.
+Jest on domyślnie ustwawiony na typ \textbf{checkbox}. Oznacza to, że jest to wiersz zawierający checkbox oraz puste pole tekstowe.
 
 \subsection{Edytor Strony}
 
 Edytor strony zajmuje reszę powierzchni ekranu. Jest polem, w którym następuje edycja tekstu oraz widgetów. Aktualny stan wizualny jest odświeżany na bieżąco, dzięki czemu użytkownik obserwuje zmiany jako efekt końcowy w czasie rzeczywistym.
+
+
+
+\section{Edycja Zawartości Notatki}
+
+\subsection{Paragrafy}
+
+Notatki w aplikacji składają się z paragrafów, które dzielimy na paragrafy tekstowe i paragrafy widgetów.
+Każdy paragraf może przechodzić w tryby.
+Obecnie wyróżnione są tryby:
+
+\begin{itemize}
+    \item widoku
+    \item edycji
+    \item zaznaczenia
+    \item niewidoczny
+\end{itemize}
+
+
+
+\subsection{Edycja Paragrafów Tekstowych}
+
+Każdy tekst zamykany jest od początku, aż do znaku końca linii w paragrafie tekstowym. Oznacza to, że styl, jaki zostanie nadany na początku linii zostanie zaaplikowany na całą linię. Przykładem jest ustawienie paragrafu jako nagłówka.
+
 
 
 \chapter{Implementacja}
