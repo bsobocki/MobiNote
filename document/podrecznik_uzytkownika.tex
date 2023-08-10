@@ -4,7 +4,7 @@
 
 Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę domową. Znajdzie tam swoje notatki i zeszyty wraz z przyciskiem w prawym dolnym rogu służącym do tworzenia nowej notatki, jak również dodatkowe elementy w menu górnego paska, pozwalające na zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[height=10cm]{images/strona_domowa.png}
     \quad\quad
@@ -20,7 +20,7 @@ Motywy \textbf{dark} oraz \textbf{light} służą, jako główne motywy aplikacj
 Dla osób mających problemy z widocznością tekstu przy domyślnych ustawieniach wielkości i kolorów aplikacji przygotowany został mowtyw \textbf{easy}.
 Motyw ten cechują kontrastujące ze sobą kolory, jak również zwiększone rozmiary czcionek, ikon, przycisków i paska narzędzi.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[height=8.5cm]{images/strona_domowa_motywy.png}
     \caption{Porównanie motywów na tej samej stronie domowej.}
@@ -54,11 +54,11 @@ Po wybraniu notatki, lub przejściu do tworzenia nowej, na ekranie pojawi się s
 Aby wyjść i zapisać notatkę korzystający używa przycisku powrotu.
 Ważnym jest, aby zamiast systemowych przycisków nawigacyjnych użyć właśnie tego przycisku nawigacyjnego, ponieważ wraz z powrotem do strony domowej zapisuje on notatkę, jeśli ta uległa zmianie.
 
-Za zmianę notatki uważamy:
+Za zmianę notatki unawane są:
 
 \begin{compactitem}
-    \item edycję tekstu w paragrafie tekstowym
-    \item edycję widgetu w paragrafie widgetu
+    \item edycja tekstu w paragrafie tekstowym
+    \item edycja widgetu w paragrafie widgetu
 \end{compactitem}
 \vspace{5mm}
 
@@ -157,6 +157,7 @@ Ustawienie nagłówka odbywa się poprzez wstawienie znaku \textbf{\#} na począ
 
 Brak nagłówka oznacza, że dana linia jest zwykłym paragrafem o domyślnej wielkości czcionki i odstępów oraz nie zawiera pogrubienia.
 
+\pagebreak
 
 \subsubsection{Odkrywanie znaków nagłówka}
 
@@ -188,14 +189,14 @@ Odbywa się to według poniższych zasad:
     \item style nie mogą być krzyżowane -- jeśli zaczynamy styl B wewnątrz stylu A, to znak końca stylu B powinien nastąpić przed symbolem końca A. 
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=8cm]{images/style.png}
     \caption{Zagnieżdżone style w prawidłowy i nieprawidłowy sposób}
     \vspace{3mm}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=8cm]{images/style_surowy_tekst.png}
     \caption{Surowy tekst ukazujący rozmieszczenie znaków.}
@@ -246,7 +247,96 @@ Dodawanie paragrafów widgetów odbywa się poprzez użycie przycisków z paska 
 
 Usunąć paragraf widgetów można poprzez usunięcie jego wszsytkich głównych elementów. W obecnej wersji możliwe jest posiadanie tylko jednego głównego elementu, jednak przewidziane w rozwoju aplikacji jest, aby paragrafy mogły przechowywać i używać większej ilości widgetów, w zależności od rodzajów używanych widgetów.
 
-\subsubsection{Obrazy}
+\subsubsection{Tryb Edycji}
+
+Przejście do trybu edycji odbywa się poprzez interakcję z widgetem, np naciśnięcie na obraz, bądź edycja tekstu w elemencie listy.
+W przypadku obrazów tryb edycji jest oznaczony poprzez dodanie obramowania do zdjęcia, jak również ikony w dolnej części obramowania służącej do zmiany rozmiaru zdjęcia.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=6cm]{images/tryb_edycji.png}
+    \caption{Tryb edycji przykładowych widgetów głównych.}
+    \vspace{3mm}
+\end{figure}
+
+\subsubsection{Tryb zaznaczenia}
+
+Przejście w tryb zaznaczenie odbywa się poprzez naciśnięcie i przytrzymanie konkretnych części widgetów. W przypadku obrazu jest to sam obraz, z kolei w przypadku list są to etykiety przypięte do pola tekstowego(w zależności od wyboru mogą być to: checkbox, etykiety tekstowe czy liczniki).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=6cm]{images/tryb_zaznaczenia.png}
+    \caption{Tryb zaznaczenia przykładowych widgetów głównych.}
+    \vspace{3mm}
+\end{figure}
 
 
-\subsubsection{Listy}
+\subsection{Obrazy}
+
+Jednym z głównych widgetów są obrazy. 
+
+Dodawane są poprzez użycie przycisku na pasku narzędzi(sekcja: Pasek Narzędzi: Dodanie obrazu). Obraz wybierany jest z pamięci urządzenia.
+
+\subsubsection{Edycja}
+
+Aby zmienić rozmiar zdjęcia użytkownik musi przejść w tryb edycji poprzez kliknięcie na zdjęcie, a następnie przeciągać ikonę ze strzałką(Rysunek 3.8). Automatycznie dostosowywany będzie rozmiar obrazu.
+
+\subsubsection{Usunięcie i zmiana}
+
+Po wejściu w tryb zaznaczenia ukażą się dwie ikony. Ikona usunięcia obrazu oraz ikona zmiany obrazu.
+Wybór pierwszej ikony skutkuje usunięciem obrazu wraz z paragrafem, natomiast drugiej -- przejściem do pamięci urządzenia w celu wyboru zdjęcia.
+
+\subsection{Listy}
+
+Dostępne są różne rodzaje list. Różnią sie one głównie etykietą oraz niewielkimi kwestiami, jak na przykład dostępne przekreślenie i zmiana koloru tekstu przy odznaczonej pozycji.
+
+\subsubsection{Edycja}
+
+Edycja list następuje poprzez interakcję użytkownika. Użytkownik może naciskać bezpośrednio na etykiety przy polu tekstowym w celu ich edycji(checkbox, licznik), jak również edytować tekst wiersza.
+
+W przypadku niektórych typów wiersza możliwe jest jego odznaczenie. Wówczas tekst wiersza zmienia kolor na szary, a sam tekst zostaje przekreślony.
+
+\subsubsection{Dodawanie wierszy}
+
+Dodawanie wierszy następuje na dwa sposoby:
+
+\begin{enumerate}
+    \item W dowolnym miejscu listy poprzez dodanie znaku nowej linii.
+    \item Na koniec listy poprzez kliknięcie przycisku "+" pod etykietami w trybie zaznaczenia. 
+\end{enumerate}
+
+Dodawanie wierszy poprzez znak nowej linii przenosi tekst na prawo od miejsca dodania znaku nowej linii do nowego wiersza.
+
+\subsubsection{Usuwanie wierszy}
+
+Usuwanie wierszy jest możliwe w trybie zaznaczania poprzez klikanie na etykiety ze znakiem "x".
+
+\subsubsection{Zmiana typu wierszy}
+
+Użytkownik może zmianić typ wszystkich wierszy w danej liście poprzez przejście w tryb zaznaczenia, a następnie w górym pasku nad listą(Rysunek 3.8) wybrać jedną z dostępnych opcji.
+
+\subsubsection{Dostępne typy wiersza}
+
+\begin{itemize}
+    \item checkbox
+    \item numerowane
+    \item oznaczone przez symbol "\--{}"
+    \item naznaczane przez symbol "*"(w nowszej wersji aplikacji spodziewane jest tworzenie etykiet przez użytkownika)
+    \item licznik
+\end{itemize}
+
+Aktualnie listy są jednopoziomowe, bez możliwości zmiany wysunięcia od początku wiersza. Możliwość ta jest przewidziana na rozwój aplikacji.
+
+\subsubsection{Licznik}
+
+Licznik służy do odliczania rzeczy opisywanej przez tekst wiersza. Z każdym kliknięciem zwiększana jest wartość licznika(lewa część etykiety), aż do osiągnięcia celu licznika(liczba w prawej części licznika). Wraz z osiągnięciem ustalonego celu wiersz zostaje odznaczony.
+
+Możliwa jest zmiana wartości celu licznika. W tym celu wystarczy nacisnąć na liczbę w prawej części licznika, a następnie wybrać liczbę na klawiaturze i zatwierdzić. Po zmianie następuje reset licznika.
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=6cm]{images/liczniki.png}
+    \caption{Edycja celu jednego z liczników.}
+    \vspace{3mm}
+\end{figure}
