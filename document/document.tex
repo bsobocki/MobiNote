@@ -5,6 +5,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{paralist}
+
 %%%%% DANE DO STRONY TYTUĹOWEJ
 % Niezaleznie od jezyka pracy wybranego w opcjach klasy, tytul i streszczenie
 % pracy nalezy podac zarowno w jezyku polskim, jak i angielskim.
@@ -61,6 +63,8 @@ Aplikacja umożliwia tworzenie i utrzymywanie brudnopisu używanego podczas codz
 
 Wytworzone notatki mogą być używane w formie brudnopisu, między innymi podczas: treningu na siłowni, organizacji przyjęcia, nauki z wykorzystaniem sesji pomodoro, tworzeniu listy zakupów oraz wielu innych codziennych czynności.
 
+\pagebreak
+
 Mogą także w przyjemny dla oka sposób przechowywać i wyświetlać informacje przygotowane w celu tworzenia dziennika, notatek do nauki, spisu pomysłów i ważnych myśli, czy tworzenia różnego rodzaju list i opisów, takich jak lista miejsc, które użytkownik chciałby odwiedzić wraz z opisem i zdjęciami miejsc, które chciałby tam zobaczyć.
 
 Interaktywność notatki jest zapewniana poprzez możliwość tworzenia zawartości na bierząco za pomocą klawiatury i dostępnego interfejsu użytkownika.
@@ -75,32 +79,34 @@ Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny(dark), ja
 Kod żródłowy aplikacji wraz plikiem \textbf{.apk} można uzyskać pobierając repozytorium \textbf{MobiNote} pod linkiem:
 \url{https://github.com/bsobocki/MobiNote}.
 
-\section{Aplikacje z nieznanych źródeł}
+\subsubsection{Aplikacje z nieznanych źródeł}
 Do zaintalowania aplikacji potrzbna jest możliwość instalowania nieznanych aplikacji za pomocą menadżera plików.
 Aby ją uruchomić, należy:
-\begin{itemize}
+\begin{compactitem}
     \item otworzyć \textbf{Ustawienia}
     \item w \textbf{Ustawieniach} przejść do sekcji \textbf{Aplikacje}
     \item następnie kliknąć na ikone menu (trzy kropki w prawym górnym rogu)
     \item przejść do opcji \textbf{Dostęp specjalny}
     \item następnie \textbf{Zainstaluj nieznane aplikacje}
     \item wybrać menadżera plików i włączyć dla niego tę opcję
-\end{itemize}
+\end{compactitem}
 
 \textbf{Ważne!} Dla bezpieczeństwa po zainstalowaniu aplikacji warto ponownie wyłączyć możliwość instalowania aplikacji z nienzanych źródeł, jeśli więcej aplikacji nie będzie w ten sposób instalowane.
 
-\section{Instalacja z pliku apk-release.apk}
+\subsubsection{Instalacja z pliku apk-release.apk}
+
 Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
 
-\begin{itemize}
+\begin{compactitem}
+    \setlength\itemsep{0mm}
     \item pobirać repozytorium za pomocą polecenia
-
+    \newline
     \verb|git clone git@github.com:bsobocki/MobiNote.git|
     \item podłączyć urządzenie i przenieść pliki \textbf{apk-release.apk} do wybranego przez siebie miejsca docelowego na urządzeniu
     \item włączyć możliwość instalacji nienzanych aplikacji (szczegóły powyżej)
     \item w menagerze plików znaleźć miejsce docelowe pliku \textbf{apk-release.apk} i uruchomić
     \item kliknąć \textbf{Zaintaluj}
-\end{itemize}
+\end{compactitem}
 
 \chapter{Podręcznik Użytkownika}
 
@@ -151,7 +157,6 @@ Po jego naciśnięciu korzystający zostaje przeniesiony do ekranu edycji, gdzie
 \section{Strona Edycji Notatki}
 
 Po wybraniu notatki, lub przejściu do tworzenia nowej, na ekranie pojawi się strona edycji notatki. Składa się ona z głównego paska strony, paska narzędzi, oraz edytora.
-
 \subsection{Pasek Strony}
 
 \subsubsection{Przycisk Zapisu i Powrotu}
@@ -161,10 +166,11 @@ Ważnym jest, aby zamiast systemowych przycisków nawigacyjnych użyć właśnie
 
 Za zmianę notatki uważamy:
 
-\begin{itemize}
+\begin{compactitem}
     \item edycję tekstu w paragrafie tekstowym
     \item edycję widgetu w paragrafie widgetu
-\end{itemize}
+\end{compactitem}
+\vspace{5mm}
 
 \textbf{WAŻNE!} Nowa notatka nie zostaje utworzona w momencie otwarcia okna edycji, a dopiero poprzez użycie przycisku powrotu pod warunkiem, ze jej tytuł lub zawartość uległy edycji. Oznacza to, że przejście do edycji nowej notatki, a następnie powrót, nie zapiszą pustej notatki, jednak dodanie i usunięcie znaku umożliwią zapis przy powrocie.
 
@@ -205,12 +211,12 @@ Notatki w aplikacji składają się z paragrafów, które dzielimy na paragrafy 
 Każdy paragraf może przechodzić w jedne z dostępnych trybów.
 Obecnie wyróżnione są tryby:
 
-\begin{itemize}
+\begin{compactitem}
     \item widoku
     \item edycji
     \item zaznaczenia
     \item niewidoczny
-\end{itemize}
+\end{compactitem}
 
 \subsubsection{tryb widoku}
 
@@ -230,11 +236,101 @@ Paragraf widgetów przechodzi w tryb zaznaczenia poprzez przytrzymanie jego elem
 
 Paragraf przestaje być widoczny w momencie przejścia edytora w kierunku pionowym wystarczająco do wysunięcia paragrafu poza edytor.
 
+\pagebreak
+
 \subsection{Edycja Paragrafów Tekstowych}
 
-Każdy tekst zamykany jest od początku, aż do znaku końca linii w paragrafie tekstowym. Oznacza to, że styl, jaki zostanie nadany na początku linii zostanie zaaplikowany na całą linię. Przykładem jest ustawienie paragrafu jako nagłówka.
+Każdy tekst zamykany jest w paragrafie tekstowym od początku, aż do znaku końca linii. Oznacza to, że styl, jaki zostanie nadany na początku linii zostanie zaaplikowany na całą linię. Przykładem jest ustawienie paragrafu jako nagłówka.
+
+\subsubsection{Ustawianie nagłówka}
+
+Ustawienie nagłówka odbywa się poprzez wstawienie znaku \textbf{\#} na początku linii, przed tekstem.
+
+\subsubsection{Dostępne nagłówki}
+\begin{itemize}
+    \setlength\itemsep{0mm}
+    \item nagłówek1 \textbf{\#}
+    \item nagłówek2 \textbf{\#\#}
+    \item nagłówek3 \textbf{\#\#\#}
+    \item nagłówek4 \textbf{\#\#\#\#}
+\end{itemize}
+
+Brak nagłówka oznacza, że dana linia jest zwykłym paragrafem o domyślnej wielkości czcionki i odstępów oraz nie zawiera pogrubienia.
 
 
+\subsubsection{Odkrywanie znaków nagłówka}
+
+Edytor posiada funcję odkrywania znaków nagłówka, w celu ułatwienia edycji danego nagłówka. Dzięki temu użytkownik może zobaczyć który aktualnie nagłówek jest wybrany oraz w prosty sposób przechodzić pomiędzy typami nagłówków dodając bądź usuwając znak \textbf{\#}.
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=6cm]{images/pokazywanie_naglowkow.png}
+    \caption{Odkryte znaki w edytowanych nagłówkach.}
+\end{figure}
+
+\subsubsection{Ustawianie styli}
+
+Kolejną rzeczą dostępną w aplikacji MobiNote są style. Użytkownik, chcąc poprawnie nadać style, wprowadza do tekstu symbole specjalne oznaczające konkretne style.
+Odbywa się to według poniższych zasad:
+
+\begin{itemize}
+    \setlength\itemsep{2mm}
+
+    \item za początek oznaczenia stylu uznawany jest wzór: \newline
+    \verb|[dowolny znak][symbol stylu][znak niebędący białym znakiem]|
+    
+    \item za koniec oznaczenia stylu uznawany jest wzór: \newline
+    \verb|[znak niebędący białym znakiem][symbol stylu]|
+    
+    \item style mogą być łączone -- wewnątrz stylu A można dodać styl B
+
+    \item style nie mogą być krzyżowane -- jeśli zaczynamy styl B wewnątrz stylu A, to znak końca stylu B powinien nastąpić przed symbolem końca A. 
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=8cm]{images/style.png}
+    \caption{Zagnieżdżone style w prawidłowy i nieprawidłowy sposób}
+    \vspace{3mm}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=8cm]{images/style_surowy_tekst.png}
+    \caption{Surowy tekst ukazujący rozmieszczenie znaków.}
+    \vspace{3mm}
+\end{figure}
+
+\subsubsection{Znaki specjalne}
+
+Każdy dostępny styl tekstu oznaczony jest za pomocą znaków:
+
+\begin{itemize}
+    \item [*] \hspace{1mm} -- pogrubienie
+    \item [\^{}] \hspace{1mm} -- kursywa
+    \item [\_{}] \hspace{1mm} -- podkreślenie
+    \item [\~{}] \hspace{1mm} -- przekreślenie
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{Odkrywanie znakow specjalnych}
+
+Edytor tekstu posiada funkcję odwijania stylu w moemncie gdy kursor znajduje się bezpośrednio w środku stylu. Odwijany jest tylko styl, którego jeden ze znaków specjalnych znajduje się najbliżej kursora. Funkcjonalność ta została wprowadzona, aby użytkownik mógł łątwiej edytować i usuwać style.
+Dzięki temu może dostrzec, gdzie konkretnie znajdują się symbole danego stylu w tekście.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=8cm]{images/pokazywanie_znakow_specjalnych.png}
+    \caption{Przykłady odkrytych znaków specjalnych.}
+    \vspace{3mm}
+\end{figure}
+
+\subsubsection{Usuwanie i Edycja styli}
+
+Aby usunąć dany styl wystarczy usunąć znaki specjalne danego stylu. Poza odkrytymi znakami reszta jest ukryta, jednak wszystkie znaki nadal występują w tekście. Edytujący może zatem kliknąć bespośrednio przed widoczny początkowy symbol lub poza tekst oznaczony danym stylem i naciskając przycisk \textbf{delete}, na klawiaturze urządzenia, usunąć dany niewidoczny symbol zakończenia stylu.
 
 \chapter{Implementacja}
 
