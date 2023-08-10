@@ -1,118 +1,8 @@
-% Opcje klasy 'iithesis' opisane sa w komentarzach w pliku klasy. Za ich pomoca
-% ustawia sie przede wszystkim jezyk oraz rodzaj (lic/inz/mgr) pracy.
-\documentclass[shortabstract]{iithesis}
-
-\usepackage[utf8]{inputenc}
-\usepackage{hyperref}
-\usepackage{graphicx}
-\usepackage{paralist}
-
-%%%%% DANE DO STRONY TYTUĹOWEJ
-% Niezaleznie od jezyka pracy wybranego w opcjach klasy, tytul i streszczenie
-% pracy nalezy podac zarowno w jezyku polskim, jak i angielskim.
-% Pamietaj o madrym (zgodnym z logicznym rozbiorem zdania oraz estetyka) recznym
-% zlamaniu wierszy w temacie pracy, zwlaszcza tego w jezyku pracy. Uzyj do tego
-% polecenia \fmlinebreak.
-\polishtitle    {Aplikacja mobilna do zarządzania i tworzenia\fmlinebreak  interaktywnych notatek}
-\englishtitle   {A mobile application to manage and create interactive notes}
-\polishabstract {TODO: streszczenie po polsku\ldots}
-\englishabstract{TODO: streszczenie po angielsku\ldots}
-% w pracach wielu autorow nazwiska mozna oddzielic poleceniem \and
-\author         {Bartosz Sobocki}
-% w przypadku kilku promotorow, lub koniecznosci podania ich afiliacji, linie
-% w ponizszym poleceniu mozna zlamac poleceniem \fmlinebreak
-\advisor        {dr Marcin Młotkowski}
-%\date          {}                     % Data zlozenia pracy
-% Dane do oswiadczenia o autorskim wykonaniu
-%\transcriptnum {}                     % Numer indeksu
-%\advisorgen    {dr. Marcina Młotkowskiego} % Nazwisko promotora w dopelniaczu
-%%%%%
-
-%%%%% WLASNE DODATKOWE PAKIETY
-%
-%\usepackage{graphicx,listings,amsmath,amssymb,amsthm,amsfonts,tikz}
-%
-%%%%% WĹASNE DEFINICJE I POLECENIA
-%
-%\theoremstyle{definition} \newtheorem{definition}{Definition}[chapter]
-%\theoremstyle{remark} \newtheorem{remark}[definition]{Observation}
-%\theoremstyle{plain} \newtheorem{theorem}[definition]{Theorem}
-%\theoremstyle{plain} \newtheorem{lemma}[definition]{Lemma}
-%\renewcommand \qedsymbol {\ensuremath{\square}}
-% ...
-%%%%%
-
-\begin{document}
-
-%%%%% POCZÄTEK ZASADNICZEGO TEKSTU PRACY
-
-\chapter{Wprowadzenie}
-
-\section{Cel projektu}
-
-Celem projektu jest wytworzenie aplikacji mobilnej do zarządzania notatkami w interaktywny sposób.
-Aplikacja ma umożliwić użytkownikowi prowadzenie i tworzenie notatek pozwalających na edycję tekstu i inncyh elementów znajdujących się w notatce bez konieczności zmian widoków, przełączenia całej zawartości pomiędzy trybem edycji, a trybem użytkowym, czy potrzeby zapisu notatki, aby jej zawartość była dostępna w postaci końcowego efektu.
-Graficzny interfejs użytkownika powinien być przystępny i pozwalać na edycję poszczególnych elementów, podczas gdy pozostała zawartość notatki jest wyświetlana w trybie widoku.
-Do przechowywania zawartości notatek powinna zostać użyta baza danych, jak również odpowiedni format zapisu dancyh do przechowywania zawartości niebędącej tekstem. 
-
-\section{Opis Aplikacji}
-
-Aplikacja MobiNote służy do zarządzania notatkami w sposób opisany powyżej.
-Głównym zamysłem aplikacji jest pomoc korzystającemu w prowadzeniu, tworzeniu i zapisywaniu notatek, w których skład wchodzi nie tylko tekst, ale również przyciski, obrazy, listy, liczniki i różnego rodzaju pomocne widgety.
-Aplikacja umożliwia tworzenie i utrzymywanie brudnopisu używanego podczas codziennych czynności, jak również przejrzystych, dopracowanych i przystępnych  notatek.
-
-Wytworzone notatki mogą być używane w formie brudnopisu, między innymi podczas: treningu na siłowni, organizacji przyjęcia, nauki z wykorzystaniem sesji pomodoro, tworzeniu listy zakupów oraz wielu innych codziennych czynności.
-
-\pagebreak
-
-Mogą także w przyjemny dla oka sposób przechowywać i wyświetlać informacje przygotowane w celu tworzenia dziennika, notatek do nauki, spisu pomysłów i ważnych myśli, czy tworzenia różnego rodzaju list i opisów, takich jak lista miejsc, które użytkownik chciałby odwiedzić wraz z opisem i zdjęciami miejsc, które chciałby tam zobaczyć.
-
-Interaktywność notatki jest zapewniana poprzez możliwość tworzenia zawartości na bierząco za pomocą klawiatury i dostępnego interfejsu użytkownika.
-Uzytkownik może tworzyć styl tekstu za pomocą znaczników dodawanych wewnątrz tekstu w odpowiednich miejscach, podobnie do języka znaczników Markdown.
-Dodawając odpowiednie znaczniki w tekście można ustawić wielkość czcionki w danym paragrafie, kursywe, podkreślenie, przekreślenie, a także pogrubienie.
-Tekst jest automatycznie dostosowywany wraz z dodaniem znaczników, co pozawala na bierząco obserwować i dostosowywać style i wielkości czcionki do potrzeb korzystającego.
-
-Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny(dark), jasny(light) oraz ułatwiający użytkowanie(easy) dla osób widzących słabiej.
-
-\chapter{Instalacja}
-
-Kod żródłowy aplikacji wraz plikiem \textbf{.apk} można uzyskać pobierając repozytorium \textbf{MobiNote} pod linkiem:
-\url{https://github.com/bsobocki/MobiNote}.
-
-\subsubsection{Aplikacje z nieznanych źródeł}
-Do zaintalowania aplikacji potrzbna jest możliwość instalowania nieznanych aplikacji za pomocą menadżera plików.
-Aby ją uruchomić, należy:
-\begin{compactitem}
-    \item otworzyć \textbf{Ustawienia}
-    \item w \textbf{Ustawieniach} przejść do sekcji \textbf{Aplikacje}
-    \item następnie kliknąć na ikone menu (trzy kropki w prawym górnym rogu)
-    \item przejść do opcji \textbf{Dostęp specjalny}
-    \item następnie \textbf{Zainstaluj nieznane aplikacje}
-    \item wybrać menadżera plików i włączyć dla niego tę opcję
-\end{compactitem}
-
-\textbf{Ważne!} Dla bezpieczeństwa po zainstalowaniu aplikacji warto ponownie wyłączyć możliwość instalowania aplikacji z nienzanych źródeł, jeśli więcej aplikacji nie będzie w ten sposób instalowane.
-
-\subsubsection{Instalacja z pliku apk-release.apk}
-
-Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
-
-\begin{compactitem}
-    \setlength\itemsep{0mm}
-    \item pobirać repozytorium za pomocą polecenia
-    \newline
-    \verb|git clone git@github.com:bsobocki/MobiNote.git|
-    \item podłączyć urządzenie i przenieść pliki \textbf{apk-release.apk} do wybranego przez siebie miejsca docelowego na urządzeniu
-    \item włączyć możliwość instalacji nienzanych aplikacji (szczegóły powyżej)
-    \item w menagerze plików znaleźć miejsce docelowe pliku \textbf{apk-release.apk} i uruchomić
-    \item kliknąć \textbf{Zaintaluj}
-\end{compactitem}
-
 \chapter{Podręcznik Użytkownika}
 
 \section{Strona Domowa}
 
-Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę domową. Znajdzie tam swoje notatki i zeszyty wraz z przyciskiem w prawym dolnym rogu służącego do tworzenia nowej notatki, jak również dodatkowe elementy w menu górnego paska, pozwalające na zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
+Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę domową. Znajdzie tam swoje notatki i zeszyty wraz z przyciskiem w prawym dolnym rogu służącym do tworzenia nowej notatki, jak również dodatkowe elementy w menu górnego paska, pozwalające na zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
 
 \begin{figure}[h]
     \centering
@@ -332,12 +222,4 @@ Dzięki temu może dostrzec, gdzie konkretnie znajdują się symbole danego styl
 
 Aby usunąć dany styl wystarczy usunąć znaki specjalne danego stylu. Poza odkrytymi znakami reszta jest ukryta, jednak wszystkie znaki nadal występują w tekście. Edytujący może zatem kliknąć bespośrednio przed widoczny początkowy symbol lub poza tekst oznaczony danym stylem i naciskając przycisk \textbf{delete}, na klawiaturze urządzenia, usunąć dany niewidoczny symbol zakończenia stylu.
 
-\chapter{Implementacja}
-
-%%%%% BIBLIOGRAFIA
-
-%\begin{thebibliography}{1}
-%\bibitem{example} \ldots
-%\end{thebibliography}
-
-\end{document}
+\section{Edycja Paragrafów Widgetów}
