@@ -53,7 +53,17 @@
 Celem projektu jest wytworzenie aplikacji mobilnej do zarządzania notatkami w interaktywny sposób.
 Aplikacja ma umożliwić użytkownikowi prowadzenie i tworzenie notatek pozwalających na edycję tekstu i inncyh elementów znajdujących się w notatce bez konieczności zmian widoków, przełączenia całej zawartości pomiędzy trybem edycji, a trybem użytkowym, czy potrzeby zapisu notatki, aby jej zawartość była dostępna w postaci końcowego efektu.
 Graficzny interfejs użytkownika powinien być przystępny i pozwalać na edycję poszczególnych elementów, podczas gdy pozostała zawartość notatki jest wyświetlana w trybie widoku.
-Do przechowywania zawartości notatek powinna zostać użyta baza danych, jak również odpowiedni format zapisu dancyh do przechowywania zawartości niebędącej tekstem. 
+Do przechowywania zawartości notatek powinna zostać użyta baza danych, jak również odpowiedni format zapisu danych do przechowywania zawartości niebędącej tekstem.
+
+\section{Motywacja}
+
+Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji, która służyłaby mi za brudnopis podczas wielu codziennych czynności. Jestem osobą, która uwielbia tworzyć notatki, prowadzić dzienniki, zapisywać przepisy, tworzyć wszelakie listy, dzielić problemy na mniejsze części i rozpisywać je, jak również wiele innych czynności związanych z prowadzeniem zeszytów. Dzięki temu mogę zawsze sięgać do moich zapisków po moje myśli, pomysły, orgzanizacje w chwilach, gdy są mi potrzebne.
+
+Dostępne na rynku aplikacje, takie jak Evernote, czy ostatnio używane przeze mnie, proste w użyciu Samsung Notes w wielu aspektach sprawdziło się i przyniosło wiele korzyści. W obu przypadkach interfejs użytkownika jest przejrzysty, a funkcjonalnośc obszerna. Jednak po dłuższym okresie użytkowania tych, oraz innych aplikacji dostrzegam problemy lub braki, które chciałbym w jak największym stopniu wyeliminować.
+
+Z upodobania do języka znaczników Markdown i tego, jakie możliwości w edycji stylów, czy tworzenia różnych nagłówków i elementów notatki oferuje poprzez samą składnię. W przeciwnieństwie do omawianych wyżej aplikacji nie ma potrzeby przeszukiwania opcji w poszukiwaniu przycisków, którymi użytkownik określa typ i wielkość czcionki, przełączania klawiatury na tę zawierającą narzędzia do edycji tekstu, czy wchodzenia w menu aby zaimportować zdjęcia, dodać listy itd. Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wyrenderowanej notatki. Zależało mi na tym, aby notatka była renderowana i edytowana na bieżąco z ewentualnym ukazywaniem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
+
+Chciałem stworzyć aplikację, która będzie posiadała szereg wymaganej przeze mnie funkcjonalności, jak na przykład liczniki, abym mógł w trakcie treningu odliczać wykonane serie, alarmów, które odliczałyby przerwy pomiędzy seriami, przycisków informacyjnych otwierających okno dialogowe z informacjami dotyczącymi na przykład wymienianego miejsca, czy edycji styli tekstu za pomocą znaczników, zamiast przycisków, czy odrębnej klawiatury. Aplikacja nie powinna wymagać ode mnie dużego wysiłku do tworzenia zapisków pracując nad implementacją, ucząc się nowych rzeczy, zapisując myśli w nocy zaraz przed spaniem, oraz nie powinna wymagać długiego czasu oczekiwania na uruchomienie i synchronizację danych. Chciałem, aby aplikacja była szybka, prosta i przejrzysta jednocześnie pozwalając użytkownikowi na dodawania, edycję oraz interakcję różnego typu widgetów, alarmów czy powiadomień, aby aplikacja mogła również służyć w stanie, gdy aktualnie nie jest edytowana. W moich intencjach było, aby interfejs użytkownika był dopasowany do moich potrzeb i gustu, aby aplikacja odpowiadała mi pod wieloma względami nie tylko w kwestii oferowanych funkcji, ale również wyglądu, czy rozmieszczeniem i dostępnością funkcji, przycisków, czy widgetów tak, aby te najczęściej używane były najłatwiej dostępne i proste w obsłudze.
 
 \section{Opis Aplikacji}
 
@@ -63,8 +73,6 @@ Aplikacja umożliwia tworzenie i utrzymywanie brudnopisu używanego podczas codz
 
 Wytworzone notatki mogą być używane w formie brudnopisu, między innymi podczas: treningu na siłowni, organizacji przyjęcia, nauki z wykorzystaniem sesji pomodoro, tworzeniu listy zakupów oraz wielu innych codziennych czynności.
 
-\pagebreak
-
 Mogą także w przyjemny dla oka sposób przechowywać i wyświetlać informacje przygotowane w celu tworzenia dziennika, notatek do nauki, spisu pomysłów i ważnych myśli, czy tworzenia różnego rodzaju list i opisów, takich jak lista miejsc, które użytkownik chciałby odwiedzić wraz z opisem i zdjęciami miejsc, które chciałby tam zobaczyć.
 
 Interaktywność notatki jest zapewniana poprzez możliwość tworzenia zawartości na bierząco za pomocą klawiatury i dostępnego interfejsu użytkownika.
@@ -72,7 +80,9 @@ Uzytkownik może tworzyć styl tekstu za pomocą znaczników dodawanych wewnątr
 Dodawając odpowiednie znaczniki w tekście można ustawić wielkość czcionki w danym paragrafie, kursywe, podkreślenie, przekreślenie, a także pogrubienie.
 Tekst jest automatycznie dostosowywany wraz z dodaniem znaczników, co pozawala na bierząco obserwować i dostosowywać style i wielkości czcionki do potrzeb korzystającego.
 
-Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny(dark), jasny(light) oraz ułatwiający użytkowanie(easy) dla osób widzących słabiej.
+Notatki będą zapisywane głównie lokalnie, co pozwoli zaoszczędzić czas ładowania, jak również pominąć problemy związane z synchronizacją.
+
+Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny(\textbf{dark}), jasny(\textbf{light}) oraz ułatwiający użytkowanie(\textbf{easy}) dla osób widzących słabiej.
 
 \chapter{Instalacja}
 
@@ -110,8 +120,7 @@ Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
 
 \include{podrecznik_uzytkownika}
 
-
-\chapter{Implementacja}
+\include{implementacja}
 
 %%%%% BIBLIOGRAFIA
 
