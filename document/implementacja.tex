@@ -1,1 +1,95 @@
-\chapter{implementacja}
+\chapter{Implementacja}
+
+\section{Technologie}
+
+\subsection{flutter}
+
+Aplikacja została napisana przy użyciu frameworka flutter w języku Dart.
+
+Wybierając technologie, kierowałem się kryteriami takimi jak: prostota, wieloplatformowość, estetyka bez dużego wkładu w kreowanie komponentów na własną rękę oraz wydajność. Jedną z najbardziej polecanych framework'ów był \textbf{flutter}. Jak podaje strona główna \url{flutter.dev}:
+
+"Flutter is an open source framework by Google for building beautiful, natively compiled, multi-platform applications from a single codebase."
+
+Składnia języka dart jest stosunkowo prosta i przejrzysta, natomiast framework Flutter pozwala na programowanie aplikacji mobilnych w prosty sposób na platformy IOS oraz Android o dużej wydajności zważywszy na to, że język Dart jest kompilowany do natywnego kodu. Pozwala to na tworzenie aplikacji szybko i bez wielkiego nakładu pracy, dając przy tym duże możliwości i przyjemny dla oka rozbudowany interfejs użytkownika.
+
+%https://itcraftapps.com/pl/blog/flutter-w-swiecie-aplikacji-mobilnych-czy-to-przyszlosc-programowania/ 
+
+\subsection{SQLite}
+
+Aplikacja wykorzystuje bibliotekę \textbf{sqlite3}, umożliwiającą wykonywanie operacji na lokalnej bazie danych SQLite. Pozwala na ona na zapis, odczyt a także manipulację danymi. Dodatkowo wykorzystywany jest pakiet \textbf{drift}, który jest rodzajem systemu ORM umożliwiającym mapowanie między obiektami języka Dart oraz tabelami bazy danych SQLite. Pozwala to na pracę bezpośrednio w kodzie Dart używając dostępnej funkcjonalności bez konieczności pisania zapytań bezpośrednio dla SQLite.
+
+\section{Organizacja repozytorium}
+
+Kod aplikacji został podzielony na moduły i zorganizowany w zależności od poziomu abstrakcji i zastosowań.
+
+Główny katalog \textbf{lib} zawiera:
+
+\begin{itemize}
+    \item plik \textbf{main.dart} z wywołaniem głównej funkcji main budującej aplikację,
+    \item katalog \textbf{database}
+    \item katalog \textbf{logic}
+    \item katalog \textbf{screens} zawierający definicję stron, komponentów i widgetów wraz z ich funkcjonalnością
+\end{itemize}
+
+\subsubsection{database}
+
+Zawiera definicję bazy danych, struktury oraz metody z nią związane. Posiada wygenerowany na podstawie pliku \textbf{database\_{}def.dart} plik \textbf{database\_{}def.g.dart} zawierający struktury odzwierciedlające tabele bazy danych w klasy języka Dart. 
+
+\subsubsection{logic}
+
+Znajdują się tam definicje struktur reprezentujących stan komponentów, definicje typów(stylów tekstu, widgetów, znaczników itd.), mapowanie kluczy(String) na style tekstu, znaczniki i elementy, logika parsera, funkcje pomocnicze wraz z funkcjonalnością aplikacji niebędącej bezpośrednią częścią widgetów.
+
+\subsubsection{screens}
+
+Dostępne są tam definicje stron wraz z funkcjonalnością i metodami ich komponentów, jak również definicje motywów aplikacji.
+
+\section{Wykorzystane rozwiązania}
+
+\subsection{Baza danych}
+
+Do zarządzania dostępem i manipulacją bazy danych tworzony jest jeden obiektu typu \textbf{MobiNoteDatabase} dla całego projektu. Jest on tworzony i udostępniany za pomocą biblioteki do zarządzania stanem \textbf{GetX}. 
+
+W implementacji aplikacji MobiNote, GetX pozwala na tworzenie instancji zarządzającej dostępem do bazy danych raz i udostępnianie jej w różnych miejscach aplikacji. Struktura aplikacji wymaga tylko jednej instancji obiektu MobiNoteDatabase, dlatego tworzone jest jedno połączenie w jej konstruktorze, a sam obiekt przechowywany jest z pomocą GetX
+
+\begin{verbatim}
+    Get.put(MobiNoteDatabase());
+\end{verbatim}
+
+\noindent Następnie za pomocą funkcji \textbf{find} może zostać udostępniany
+
+\begin{verbatim}
+    final database = Get.find<MobiNoteDatabase>();
+\end{verbatim}
+
+Umożliwia to zwiększenie wydajności, ponieważ unikamy tworzenia połączenia z bazą danych za każdym razem, gdy jest ono potrzebne(obie strony: strona domowa, oraz edytor notatki używają połączenia z bazą danych do swoich funkcjonalności). Używany zatem jest tutaj wzorzec Singleton. Z racji tego, że nie ma potrzeby na wiele równoległych połączeń(używana  jest tylko jedna ze stron i ich funkcjonalnośc naraz) wzorzec ten został zastosowany w implementacji.
+
+\subsection{Dobre praktyki}
+
+\subsubsection{Leniwe tworzenie widgetów w ListView}
+
+Podczas implementacji listy notatek w stronie domowej oraz edytora zawartości notatki użyty został widget ListView poprzez wywołanie twz. \textit{named constructor} \textbf{ListView.builder}. Praktyka ta ma dobre zastosowanie przy długich listach, ponieważ używając konstruktora \textbf{builder} widgety zawarte w ListView budowane są w sposób leniwy, na bieżąco, jeśli istnieje potrzeba ich wyświetlenia. Z racji tego, że budowanie jest szybkie i nieskomplikowane pozwala to uniknąć przechowywania dużej ilości widgetów(znajduje to pozytywne skutki przy długich, skomplikowanych notatkach).
+
+\subsubsection{Reprezentacja widgetów}
+
+Każdy widget reprezentowany jest poprzez obiekt typu pochodnej klasy WidgetData przechowywującej parametry danego widgetu potrzebne do jego prawidłowego wyświetlania oraz funkcjonowania. Oddzielana jest warstwa wyświetlania od warstwy informacji danego widgetu. Pozwala to na zapis stanu widgetu do bazy danych, ponieważ zawarta w obiektach reprezentujących warstwę informacji jest funkcja konwersji do formatu JSON, który jest przechowywany w bazie danych jako fragment zawartości danej notatki.
+
+\subsubsection{ID Generator}
+
+Widgety zawierają identyfikatory do odróżniania ich w rodzicu lub liście zwierającej je. Ma to zastosowanie m.in. w znajdowaniu miejsca w liście np do dodawania nowego elementu, czy usuwania i zmiany elementów. Lepiej nadać id i na podstawie znalezienia id na liście pobierać index, zamiast nadawać i aktualizować indeksy za każdym razem elementom przy manipulacji listy.
+
+Do generowania identyfikatorów w odpowiednich miejscach w kodzie służy obiekt klasy \textbf{IdGenerator}.
+
+\subsubsection{Fabryka widgetów}
+
+Widgety tworzone są na podstawie obiektów reprezentacyjnych(opisanych powyżej) w klasie \textbf{NoteEditorWidgetFactory}. Na podstawie pola \textbf{\textit{type}} wybierany jest typ widgetu, który następnie tworzony jest z parametrów obiektu reprezentującego. Używa klasy IdGenerator do generowania identyfikatorów, przez co obsługa przydzielania id jest robiona w jednym miejscu, w fabryce, która jest przekazywana dzieciom i elementom danych widgetów. Pozwala to zachować spójność w aktualnej implementacji, jak również przy dalszym rozwoju.
+
+\subsubsection{Programowanie Obiektowe}
+
+W projekcie zastosowany został paradygmat obiektowego programowania wraz z jego mechanizmami. Przykładami tych mechanizmów może być wielokrotne zastosowanie abstrakcji różnych poziomów, dziedziczenie i polimorfizm.
+
+Przykładem zastosowanie wszystkich powyższych mechanizmów jest reprezentowanie, tworzenie widgetów oraz zarządzania nimi. 
+Dzięki zastosowaniu opisanych mechanizmów możliwe było zaimplementowanie fabryki, widgetów typu listy, oraz paragrafów trzymanych w edytorze.
+
+
+
+%https://docs.flutter.dev/cookbook/lists/long-lists
