@@ -103,14 +103,15 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Expanded(
-      child: ListView(
+      child: ListView.builder(
         padding: const EdgeInsets.only(
           top: 14,
           left: listViewPadding,
           right: listViewPadding,
           bottom: listViewPadding,
         ),
-        children: noteListWidgets,
+        itemCount: noteListWidgets.length,
+        itemBuilder: (context, index) => noteListWidgets[index]
       ),
     );
   }
