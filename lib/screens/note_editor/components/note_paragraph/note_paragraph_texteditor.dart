@@ -126,7 +126,6 @@ class _NoteParagraphEditorState extends State<NoteParagraphTextEditor> {
   }
 
   void addPlaceholder() {
-    var replacedPlaceholder = controller.text.replaceAll(placeholder, "+");
     if (controller.text.isEmpty || controller.text[0] != placeholder) {
       controller.text = placeholder + controller.text;
     }
