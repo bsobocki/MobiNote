@@ -1,5 +1,8 @@
 \chapter{Implementacja}
 
+Implementując aplikację MobiNote starałem się zachowywać czysty kod, podzielony na jak najmniejsze części pod względem odpowiedzialności i zadań klas oraz metod, jak również czyste repozytorium zachowując odpowiedni podział i strukturę katalogów, modułów i pozostałych plików. Przykładałem dużą uwagę do jakości oraz wykonania, aby powrót do poszczególnych warstw i miejsc w aplikacji był prosty, a sama jej struktura była przejrzysta i zrozumiała. 
+
+
 \section{Technologie}
 
 \subsection{flutter}
@@ -22,13 +25,13 @@ Aplikacja wykorzystuje bibliotekę \textbf{sqlite3}, umożliwiającą wykonywani
 
 Kod aplikacji został podzielony na moduły i zorganizowany w zależności od poziomu abstrakcji i zastosowań.
 
-Główny katalog \textbf{lib} zawiera:
+Główny katalog z kodem źródłowym \textbf{lib} zawiera:
 
 \begin{itemize}
     \item plik \textbf{main.dart} z wywołaniem głównej funkcji main budującej aplikację,
     \item katalog \textbf{database}
     \item katalog \textbf{logic}
-    \item katalog \textbf{screens} zawierający definicję stron, komponentów i widgetów wraz z ich funkcjonalnością
+    \item katalog \textbf{screens}
 \end{itemize}
 
 \subsubsection{database}
@@ -41,9 +44,13 @@ Znajdują się tam definicje struktur reprezentujących stan komponentów, defin
 
 \subsubsection{screens}
 
-Dostępne są tam definicje stron wraz z funkcjonalnością i metodami ich komponentów, jak również definicje motywów aplikacji.
+Dostępne są tam definicje stron wraz z funkcjonalnością i metodami ich komponentów, jak również definicje motywów i kolorów aplikacji.
 
 \section{Wykorzystane rozwiązania}
+
+\subsubsection{Testy Jednostkowe}
+
+Część logiki niezwiązanej bezpośrednio z wyświetlaniem i organizacją komponentów i ich wyglądu testowałem za pomocą testów jednostkowych od razu podczas ich implementacji. Dzięki temu uniknąłem długich godzin poszukiwania problemów, gdy któryś z komponentów mógł nie działałć poprawnie zważywszy na to, że problemem może być algorytm, jak i sam widget i funkjonowanie frameworka flutter. Dostosowując szczegółowość testów jednostkowych starałem się pokryć przypadki użycia jeszcze przez użyciem danych klas, metod i algorytmów w aplikacji. Przetestowany został w ten sposób parser języka znaczników stylów, wraz z pełną funkcjonalnością, jak również konwersja reprezentacji widgetów do formatu JSON.
 
 \subsection{Baza danych}
 
@@ -68,6 +75,7 @@ Umożliwia to zwiększenie wydajności, ponieważ unikamy tworzenia połączenia
 \subsubsection{Leniwe tworzenie widgetów w ListView}
 
 Podczas implementacji listy notatek w stronie domowej oraz edytora zawartości notatki użyty został widget ListView poprzez wywołanie twz. \textit{named constructor} \textbf{ListView.builder}. Praktyka ta ma dobre zastosowanie przy długich listach, ponieważ używając konstruktora \textbf{builder} widgety zawarte w ListView budowane są w sposób leniwy, na bieżąco, jeśli istnieje potrzeba ich wyświetlenia. Z racji tego, że budowanie jest szybkie i nieskomplikowane pozwala to uniknąć przechowywania dużej ilości widgetów(znajduje to pozytywne skutki przy długich, skomplikowanych notatkach).
+%https://docs.flutter.dev/cookbook/lists/long-lists
 
 \subsubsection{Reprezentacja widgetów}
 
@@ -90,6 +98,13 @@ W projekcie zastosowany został paradygmat obiektowego programowania wraz z jego
 Przykładem zastosowanie wszystkich powyższych mechanizmów jest reprezentowanie, tworzenie widgetów oraz zarządzania nimi. 
 Dzięki zastosowaniu opisanych mechanizmów możliwe było zaimplementowanie fabryki, widgetów typu listy, oraz paragrafów trzymanych w edytorze.
 
+\subsubsection{Wzorce projektowe}
 
+W powyższych opisach możemy zauważyć użycie niktórych wzorców projektowych spotykanych podczas pisania aplikacji mobilnej. Są to między innymi:
 
-%https://docs.flutter.dev/cookbook/lists/long-lists
+\begin{itemize}
+    \item \textbf{Fabryka} -- użyty w przypadku fabryki widgetów \textit{NoteEditorWidgetFactory}
+    \item \textbf{Singleton} -- uzywany w przypadku dostępu do bazy danych oraz dostępu do ustawionego motywu aplikacji
+\end{itemize}
+%https://flutterdesignpatterns.com/
+
