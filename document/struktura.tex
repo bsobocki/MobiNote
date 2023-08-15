@@ -31,11 +31,11 @@ Istanieją trzy typy paragrafów w edytorze dziedziczące po \textbf{NoteParagra
 Każdy z paragrafów posiada unikalny identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
 Pozwala to na unikalne identyfikowanie paragrafów wewnątrz listy, oraz wszystkich utworzonych widgetów w obrębie przestrzenii edytora.
 
-Używane są również mechanizmy wywołań zwrotnych(callbacks) do zgłaszania aktywności(focus) oraz zaistniałej zmiany, jak również usunięcia z listy na podstawie swojego id, gdy wszystkie jego elementy zostaną usunięte.
+Używane są również mechanizmy wywołań zwrotnych(callbacks) do zgłaszania aktywności(focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy paragrafów, na podstawie swojego id, gdy wszystkie jego elementy zostaną usunięte.
 
 \subsubsection{NoteParagraphTextEditor}
 
-Służy do przechowywania, wyświetlania i edycji tekstu notatki. Posiada mechanizmy dynamicznej zmiany rozmiaru poprzez manipulację stanem oraz wartościami wewnętrznych pól. Posiada tylko jeden element, którym jest pole tekstowe z niestandardowym kontrolerem używającym parsera tekstu.
+Służy do przechowywania, wyświetlania i edycji tekstu notatki. Posiada mechanizmy dynamicznej zmiany rozmiaru poprzez manipulację stanem oraz wartościami wewnętrznych pól. Posiada tylko jeden element, którym jest pole tekstowe z niestandardowym kontrolerem parsującym tekst przy użyciu własnego parsera.
 
 \subsubsection{NoteParagraphWidget}
 
@@ -51,41 +51,47 @@ Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \text
 
 \subsection{Edycja Tekstu}
 
-Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy(lewa i prawa strona) jako stałą wartość, oraz padding pionowy(góra, dół) obliczany na podstawie różnicy pomiędzy wielkoścą czcionki użytej w danym paragrafie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej(w przypadku, gdy mamy zwykły paragraf nie chcemy braku odstępu między paragrafami.
+Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy(lewa i prawa strona) jako stałą wartość, oraz padding pionowy(góra, dół) obliczany na podstawie różnicy pomiędzy wielkoścą czcionki użytej w danym paragrafie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej(w przypadku, gdy dany paragraf nie ma ustawionego nagłówka, nie chcemy braku odstępu między paragrafami z powodu zerowego paddingu pionowego).
 
-Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie paragrafu.
+Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie paragrafu. Stan ten określa się poprzez wielkośc czcionki i stylów tekstu użytych w paragrafie.
 
 \subsubsection{Dodawanie tekstu}
 
-Jeśli został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne(callback) zainicjalizowane przez \textbf{NoteParagraphs} do dodawania nowego paragrafu. Wywołanie to przyjmuje identyfikator danego paragrafu i na tej podstawie oblicza miejsce w liście do którego należy włożyć nowopowstały paragraf. Przy tworzeniu nowego paragrafu następuje przeniesienie tekstu następującego po znaku końca linii, znak końca linii jest usuwany, natomiast reszta pozostaje bez zmian.
+Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne(callback), zainicjalizowane przy tworzeniu danego paragrafu przez \textbf{NoteParagraphs}, do dodawania nowego paragrafu. Wywołanie to przyjmuje identyfikator danego paragrafu i na tej podstawie oblicza miejsce w liście do którego należy włożyć nowopowstały paragraf. Przy tworzeniu nowego paragrafu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
 
 \subsubsection{Usuwanie tekstu}
 \label{eq:usuwanieTekstu}
 
-Flutter nie oferuje możliwości wyłapania zdarzenia naciśnięcia przycisku \textbf{delete} będąc na początku tekstu. W tej sytuacji najprościej jest użyć wyłapania zdarzenia edycji tekstu w paragrafie.
+Flutter nie oferuje możliwości przechwycenia zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwycenia zdarzenia edycji tekstu w paragrafie.
 
-W każdym paragrafie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik, którego brak, przy sprawdzeniu tekstu po edycji, mówi o potrzebie usunięcia paragrafu.
+W każdym paragrafie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik, którego brak na początku tekstu podczas sprawdzania tekstu po edycji, mówi o potrzebie usunięcia paragrafu.
 
 Gdy użytkownik zechce usunąć paragraf, wówczas przenosi się kliknięciem na początek wiersza(o ile już się na nim nie znajduje), a następnie naciska przycisk \textbf{delete}. Dzięki temu usuwa \verb|placeholder|, a przy tym wywoływany jest callback służący do usunięcia paragrafu. Jako argument przyjmuje identyfikator paragrafu, aby określić miejsce usunięcia.
 
-Aby uniknąć kliknięcia na początek linii, przed wartownika, dodany został mechanizm zmiany pozycji kursora na drugi znak(bezpośrednio przed wartownikiem) za każdym razem gdy jest on na pozycji zerowej.
+Aby uniknąć kliknięcia na początek linii, przed wartownika, dodany został mechanizm zmiany pozycji kursora na drugi znak(bezpośrednio za wartownikiem) za każdym razem gdy jest on na pozycji zerowej.
 
 \subsection{Wyświetlanie tesktu}
 
-Do wyświetlania stylizowanego tekstu używane są obiekty typu \textbf{TextSpan}. Obiekty te posiadają drzewiastą strukturę, ponieważ mogą zawierać dzieci o tym samym typie, które będą dziedziczyć dane parametry stylu, o ile nie zostaną one w nich inaczej zainicjalizowane. Daje to możliwość zorganizowania tesktu bez potrzeby dzielenia go na małe kawałki i nadawania łączonych styli(gdyby obiekty \textbf{TextSpan} były przechowywane jako elementy jednej listy). Można zainicjalizować jeden styl wewnątrz drugiego, co bardzo upraszcza strukturę i pozwala na wprowadzanie globalnych zmian struktury(jak na przykład wielkość czcionki całego paragrafu) tylko w korzeniu zapewniając, że wszystkie części tekstu odziedziczą zmianę.
+Do wyświetlania stylizowanego tekstu używane są obiekty typu \textbf{TextSpan}. Obiekty te posiadają drzewiastą strukturę, ponieważ mogą zawierać dzieci tego samego typu, które będą dziedziczyć dane parametry stylu, o ile nie zostaną dla nich specjalnie zainicjalizowane. Daje to możliwość zorganizowania tesktu bez potrzeby dzielenia go na małe kawałki oraz nadawania za każdym razem łączonych styli(gdyby obiekty \textbf{TextSpan} były przechowywane jako elementy jednej listy). Można zainicjalizować jeden styl wewnątrz drugiego, co bardzo upraszcza strukturę i pozwala na wprowadzanie globalnych zmian struktury(jak na przykład wielkość czcionki całego paragrafu) tylko w korzeniu, zapewniając, że wszystkie części tekstu odziedziczą zmianę.
 
 Aktualizacja i renderowanie wyglądu pola tekstowego na bieżąco jest możliwe poprzez wykorzystanie klasy \textbf{TextEditingController}. Posiada ona metodę \textbf{buildTextSpan}, która służy do budowania wyglądu i stylu tekstu poprzez obiekty \textbf{TextSpan}. Dzieczicząc z tej klasy i nadpisując metodę \textbf{buildTextSpan} mogłem użyć parsera tekstu zawierającego znaczniki do przekonwertowania go na stylizowany tekst.
 Dzięki temu przy każdej zmianie tekst jest parsowany, a jego wygląd aktualizowany.
 
-Utworzony w ten sposób \textbf{NoteTextEditingController} może nie tylko używać parsera do tworzenia obiektów \textbf{TextSpan}, ale również mógł zostać rozszerzony od dodatkowe parametry, takie jak callback \textbf{resizeTextField} wołany podczas parsowania, gdy wielkość czcionki w tekście ulega zmianie, możliwość przechowywania informacji o tym, czy dany paragraf jest aktualnie w użyciu oraz sprawdzanie i manipulacja pozycją kursora. 
+Utworzony w ten sposób \textbf{NoteTextEditingController} może nie tylko używać parsera do tworzenia obiektów \textbf{TextSpan}, ale również mógł zostać rozszerzony o dodatkowe parametry, takie jak:
 
-Callback \textbf{resizeTextField} jest używany w kontrolerze, ponieważ wtedy wystarczy parsować tekst jednokrotnie, a przed samym zwróceniem drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego w jego korzeniu.
+\begin{compactitem}
+    \item callback \textbf{resizeTextField} wołany podczas parsowania, gdy wielkość czcionki w tekście ulega zmianie, 
+    \item możliwość przechowywania informacji o tym, czy dany paragraf jest aktualnie w użyciu,
+    \item sprawdzanie i manipulacja pozycją kursora.
+\end{compactitem}
 
-Informacja na temat użycia paragrafu jest używana przy wyświetlaniu znaczników stylu nagłówka.
+Callback \textbf{resizeTextField} został użyty w kontrolerze, zamiast w widgecie pola tekstowego, ponieważ wtedy wystarczy parsować tekst jednokrotnie. Przed samym zwróceniem drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego w jego korzeniu, zamiast edytować zawartość widgetu w innych mechanizmach i tak czy inaczej parsować dodatkowo tekst w poszukiwaniu informacji na temat wielkości czcionki.
 
-Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby nie była dalej niż \verb|placeholder|(zobacz \hyperref[eq:usuwanieTekstu]{Usuwanie tekstu}).
+Informacja na temat aktualnego użycia paragrafu jest używana do wyświetlania i ukrywania znaczników stylu nagłówka.
 
-Przy każdej zmianie tekstu odeiżany jest widok, co skutkuje tworzonym stanem widgetu paragrafu(obiekty typu State), dlatego wystarczy zmienić wartość zmiennej odpowiadającej za rozmiar widgetu paragrafu, przed końcem całej operacji związanej z przetwarzaniem nowego tekstu.
+Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby kursor nie znajdował się przed znakiem \verb|placeholder|(zobacz \hyperref[eq:usuwanieTekstu]{Usuwanie tekstu}).
+
+Przy każdej zmianie tekstu odświeżany jest widok paragrafu, dlatego wystarczy zmienić wartość zmiennej odpowiadającej za jego rozmiar przed końcem całej operacji związanej z przetwarzaniem nowego tekstu.
 %https://api.flutter.dev/flutter/widgets/TextEditingController/buildTextSpan.html
 
 \subsection{Problem parsowania tekstu ze znacznikami stylu}
@@ -102,6 +108,14 @@ Zrealizowanym pomysłem rozwiązania problemu jest podział parsowania tekstu na
 
 \subsection{Implementacja Parsera}
 
+\subsubsection{Własna implementacja}
+
+Parser wraz z jego strukturą został zaprojektowany i zaimplementowany przeze mnie, zamiast przy użyciu narzędzi generowania parsera dla opisanej gramatyki użwanego przeze mnie języka znaczników. Powodem tego jest potrzeba łatwego rozwoju oraz wprowadzenia niestandardowych rozwiązań i dodatkowych funkcjonalności niebędących częścią samej składni gramatyki, jednak potrzebnych wewnątrz implementacji parsera.
+
+Własna implementacja parsera pozwoliła mi od początku do końca zaprojektować i zrozumieć jego strukturę dzięki czemu przykładowo wprowadzanie funkcji odkrywania i ukrywania znaczników stylu oraz nagłówka, bądź dodanie wywołania zwrotnego zmieniającego rozmiar pola tekstowego, było prostym zabiegiem niewymagającym dużych zmian i rozrzerzeń kodu parsera.
+
+\subsubsection{Parsowanie}
+
 Każdy z etapów parsowania jest realizowany poprzez inną klasę. Całość łączona jest w metodzie obiektu \textbf{NoteTextEditingController}.
 \newline
 \begin{figure}[ht]
@@ -114,7 +128,7 @@ Każdy z etapów parsowania jest realizowany poprzez inną klasę. Całość ł�
 \subsubsection{Znaki unicode}
 
 %https://unicode.org/glossary/#private_use_area
-Do procesu parsowania zostały użyte znaki unicode z bloku Private Use Area(Prywatny Obszar Użytkowania). Są to znaki, które są trudnodostępne dla użytkownika z poziomu klawiatury mobilnej.
+Do procesu parsowania zostały użyte znaki unicode z bloku Private Use Area(Prywatny Obszar Użytkowania). Są to znaki, które są trudno dostępne dla użytkownika z poziomu klawiatury mobilnej.
 
 \noindent Zdefiniowane zostały w następujący sposób:
 
@@ -163,9 +177,9 @@ W podobny sposób konwertowane są również widgety i elementy wewnętrzne w te
 
 \subsubsection{UnicodeMarkedTextParser}
 
-Z racji tego, ze znaki unicode z tego zakresu są trudnodostępne, na potrzeby samego problemu konwersji tekstu notatek możemy założyć, że znaki w tekście symbolizują początkowe i końcowe znaczniki, które na pewno mają swoje odpowiedniki i są poprawnie użyte(nie przecinają się).
+Z racji tego, ze znaki unicode z tego zakresu są trudno dostępne, na potrzeby samego problemu konwersji tekstu notatek możemy założyć, że znaki w tekście symbolizują początkowe i końcowe znaczniki, które na pewno mają swoje odpowiedniki i są poprawnie użyte(nie przecinają się).
 
-Na początku algorytmu tworzona jest referencja $currentSpan$ na obiekt \textbf{SpanInfo}, który jest aktualnie przetwarzanym stylem(napotkany został znacznik początkowy). Początkowo jest to korzeń całej struktury \textbf{SpanInfo}.
+Na początku algorytmu tworzona jest referencja $currentSpan$ na obiekt \textbf{SpanInfo}, który jest aktualnie przetwarzanym stylem(napotkany został jego znacznik początkowy). Początkowo jest to korzeń całej struktury \textbf{SpanInfo}.
 
 Oznaczony w ten sposób tekst przechodzimy ponownie, jednak posiadając dokładne informacje, które symbole są znacznikami stylu, a które zwykłymi fragmentami tekstu.
 
@@ -173,7 +187,7 @@ Podczas przechodzenia tekstu zapisujemy znaki niebędące znacznikami do tymczas
 
 Napotykając znacznik początkowy, jeśli w buforze znajduje się tekst, to wówczas jest on dodawany do tekstu przechowywanego w $currentSpan$. Następnie tworzony jest nowy \textbf{SpanInfo}, na podstawie stylu reprezentowanego przez znacznik, będący dzieckiem $surrentSpan$ i zapisywany jest jako $currentSpan$. 
 
-Po napotkaniu znacznika końcowego dodajemy tekst z tymczasowego bufora do $currentSpan$ i przestawiamy $currentSpan$ przechodząc po węzłach \textbf{SpanInfo}(używane jest do tego pole z referencją $parent$ wskazującą na rodzica danego węzła) na pierwszy napotkany węzeł przechowujący informacje na temat stylu reprezentowanego przez znacznik.
+Po napotkaniu znacznika końcowego dodajemy tekst z tymczasowego bufora do $currentSpan$, czyścimy bufor i przestawiamy $currentSpan$ przechodząc po węzłach \textbf{SpanInfo}(używane jest do tego pole z referencją $parent$ wskazującą na rodzica danego węzła) na pierwszy napotkany węzeł przechowujący informacje na temat stylu reprezentowanego przez aktualnie sprawdzany znacznik.
 
 Przetwarzane są również informacje na temat widgetów i elementów wewnętrznych przygotowane w ramach podstawy do rozwoju funkcjonalności w przyszłosci.
 
