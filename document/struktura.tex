@@ -47,7 +47,7 @@ Służy jako wypełnienie pozostałej przestrzeni edytora. Po kliknięciu na nie
 
 \section{Praca z tekstem}
 
-Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \textbf{NoteParagraphTextEditor}, jak również wyświetlanie go wraz ze zmianą rozmiarów z pomocą \textbf{NoteTextEditingController}.
+Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \textbf{NoteParagraphTextEditor} i \textbf{NoteTextEditorWidget}, jak również wyświetlanie go wraz ze zmianą rozmiarów z pomocą \textbf{NoteTextEditingController}.
 
 \subsection{Edycja Tekstu}
 
@@ -112,7 +112,7 @@ Zrealizowanym pomysłem rozwiązania problemu jest podział parsowania tekstu na
 
 Parser wraz z jego strukturą został zaprojektowany i zaimplementowany przeze mnie, zamiast przy użyciu narzędzi generowania parsera dla opisanej gramatyki użwanego przeze mnie języka znaczników. Powodem tego jest potrzeba łatwego rozwoju oraz wprowadzenia niestandardowych rozwiązań i dodatkowych funkcjonalności niebędących częścią samej składni gramatyki, jednak potrzebnych wewnątrz implementacji parsera.
 
-Własna implementacja parsera pozwoliła mi od początku do końca zaprojektować i zrozumieć jego strukturę dzięki czemu przykładowo wprowadzanie funkcji odkrywania i ukrywania znaczników stylu oraz nagłówka, bądź dodanie wywołania zwrotnego zmieniającego rozmiar pola tekstowego, było prostym zabiegiem niewymagającym dużych zmian i rozrzerzeń kodu parsera.
+Własna implementacja parsera pozwoliła mi od początku do końca zaprojektować i zrozumieć jego strukturę co pozwoliło mi tworzyć elastyczne środowisko rozwoju tekstu w notatkach. Przykładowo wprowadzanie funkcji odkrywania i ukrywania znaczników stylu oraz nagłówka, bądź dodanie wywołania zwrotnego zmieniającego rozmiar pola tekstowego, było prostym zabiegiem niewymagającym dużych zmian i rozrzerzeń kodu parsera.
 
 \subsubsection{Parsowanie}
 
@@ -212,4 +212,8 @@ InlineSpan getSpans(SpanInfo spanInfo) {
      * oraz zwracanie go wraz z children */
 }
 \end{lstlisting}
+
+\section{Praca z widgetami}
+
+
 
