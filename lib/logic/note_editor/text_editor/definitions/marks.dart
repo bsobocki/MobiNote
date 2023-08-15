@@ -10,16 +10,16 @@ const List<String> styleChars = [
 int styleCharsAmount = styleChars.length * 2;
 
 const List<String> widgetTags = [
-  '(w)',
-  '(n)',
-  '<n>',
-  '\$',
+  // '(w)',
+  // '(n)',
+  // '<n>',
+  // '\$',
 ];
 
 const List<String> elementPatterns = [
-  '[ ]',
-  '[x]',
-  '[i]',
+  // '[ ]',
+  // '[x]',
+  // '[i]',
 ];
 
 const List<String> paragraphStyleChars = [
