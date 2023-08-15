@@ -92,8 +92,6 @@ Przy każdej zmianie tekstu odeiżany jest widok, co skutkuje tworzonym stanem w
 
 Do wyświetlania stylizowanego tekstu potrzebne jest jego parswoanie. Funkcjonalnośc ta, będzie wołana stosunkowo często, a dla długich tekstów bez znaku nowej linii będzie to długi do obsługi tekst. Dlatego też ważny jest sposób implementacji.
 
-\subsubsection{Implementacja}
-
 Zrealizowanym pomysłem rozwiązania problemu jest podział parsowania tekstu na trzy etapy:
 \begin{enumerate}
     \setlength\itemsep{0mm}
@@ -128,6 +126,7 @@ const paragraphUnicodeNumber = 0xe200;
 \end{lstlisting}
 
 Oznaczają odpowiednio początki przestrzeni znaczników: stylu tekstu, wewnętrznych widgetów i elementów w tekście oraz nagłówków paragrafu.
+Znaczniki początkowe mają parzyste numery, natomiast znaczniki końcowe mają nieparzyste numery następujące po odpowiadających im znacznikach początkowych.
 
 \subsubsection{StyledTextToUtfConverter}
 
@@ -164,7 +163,11 @@ Przetwarzane są również informacje na temat widgetów i elementów wewnętrzn
 
 \subsubsection{SpanInfoConverter}
 
-Przechodząc przez strukturę \textbf{SpanInfo} budujemy strukturę \textbf{TextSpan}. Zapisywany jest $mainSpan$ będący korzeniem struktury, natomiast przejście przez strukturę odbywa się w sposób rekurencyjny.
+Klasa \textbf{TextSpan} jest klasą pochodną klasy \textbf{InlineSpan}.
+
+\textbf{SpanInfoConverter} buduje strukturę \textbf{InlineSpan} złożoną z obiektów klas pochodnych \textbf{TextSpan} oraz \textbf{WidgetSpan}. Biorąc pod uwagę, że wewnętrzne widgety i elementy, które mają w przyszłości być obsługiwane przy użyciu \textbf{WidgetSpan} nie są aktualnie obsługiwane przyjęty w opisie model struktury opiera się tylko na obiektach typu \textbf{TextSpan}.
+
+Przechodząc przez strukturę \textbf{SpanInfo} budujemy strukturę złożoną z obiektów typu \textbf{TextSpan}. Zapisywany jest $mainSpan$ będący korzeniem struktury, natomiast przejście przez strukturę odbywa się w sposób rekurencyjny.
 
 \begin{lstlisting}[language=Java]
 SpanInfo mainSpan = SpanInfo(type: 'null');
@@ -179,3 +182,4 @@ InlineSpan getSpans(SpanInfo spanInfo) {
      * oraz zwracanie go wraz z children */
 }
 \end{lstlisting}
+
