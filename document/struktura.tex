@@ -128,6 +128,22 @@ const paragraphUnicodeNumber = 0xe200;
 Oznaczają odpowiednio początki przestrzeni znaczników: stylu tekstu, wewnętrznych widgetów i elementów w tekście oraz nagłówków paragrafu.
 Znaczniki początkowe mają parzyste numery, natomiast znaczniki końcowe mają nieparzyste numery następujące po odpowiadających im znacznikach początkowych.
 
+\subsubsection{Struktura SpanInfo}
+
+Podczas implementacji użyta została struktura \textbf{SpanInfo}. Zawiera ona informacje na temat danego węzła w drzewiastej strukturze stylów tekstu, oraz referencję do jego rodzica.
+Została zaimplementowana w celu usprawnienia przebiegu etapu drugiego parsowania tekstu.
+
+\begin{lstlisting}[language=java]
+class SpanInfo {
+  String type;
+  String text;
+  List<SpanInfo> children;
+  late SpanInfo parent;
+}
+\end{lstlisting}
+
+Dzięki swojej budowie struktura może zostać przekonwertowana w prosty sposób na obiekt typu \textbf{TextSpan}.
+
 \subsubsection{StyledTextToUtfConverter}
 
 Przekształcanie znaczników odbywa się poprzez przejście przez tekst w ich poszukiwaniu i przetwarzaniu. Znaczniki dzielone są na początkowe i końcowe(zobacz: \hyperref[subsec:ustawianieStyli]{Ustawianie styli}). Podczas sprawdzania czy dany znak jest znacznikiem początkowym, czy końcowym pobierany jest szerszy kontekst, złożony z przylegających do niego znaków.
