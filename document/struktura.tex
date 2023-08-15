@@ -69,3 +69,13 @@ Aby uniknąć kliknięcia na początek linii, przed wartownika, dodany został m
 
 \subsection{Wyświetlanie tesktu}
 
+Aktualizacja i renderowanie wyglądu pola tekstowego na bieżąco jest możliwe poprzez wykorzystanie klasy \textbf{TextEditingController}. Posiada ona metodę \textbf{buildTextSpan}, która służy do budowania wyglądu i stylu tekstu poprzez obiekty \textbf{TextSpan}. Dzieczicząc po tej klasie i nadpisując metodę \textbf{buildTextSpan} mogłem użyć parsera tekstu zawierającego znaczniki na stylizowany tekst, dzięki czemu przy każdej zmianie tekst jest parsowany, a wygląd aktualizowany. Utworzony w ten sposów \textbf{NoteTextEditingController} może nie tylko używać parsera do tworzenia \textbf{TextSpan}ów, ale również mógł zostać rozszerzony od dodatkowe parametry, takie jak callback \textbf{resizeTextField} wołany podczas parsowania, gdy wielkość czcionki w tekście ulega zmianie. Dzieje się to w kontrolerze, ponieważ wtedy wystarczy parsować tekst jednokrotnie, a przed samym zwróceniem drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego.
+
+Przy każdej zmianie tekstu na nowo tworzony jest obiekt stanu widgetu paragrafu, dlatego też wystarczy, że przed końcem całej operacji związanej z przetwarzaniem nowego tekstu zmienimy rozmiar, który zaciągany jest przy budowie paragrafu. 
+%https://api.flutter.dev/flutter/widgets/TextEditingController/buildTextSpan.html
+
+\subsection{Parser}
+
+Do 
+
+\subsubsection{}
