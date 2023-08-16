@@ -45,6 +45,35 @@ Służy do przechowywania, wyświetlania i edycji widgetów notatki. Posiada mec
 
 Służy jako wypełnienie pozostałej przestrzeni edytora. Po kliknięciu na niego uruchamia mechanizm przenoszenia aktywności(focus) na ostatni paragraf na liście, dzięki czemu użytkownik nie musi znać wielkości i szukać ostatniego paragrafu, aby kontynuować edycję notatki.
 
+
+\section{Widgety}
+
+\subsection{Struktura widgetów}
+
+W aktualnej wersji aplikacji widgety dzielą się na widgety główne będące bezpośrednimi dziećmi \textbf{NoteParagraphWidget}, oraz widgety będące ich dziećmi. W przypadku rozwoju aplikacji struktura hierarchii i tworzenia widgetów, oraz samych widgetów ulegnie zmianie. Aktualnie struktura aplikacji wygląda następująco:
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/struktura_widgetow_w_notatce.png}
+    \caption{Struktura widgetów w zawartości notatki w aktualnej wersji aplikacji.}
+    \label{fig:struktura-widgetow}
+\end{figure}
+
+\subsection{Tworzenie widgetów}
+
+Widgety tworzone są poprzez interakcję z użyciem interfejsu użytkownika(patrz \hyperref[sub:dodawanieWidgetow]{\textbf{Dodawanie widgetow}}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=5cm]{images/tworzenie_widgetow.png}
+    \caption{Schemat tworzenia widgetów.}
+    \label{fig:create-widget}
+\end{figure}
+
+\subsection{Usuwanie widgetów}
+
+Widgety usuwane są poprzez interakcję użytkownika z dostępnym interfejsem graficznym po przejściu w tryb zaznaczenia(patrz \hyperref[sub:usuwanieWidgetow]{\textbf{Usuwanie widgetow}}). Widgety usuwane są w swoich rodzicach, a jeśli brakuje widgetów potomnych, wówczas widget listy bądź paragraf widgetów zostaje usunięty.
+
 \section{Praca z tekstem}
 
 Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \textbf{NoteParagraphTextEditor} i \textbf{NoteTextEditorWidget}, jak również wyświetlanie go wraz ze zmianą rozmiarów z pomocą \textbf{NoteTextEditingController}.
@@ -214,8 +243,3 @@ InlineSpan getSpans(SpanInfo spanInfo) {
      * oraz zwracanie go wraz z children */
 }
 \end{lstlisting}
-
-\section{Praca z widgetami}
-
-
-
