@@ -1,0 +1,63 @@
+
+
+\chapter{Rozwój Aplikacji}
+
+\section{Struktura Aplikacji}
+
+\subsection{Baza danych}
+
+\subsection{Strona główna}
+
+\subsection{Edytor notatek}
+
+\subsection{Dodatkowe strony}
+
+\section{Rozszerzenie istniejących rozwiązań}
+
+\subsubsection{Lista}
+
+Klasa \textbf{NoteElementListWidget} posiada zmienną \verb|int depth| służącą do określania poziomu głębokości w liście. Ma to na celu określenie wielkości wcięcia, jak również uzywanych etykiet do oznaczania danego elementu(różne znaki, numeracja itd).
+
+Dodatkowym elmenetem do edycji listy jest możliwość własnej definicji etykiet w liście. Będzie to ograniczone do pewnej głębokości. W zależności od głębokości, użytkownik będzie mógł zdefiniować symbol lub napis, który będzie używany jako etykieta.
+
+\subsection{Widgety wewnętrzne w tekście}
+
+Aktualnie w kodzie przygotowane są miejsca do parsowania widgetów wewnętrznych w tekście. Przygotowane są definicje wzorów w tekście, które miałyby zostać przekonwertowane w widgety.
+
+Widgetami wewnętrzymi są między innymi:
+
+\begin{compactitem}
+    \item linki stron internetowych
+    \item linki notatek w bazie
+    \item inline latex -- do dodawania na przykład symboli matematycznych
+    \item zdjęcia (o rozmiarze nieprzekraczającym rozmiaru czcionki)
+    \item cytowanie tekstu(zmiana koloru tła tekstu oraz czcionki)
+\end{compactitem}
+
+Użycie obiektów \textbf{InlineSpan} udostępnianych przez flutter pozwala tworzyć drzewiastą strukturę, której korzeniem jest \textbf{TextSpan}, natmiast dziećmi są inne obiekty \textbf{InlineSpan}, czyli instancje obiektów klas pochodnych \textbf{TextSpan} i \textbf{WidgetSpan}.
+%https://api.flutter.dev/flutter/painting/InlineSpan-class.html
+
+\subsection{Dodatkowe Widgety w notatce}
+
+Przygotowane również zostały obiekty typu \textbf{NoteWidgetData} oraz miejsca w \textbf{NoteListElementWidget} na dodatkowe elementy takie jak na przykład \textbf{NoteInfoPage}, która będzie widgetem złożonym z ikony, który po kliknięciu otwiera okno dialogowe ze przewijalną notatką/stroną informacyjną.
+
+Planowanymi dodatkowymi widgetami są między innymi:
+
+\begin{compactitem}
+    \item notatka głosowa(zobacz \hyperlink{sec:glosowaNotatka}{Nagrywanie głosowej notatki}
+    \item 
+\end{compactitem}
+
+\subsection{Interakcja widgetów}
+
+\section{Funkcjonalność}
+
+\subsection{Alarmy}
+
+\subsection{Powiadomienia}
+
+\subsection{Nagrywanie głosowej notatki}
+\label{sec:glosowaNotatka}
+
+\subsection{Karty Step-By-Step}
+
