@@ -52,21 +52,56 @@
 \section{Cel projektu}
 
 Celem projektu jest wytworzenie aplikacji mobilnej do zarządzania notatkami w interaktywny sposób.
-Aplikacja ma umożliwić użytkownikowi prowadzenie i tworzenie notatek pozwalających na edycję tekstu i inncyh elementów znajdujących się w notatce bez konieczności zmian widoków, przełączenia całej zawartości pomiędzy trybem edycji, a trybem użytkowym, czy potrzeby zapisu notatki, aby jej zawartość była dostępna w postaci końcowego efektu.
-Graficzny interfejs użytkownika powinien być przystępny i pozwalać na edycję poszczególnych elementów, podczas gdy pozostała zawartość notatki jest wyświetlana w trybie widoku.
+Aplikacja ma umożliwić użytkownikowi prowadzenie i tworzenie notatek pozwalających na formatowanie tekstu i dołączanie załączników.
+Formatowanie tekstu wzorowane będzie na języku naczników Markdown. Główną różnicą w stosunku do edytorów używających tego typu formatowania tekstu będą:
+\begin{compactitem}
+    \item brak konieczności zmian widoków (pomiędzy edycją surowego tekstu, a widokiem z formatowaniem);
+    \item przełączenia całej zawartości pomiędzy trybem edycji, a trybem użytkowym;
+    \item potrzeby zapisu notatki do wyświetlania formatowania i zawartych załączników.
+\end{compactitem}
+
+Graficzny interfejs użytkownika powinien być przystępny i pozwalać na formatowanie wybranych elementów, podczas gdy pozostała zawartość notatki jest wyświetlana w trybie widoku.
 Do przechowywania zawartości notatek powinna zostać użyta baza danych, jak również odpowiedni format zapisu danych do przechowywania zawartości niebędącej tekstem.
 
 \section{Motywacja}
 
-Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji, która służyłaby mi za brudnopis podczas wielu codziennych czynności. Jestem osobą, która uwielbia tworzyć notatki, prowadzić dzienniki, zapisywać przepisy, tworzyć wszelakie listy, dzielić problemy na mniejsze części i rozpisywać je, jak również wiele innych czynności związanych z prowadzeniem zeszytów. Dzięki temu mogę zawsze sięgać do moich zapisków po moje myśli, pomysły, orgzanizacje w chwilach, gdy są mi potrzebne.
+Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji, pełniącej rolę brudnopisu używanego podczas wielu codziennych czynności. Jestem osobą, która uwielbia 
 
-Dostępne na rynku aplikacje, takie jak Evernote, czy ostatnio używane przeze mnie, proste w użyciu Samsung Notes w wielu aspektach sprawdziło się i przyniosło wiele korzyści. W obu przypadkach interfejs użytkownika jest przejrzysty, a funkcjonalnośc obszerna. Jednak po dłuższym okresie użytkowania tych, oraz innych aplikacji dostrzegam problemy lub braki, które chciałbym w jak największym stopniu wyeliminować.
+\begin{compactitem}
+    \item tworzyć notatki;
+    \item prowadzić dzienniki;
+    \item zapisywać przepisy;
+    \item tworzyć wszelakie listy;
+    \item dzielić problemy na mniejsze części i rozpisywać je;
+\end{compactitem}
+jak również wiele innych czynności związanych z prowadzeniem zeszytów. Dzięki temu mogę zawsze sięgać do zapisków swoich myśli i pomysłów w chwilach, gdy są mi potrzebne.
 
-Z upodobania do języka znaczników Markdown i tego, jakie możliwości w edycji stylów, czy tworzenia różnych nagłówków i elementów notatki oferuje poprzez samą składnię. W przeciwnieństwie do omawianych wyżej aplikacji nie ma potrzeby przeszukiwania opcji w poszukiwaniu przycisków, którymi użytkownik określa typ i wielkość czcionki, przełączania klawiatury na tę zawierającą narzędzia do edycji tekstu, czy wchodzenia w menu aby zaimportować zdjęcia, dodać listy itd. Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wyrenderowanej notatki. Zależało mi na tym, aby notatka była renderowana i edytowana na bieżąco z ewentualnym ukazywaniem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
+Dostępne na rynku aplikacje, takie jak Evernote, czy ostatnio używane przeze mnie proste w użyciu Samsung Notes, w wielu aspektach sprawdziło się i przyniosło wiele korzyści. W obu przypadkach interfejs użytkownika jest przejrzysty, a funkcjonalnośc obszerna. Jednak po dłuższym okresie użytkowania tych, oraz innych aplikacji dostrzegam w nich problemy lub braki, dlatego chciałbym używać notatnika wolnego od nich.
 
-Chciałem stworzyć aplikację, która będzie posiadała szereg wymaganej przeze mnie funkcjonalności, jak na przykład liczniki, abym mógł w trakcie treningu odliczać wykonane serie, alarmów, które odliczałyby przerwy pomiędzy seriami, przycisków informacyjnych otwierających okno dialogowe z informacjami dotyczącymi na przykład wymienianego miejsca, czy edycji styli tekstu za pomocą znaczników, zamiast przycisków, czy odrębnej klawiatury. Aplikacja nie powinna wymagać ode mnie dużego wysiłku do tworzenia zapisków pracując nad implementacją, ucząc się nowych rzeczy, zapisując myśli w nocy zaraz przed spaniem, oraz nie powinna wymagać długiego czasu oczekiwania na uruchomienie i synchronizację danych. Chciałem, aby aplikacja była szybka, prosta i przejrzysta jednocześnie pozwalając użytkownikowi na dodawania, edycję oraz interakcję różnego typu widgetów, alarmów czy powiadomień, aby aplikacja mogła również służyć w stanie, gdy aktualnie nie jest edytowana. W moich intencjach było, aby interfejs użytkownika był dopasowany do moich potrzeb i gustu, aby aplikacja odpowiadała mi pod wieloma względami nie tylko w kwestii oferowanych funkcji, ale również wyglądu, czy rozmieszczeniem i dostępnością funkcji, przycisków, czy widgetów tak, aby te najczęściej używane były najłatwiej dostępne i proste w obsłudze.
+Bardzo lubię korzystać z języka znaczników Markdown. Oferuje on możliwość formatowania tesktu, tworzenia różnych nagłówków i elementów notatki przy użyciu jedynie odpowiedniej składni zawartej w zwykłym tekście. W przeciwnieństwie do omawianych wyżej aplikacji nie trzeba:
+\begin{compactitem}
+    \item przeszukiwania opcji w poszukiwaniu przycisków, którymi użytkownik określa typ i wielkość czcionki;
+    \item przełączania klawiatury na tę zawierającą narzędzia do edycji tekstu;
+    \item czy wchodzenia w menu aby zaimportować zdjęcia, dodać listy itd.
+\end{compactitem} 
+Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wyrenderowanej notatki. Zależało mi na tym, aby notatka była renderowana i formatowaniem na bieżąco z ewentualnym ujawnianiem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
 
-\section{Opis Aplikacji}
+Chciałem stworzyć aplikację, która będzie posiadała szereg wymaganej przeze mnie funkcjonalności, jak na przykład:
+\begin{compactitem}
+    \item liczniki, abym mógł w trakcie treningu odliczać wykonane serie;
+    \item alarmów, które odliczałyby przerwy pomiędzy seriami;
+    \item przycisków informacyjnych otwierających okno dialogowe z informacjami dotyczącymi na przykład wymienianego miejsca;
+    \itme edycji styli tekstu za pomocą znaczników, zamiast przycisków, czy odrębnej klawiatury. 
+\end{compactitem}
+Aplikacja nie powinna wymagać ode mnie dużego wysiłku podczas tworzenia zapisków: 
+\begin{compactitem}
+    \item pracując nad implementacją;
+    \item ucząc się nowych rzeczy;
+    \item zapisując myśli w nocy tuż przed spaniem.
+\end{compactitem}
+Chciałem, aby aplikacja była szybka, prosta i przejrzysta, jednocześnie pozwalając użytkownikowi na dodawanie, edycję oraz interakcję różnego typu widgetów, alarmów czy powiadomień. Wtedy aplikacja może również służyć w stanie, gdy aktualnie nie jest edytowana. W moich intencjach było, aby interfejs użytkownika był dopasowany do moich potrzeb i gustu. Chciałem, by aplikacja odpowiadała mi pod wieloma względami, nie tylko w kwestii oferowanych funkcji, ale również wyglądu, czy rozmieszczenia i dostępności funkcji, przycisków, czy widgetów tak, aby te najczęściej używane były najłatwiej dostępne i proste w obsłudze.
+
+\section{Opis aplikacji MobiNote}
 
 Aplikacja MobiNote służy do zarządzania notatkami w sposób opisany powyżej.
 Głównym zamysłem aplikacji jest pomoc korzystającemu w prowadzeniu, tworzeniu i zapisywaniu notatek, w których skład wchodzi nie tylko tekst, ale również przyciski, obrazy, listy, liczniki i różnego rodzaju pomocne widgety.
@@ -124,6 +159,8 @@ Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
 \include{implementacja}
 
 \include{struktura}
+
+\include{rozwoj}
 
 %%%%% BIBLIOGRAFIA
 
