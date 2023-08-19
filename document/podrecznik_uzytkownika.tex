@@ -1,16 +1,22 @@
-\chapter{Podręcznik Użytkownika}
+\chapter{Podręcznik użytkownika}
 \label{ch:manual}
 
-\section{Strona Domowa}
+\section{Strona główna}
 
-Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę domową. Znajdzie tam swoje notatki i zeszyty wraz z przyciskiem w prawym dolnym rogu służącym do tworzenia nowej notatki, jak również dodatkowe elementy w menu górnego paska, pozwalające na zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
+Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę główną. Znajdzie tam:
+\begin{compactitem}
+    \item swoje notatki i zeszyty;
+    \item przycisk w prawym dolnym rogu służący do tworzenia nowej notatki;
+    \item dodatkowe elementy w menu górnego paska.
+\end{compactitem}
+Elementy w menu górnego paska umożliwiają na zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[height=10cm]{images/strona_domowa.png}
+    \includegraphics[height=9cm]{images/strona_domowa.png}
     \quad\quad
-    \includegraphics[height=10cm]{images/strona_domowa_opcje.png}
-    \caption{Strona domowa aplikacji MobiNote z wybranym motywem \textbf{dark}.}
+    \includegraphics[height=9cm]{images/strona_domowa_opcje.png}
+    \caption{Strona główna aplikacji MobiNote z wybranym motywem \textbf{dark}.}
 \end{figure}
 
 \subsection{Opcja \textit{Choose Theme}}
@@ -18,88 +24,92 @@ Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę domową. Z
 Po uruchomieniu tej opcji wyświetli się okienko dialogowe z wyborem motywu, jakiego użytkownik chciałby użyć. Do wyboru mamy trzy mowtywy: \textbf{dark}, \textbf{light} oraz \textbf{easy}.
 
 Motywy \textbf{dark} oraz \textbf{light} służą, jako główne motywy aplikacji, zachowując te same wielkości elementów tekstu i całej aplikacji.
-Dla osób mających problemy z widocznością tekstu przy domyślnych ustawieniach wielkości i kolorów aplikacji przygotowany został mowtyw \textbf{easy}.
+Dla osób mających problemy z widocznością tekstu przy domyślnych ustawieniach wielkości i kolorów aplikacji przygotowany został motyw \textbf{easy}.
 Motyw ten cechują kontrastujące ze sobą kolory, jak również zwiększone rozmiary czcionek, ikon, przycisków i paska narzędzi.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[height=8.5cm]{images/strona_domowa_motywy.png}
-    \caption{Porównanie motywów na tej samej stronie domowej.}
+    \caption{Porównanie motywów na tej samej stronie głównej.}
 \end{figure}
 
 \subsection{Opcja \textit{Rebuild Database}}
 
-Opcja ta otwiera okno dialogowe z pytaniem o to, czy na pewno chcemy wykonać tę przebudowanie bazy danych. Po zatwierdzeniu baza danych jest usuwana i budowana.
+Opcja ta otwiera okno dialogowe z pytaniem o to, czy na pewno chcemy wykonać operację przebudowy bazy danych. Po zatwierdzeniu baza danych jest usuwana i budowana.
 
 \subsection{Zeszyty}
 
-Pod etykietą \textbf{\textit{Notebooks:}} widnieją dwa przyciski \textbf{Trainings} oraz \textbf{Diet}. Są to roboczo dodane przyciski, które są przygotowane pod rozszerzenie aplikacji w przyszłości o możliwość układania notatek w zeszyty, dla lepszej organizacji, a także wprowadzać etykiety.
-Pomysł ten zostanie omówiony w rozdziale \textbf{Rozszerzenie Funkcjonalnosći aplikacji}.
+Pod etykietą \textbf{\textit{Notebooks}} dostępne są dwa przyciski: \textbf{Trainings} oraz \textbf{Diet}. Są to roboczo dodane przyciski, które są przygotowane pod rozszerzenie aplikacji w przyszłości o możliwość układania notatek w zeszyty, dla lepszej organizacji, a także wprowadzać etykiety.
+Pomysł ten zostanie omówiony w rozdziale \ref{ch:rozwoj}.
 
 \subsection{Notatki}
 
-Kolejnym elementem strony domowej jest lista notatek znajdująca się pod etykietą \textbf{\textit{Recent Notes:}}. Każdy element zawiera tytuł oraz pierwsze cztery surowe linie tekstu(zawierające znaki specjalne styli w przypadku paragrafu będącego tekstem, lub string w formacie JSON reprezentujący widget zawarty w danym paragrafie).
+Kolejnym elementem strony głównej jest lista notatek znajdująca się pod etykietą \textbf{\textit{Recent Notes}}. Każdy element zawiera tytuł oraz pierwsze cztery surowe linie tekstu (zawierające znaki specjalne styli w przypadku akapitu będącego tekstem, lub string w formacie JSON reprezentujący widget zawarty w danym akapitie).
 W prawym górnym rogu elementów znajduje się przycisk \textbf{X} służący do usunięcia danej notatki z bazy danych.
 Po naciśnięciu na dany element użytkownik zostaje przeniesiony do ekranu wyświetlania i edycji wybranej notatki.
 
 W prawym dolnym rogu ekranu widnieje okrągły przycisk z ikoną ołówka.
 Po jego naciśnięciu korzystający zostaje przeniesiony do ekranu edycji, gdzie może stworzyć i zapisać nową notatkę.
 
-\section{Strona Edycji Notatki}
+\section{Edycja notatki}
 
 Po wybraniu notatki, lub przejściu do tworzenia nowej, na ekranie pojawi się strona edycji notatki. Składa się ona z głównego paska strony, paska narzędzi, oraz edytora.
-\subsection{Pasek Strony}
 
-\subsubsection{Przycisk Zapisu i Powrotu}
+\subsection{Pasek strony}
+
+\subsubsection{Przycisk zapisu i powrotu}
 
 Aby wyjść i zapisać notatkę korzystający używa przycisku powrotu.
-Ważnym jest, aby zamiast systemowych przycisków nawigacyjnych użyć właśnie tego przycisku nawigacyjnego, ponieważ wraz z powrotem do strony domowej zapisuje on notatkę, jeśli ta uległa zmianie.
+Ważnym jest, aby zamiast systemowych przycisków nawigacyjnych użyć właśnie tego przycisku nawigacyjnego, ponieważ wraz z powrotem do strony głównej zapisuje on notatkę, jeśli ta uległa zmianie.
 
-Za zmianę notatki unawane są:
+Za zmianę notatki uznawane są:
 
 \begin{compactitem}
-    \item edycja tekstu w paragrafie tekstowym
-    \item edycja widgetu w paragrafie widgetu
+    \item edycja tekstu w akapitie tekstowym
+    \item edycja widgetu w akapitie widgetu
 \end{compactitem}
 \vspace{5mm}
 
-\textbf{WAŻNE!} Nowa notatka nie zostaje utworzona w momencie otwarcia okna edycji, a dopiero poprzez użycie przycisku powrotu pod warunkiem, ze jej tytuł lub zawartość uległy edycji. Oznacza to, że przejście do edycji nowej notatki, a następnie powrót, nie zapiszą pustej notatki, jednak dodanie i usunięcie znaku umożliwią zapis przy powrocie.
+\textbf{WAŻNE!} Nowa notatka nie zostaje utworzona w momencie otwarcia okna edycji, a dopiero poprzez użycie przycisku powrotu pod warunkiem, że jej tytuł lub zawartość uległy zmianie. Oznacza to, że przejście do edycji nowej notatki, a następnie powrót, nie zapiszą pustej notatki, jednak dodanie i usunięcie znaku umożliwią zapis przy powrocie.
 
 \subsubsection{Edytor tytułu}
 
-Jest to pole tekstowe widniejące zaraz obok \textbf{Przycisku zapisu i powrotu}. Służy ono do edycji tytułu notatki.
+Jest to pole tekstowe widniejące zaraz obok ikony przycisku (zapis i powrót). Służy ono do edycji tytułu notatki.
 
 \subsubsection{Przycisk zmiany opcji zapisu}
 
 Ostatnim elementem paska jest \textbf{przycisk zmiany opcji zapisu}. Jest to przycisk typu \textbf{switch} domyślnie ustawiony na true. Każdorazowe kliknięcie zmienia jego logiczną wartość.
 Wartość \textbf{true} oznacza zapis notatki w przypadku jej edycji, natomiast \textbf{false} oznacza brak zapisu stanu notatki, nawet jeśli została ona zmieniona.
 
-\subsection{Pasek Narzędzi}
+\subsection{Pasek narzędzi}
 
 W tym pasku znajdują się przyciski oznaczone ikonami.
-W aktualnej wersji aplikacji dostępne są dwa przyciski: dodanie obrazu(ikona obrazu), oraz dodanie listy(ikona listy).
+W aktualnej wersji aplikacji dostępne są dwa przyciski: dodanie obrazu (ikona obrazu), oraz dodanie listy (ikona listy).
 
 \subsubsection{Dodanie obrazu}
 
-Do zawartości notatki można dodawać również obrazy. Aby to zrobić należy kliknąć przycisk z ikoną obrazu na pasku narzędzi edytora notatki, a następnie wybrać z urządzenia zdjęcie, które ma zostać użyte. Zdjęcie zostanie dodane do notatki.
+Do zawartości notatki można dodawać również obrazy. Aby to zrobić należy kliknąć przycisk z ikoną obrazu na pasku narzędzi edytora notatki, a następnie wybrać z urządzenia zdjęcie, które ma zostać wstawione. Zdjęcie zostanie dodane do notatki.
 
 \subsubsection{Dodanie listy}
 
 Po wybraniu tej opcji na ekranie pojawi się lista złożona początkowo z jednego elementu.
-Jest on domyślnie ustwawiony na typ \textbf{checkbox}. Oznacza to, że jest to wiersz zawierający checkbox oraz puste pole tekstowe.
+Jest on domyślnie ustawiony na typ \textbf{checkbox}. Oznacza to, że jest to wiersz zawierający checkbox oraz puste pole tekstowe.
 
-\subsection{Edytor Strony}
+\subsection{Edytor strony}
 
-Edytor strony zajmuje reszę powierzchni ekranu. Jest polem, w którym następuje edycja tekstu oraz widgetów. Aktualny stan wizualny jest odświeżany na bieżąco, dzięki czemu użytkownik obserwuje zmiany jako efekt końcowy w czasie rzeczywistym.
+Edytor strony zajmuje resztę powierzchni ekranu. Jest polem, w którym następuje edycja tekstu oraz widgetów. Aktualny stan wizualny jest odświeżany na bieżąco, dzięki czemu użytkownik obserwuje zmiany jako efekt końcowy w czasie rzeczywistym.
 
 
 
-\section{Edycja Zawartości Notatki}
+\section{Edycja zawartości notatki}
 
-\subsection{Paragrafy}
+Dla lepszego zrozumienia działania aplikacji MobiNote będą używane sformułowania \textbf{akapit tekstowy} oraz \textbf{akapit widgetów}.
+Są to nazwy opisujące abstrakcję użytą podczas konstruowania struktury aplikacji.
 
-Notatki w aplikacji składają się z paragrafów, które dzielimy na paragrafy tekstowe i paragrafy widgetów.
-Każdy paragraf może przechodzić w jedne z dostępnych trybów.
+\subsection{Akapity}
+
+Notatki w aplikacji składają się z akapitów, które dzielimy na akapity tekstowe i akapity widgetów.
+Każdy akapit może przechodzić w jeden z dostępnych trybów.
 Obecnie wyróżnione są tryby:
 
 \begin{compactitem}
@@ -111,41 +121,41 @@ Obecnie wyróżnione są tryby:
 
 \subsubsection{tryb widoku}
 
-Paragraf istnieje w trybie widoku, kiedy nie jest aktywny.
-Paragraf przechodzi w tryb widoku, w momencie przeniesienia aktywności na inny paragraf(na przykład poprzez kliknięcie).
+Akapit istnieje w trybie widoku, kiedy nie jest aktywny.
+Akapit przechodzi w tryb widoku, w momencie przeniesienia aktywności na inny akapit (na przykład poprzez kliknięcie).
 
 \subsubsection{tryb edycji}
 
-Paragraf przechodzi w tryb edycji, w momencie przeniesienia na niego aktywności.
-Aktywność ta może zostać przeniesiona poprzez kliknięcie na elementy paragrafu, lub w przypadku, gdy jest to paragraf widgetów, a jego następnikiem jest paragraf tekstowy, którego edytujący stara się usunąć.
+Akapit przechodzi w tryb edycji, w momencie przeniesienia na niego aktywności.
+Aktywność ta może zostać przeniesiona poprzez kliknięcie na elementy akapitu, lub w przypadku, gdy jest to akapit widgetów, a jego następnikiem jest akapit tekstowy, którego edytujący stara się usunąć.
 
-\subsubsection{tryb zanzaczenia}
+\subsubsection{tryb zaznaczenia}
 
-Paragraf widgetów przechodzi w tryb zaznaczenia poprzez przytrzymanie jego elementów niebędących polem tekstowym(poniważ pole tekstowe ma już zarezerwowany ten gest na zaznaczanie tekstu).
+Akapit widgetów przechodzi w tryb zaznaczenia poprzez przytrzymanie jego elementów niebędących polem tekstowym (ponieważ pole tekstowe ma już zarezerwowany ten gest na zaznaczanie tekstu).
 
 \subsubsection{tryb niewidoczny}
 
-Paragraf przestaje być widoczny w momencie przejścia edytora w kierunku pionowym wystarczająco do wysunięcia paragrafu poza edytor.
+Akapit przestaje być widoczny w momencie przejścia edytora w kierunku pionowym wystarczająco do wysunięcia akapitu poza edytor.
 
 \pagebreak
 
-\subsection{Edycja Paragrafów Tekstowych}
+\subsection{Edycja akapitów tekstowych}
 
-Każdy tekst zamykany jest w paragrafie tekstowym od początku, aż do znaku końca linii. Oznacza to, że styl, jaki zostanie nadany na początku linii zostanie zaaplikowany na całą linię. Przykładem jest ustawienie paragrafu jako nagłówka.
+Każdy tekst zamykany jest w akapicie tekstowym od początku, aż do znaku końca linii. Oznacza to, że styl, jaki zostanie nadany na początku linii zostanie zaaplikowany na całą linię. Przykładem jest ustawienie akapitu jako nagłówka.
 
 \subsubsection{Dodawanie}
 
-Dodawanie paragrafów tekstowych odbywa się za pomocą klawiatury. W momencie, gdy użytkownik podczas edycji doda znak nowej linii, wówczas utworzy się nowy paragraf, będący następnikiem edytowanego.
+Dodawanie akapitów tekstowych odbywa się za pomocą klawiatury. W momencie, gdy użytkownik podczas edycji doda znak nowej linii, wówczas utworzy się nowy akapit, będący następnikiem edytowanego.
 
-\textbf{Ważne:} Podczas dodawania nowego paragrafu widgetów utworzy się nowy paragraf tekstowy jako jego następnik. Ma to na celu zachowanie możliwości ciągłej pracy z tekstem.
+\textbf{Ważne:} Podczas dodawania nowego akapitu widgetów utworzy się nowy akapit tekstowy jako jego następnik. Ma to na celu zachowanie możliwości ciągłej pracy z tekstem.
 
 \subsubsection{Usuwanie}
 
-Usunąć paragraf tekstowy można poprzez naciśnięcie przycisku \textbf{delete} na samym początku tekstu. Jeśli poprzedni paragraf jest paragrafem tekstowym, wówczas pozostały tekst kopiowany jest na koniec poprzedniego paragrafu.
+Usunąć akapit tekstowy można poprzez naciśnięcie przycisku \textbf{delete} na samym początku tekstu. Jeśli poprzedni akapit jest akapitem tekstowym, wówczas pozostały tekst kopiowany jest na koniec poprzedniego akapitu.
 
 \subsubsection{Ustawianie nagłówka}
 
-Ustawienie nagłówka odbywa się poprzez wstawienie znaku \textbf{\#} na początku linii, przed tekstem.
+Do formatowania tekstu używany jest język znaczników wzorowany na Markdown. Ustawienie nagłówka odbywa się poprzez wstawienie znaku \textbf{\#} na początku linii, przed tekstem.
 
 \subsubsection{Dostępne nagłówki}
 \begin{itemize}
@@ -156,14 +166,13 @@ Ustawienie nagłówka odbywa się poprzez wstawienie znaku \textbf{\#} na począ
     \item nagłówek4 \textbf{\#\#\#\#}
 \end{itemize}
 
-Brak nagłówka oznacza, że dana linia jest zwykłym paragrafem o domyślnej wielkości czcionki i odstępów oraz nie zawiera pogrubienia.
+Brak nagłówka oznacza, że dana linia jest zwykłym akapitem o domyślnej wielkości czcionki i odstępów oraz nie zawiera pogrubienia.
 
 \pagebreak
 
 \subsubsection{Odkrywanie znaków nagłówka}
 
-Edytor posiada funcję odkrywania znaków nagłówka, w celu ułatwienia edycji danego nagłówka. Dzięki temu użytkownik może zobaczyć który aktualnie nagłówek jest wybrany oraz w prosty sposób przechodzić pomiędzy typami nagłówków dodając bądź usuwając znak \textbf{\#}.
-
+Edytor posiada funkcję odkrywania znaków nagłówka, w celu ułatwienia edycji danego nagłówka. Dzięki temu użytkownik może zobaczyć który aktualnie nagłówek jest wybrany oraz w prosty sposób przechodzić pomiędzy typami nagłówków dodając bądź usuwając znak \textbf{\#}.
 
 \begin{figure}[ht]
     \centering
@@ -171,10 +180,10 @@ Edytor posiada funcję odkrywania znaków nagłówka, w celu ułatwienia edycji 
     \caption{Odkryte znaki w edytowanych nagłówkach.}
 \end{figure}
 
-\subsubsection{Ustawianie styli}
+\subsubsection{Ustawianie stylów}
 \label{subsec:ustawianieStyli}
 
-Kolejną rzeczą dostępną w aplikacji MobiNote są style. Użytkownik, chcąc poprawnie nadać style, wprowadza do tekstu symbole specjalne oznaczające konkretne style.
+Kolejną rzeczą dostępną w aplikacji MobiNote są style. Użytkownik, chcąc sformatować tekst w odpowiednim stylu, wprowadza do niego symbole specjalne oznaczające konkretne style.
 Odbywa się to według poniższych zasad:
 
 \begin{itemize}
@@ -185,10 +194,12 @@ Odbywa się to według poniższych zasad:
     
     \item za koniec oznaczenia stylu uznawany jest wzór: \newline
     \verb|[znak niebędący białym znakiem][symbol stylu]|
-    
-    \item style mogą być łączone -- wewnątrz stylu A można dodać styl B
 
-    \item style nie mogą być krzyżowane -- jeśli zaczynamy styl B wewnątrz stylu A, to znak końca stylu B powinien nastąpić przed symbolem końca A. 
+    \item dla każdego znacznika początkowego stylu musi istnieć znacznik końcowy;
+    
+    \item style mogą być łączone -- pomiędzy znacznikami stylu A można dodać znaczniki stylu B;
+
+    \item style nie mogą się przecinać -- jeśli dodajemy znacznik początkowy stylu B pomiędzy znacznikami stylu A, to znacznik końca stylu B powinien nastąpić przed znacznikiem końca stylu A. 
 \end{itemize}
 
 \begin{figure}[ht]
@@ -217,9 +228,9 @@ Każdy dostępny styl tekstu oznaczony jest za pomocą znaków:
     \item [\~{}] \hspace{1mm} -- przekreślenie
 \end{compactitem}
 
-\subsubsection{Odkrywanie znakow specjalnych}
+\subsubsection{Odkrywanie znaków specjalnych}
 
-Edytor tekstu posiada funkcję odwijania stylu w moemncie gdy kursor znajduje się bezpośrednio w środku stylu. Odwijany jest tylko styl, którego jeden ze znaków specjalnych znajduje się najbliżej kursora. Funkcjonalność ta została wprowadzona, aby użytkownik mógł łątwiej edytować i usuwać style.
+Edytor tekstu posiada funkcję odwijania stylu w momencie gdy kursor znajduje się bezpośrednio w środku stylu. Odwijany jest tylko styl, którego jeden ze znaków specjalnych znajduje się najbliżej kursora. Funkcjonalność ta została wprowadzona, aby użytkownik mógł łatwiej edytować i usuwać style.
 Dzięki temu może dostrzec, gdzie konkretnie znajdują się symbole danego stylu w tekście.
 
 
@@ -230,26 +241,24 @@ Dzięki temu może dostrzec, gdzie konkretnie znajdują się symbole danego styl
     \vspace{3mm}
 \end{figure}
 
-\subsubsection{Usuwanie i Edycja styli}
+\subsubsection{Usuwanie i edycja stylów}
 
-Aby usunąć dany styl wystarczy usunąć znaki specjalne danego stylu. Poza odkrytymi znakami reszta jest ukryta, jednak wszystkie znaki nadal występują w tekście. Edytujący może zatem kliknąć bespośrednio przed widoczny początkowy symbol lub poza tekst oznaczony danym stylem i naciskając przycisk \textbf{delete}, na klawiaturze urządzenia, usunąć dany niewidoczny symbol zakończenia stylu.
+Aby usunąć dany styl wystarczy usunąć znaki specjalne danego stylu. Poza odkrytymi znakami reszta jest ukryta, jednak wszystkie znaki nadal występują w tekście. Edytujący może zatem kliknąć bezpośrednio przed widoczny początkowy symbol lub poza tekst oznaczony danym stylem i naciskając przycisk \textbf{delete}, na klawiaturze urządzenia, usunąć dany niewidoczny symbol zakończenia stylu.
 
-\pagebreak
+\subsection{Edycja akapitów widgetów}
 
-\subsection{Edycja Paragrafów Widgetów}
-
-Elementami tych paragrafów są widgety. W aktualnej wersji aplikacji dostępne są dwa widgety, które mogą być bezpośrednimi elementami paragrafów widgetów.
+Elementami tych akapitów są widgety. W aktualnej wersji aplikacji dostępne są dwa widgety, które mogą być bezpośrednimi elementami akapitów widgetów.
 Są to \textbf{obrazy} i \textbf{listy}.
 
 \subsubsection{Dodawanie}
 \label{sub:dodawanieWidgetow}
 
-Dodawanie paragrafów widgetów odbywa się poprzez użycie przycisków z paska narzędzi edytora notatki.
+Dodawanie akapitów widgetów odbywa się poprzez użycie przycisków z paska narzędzi edytora notatki.
 
 \subsubsection{Usuwanie}
 \label{sub:usuwanieWidgetow}
 
-Usunąć paragraf widgetów można poprzez usunięcie jego wszsytkich głównych elementów. W obecnej wersji możliwe jest posiadanie tylko jednego głównego elementu, jednak przewidziane w rozwoju aplikacji jest, aby paragrafy mogły przechowywać i używać większej ilości widgetów, w zależności od rodzajów używanych widgetów.
+Akapit widgetów można usunąć poprzez usunięcie jego wszystkich głównych elementów. W obecnej wersji możliwe jest posiadanie tylko jednego głównego elementu, jednak w planie rozwoju aplikacji przewidziane jest, aby akapity mogły przechowywać i używać większej ilości widgetów, w zależności od rodzajów używanych widgetów.
 
 \subsubsection{Tryb Edycji}
 
@@ -288,11 +297,11 @@ Aby zmienić rozmiar zdjęcia użytkownik musi przejść w tryb edycji poprzez k
 \subsubsection{Usunięcie i zmiana}
 
 Po wejściu w tryb zaznaczenia ukażą się dwie ikony. Ikona usunięcia obrazu oraz ikona zmiany obrazu.
-Wybór pierwszej ikony skutkuje usunięciem obrazu wraz z paragrafem, natomiast drugiej -- przejściem do pamięci urządzenia w celu wyboru zdjęcia.
+Wybór pierwszej ikony skutkuje usunięciem obrazu wraz z akapitem, natomiast drugiej -- przejściem do pamięci urządzenia w celu wyboru zdjęcia.
 
 \subsection{Listy}
 
-Dostępne są różne rodzaje list. Różnią sie one głównie etykietą oraz niewielkimi kwestiami, jak na przykład dostępne przekreślenie i zmiana koloru tekstu przy odznaczonej pozycji.
+Dostępne są różne rodzaje list. Różnią się one głównie etykietą oraz niewielkimi kwestiami, jak na przykład dostępne przekreślenie i zmiana koloru tekstu przy odznaczonej pozycji.
 
 \subsubsection{Edycja}
 
@@ -329,7 +338,7 @@ Użytkownik może zmianić typ wszystkich wierszy w danej liście poprzez przej�
     \item licznik
 \end{itemize}
 
-Aktualnie listy są jednopoziomowe, bez możliwości zmiany wysunięcia od początku wiersza. Możliwość ta jest przewidziana na rozwój aplikacji.
+Aktualnie listy są jednopoziomowe, bez możliwości zmiany wysunięcia od początku wiersza. Możliwość ta jest przewidziana w dalszym rozwoju aplikacji.
 
 \subsubsection{Licznik}
 

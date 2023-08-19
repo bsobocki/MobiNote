@@ -1,10 +1,13 @@
 
 
 \chapter{Rozwój Aplikacji}
+\label{ch:rozwoj}
 
 \section{Struktura Aplikacji}
 
 \subsection{Baza danych}
+
+Rozwój aplikacji oznacza rozwój wielu 
 
 \subsection{Strona główna}
 
@@ -16,15 +19,15 @@
 
 \subsubsection{Lista}
 
-Klasa \textbf{NoteElementListWidget} posiada zmienną \verb|int depth| służącą do określania poziomu głębokości w liście. Ma to na celu określenie wielkości wcięcia, jak również uzywanych etykiet do oznaczania danego elementu(różne znaki, numeracja itd).
+Klasa \textbf{NoteElementListWidget} posiada zmienną \verb|int depth| służącą do określania poziomu głębokości w liście. Ma to na celu określenie wielkości wcięcia, jak również używanych etykiet do oznaczania danego elementu(różne znaki, numeracja itd).
 
-Dodatkowym elmenetem do edycji listy jest możliwość własnej definicji etykiet w liście. Będzie to ograniczone do pewnej głębokości. W zależności od głębokości, użytkownik będzie mógł zdefiniować symbol lub napis, który będzie używany jako etykieta.
+Dodatkowym elemnetem do edycji listy jest możliwość własnej definicji etykiet w liście. Będzie to ograniczone do pewnej głębokości. W zależności od głębokości, użytkownik będzie mógł zdefiniować symbol lub napis, który będzie używany jako etykieta.
 
 \subsection{Widgety wewnętrzne w tekście}
 
 Aktualnie w kodzie przygotowane są miejsca do parsowania widgetów wewnętrznych w tekście. Przygotowane są definicje wzorów w tekście, które miałyby zostać przekonwertowane w widgety.
 
-Widgetami wewnętrzymi są między innymi:
+Widgetami wewnętrznymi są między innymi:
 
 \begin{compactitem}
     \item linki stron internetowych
@@ -44,9 +47,9 @@ Przygotowane również zostały obiekty typu \textbf{NoteWidgetData} oraz miejsc
 Planowanymi dodatkowymi widgetami są między innymi:
 
 \begin{compactitem}
-    \item notatka głosowa(zobacz \hyperlink{sec:glosowaNotatka}{Nagrywanie głosowej notatki})
+    \item notatka głosowa (zobacz \hyperlink{sec:glosowaNotatka}{Nagrywanie głosowej notatki})
     \item tabele
-    \item 
+    
 \end{compactitem}
 
 \subsection{Interakcja widgetów}
