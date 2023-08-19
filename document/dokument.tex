@@ -53,7 +53,7 @@
 
 Celem projektu jest wytworzenie aplikacji mobilnej do zarządzania notatkami w interaktywny sposób.
 Aplikacja ma umożliwić użytkownikowi prowadzenie i tworzenie notatek pozwalających na formatowanie tekstu i dołączanie załączników.
-Formatowanie tekstu wzorowane będzie na języku naczników Markdown. Główną różnicą w stosunku do edytorów używających tego typu formatowania tekstu będą:
+Formatowanie tekstu wzorowane będzie na języku znaczników Markdown. Główną różnicą w stosunku do edytorów używających tego typu formatowania tekstu będą:
 \begin{compactitem}
     \item brak konieczności zmian widoków (pomiędzy edycją surowego tekstu, a widokiem z formatowaniem);
     \item przełączenia całej zawartości pomiędzy trybem edycji, a trybem użytkowym;
@@ -76,26 +76,27 @@ Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji, pełniącej
 \end{compactitem}
 jak również wiele innych czynności związanych z prowadzeniem zeszytów. Dzięki temu mogę zawsze sięgać do zapisków swoich myśli i pomysłów w chwilach, gdy są mi potrzebne.
 
-Dostępne na rynku aplikacje, takie jak Evernote, czy ostatnio używane przeze mnie proste w użyciu Samsung Notes, w wielu aspektach sprawdziło się i przyniosło wiele korzyści. W obu przypadkach interfejs użytkownika jest przejrzysty, a funkcjonalnośc obszerna. Jednak po dłuższym okresie użytkowania tych, oraz innych aplikacji dostrzegam w nich problemy lub braki, dlatego chciałbym używać notatnika wolnego od nich.
+Dostępne na rynku aplikacje, takie jak Evernote, czy ostatnio używane przeze mnie proste w użyciu Samsung Notes, w wielu aspektach sprawdziło się i przyniosło wiele korzyści. W obu przypadkach interfejs użytkownika jest przejrzysty, a funkcjonalność obszerna. Jednak po dłuższym okresie użytkowania tych, oraz innych aplikacji dostrzegam w nich problemy lub braki, dlatego chciałbym używać notatnika wolnego od nich.
 
-Bardzo lubię korzystać z języka znaczników Markdown. Oferuje on możliwość formatowania tesktu, tworzenia różnych nagłówków i elementów notatki przy użyciu jedynie odpowiedniej składni zawartej w zwykłym tekście. W przeciwnieństwie do omawianych wyżej aplikacji nie trzeba:
+Bardzo lubię korzystać z języka znaczników Markdown. Oferuje on możliwość formatowania tekstu, tworzenia różnych nagłówków i elementów notatki przy użyciu jedynie odpowiedniej składni zawartej w zwykłym tekście. W przeciwieństwie do omawianych wyżej aplikacji nie trzeba:
 \begin{compactitem}
     \item przeszukiwania opcji w poszukiwaniu przycisków, którymi użytkownik określa typ i wielkość czcionki;
     \item przełączania klawiatury na tę zawierającą narzędzia do edycji tekstu;
     \item czy wchodzenia w menu aby zaimportować zdjęcia, dodać listy itd.
 \end{compactitem} 
-Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wyrenderowanej notatki. Zależało mi na tym, aby notatka była renderowana i formatowaniem na bieżąco z ewentualnym ujawnianiem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
+Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wygenerowanej notatki. Zależało mi na tym, aby notatka była renderowana i formatowaniem na bieżąco z ewentualnym ujawnianiem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
 
 Chciałem stworzyć aplikację, która będzie posiadała szereg wymaganej przeze mnie funkcjonalności, jak na przykład:
 \begin{compactitem}
     \item liczniki, abym mógł w trakcie treningu odliczać wykonane serie;
     \item alarmów, które odliczałyby przerwy pomiędzy seriami;
     \item przycisków informacyjnych otwierających okno dialogowe z informacjami dotyczącymi na przykład wymienianego miejsca;
-    \itme edycji styli tekstu za pomocą znaczników, zamiast przycisków, czy odrębnej klawiatury. 
+    \item edycji stylów tekstu za pomocą znaczników, zamiast przycisków;
+    \item odrębnej klawiatury. 
 \end{compactitem}
 Aplikacja nie powinna wymagać ode mnie dużego wysiłku podczas tworzenia zapisków: 
 \begin{compactitem}
-    \item pracując nad implementacją;
+    \item pracując nad projektem;
     \item ucząc się nowych rzeczy;
     \item zapisując myśli w nocy tuż przed spaniem.
 \end{compactitem}
@@ -103,55 +104,67 @@ Chciałem, aby aplikacja była szybka, prosta i przejrzysta, jednocześnie pozwa
 
 \section{Opis aplikacji MobiNote}
 
-Aplikacja MobiNote służy do zarządzania notatkami w sposób opisany powyżej.
+Aplikacja MobiNote służy do tworzenia i zarządzania notatkami w sposób opisany powyżej.
 Głównym zamysłem aplikacji jest pomoc korzystającemu w prowadzeniu, tworzeniu i zapisywaniu notatek, w których skład wchodzi nie tylko tekst, ale również przyciski, obrazy, listy, liczniki i różnego rodzaju pomocne widgety.
 Aplikacja umożliwia tworzenie i utrzymywanie brudnopisu używanego podczas codziennych czynności, jak również przejrzystych, dopracowanych i przystępnych  notatek.
 
 Wytworzone notatki mogą być używane w formie brudnopisu, między innymi podczas: treningu na siłowni, organizacji przyjęcia, nauki z wykorzystaniem sesji pomodoro, tworzeniu listy zakupów oraz wielu innych codziennych czynności.
 
-Mogą także w przyjemny dla oka sposób przechowywać i wyświetlać informacje przygotowane w celu tworzenia dziennika, notatek do nauki, spisu pomysłów i ważnych myśli, czy tworzenia różnego rodzaju list i opisów, takich jak lista miejsc, które użytkownik chciałby odwiedzić wraz z opisem i zdjęciami miejsc, które chciałby tam zobaczyć.
+Mogą także w przyjemny dla oka sposób przechowywać i wyświetlać informacje przygotowane w celu:
+\begin{compactitem}
+ \item tworzenia dziennika;
+ \item notatek do nauki;
+ \item spisu pomysłów i ważnych myśli,
+ \item tworzenia różnego rodzaju list i opisów.
+\end{compactitem}
+ Przykładem może być lista miejsc, które użytkownik chciałby odwiedzić wraz z opisem i zdjęciami miejsc, które chciałby tam zobaczyć.
 
-Interaktywność notatki jest zapewniana poprzez możliwość tworzenia zawartości na bierząco za pomocą klawiatury i dostępnego interfejsu użytkownika.
-Uzytkownik może tworzyć styl tekstu za pomocą znaczników dodawanych wewnątrz tekstu w odpowiednich miejscach, podobnie do języka znaczników Markdown.
-Dodawając odpowiednie znaczniki w tekście można ustawić wielkość czcionki w danym paragrafie, kursywe, podkreślenie, przekreślenie, a także pogrubienie.
-Tekst jest automatycznie dostosowywany wraz z dodaniem znaczników, co pozawala na bierząco obserwować i dostosowywać style i wielkości czcionki do potrzeb korzystającego.
+Interaktywność notatki jest zapewniana poprzez możliwość tworzenia zawartości na bieżąco za pomocą klawiatury i dostępnego interfejsu użytkownika.
+Użytkownik może tworzyć styl tekstu za pomocą znaczników dodawanych wewnątrz tekstu w odpowiednich miejscach, podobnie do języka znaczników Markdown.
+Dodając odpowiednie znaczniki w tekście można ustawić wielkość czcionki w danym paragrafie, kursywę, podkreślenie, przekreślenie, a także pogrubienie.
+Tekst jest automatycznie dostosowywany wraz z dodaniem znaczników, co pozawala na bieżąco obserwować i dostosowywać style i wielkości czcionki do potrzeb korzystającego.
 
-Notatki będą zapisywane głównie lokalnie, co pozwoli zaoszczędzić czas ładowania, jak również pominąć problemy związane z synchronizacją.
+Notatki będą zapisywane lokalnie, co pozwoli zaoszczędzić czas ładowania, jak również pominąć problemy związane z synchronizacją.
 
-Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny(\textbf{dark}), jasny(\textbf{light}) oraz ułatwiający użytkowanie(\textbf{easy}) dla osób widzących słabiej.
+Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny (\textbf{dark}), jasny (\textbf{light}) oraz ułatwiający użytkowanie (\textbf{easy}) dla osób słabowidzących.
 
 \chapter{Instalacja}
 
 Kod żródłowy aplikacji wraz plikiem \textbf{.apk} można uzyskać pobierając repozytorium \textbf{MobiNote} pod linkiem:
 \url{https://github.com/bsobocki/MobiNote}.
 
-\subsubsection{Aplikacje z nieznanych źródeł}
-Do zaintalowania aplikacji potrzbna jest możliwość instalowania nieznanych aplikacji za pomocą menadżera plików.
-Aby ją uruchomić, należy:
+\subsection{Android}
+
+Aplikacja MobiNote dostępna i testowana jest na urządzenia android. Do instalowania aplikacji, dla urządzeń posiadających system Android, Google wprowadziło \textbf{Sklep Play}. Oferuje on możliwości sprawdzenia aplikacji pod względem niechcianych zachowań, czy instalacji złośliwego oprogramowania. Aplikacje są instalowane za pomocą dostępnego interfejsu użytkownika. Domyślne ustawienia urządzenia pozwalają wyłącznie na instalacje aplikacji z zaufanego źródła, jakim jest wspomniany \textbf{Sklep Play}.
+
+Istnieje również możliwość instalacji aplikacji bez użycia oferowanego rozwiązania opisanego powyżej. Użytkownik posiadając plik o rozszerzeniu \textbf{.apk} może zainstalować za jego pośrednictwem aplikację. Użytkownik robi to na własną odpowiedzialność, dlatego ważne, żeby aplikacja pochodziła z zaufanego źródła. Aby to zrobić, należy wyłączyć blokadę instalowania aplikacji z nieznanych źródeł.
+
+\subsection{Instalacja aplikacje z nieznanych źródeł}
+Do zainstalowania aplikacji MobiNote potrzebna jest wyłączona blokada instalacji aplikacji z nieznanych źródeł dla menadżera plików.
+W tym celu należy:
 \begin{compactitem}
     \item otworzyć \textbf{Ustawienia}
     \item w \textbf{Ustawieniach} przejść do sekcji \textbf{Aplikacje}
-    \item następnie kliknąć na ikone menu (trzy kropki w prawym górnym rogu)
+    \item następnie kliknąć na ikonę menu (trzy kropki w prawym górnym rogu)
     \item przejść do opcji \textbf{Dostęp specjalny}
     \item następnie \textbf{Zainstaluj nieznane aplikacje}
     \item wybrać menadżera plików i włączyć dla niego tę opcję
 \end{compactitem}
 
-\textbf{Ważne!} Dla bezpieczeństwa po zainstalowaniu aplikacji warto ponownie wyłączyć możliwość instalowania aplikacji z nienzanych źródeł, jeśli więcej aplikacji nie będzie w ten sposób instalowane.
+\textbf{Ważne!} Dla bezpieczeństwa po zainstalowaniu aplikacji warto ponownie wyłączyć możliwość instalowania aplikacji z nieznanych źródeł, jeśli więcej aplikacji nie będzie w ten sposób instalowane.
 
 \subsubsection{Instalacja z pliku apk-release.apk}
 
-Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android:
-
+Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android należy:
 \begin{compactitem}
     \setlength\itemsep{0mm}
-    \item pobirać repozytorium za pomocą polecenia
+    \item pobrać repozytorium za pomocą polecenia
     \newline
     \verb|git clone git@github.com:bsobocki/MobiNote.git|
-    \item podłączyć urządzenie i przenieść pliki \textbf{apk-release.apk} do wybranego przez siebie miejsca docelowego na urządzeniu
-    \item włączyć możliwość instalacji nienzanych aplikacji (szczegóły powyżej)
-    \item w menagerze plików znaleźć miejsce docelowe pliku \textbf{apk-release.apk} i uruchomić
-    \item kliknąć \textbf{Zaintaluj}
+    \item podłączyć urządzenie i przenieść pliki \textbf{apk-release.apk} do wybranego przez siebie miejsca docelowego na urządzeniu;
+    \item włączyć możliwość instalacji nieznanych aplikacji (szczegóły powyżej);
+    \item w managerze plików znaleźć miejsce docelowe pliku \textbf{apk-release.apk} i uruchomić;
+    \item kliknąć \textbf{Zainstaluj}.
 \end{compactitem}
 
 \include{podrecznik_uzytkownika}
