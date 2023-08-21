@@ -1,6 +1,6 @@
-\chapter{Struktura Aplikacji}
+\chapter{Struktura aplikacji MobiNote}
 
-Struktura aplikacji została częściowo opisana w rozdziale \hyperref[ch:manual]{\textbf{Podręcznik użytkownika}}.
+Struktura aplikacji MobiNote została częściowo opisana w rozdziale \ref{ch:manual}.
 
 \section{Edytor notatki}
 
@@ -8,34 +8,34 @@ Edytor notatki składa się z edytora tytułu znajdującego się w głównym pas
 
 \subsection{Zarządzanie zawartością}
 
-Do zarządzania zawartością notatki używana jest klasa \textbf{NoteParagraphs} przechowująca listę obiektów typu \textbf{NoteParagraph} reprezentujących paragrafy notatki.
+Do zarządzania zawartością notatki używana jest klasa \textbf{NoteParagraphs} przechowująca listę obiektów typu \textbf{NoteParagraph} reprezentujących akapity notatki.
 Współpracę tych klas można przedstawić w uproszczony sposób za pomocą schematu:
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{images/ContentEditor_podzial.png}
-    \caption{Uproszczony schemat zarządzania paragrafami.}
+    \caption{Uproszczony schemat zarządzania akapitami.}
 \end{figure}
 
 \newpage
 
-\subsection{Paragrafy}
+\subsection{Akapity}
 
-Istanieją trzy typy paragrafów w edytorze dziedziczące po \textbf{NoteParagraph}: 
+Istnieją trzy typy akapitów w edytorze dziedziczące po \textbf{NoteParagraph}: 
 \begin{itemize}
     \item \textbf{NoteParagraphTextEditor},
     \item \textbf{NoteParagraphWidget},
     \item \textbf{NoteParagraphPlaceholder}
 \end{itemize}
 
-Każdy z paragrafów posiada unikalny identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
-Pozwala to na unikalne identyfikowanie paragrafów wewnątrz listy, oraz wszystkich utworzonych widgetów w obrębie przestrzenii edytora.
+Każdy z akapitów posiada unikalny identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
+Pozwala to na unikalne identyfikowanie akapitów wewnątrz listy, oraz wszystkich utworzonych widgetów w obrębie przestrzeni edytora.
 
-Używane są również mechanizmy wywołań zwrotnych(callbacks) do zgłaszania aktywności(focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy paragrafów, na podstawie swojego id, gdy wszystkie jego elementy zostaną usunięte.
+Używane są również mechanizmy wywołań zwrotnych (callbacks) do zgłaszania aktywności (focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy akapitów, na podstawie swojego id, gdy wszystkie jego elementy zostaną usunięte.
 
 \subsubsection{NoteParagraphTextEditor}
 
-Służy do przechowywania, wyświetlania i edycji tekstu notatki. Posiada mechanizmy dynamicznej zmiany rozmiaru poprzez manipulację stanem oraz wartościami wewnętrznych pól. Posiada tylko jeden element, którym jest pole tekstowe z niestandardowym kontrolerem parsującym tekst przy użyciu własnego parsera.
+Służy do przechowywania, wyświetlania i edycji tekstu notatki. Posiada mechanizmy dynamicznej zmiany rozmiaru poprzez manipulację stanem oraz wartościami wewnętrznych pól. Posiada tylko jeden element, którym jest pole tekstowe z niestandardowym kontrolerem \textit{NoteTextEditingController} parsującym tekst przy użyciu własnego parsera.
 
 \subsubsection{NoteParagraphWidget}
 
@@ -43,7 +43,7 @@ Służy do przechowywania, wyświetlania i edycji widgetów notatki. Posiada mec
 
 \subsubsection{NoteParagraphPlaceholder}
 
-Służy jako wypełnienie pozostałej przestrzeni edytora. Po kliknięciu na niego uruchamia mechanizm przenoszenia aktywności(focus) na ostatni paragraf na liście, dzięki czemu użytkownik nie musi znać wielkości i szukać ostatniego paragrafu, aby kontynuować edycję notatki.
+Służy jako wypełnienie pozostałej przestrzeni edytora. Po kliknięciu na niego uruchamia mechanizm przenoszenia aktywności (focus) na ostatni akapit na liście, dzięki czemu użytkownik nie musi znać wielkości i szukać ostatniego akapitu, aby kontynuować edycję notatki.
 
 
 \section{Widgety}
@@ -55,13 +55,13 @@ W aktualnej wersji aplikacji widgety dzielą się na widgety główne będące b
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{images/struktura_widgetow_w_notatce.png}
-    \caption{Struktura widgetów w zawartości notatki w aktualnej wersji aplikacji.}
+    \caption{Struktura widgetów zawartości notatki w aktualnej wersji aplikacji.}
     \label{fig:struktura-widgetow}
 \end{figure}
 
 \subsection{Tworzenie widgetów}
 
-Widgety tworzone są poprzez interakcję z użyciem interfejsu użytkownika(patrz \hyperref[sub:dodawanieWidgetow]{\textbf{Dodawanie widgetow}}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych.
+Widgety tworzone są poprzez interakcję z użyciem interfejsu użytkownika (patrz \ref{sub:dodawanieWidgetow}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych.
 
 \begin{figure}[ht]
     \centering
@@ -72,7 +72,7 @@ Widgety tworzone są poprzez interakcję z użyciem interfejsu użytkownika(patr
 
 \subsection{Usuwanie widgetów}
 
-Widgety usuwane są poprzez interakcję użytkownika z dostępnym interfejsem graficznym po przejściu w tryb zaznaczenia(patrz \hyperref[sub:usuwanieWidgetow]{\textbf{Usuwanie widgetow}}). Widgety usuwane są w swoich rodzicach, a jeśli brakuje widgetów potomnych, wówczas widget listy bądź paragraf widgetów zostaje usunięty.
+Widgety usuwane są poprzez interakcję użytkownika z dostępnym interfejsem graficznym po przejściu w tryb zaznaczenia (patrz \ref{sub:usuwanieWidgetow}). Widgety usuwane są w swoich rodzicach, a jeśli brakuje widgetów potomnych, wówczas widget listy bądź akapit widgetów zostaje usunięty.
 
 \section{Praca z tekstem}
 
@@ -80,68 +80,68 @@ Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \text
 
 \subsection{Edycja Tekstu}
 
-Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy(lewa i prawa strona) jako stałą wartość, oraz padding pionowy(góra, dół) obliczany na podstawie różnicy pomiędzy wielkoścą czcionki użytej w danym paragrafie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej(w przypadku, gdy dany paragraf nie ma ustawionego nagłówka, nie chcemy braku odstępu między paragrafami z powodu zerowego paddingu pionowego).
+Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy (lewa i prawa strona) jako stałą wartość, oraz padding pionowy (góra, dół) obliczany na podstawie różnicy pomiędzy wielkoścą czcionki użytej w danym akapicie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej (w przypadku, gdy dany akapit nie ma ustawionego nagłówka, nie chcemy braku odstępu między akapitami z powodu zerowego paddingu pionowego).
 
-Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie paragrafu. Stan ten określa się poprzez wielkośc czcionki i stylów tekstu użytych w paragrafie.
+Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie akapitu. Stan ten określa się poprzez wielkośc czcionki i stylów tekstu użytych w akapicie.
 
 \subsubsection{Dodawanie tekstu}
 
-Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne(callback), zainicjalizowane przy tworzeniu danego paragrafu przez \textbf{NoteParagraphs}, do dodawania nowego paragrafu. Wywołanie to przyjmuje identyfikator danego paragrafu i na tej podstawie oblicza miejsce w liście do którego należy włożyć nowopowstały paragraf. Przy tworzeniu nowego paragrafu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
+Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne (callback), zainicjalizowane przy tworzeniu danego akapitu przez \textbf{NoteParagraphs}, do dodawania nowego akapitu. Wywołanie to przyjmuje identyfikator danego akapitu i na tej podstawie oblicza miejsce w liście do którego należy włożyć nowopowstały akapit. Przy tworzeniu nowego akapitu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
 
 \subsubsection{Usuwanie tekstu}
 \label{eq:usuwanieTekstu}
 
-Flutter nie oferuje możliwości przechwycenia zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwycenia zdarzenia edycji tekstu w paragrafie.
+Flutter nie oferuje możliwości przechwycenia zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwycenia zdarzenia edycji tekstu w akapicie.
 
-W każdym paragrafie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik, którego brak na początku tekstu podczas sprawdzania tekstu po edycji, mówi o potrzebie usunięcia paragrafu.
+W każdym akapicie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik, którego brak na początku tekstu podczas sprawdzania tekstu po edycji mówi o potrzebie usunięcia akapitu.
 
-Gdy użytkownik zechce usunąć paragraf, wówczas przenosi się kliknięciem na początek wiersza(o ile już się na nim nie znajduje), a następnie naciska przycisk \textbf{delete}. Dzięki temu usuwa \verb|placeholder|, a przy tym wywoływany jest callback służący do usunięcia paragrafu. Jako argument przyjmuje identyfikator paragrafu, aby określić miejsce usunięcia.
+Gdy użytkownik zechce usunąć akapit, wówczas przenosi się kliknięciem na początek wiersza (o ile już się na nim nie znajduje), a następnie naciska przycisk \textbf{delete}. Dzięki temu usuwa \verb|placeholder|, a przy tym wywoływany jest callback służący do usunięcia akapitu. Jako argument przyjmuje identyfikator akapitu, aby określić miejsce usunięcia.
 
-Aby uniknąć kliknięcia na początek linii, przed wartownika, dodany został mechanizm zmiany pozycji kursora na drugi znak(bezpośrednio za wartownikiem) za każdym razem gdy jest on na pozycji zerowej.
+Aby uniknąć kliknięcia na początek linii, przed wartownika, dodany został mechanizm zmiany pozycji kursora na drugi znak (bezpośrednio za wartownikiem) za każdym razem gdy jest on na pozycji zerowej.
 
-\subsection{Wyświetlanie tesktu}
+\subsection{Wyświetlanie tekstu}
 
-Do wyświetlania stylizowanego tekstu używane są obiekty typu \textbf{TextSpan}. Obiekty te posiadają drzewiastą strukturę, ponieważ mogą zawierać dzieci tego samego typu, które będą dziedziczyć dane parametry stylu, o ile nie zostaną dla nich specjalnie zainicjalizowane. Daje to możliwość zorganizowania tesktu bez potrzeby dzielenia go na małe kawałki oraz nadawania za każdym razem łączonych styli(gdyby obiekty \textbf{TextSpan} były przechowywane jako elementy jednej listy). Można zainicjalizować jeden styl wewnątrz drugiego, co bardzo upraszcza strukturę i pozwala na wprowadzanie globalnych zmian struktury(jak na przykład wielkość czcionki całego paragrafu) tylko w korzeniu, zapewniając, że wszystkie części tekstu odziedziczą zmianę.
+Do wyświetlania stylizowanego tekstu używane są obiekty typu \textbf{TextSpan}. Obiekty te posiadają drzewiastą strukturę, ponieważ mogą zawierać dzieci tego samego typu, które będą dziedziczyć dane parametry stylu, o ile nie zostaną dla nich specjalnie zainicjalizowane. Daje to możliwość zorganizowania tekstu bez potrzeby dzielenia go na małe kawałki oraz nadawania za każdym razem łączonych stylów (gdyby obiekty \textbf{TextSpan} były przechowywane jako elementy jednej listy). Można zainicjalizować jeden styl wewnątrz drugiego, co bardzo upraszcza strukturę i pozwala na wprowadzanie globalnych zmian struktury (jak na przykład wielkość czcionki całego akapitu) tylko w korzeniu, zapewniając, że wszystkie części tekstu odziedziczą zmianę.
 
-Aktualizacja i renderowanie wyglądu pola tekstowego na bieżąco jest możliwe poprzez wykorzystanie klasy \textbf{TextEditingController}. Posiada ona metodę \textbf{buildTextSpan}, która służy do budowania wyglądu i stylu tekstu poprzez obiekty \textbf{TextSpan}. Dzieczicząc z tej klasy i nadpisując metodę \textbf{buildTextSpan} mogłem użyć parsera tekstu zawierającego znaczniki do przekonwertowania go na stylizowany tekst.
+Aktualizacja i renderowanie wyglądu pola tekstowego na bieżąco jest możliwe poprzez wykorzystanie klasy \textbf{TextEditingController}. Posiada ona metodę \textbf{buildTextSpan}, która służy do budowania wyglądu i stylu tekstu poprzez obiekty \textbf{TextSpan}. Dziedzicząc z tej klasy i nadpisując metodę \textbf{buildTextSpan} mogłem użyć parsera tekstu zawierającego znaczniki do przekonwertowania go na stylizowany tekst.
 Dzięki temu przy każdej zmianie tekst jest parsowany, a jego wygląd aktualizowany.
 
 Utworzony w ten sposób \textbf{NoteTextEditingController} może nie tylko używać parsera do tworzenia obiektów \textbf{TextSpan}, ale również mógł zostać rozszerzony o dodatkowe parametry, takie jak:
 
 \begin{compactitem}
-    \item callback \textbf{resizeTextField} wołany podczas parsowania, gdy wielkość czcionki w tekście ulega zmianie, 
-    \item możliwość przechowywania informacji o tym, czy dany paragraf jest aktualnie w użyciu,
+    \item callback \textbf{resizeTextField} wołany podczas parsowania, gdy wielkość czcionki w tekście ulega zmianie;
+    \item możliwość przechowywania informacji o tym, czy dany akapit jest aktualnie w użyciu;
     \item sprawdzanie i manipulacja pozycją kursora.
 \end{compactitem}
 
 Callback \textbf{resizeTextField} został użyty w kontrolerze, zamiast w widgecie pola tekstowego, ponieważ wtedy wystarczy parsować tekst jednokrotnie. Przed samym zwróceniem drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego w jego korzeniu, zamiast edytować zawartość widgetu w innych mechanizmach i tak czy inaczej parsować dodatkowo tekst w poszukiwaniu informacji na temat wielkości czcionki.
 
-Informacja na temat aktualnego użycia paragrafu jest używana do wyświetlania i ukrywania znaczników stylu nagłówka.
+Informacja na temat aktualnego użycia akapitu jest używana do wyświetlania i ukrywania znaczników stylu nagłówka.
 
-Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby kursor nie znajdował się przed znakiem \verb|placeholder|(zobacz \hyperref[eq:usuwanieTekstu]{Usuwanie tekstu}).
+Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby kursor nie znajdował się przed znakiem \verb|placeholder|(zobacz \ref{eq:usuwanieTekstu}).
 
-Przy każdej zmianie tekstu odświeżany jest widok paragrafu, dlatego wystarczy zmienić wartość zmiennej odpowiadającej za jego rozmiar przed końcem całej operacji związanej z przetwarzaniem nowego tekstu.
+Przy każdej zmianie tekstu odświeżany jest widok akapitu, dlatego wystarczy zmienić wartość zmiennej odpowiadającej za jego rozmiar przed końcem całej operacji związanej z przetwarzaniem nowego tekstu.
 %https://api.flutter.dev/flutter/widgets/TextEditingController/buildTextSpan.html
 
 \subsection{Problem parsowania tekstu ze znacznikami stylu}
 
-Do wyświetlania stylizowanego tekstu potrzebne jest jego parswoanie. Funkcjonalnośc ta, będzie wołana stosunkowo często, a dla długich tekstów bez znaku nowej linii będzie to długi do obsługi tekst. Dlatego też ważny jest sposób implementacji.
+Do wyświetlania stylizowanego tekstu potrzebne jest jego parsowanie. Funkcjonalność ta, będzie wołana stosunkowo często, a dla długich tekstów bez znaku nowej linii będzie to długi do obsługi tekst. Dlatego też ważny jest sposób implementacji.
 
 Zrealizowanym pomysłem rozwiązania problemu jest podział parsowania tekstu na trzy etapy:
 \begin{enumerate}
     \setlength\itemsep{0mm}
-    \item przkształcanie znaczników stylu w tekście na \textbf{znaki unicode}
-    \item parsowanie tekstu ze \textbf{znakami unicode} na specjalną drzewiastą reprezentację \textbf{SpanInfo}
-    \item konwersja struktury \textbf{SpanInfo} na obiekt \textbf{TextSpan}
+    \item przekształcanie znaczników stylu w tekście na \textbf{znaki unicode};
+    \item parsowanie tekstu ze \textbf{znakami unicode} na specjalną drzewiastą reprezentację \textbf{SpanInfo};
+    \item konwersja struktury \textbf{SpanInfo} na obiekt \textbf{TextSpan}.
 \end{enumerate}
 
 \subsection{Implementacja Parsera}
 
 \subsubsection{Własna implementacja}
 
-Parser wraz z jego strukturą został zaprojektowany i zaimplementowany przeze mnie, zamiast przy użyciu narzędzi generowania parsera dla opisanej gramatyki użwanego przeze mnie języka znaczników. Powodem tego jest potrzeba łatwego rozwoju oraz wprowadzenia niestandardowych rozwiązań i dodatkowych funkcjonalności niebędących częścią samej składni gramatyki, jednak potrzebnych wewnątrz implementacji parsera.
+Parser wraz z jego strukturą został zaprojektowany i zaimplementowany przeze mnie, zamiast przy użyciu narzędzi generowania parsera dla opisanej gramatyki używanego przeze mnie języka znaczników. Powodem tego jest potrzeba łatwego rozwoju oraz wprowadzenia niestandardowych rozwiązań i dodatkowych funkcjonalności niebędących częścią samej składni gramatyki, jednak potrzebnych wewnątrz implementacji parsera.
 
-Własna implementacja parsera pozwoliła mi od początku do końca zaprojektować i zrozumieć jego strukturę co pozwoliło mi tworzyć elastyczne środowisko rozwoju tekstu w notatkach. Przykładowo wprowadzanie funkcji odkrywania i ukrywania znaczników stylu oraz nagłówka, bądź dodanie wywołania zwrotnego zmieniającego rozmiar pola tekstowego, było prostym zabiegiem niewymagającym dużych zmian i rozrzerzeń kodu parsera.
+Własna implementacja parsera pozwoliła mi od początku do końca zaprojektować i zrozumieć jego strukturę co pozwoliło mi tworzyć elastyczne środowisko rozwoju tekstu w notatkach. Przykładowo wprowadzanie funkcji odkrywania i ukrywania znaczników stylu oraz nagłówka, bądź dodanie wywołania zwrotnego zmieniającego rozmiar pola tekstowego, było prostym zabiegiem niewymagającym dużych zmian i rozszerzeń kodu parsera.
 
 \subsubsection{Parsowanie}
 
@@ -168,7 +168,7 @@ const elementUnicodeNumber = 0xe1A0;
 const paragraphUnicodeNumber = 0xe200;
 \end{lstlisting}
 
-Oznaczają odpowiednio początki przestrzeni znaczników: stylu tekstu, wewnętrznych widgetów i elementów w tekście oraz nagłówków paragrafu.
+Oznaczają odpowiednio początki przestrzeni znaczników: stylu tekstu, wewnętrznych widgetów i elementów w tekście oraz nagłówków akapitu.
 Znaczniki początkowe mają parzyste numery, natomiast znaczniki końcowe mają nieparzyste numery następujące po odpowiadających im znacznikach początkowych.
 
 \newpage
@@ -191,7 +191,7 @@ Dzięki swojej budowie struktura może zostać przekonwertowana w prosty sposób
 
 \subsubsection{StyledTextToUtfConverter}
 
-Przekształcanie znaczników odbywa się poprzez przejście przez tekst w ich poszukiwaniu i przetwarzaniu. Znaczniki dzielone są na początkowe i końcowe(zobacz: \hyperref[subsec:ustawianieStyli]{Ustawianie styli}). Podczas sprawdzania czy dany znak jest znacznikiem początkowym, czy końcowym pobierany jest szerszy kontekst, złożony z przylegających do niego znaków.
+Przekształcanie znaczników odbywa się poprzez przejście przez surowy tekst w ich poszukiwaniu i przetwarzaniu. Znaczniki dzielone są na początkowe i końcowe (zobacz: \ref{subsec:ustawianieStyli}). Podczas sprawdzania, czy dany znak jest znacznikiem początkowym, czy końcowym pobierany jest szerszy kontekst, złożony z przylegających do niego znaków.
 
 W momencie, gdy zostanie znaleziony znak będący początkowym znacznikiem, dodawana jest informacja o nim do listy \textbf{startBounds} w postaci struktury \textbf{SpecialPatternInfo} przechowującej znacznik wraz z jego indeksem.
 
@@ -202,31 +202,31 @@ class SpecialPatternInfo {
 }
 \end{lstlisting}
 
-W przypadku znalezienia znaku $c$ będącego końcowym znacznikiem, przeszukujemy listę \textbf{startBounds} w poszukiwaniu pierwszego wystąpienia znacznika $c'$ o takiej samej wartości. Jeśli nie zostanie znaleziony, wówczas znak $c$ traktowany jest jako zwykły tekst. Jesli natomiast zostanie znaleziony, oznacza to, że wystąpił wcześniej początek stylu, a cały tekst pomiędzy aktualnym indeksem, a indeksem zapisanym w strukturze opisującej początkowy znacznik $c'$ jest tekstem zawierającym ten styl. Zatem znalezione znaczniki zamieniane są na swoje odpowiedniki w formie znaków unicode, a znaczniki istniejące na liście będące następnikami znalezionego $c'$ zostają usunięte z listy(style nie mogą się przecinać), a więc nie zostaną zamienione.
+W przypadku znalezienia znaku $c$ będącego końcowym znacznikiem, przeszukujemy listę \textbf{startBounds} w poszukiwaniu pierwszego wystąpienia znacznika $c'$ o takiej samej wartości. Jeśli nie zostanie znaleziony, wówczas znak $c$ traktowany jest jako zwykły tekst. Jeśli natomiast zostanie znaleziony, oznacza to, że wystąpił wcześniej początek stylu, a cały tekst pomiędzy aktualnym indeksem, a indeksem zapisanym w strukturze opisującej początkowy znacznik $c'$ jest tekstem zawierającym ten styl. Zatem znalezione znaczniki zamieniane są na swoje odpowiedniki w formie znaków unicode, a znaczniki istniejące na liście będące następnikami znalezionego $c'$ zostają usunięte z listy (granice stylów nie mogą się przecinać), a więc nie zostaną zamienione.
 
 W podobny sposób konwertowane są również widgety i elementy wewnętrzne w tekście. W aktualnej wersji aplikacji nie są one obsługiwane, jednak sam parser został przygotowany na obsługę tego typu problemu. Szukane są zatem również fragmenty tekstu będące tagami widgetów bądź oznaczeniami elementów.
 
 \subsubsection{UnicodeMarkedTextParser}
 
-Z racji tego, ze znaki unicode z tego zakresu są trudno dostępne, na potrzeby samego problemu konwersji tekstu notatek możemy założyć, że znaki w tekście symbolizują początkowe i końcowe znaczniki, które na pewno mają swoje odpowiedniki i są poprawnie użyte(nie przecinają się).
+Z racji tego, ze znaki unicode z tego zakresu są trudno dostępne, na potrzeby samego problemu konwersji tekstu notatek możemy założyć, że znaki w tekście symbolizują początkowe i końcowe znaczniki, które na pewno mają swoje odpowiedniki i są poprawnie użyte (nie przecinają się).
 
-Na początku algorytmu tworzona jest referencja $currentSpan$ na obiekt \textbf{SpanInfo}, który jest aktualnie przetwarzanym stylem(napotkany został jego znacznik początkowy). Początkowo jest to korzeń całej struktury \textbf{SpanInfo}.
+Na początku algorytmu tworzona jest referencja $currentSpan$ na obiekt \textbf{SpanInfo}, który jest aktualnie przetwarzanym stylem (napotkany został jego znacznik początkowy). Początkowo jest to korzeń całej struktury \textbf{SpanInfo}.
 
-Oznaczony w ten sposób tekst przechodzimy ponownie, jednak posiadając dokładne informacje, które symbole są znacznikami stylu, a które zwykłymi fragmentami tekstu.
+Oznaczony w ten sposób tekst przechodzimy ponownie posiadając dokładne informacje, które symbole są znacznikami stylu, a które zwykłymi fragmentami tekstu.
 
 Podczas przechodzenia tekstu zapisujemy znaki niebędące znacznikami do tymczasowego bufora.
 
-Napotykając znacznik początkowy, jeśli w buforze znajduje się tekst, to wówczas jest on dodawany do tekstu przechowywanego w $currentSpan$. Następnie tworzony jest nowy \textbf{SpanInfo}, na podstawie stylu reprezentowanego przez znacznik, będący dzieckiem $surrentSpan$ i zapisywany jest jako $currentSpan$. 
+Napotykając znacznik początkowy, jeśli w buforze znajduje się tekst, to wówczas jest on dodawany do tekstu przechowywanego w $currentSpan$. Następnie tworzony jest nowy \textbf{SpanInfo}, na podstawie stylu reprezentowanego przez znacznik, będący dzieckiem $currentSpan$ i zapisywany jest jako $currentSpan$. 
 
-Po napotkaniu znacznika końcowego dodajemy tekst z tymczasowego bufora do $currentSpan$, czyścimy bufor i przestawiamy $currentSpan$ przechodząc po węzłach \textbf{SpanInfo}(używane jest do tego pole z referencją $parent$ wskazującą na rodzica danego węzła) na pierwszy napotkany węzeł przechowujący informacje na temat stylu reprezentowanego przez aktualnie sprawdzany znacznik.
+Po napotkaniu znacznika końcowego dodajemy tekst z tymczasowego bufora do $currentSpan$, czyścimy bufor i przestawiamy $currentSpan$ przechodząc po węzłach \textbf{SpanInfo} (używane jest do tego pole z referencją $parent$ wskazującą na rodzica danego węzła) na pierwszy napotkany węzeł przechowujący informacje na temat stylu reprezentowanego przez aktualnie sprawdzany znacznik.
 
-Przetwarzane są również informacje na temat widgetów i elementów wewnętrznych przygotowane w ramach podstawy do rozwoju funkcjonalności w przyszłosci.
+Przetwarzane są również informacje na temat widgetów i elementów wewnętrznych przygotowane w ramach podstawy do rozwoju funkcjonalności w przyszłości.
 
 \subsubsection{SpanInfoConverter}
 
 Klasa \textbf{TextSpan} jest klasą pochodną klasy \textbf{InlineSpan}.
 
-\textbf{SpanInfoConverter} buduje strukturę \textbf{InlineSpan} złożoną z obiektów klas pochodnych \textbf{TextSpan} oraz \textbf{WidgetSpan}. Biorąc pod uwagę, że wewnętrzne widgety i elementy, które mają w przyszłości być obsługiwane przy użyciu \textbf{WidgetSpan} nie są aktualnie obsługiwane przyjęty w opisie model struktury opiera się tylko na obiektach typu \textbf{TextSpan}.
+\textbf{SpanInfoConverter} buduje strukturę \textbf{InlineSpan} złożoną z obiektów klas pochodnych \textbf{TextSpan} oraz \textbf{WidgetSpan}. Wewnętrzne widgety i elementy, które mają w przyszłości być obsługiwane przy użyciu \textbf{WidgetSpan} nie są aktualnie obsługiwane, dlatego przyjęty w opisie model struktury opiera się tylko na obiektach typu \textbf{TextSpan}.
 
 Przechodząc przez strukturę \textbf{SpanInfo} budujemy strukturę złożoną z obiektów typu \textbf{TextSpan}. Zapisywany jest $mainSpan$ będący korzeniem struktury, natomiast przejście przez strukturę odbywa się w sposób rekurencyjny.
 
