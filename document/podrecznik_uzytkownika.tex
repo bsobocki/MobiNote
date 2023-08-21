@@ -113,10 +113,10 @@ Każdy akapit może przechodzić w jeden z dostępnych trybów.
 Obecnie wyróżnione są tryby:
 
 \begin{compactitem}
-    \item widoku
-    \item edycji
-    \item zaznaczenia
-    \item niewidoczny
+    \item widoku;
+    \item edycji;
+    \item zaznaczenia;
+    \item niewidoczny.
 \end{compactitem}
 
 \subsubsection{tryb widoku}
@@ -131,7 +131,7 @@ Aktywność ta może zostać przeniesiona poprzez kliknięcie na elementy akapit
 
 \subsubsection{tryb zaznaczenia}
 
-Akapit widgetów przechodzi w tryb zaznaczenia poprzez przytrzymanie jego elementów niebędących polem tekstowym (ponieważ pole tekstowe ma już zarezerwowany ten gest na zaznaczanie tekstu).
+Akapit widgetów przechodzi w tryb zaznaczenia poprzez przytrzymanie jego elementów niebędących polem tekstowym (pole tekstowe ma już zarezerwowany ten gest na zaznaczanie tekstu).
 
 \subsubsection{tryb niewidoczny}
 
@@ -145,7 +145,7 @@ Każdy tekst zamykany jest w akapicie tekstowym od początku, aż do znaku końc
 
 \subsubsection{Dodawanie}
 
-Dodawanie akapitów tekstowych odbywa się za pomocą klawiatury. W momencie, gdy użytkownik podczas edycji doda znak nowej linii, wówczas utworzy się nowy akapit, będący następnikiem edytowanego.
+Dodawanie akapitów tekstowych odbywa się za pomocą klawiatury. W momencie, gdy użytkownik podczas edycji doda znak nowej linii utworzy się nowy akapit, będący następnikiem edytowanego.
 
 \textbf{Ważne:} Podczas dodawania nowego akapitu widgetów utworzy się nowy akapit tekstowy jako jego następnik. Ma to na celu zachowanie możliwości ciągłej pracy z tekstem.
 
@@ -274,12 +274,13 @@ W przypadku obrazów tryb edycji jest oznaczony poprzez dodanie obramowania do z
 
 \subsubsection{Tryb zaznaczenia}
 
-Przejście w tryb zaznaczenie odbywa się poprzez naciśnięcie i przytrzymanie konkretnych części widgetów. W przypadku obrazu jest to sam obraz, z kolei w przypadku list są to etykiety przypięte do pola tekstowego(w zależności od wyboru mogą być to: checkbox, etykiety tekstowe czy liczniki).
+Przejście w tryb zaznaczenie odbywa się poprzez naciśnięcie i przytrzymanie konkretnych części widgetów. W przypadku obrazu jest to sam obraz, z kolei w przypadku list są to etykiety przypięte do pola tekstowego (w zależności od wyboru mogą być to: checkbox, etykiety tekstowe czy liczniki).
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=6cm]{images/tryb_zaznaczenia.png}
     \caption{Tryb zaznaczenia przykładowych widgetów głównych.}
+    \label{fig:trybZaznaczenia}
     \vspace{3mm}
 \end{figure}
 
@@ -288,11 +289,11 @@ Przejście w tryb zaznaczenie odbywa się poprzez naciśnięcie i przytrzymanie 
 
 Jednym z głównych widgetów są obrazy. 
 
-Dodawane są poprzez użycie przycisku na pasku narzędzi(sekcja: Pasek Narzędzi: Dodanie obrazu). Obraz wybierany jest z pamięci urządzenia.
+Dodawane są poprzez użycie przycisku na pasku narzędzi (sekcja: Pasek Narzędzi: Dodanie obrazu). Obraz wybierany jest z pamięci urządzenia.
 
 \subsubsection{Edycja}
 
-Aby zmienić rozmiar zdjęcia użytkownik musi przejść w tryb edycji poprzez kliknięcie na zdjęcie, a następnie przeciągać ikonę ze strzałką(Rysunek 3.8). Automatycznie dostosowywany będzie rozmiar obrazu.
+Aby zmienić rozmiar zdjęcia użytkownik musi przejść w tryb edycji poprzez kliknięcie na zdjęcie, a następnie przeciągać ikonę ze strzałką (Rysunek \ref{fig:trybZaznaczenia}). Automatycznie dostosowywany będzie rozmiar obrazu.
 
 \subsubsection{Usunięcie i zmiana}
 
@@ -305,7 +306,7 @@ Dostępne są różne rodzaje list. Różnią się one głównie etykietą oraz 
 
 \subsubsection{Edycja}
 
-Edycja list następuje poprzez interakcję użytkownika. Użytkownik może naciskać bezpośrednio na etykiety przy polu tekstowym w celu ich edycji(checkbox, licznik), jak również edytować tekst wiersza.
+Edycja list następuje poprzez interakcję użytkownika. Użytkownik może naciskać bezpośrednio na etykiety przy polu tekstowym w celu ich edycji (checkbox, licznik), jak również edytować tekst wiersza.
 
 W przypadku niektórych typów wiersza możliwe jest jego odznaczenie. Wówczas tekst wiersza zmienia kolor na szary, a sam tekst zostaje przekreślony.
 
@@ -326,7 +327,7 @@ Usuwanie wierszy jest możliwe w trybie zaznaczania poprzez klikanie na etykiety
 
 \subsubsection{Zmiana typu wierszy}
 
-Użytkownik może zmianić typ wszystkich wierszy w danej liście poprzez przejście w tryb zaznaczenia, a następnie w górym pasku nad listą(Rysunek 3.8) wybrać jedną z dostępnych opcji.
+Użytkownik może zmianić typ wszystkich wierszy w danej liście poprzez przejście w tryb zaznaczenia, a następnie w górym pasku nad listą (Rysunek \ref{fig:trybZaznaczenia}) wybrać jedną z dostępnych opcji.
 
 \subsubsection{Dostępne typy wiersza}
 
@@ -334,7 +335,7 @@ Użytkownik może zmianić typ wszystkich wierszy w danej liście poprzez przej�
     \item checkbox
     \item numerowane
     \item oznaczone przez symbol "\--{}"
-    \item naznaczane przez symbol "*"(w nowszej wersji aplikacji spodziewane jest tworzenie etykiet przez użytkownika)
+    \item naznaczane przez symbol "*" (w nowszej wersji aplikacji spodziewane jest tworzenie etykiet przez użytkownika)
     \item licznik
 \end{itemize}
 
@@ -342,7 +343,7 @@ Aktualnie listy są jednopoziomowe, bez możliwości zmiany wysunięcia od pocz�
 
 \subsubsection{Licznik}
 
-Licznik służy do odliczania rzeczy opisywanej przez tekst wiersza. Z każdym kliknięciem zwiększana jest wartość licznika(lewa część etykiety), aż do osiągnięcia celu licznika(liczba w prawej części licznika). Wraz z osiągnięciem ustalonego celu wiersz zostaje odznaczony.
+Licznik służy do odliczania rzeczy opisywanej przez tekst wiersza. Z każdym kliknięciem zwiększana jest wartość licznika (lewa część etykiety), aż do osiągnięcia celu licznika (liczba w prawej części licznika). Wraz z osiągnięciem ustalonego celu wiersz zostaje odznaczony.
 
 Możliwa jest zmiana wartości celu licznika. W tym celu wystarczy nacisnąć na liczbę w prawej części licznika, a następnie wybrać liczbę na klawiaturze i zatwierdzić. Po zmianie następuje reset licznika.
 
