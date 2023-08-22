@@ -45,8 +45,8 @@ Pomysł ten zostanie omówiony w rozdziale \ref{ch:rozwoj}.
 \subsection{Notatki}
 
 Kolejnym elementem strony głównej jest lista notatek znajdująca się pod etykietą \textbf{\textit{Recent Notes}}. Każdy element zawiera tytuł oraz pierwsze cztery surowe linie tekstu (zawierające znaki specjalne styli w przypadku akapitu będącego tekstem, lub string w formacie JSON reprezentujący widget zawarty w danym akapitie).
-W prawym górnym rogu elementów znajduje się przycisk \textbf{X} służący do usunięcia danej notatki z bazy danych.
-Po naciśnięciu na dany element użytkownik zostaje przeniesiony do ekranu wyświetlania i edycji wybranej notatki.
+W prawym górnym rogu danych elementów znajduje się przycisk \textbf{X} służący do usunięcia z bazy danych notatki reprezentowanej przez ten element.
+Po naciśnięciu na jeden z omawianych elementów użytkownik zostaje przeniesiony do ekranu wyświetlania i edycji wybranej notatki.
 
 W prawym dolnym rogu ekranu widnieje okrągły przycisk z ikoną ołówka.
 Po jego naciśnięciu korzystający zostaje przeniesiony do ekranu edycji, gdzie może stworzyć i zapisać nową notatkę.
@@ -60,13 +60,14 @@ Po wybraniu notatki, lub przejściu do tworzenia nowej, na ekranie pojawi się s
 \subsubsection{Przycisk zapisu i powrotu}
 
 Aby wyjść i zapisać notatkę korzystający używa przycisku powrotu.
-Ważnym jest, aby zamiast systemowych przycisków nawigacyjnych użyć właśnie tego przycisku nawigacyjnego, ponieważ wraz z powrotem do strony głównej zapisuje on notatkę, jeśli ta uległa zmianie.
+Ważnym jest, aby zamiast systemowych przycisków nawigacyjnych użyć właśnie tego przycisku nawigacyjnego dostępnego w górnym pasku, ponieważ wraz z powrotem do strony głównej zapisuje on notatkę, jeśli ta uległa zmianie.
 
 Za zmianę notatki uznawane są:
 
 \begin{compactitem}
-    \item edycja tekstu w akapitie tekstowym
-    \item edycja widgetu w akapitie widgetu
+    \item edycja tytułu;
+    \item edycja tekstu w akapitie tekstowym;
+    \item edycja widgetu w akapitie widgetu.
 \end{compactitem}
 \vspace{5mm}
 
@@ -145,7 +146,7 @@ Każdy tekst zamykany jest w akapicie tekstowym od początku, aż do znaku końc
 
 \subsubsection{Dodawanie}
 
-Dodawanie akapitów tekstowych odbywa się za pomocą klawiatury. W momencie, gdy użytkownik podczas edycji doda znak nowej linii utworzy się nowy akapit, będący następnikiem edytowanego.
+Dodawanie akapitów tekstowych odbywa się za pomocą klawiatury. W momencie, gdy użytkownik podczas edycji doda znak nowej linii utworzy się nowy akapit będący następnikiem edytowanego.
 
 \textbf{Ważne:} Podczas dodawania nowego akapitu widgetów utworzy się nowy akapit tekstowy jako jego następnik. Ma to na celu zachowanie możliwości ciągłej pracy z tekstem.
 
@@ -230,7 +231,7 @@ Każdy dostępny styl tekstu oznaczony jest za pomocą znaków:
 
 \subsubsection{Odkrywanie znaków specjalnych}
 
-Edytor tekstu posiada funkcję odwijania stylu w momencie gdy kursor znajduje się bezpośrednio w środku stylu. Odwijany jest tylko styl, którego jeden ze znaków specjalnych znajduje się najbliżej kursora. Funkcjonalność ta została wprowadzona, aby użytkownik mógł łatwiej edytować i usuwać style.
+Edytor tekstu posiada funkcję odwijania stylu w momencie, gdy kursor znajduje się bezpośrednio w środku stylu. Odwijany jest tylko styl, którego jeden ze znaków specjalnych znajduje się najbliżej kursora. Funkcjonalność ta została wprowadzona, aby użytkownik mógł łatwiej edytować i usuwać style.
 Dzięki temu może dostrzec, gdzie konkretnie znajdują się symbole danego stylu w tekście.
 
 
@@ -243,7 +244,7 @@ Dzięki temu może dostrzec, gdzie konkretnie znajdują się symbole danego styl
 
 \subsubsection{Usuwanie i edycja stylów}
 
-Aby usunąć dany styl wystarczy usunąć znaki specjalne danego stylu. Poza odkrytymi znakami reszta jest ukryta, jednak wszystkie znaki nadal występują w tekście. Edytujący może zatem kliknąć bezpośrednio przed widoczny początkowy symbol lub poza tekst oznaczony danym stylem i naciskając przycisk \textbf{delete}, na klawiaturze urządzenia, usunąć dany niewidoczny symbol zakończenia stylu.
+Aby usunąć dany styl wystarczy usunąć reprezentujące go znaki specjalne. Poza odkrytymi znakami reszta jest ukryta, jednak wszystkie znaki nadal występują w tekście. Edytujący może zatem kliknąć bezpośrednio przed widoczny początkowy symbol lub poza tekst oznaczony danym stylem i naciskając przycisk \textbf{delete}, na klawiaturze urządzenia, usunąć dany niewidoczny symbol zakończenia stylu.
 
 \subsection{Edycja akapitów widgetów}
 
@@ -274,7 +275,7 @@ W przypadku obrazów tryb edycji jest oznaczony poprzez dodanie obramowania do z
 
 \subsubsection{Tryb zaznaczenia}
 
-Przejście w tryb zaznaczenie odbywa się poprzez naciśnięcie i przytrzymanie konkretnych części widgetów. W przypadku obrazu jest to sam obraz, z kolei w przypadku list są to etykiety przypięte do pola tekstowego (w zależności od wyboru mogą być to: checkbox, etykiety tekstowe czy liczniki).
+Przejście w tryb zaznaczenia odbywa się poprzez naciśnięcie i przytrzymanie konkretnych części widgetów. W przypadku obrazu jest to sam obraz, z kolei w przypadku list są to etykiety przypięte do pola tekstowego (w zależności od wyboru mogą być to: checkbox, etykiety tekstowe czy liczniki).
 
 \begin{figure}[ht]
     \centering
@@ -289,7 +290,7 @@ Przejście w tryb zaznaczenie odbywa się poprzez naciśnięcie i przytrzymanie 
 
 Jednym z głównych widgetów są obrazy. 
 
-Dodawane są poprzez użycie przycisku na pasku narzędzi (sekcja: Pasek Narzędzi: Dodanie obrazu). Obraz wybierany jest z pamięci urządzenia.
+Dodawane są poprzez użycie przycisku na pasku narzędzi. Obraz wybierany jest z pamięci urządzenia.
 
 \subsubsection{Edycja}
 
@@ -297,7 +298,7 @@ Aby zmienić rozmiar zdjęcia użytkownik musi przejść w tryb edycji poprzez k
 
 \subsubsection{Usunięcie i zmiana}
 
-Po wejściu w tryb zaznaczenia ukażą się dwie ikony. Ikona usunięcia obrazu oraz ikona zmiany obrazu.
+Po wejściu w tryb zaznaczenia ukażą się dwie ikony: ikona usunięcia obrazu oraz ikona zmiany obrazu.
 Wybór pierwszej ikony skutkuje usunięciem obrazu wraz z akapitem, natomiast drugiej -- przejściem do pamięci urządzenia w celu wyboru zdjęcia.
 
 \subsection{Listy}
