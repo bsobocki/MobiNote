@@ -55,7 +55,7 @@ Celem projektu jest wytworzenie aplikacji mobilnej do zarządzania notatkami w i
 Aplikacja ma umożliwić użytkownikowi prowadzenie i tworzenie notatek pozwalających na formatowanie tekstu i dołączanie załączników.
 Formatowanie tekstu wzorowane będzie na języku znaczników Markdown. Główną różnicą w stosunku do edytorów używających tego typu formatowania tekstu będą:
 \begin{compactitem}
-    \item brak konieczności zmian widoków (pomiędzy edycją surowego tekstu, a widokiem z formatowaniem);
+    \item brak konieczności zmian widoków (pomiędzy edycją surowego tekstu, a widokiem zawierającym sformatowany tekst);
     \item przełączenia całej zawartości pomiędzy trybem edycji, a trybem użytkowym;
     \item potrzeby zapisu notatki do wyświetlania formatowania i zawartych załączników.
 \end{compactitem}
@@ -65,7 +65,7 @@ Do przechowywania zawartości notatek powinna zostać użyta baza danych, jak r�
 
 \section{Motywacja}
 
-Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji, pełniącej rolę brudnopisu używanego podczas wielu codziennych czynności. Jestem osobą, która uwielbia 
+Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji, pełniącej rolę brudnopisu używanego podczas wielu codziennych czynności. Jestem osobą, która uwielbia:
 
 \begin{compactitem}
     \item tworzyć notatki;
@@ -73,7 +73,7 @@ Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji, pełniącej
     \item zapisywać przepisy;
     \item tworzyć wszelakie listy;
     \item dzielić problemy na mniejsze części i rozpisywać je;
-    \item  wiele innych czynności związanych z prowadzeniem zeszytów.
+    \item  prowadzić różnego rodzaju zeszyty.
 \end{compactitem}
 Dzięki temu mogę zawsze sięgać do zapisków swoich myśli i pomysłów w chwilach, gdy są mi potrzebne.
 
@@ -82,16 +82,16 @@ Dostępne na rynku aplikacje, takie jak Evernote, czy ostatnio używane przeze m
 Bardzo lubię korzystać z języka znaczników Markdown. Oferuje on możliwość formatowania tekstu, tworzenia różnych nagłówków i elementów notatki przy użyciu jedynie odpowiedniej składni zawartej w zwykłym tekście. W przeciwieństwie do omawianych wyżej aplikacji nie trzeba:
 \begin{compactitem}
     \item przeszukiwania opcji w poszukiwaniu przycisków, którymi użytkownik określa typ i wielkość czcionki;
-    \item przełączania klawiatury na tę zawierającą narzędzia do edycji tekstu;
-    \item czy wchodzenia w menu aby zaimportować zdjęcia, dodać listy itd.
+    \item przełączania zwkłej klawiatury na klawiaturę zawierającą narzędzia do formatowania tekstu;
+    \item wchodzenia w menu aby zaimportować zdjęcia, dodać listy itd.
 \end{compactitem} 
-Używanym przeze mnie serwisem był \textbf{HackMD}. Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wygenerowanej notatki. Zależało mi na tym, aby notatka była renderowana i formatowaniem na bieżąco z ewentualnym ujawnianiem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
+Używanym przeze mnie serwisem był \textbf{HackMD}. Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wygenerowanej notatki. Zależało mi na tym, aby notatka była renderowana i formatowana na bieżąco z ewentualnym ujawnianiem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
 
 Chciałem stworzyć aplikację, która będzie posiadała szereg wymaganej przeze mnie funkcjonalności, jak na przykład:
 \begin{compactitem}
     \item liczniki, abym mógł w trakcie treningu odliczać wykonane serie;
     \item alarmów, które odliczałyby przerwy pomiędzy seriami;
-    \item przycisków informacyjnych otwierających okno dialogowe z informacjami dotyczącymi na przykład wymienianego miejsca;
+    \item przycisków informacyjnych otwierających okno dialogowe z informacjami dotyczącymi na przykład wymienionego w notatce miejsca;
     \item edycji stylów tekstu za pomocą znaczników, zamiast przycisków;
     \item odrębnej klawiatury. 
 \end{compactitem}
@@ -144,9 +144,9 @@ Kod żródłowy aplikacji wraz plikiem \textbf{.apk} można uzyskać pobierając
 
 \section{Android}
 
- Do instalowania aplikacji, dla urządzeń posiadających system Android, Google wprowadziło \textbf{Sklep Play}. Oferuje on możliwości sprawdzenia aplikacji pod względem niechcianych zachowań, czy instalacji złośliwego oprogramowania. Aplikacje są instalowane za pomocą dostępnego interfejsu użytkownika. Domyślne ustawienia urządzenia pozwalają wyłącznie na instalacje aplikacji z zaufanego źródła, jakim jest wspomniany \textbf{Sklep Play}.
+ Do instalowania aplikacji dla urządzeń posiadających system Android, Google wprowadziło \textbf{Sklep Play}. Oferuje on możliwości sprawdzenia aplikacji pod względem niechcianych zachowań, czy instalacji złośliwego oprogramowania. Aplikacje są instalowane za pomocą dostępnego interfejsu użytkownika. Domyślne ustawienia urządzenia pozwalają wyłącznie na instalacje aplikacji z zaufanego źródła, jakim jest wspomniany \textbf{Sklep Play}.
 
-Istnieje również niestandardowy sposób instalacji aplikacji bez użycia oferowanego rozwiązania opisanego powyżej. Użytkownik posiadając plik o rozszerzeniu \textbf{.apk} może zainstalować aplikację za jego pośrednictwem. Użytkownik robi to na własną odpowiedzialność, dlatego ważne, żeby aplikacja pochodziła z zaufanego źródła. Aby to zrobić, należy wyłączyć blokadę instalacji aplikacji z nieznanych źródeł.
+Istnieje również niestandardowy sposób instalacji aplikacji bez użycia oferowanego rozwiązania opisanego powyżej. Użytkownik może zainstalować aplikację za pośrednictwem pliku o rozszerzeniu \textbf{.apk}. Użytkownik robi to na własną odpowiedzialność, dlatego ważne, żeby aplikacja pochodziła z zaufanego źródła. Aby to zrobić, należy wyłączyć blokadę instalacji aplikacji z nieznanych źródeł.
 
 \subsection{Instalacja aplikacji z nieznanych źródeł}
 Do zainstalowania aplikacji MobiNote potrzebna jest wyłączona blokada instalacji aplikacji z nieznanych źródeł dla menadżera plików.
