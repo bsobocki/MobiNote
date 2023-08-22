@@ -1,13 +1,17 @@
 
 
-\chapter{Rozwój Aplikacji}
+\chapter{Rozwój aplikacji MobiNote}
 \label{ch:rozwoj}
 
-\section{Struktura Aplikacji}
+\section{Struktura}
 
 \subsection{Baza danych}
 
-W kolejnych wersjach aplikacji MobiNote przewidziane jest rozszerzenie bazy danych o dodatkowe tabele \textit{Notebooks} przechowującą wpisy dotyczące utworzonych zeszytów, jak również \textit{NotesInNotebook} zawierającą wpisy dotyczące notatek w danych zeszytach.
+W kolejnych wersjach aplikacji MobiNote przewidziane jest rozszerzenie bazy danych o dodatkowe tabele:
+\begin{compactitem}
+    \item \textit{Notebooks} przechowującą wpisy dotyczące utworzonych zeszytów;
+    \item \textit{NotesInNotebook} zawierającą wpisy dotyczące notatek w danych zeszytach.
+\end{compactitem}
 
 \subsection{Strona główna}
 
@@ -15,11 +19,11 @@ Na stronie głównej dostępne są przygotowane już przyciski \textbf{Trainings
 
 Po naciśnięciu na przycisk użytkownik zostanie przeniesiony do strony z dostępnymi notatkami, będącymi częścią zeszytu reprezentowanego przez dany przycisk.
 
-Przyciski w dolnym pasku przygotowane są na przęłączanie pomiędzy widokami strony głównej. W obecnej aplikacji dostępny jest tylko widok główny, jednak przewidziany jest jeszcze widok zawierający tylko listę zeszytów (Library), oraz widok profilu użytkownika i jego ustawień (Profile).
+Przyciski w dolnym pasku przygotowane są na przełączanie pomiędzy widokami strony głównej. W obecnej aplikacji dostępny jest tylko widok główny, jednak przewidziany jest jeszcze widok zawierający tylko listę zeszytów (Library), oraz widok profilu użytkownika i jego ustawień (Profile).
 
 \section{Rozszerzenie istniejących rozwiązań}
 
-\subsubsection{Lista}
+\subsection{Lista}
 
 Klasa \textbf{NoteElementListWidget} posiada zmienną \verb|int depth| służącą do określania poziomu głębokości w liście. Ma to na celu określenie wielkości wcięcia, jak również używanych etykiet do oznaczania danego elementu (różne znaki, numeracja itd).
 
@@ -42,9 +46,9 @@ Widgetami wewnętrznymi są między innymi:
 Użycie obiektów \textbf{InlineSpan} udostępnianych przez flutter pozwala tworzyć drzewiastą strukturę, której korzeniem jest \textbf{TextSpan}, natmiast dziećmi są inne obiekty \textbf{InlineSpan}, czyli instancje obiektów klas pochodnych \textbf{TextSpan} i \textbf{WidgetSpan}.
 %https://api.flutter.dev/flutter/painting/InlineSpan-class.html
 
-\subsection{Dodatkowe Widgety w notatce}
+\subsection{Dodatkowe widgety w notatce}
 
-Przygotowane również zostały obiekty typu \textbf{NoteWidgetData} oraz miejsca w \textbf{NoteListElementWidget} na dodatkowe elementy takie jak na przykład \textbf{NoteInfoPage}, która będzie widgetem złożonym z ikony, który po kliknięciu otwiera okno dialogowe ze przewijalną notatką/stroną informacyjną.
+Przygotowane również zostały obiekty typu \textbf{NoteWidgetData} oraz miejsca w \textbf{NoteListElementWidget} na dodatkowe elementy takie jak na przykład \textbf{NoteInfoPage}, która będzie widgetem złożonym z ikony, który po kliknięciu otwiera okno dialogowe notatką/stroną informacyjną, którą będzie można przewijać.
 
 Planowanymi dodatkowymi widgetami są między innymi:
 
@@ -57,15 +61,15 @@ Planowanymi dodatkowymi widgetami są między innymi:
 
 \subsection{Alarmy}
 
-Jedną z głównych funkcjonalności aplikacji MobiNote zaplanowaną na kolejne iteracje jest możliwość dodawania i ustawiania alarmów. Alarmy te będą używane w elementach list. Będą odmierzać czas i informować użytkownika o końcu przerwy, na prykład pomiędzy seriami ćwiczeń, bądź pomiędzy sesjami nauki.
+Jedną z głównych funkcjonalności aplikacji MobiNote zaplanowaną na kolejne iteracje jest możliwość dodawania i ustawiania alarmów. Alarmy te będą używane w elementach list. Będą odmierzać czas i informować użytkownika o końcu przerwy, na przykład pomiędzy seriami ćwiczeń, bądź pomiędzy sesjami nauki.
 
 \subsection{Powiadomienia}
 
-Kolejną zaplanowaną funkcjonalnością jest dodanie powiadomień. Powiadomienia służyć mają jako przypomnienia ustawione w notatce do konkretnych działań. Przykładowo w notatce dotyczącej urodzin bliskiej osoby możemy ustawić przypomnienia dotyczące odebrania tortu, bądź prezentu. Nada to użyteczność notatce nawet, gdy nie będzie ona bezpośrednio wyświetlana.
+Kolejną zaplanowaną funkcjonalnością jest dodanie powiadomień. Powiadomienia mają służyć jako przypomnienia ustawione w notatce do konkretnych działań. Przykładowo w notatce dotyczącej urodzin bliskiej osoby możemy ustawić przypomnienia dotyczące odebrania tortu, bądź prezentu. Nada to użyteczność notatce nawet, gdy nie będzie ona bezpośrednio wyświetlana.
 
 \subsection{Nagrywanie głosowej notatki}
 
-Przydatną funkcjonalnością danej aplikacji będzie możliwość nagrywania notatek głosowych. Przydatne będą one w sytuacji, kiedy użytkownik będzie potrzebował na szybko zapisać daną treść i wrócić do niej w późniejszym czasie.
+Przydatną funkcjonalnością danej aplikacji będzie możliwość nagrywania notatek głosowych. Będą one przydatne w sytuacji, kiedy użytkownik będzie potrzebował na szybko zapisać daną treść i wrócić do niej w późniejszym czasie.
 
 \subsection{Karty step-by-step}
 
