@@ -7,21 +7,23 @@
 
 \subsection{Baza danych}
 
-Rozwój aplikacji oznacza rozwój wielu 
+W kolejnych wersjach aplikacji MobiNote przewidziane jest rozszerzenie bazy danych o dodatkowe tabele \textit{Notebooks} przechowującą wpisy dotyczące utworzonych zeszytów, jak również \textit{NotesInNotebook} zawierającą wpisy dotyczące notatek w danych zeszytach.
 
 \subsection{Strona główna}
 
-\subsection{Edytor notatek}
+Na stronie głównej dostępne są przygotowane już przyciski \textbf{Trainings} oraz \textbf{Diet} reprezentujące przykładowy widok, który będzie używany w kolejnej wersji aplikacji MobiNote. Przyciski te reprezentują instancje typu \textbf{Notebook}, które będą odzwierciedleniem wpisów tabeli \textbf{Notebooks}.
 
-\subsection{Dodatkowe strony}
+Po naciśnięciu na przycisk użytkownik zostanie przeniesiony do strony z dostępnymi notatkami, będącymi częścią zeszytu reprezentowanego przez dany przycisk.
+
+Przyciski w dolnym pasku przygotowane są na przęłączanie pomiędzy widokami strony głównej. W obecnej aplikacji dostępny jest tylko widok główny, jednak przewidziany jest jeszcze widok zawierający tylko listę zeszytów (Library), oraz widok profilu użytkownika i jego ustawień (Profile).
 
 \section{Rozszerzenie istniejących rozwiązań}
 
 \subsubsection{Lista}
 
-Klasa \textbf{NoteElementListWidget} posiada zmienną \verb|int depth| służącą do określania poziomu głębokości w liście. Ma to na celu określenie wielkości wcięcia, jak również używanych etykiet do oznaczania danego elementu(różne znaki, numeracja itd).
+Klasa \textbf{NoteElementListWidget} posiada zmienną \verb|int depth| służącą do określania poziomu głębokości w liście. Ma to na celu określenie wielkości wcięcia, jak również używanych etykiet do oznaczania danego elementu (różne znaki, numeracja itd).
 
-Dodatkowym elemnetem do edycji listy jest możliwość własnej definicji etykiet w liście. Będzie to ograniczone do pewnej głębokości. W zależności od głębokości, użytkownik będzie mógł zdefiniować symbol lub napis, który będzie używany jako etykieta.
+Dodatkowym elementem do edycji listy jest możliwość własnej definicji etykiet w liście. Będzie to ograniczone do pewnej głębokości. W zależności od głębokości, użytkownik będzie mógł zdefiniować symbol lub napis, który będzie używany jako etykieta.
 
 \subsection{Widgety wewnętrzne w tekście}
 
@@ -30,11 +32,11 @@ Aktualnie w kodzie przygotowane są miejsca do parsowania widgetów wewnętrznyc
 Widgetami wewnętrznymi są między innymi:
 
 \begin{compactitem}
-    \item linki stron internetowych
-    \item linki notatek w bazie
-    \item inline latex -- do dodawania na przykład symboli matematycznych
-    \item zdjęcia (o rozmiarze nieprzekraczającym rozmiaru czcionki)
-    \item cytowanie tekstu(zmiana koloru tła tekstu oraz czcionki)
+    \item linki stron internetowych;
+    \item linki notatek w bazie;
+    \item inline latex -- do dodawania na przykład symboli matematycznych;
+    \item zdjęcia (o rozmiarze nieprzekraczającym rozmiaru czcionki);
+    \item cytowanie tekstu (zmiana koloru tła tekstu oraz czcionki).
 \end{compactitem}
 
 Użycie obiektów \textbf{InlineSpan} udostępnianych przez flutter pozwala tworzyć drzewiastą strukturę, której korzeniem jest \textbf{TextSpan}, natmiast dziećmi są inne obiekty \textbf{InlineSpan}, czyli instancje obiektów klas pochodnych \textbf{TextSpan} i \textbf{WidgetSpan}.
@@ -47,21 +49,27 @@ Przygotowane również zostały obiekty typu \textbf{NoteWidgetData} oraz miejsc
 Planowanymi dodatkowymi widgetami są między innymi:
 
 \begin{compactitem}
-    \item notatka głosowa (zobacz \hyperlink{sec:glosowaNotatka}{Nagrywanie głosowej notatki})
-    \item tabele
-    
+    \item notatka głosowa;
+    \item tabele.
 \end{compactitem}
-
-\subsection{Interakcja widgetów}
 
 \section{Funkcjonalność}
 
 \subsection{Alarmy}
 
+Jedną z głównych funkcjonalności aplikacji MobiNote zaplanowaną na kolejne iteracje jest możliwość dodawania i ustawiania alarmów. Alarmy te będą używane w elementach list. Będą odmierzać czas i informować użytkownika o końcu przerwy, na prykład pomiędzy seriami ćwiczeń, bądź pomiędzy sesjami nauki.
+
 \subsection{Powiadomienia}
 
+Kolejną zaplanowaną funkcjonalnością jest dodanie powiadomień. Powiadomienia służyć mają jako przypomnienia ustawione w notatce do konkretnych działań. Przykładowo w notatce dotyczącej urodzin bliskiej osoby możemy ustawić przypomnienia dotyczące odebrania tortu, bądź prezentu. Nada to użyteczność notatce nawet, gdy nie będzie ona bezpośrednio wyświetlana.
+
 \subsection{Nagrywanie głosowej notatki}
-\label{sec:glosowaNotatka}
 
-\subsection{Karty Step-By-Step}
+Przydatną funkcjonalnością danej aplikacji będzie możliwość nagrywania notatek głosowych. Przydatne będą one w sytuacji, kiedy użytkownik będzie potrzebował na szybko zapisać daną treść i wrócić do niej w późniejszym czasie.
 
+\subsection{Karty step-by-step}
+
+Ostatnią funkcjonalnością przewidzianą w aplikacji MobiNote będą karty \textbf{step-by-step}.
+Funkcjonalność ta będzie polegać na przygotowaniu listy rzeczy do zrobienia, aby osiągnąć dany cel. Następnie użytkownik zapisuje daną listę i przechodzi do widoku danej notatki. Widok ten składać się będzie tylko z jednego pola z opisem kroku, na którym aktualnie znajduje się użytkownik. Będą dostępne przyciski nawigacyjne pozwalające cofnąć się o jeden krok oraz przejść do następnego kroku.
+
+Karty te mają na celu pokazać użytkownikowi jedynie następny krok, zamiast całej listy. Pozwala to na uniknięcie nadmiernego rozmyślania i poczucia przytłoczenia związanego z ilością rzeczy, jakie trzeba wykonać, aby osiągnąć zaplanowany cel.
