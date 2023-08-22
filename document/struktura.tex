@@ -23,9 +23,9 @@ Współpracę tych klas można przedstawić w uproszczony sposób za pomocą sch
 
 Istnieją trzy typy akapitów w edytorze dziedziczące po \textbf{NoteParagraph}: 
 \begin{itemize}
-    \item \textbf{NoteParagraphTextEditor},
-    \item \textbf{NoteParagraphWidget},
-    \item \textbf{NoteParagraphPlaceholder}
+    \item \textbf{NoteParagraphTextEditor};
+    \item \textbf{NoteParagraphWidget};
+    \item \textbf{NoteParagraphPlaceholder}.
 \end{itemize}
 
 Każdy z akapitów posiada unikalny identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
@@ -50,7 +50,7 @@ Służy jako wypełnienie pozostałej przestrzeni edytora. Po kliknięciu na nie
 
 \subsection{Struktura widgetów}
 
-W aktualnej wersji aplikacji widgety dzielą się na widgety główne będące bezpośrednimi dziećmi \textbf{NoteParagraphWidget}, oraz widgety będące ich dziećmi. W przypadku rozwoju aplikacji struktura hierarchii i tworzenia widgetów, oraz samych widgetów ulegnie zmianie. Aktualnie struktura aplikacji wygląda następująco:
+W aktualnej wersji aplikacji widgety dzielą się na widgety główne będące bezpośrednimi dziećmi \textbf{NoteParagraphWidget}, oraz widgety będące ich dziećmi. W przypadku rozwoju aplikacji struktury widgetów oraz ich hierarchii i tworzenia ulegną zmianie. Aktualnie struktura aplikacji wygląda następująco:
 
 \begin{figure}[ht]
     \centering
@@ -61,7 +61,7 @@ W aktualnej wersji aplikacji widgety dzielą się na widgety główne będące b
 
 \subsection{Tworzenie widgetów}
 
-Widgety tworzone są poprzez interakcję z użyciem interfejsu użytkownika (patrz \ref{sub:dodawanieWidgetow}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych.
+Widgety tworzone są poprzez interakcję użytkownika przy użyciu interfejsu użytkownika (patrz \ref{sub:dodawanieWidgetow}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych.
 
 \begin{figure}[ht]
     \centering
@@ -78,7 +78,7 @@ Widgety usuwane są poprzez interakcję użytkownika z dostępnym interfejsem gr
 
 Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \textbf{NoteParagraphTextEditor} i \textbf{NoteTextEditorWidget}, jak również wyświetlanie go wraz ze zmianą rozmiarów z pomocą \textbf{NoteTextEditingController}.
 
-\subsection{Edycja Tekstu}
+\subsection{Edycja tekstu}
 
 Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy (lewa i prawa strona) jako stałą wartość, oraz padding pionowy (góra, dół) obliczany na podstawie różnicy pomiędzy wielkoścą czcionki użytej w danym akapicie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej (w przypadku, gdy dany akapit nie ma ustawionego nagłówka, nie chcemy braku odstępu między akapitami z powodu zerowego paddingu pionowego).
 
@@ -86,7 +86,7 @@ Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu info
 
 \subsubsection{Dodawanie tekstu}
 
-Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne (callback), zainicjalizowane przy tworzeniu danego akapitu przez \textbf{NoteParagraphs}, do dodawania nowego akapitu. Wywołanie to przyjmuje identyfikator danego akapitu i na tej podstawie oblicza miejsce w liście do którego należy włożyć nowopowstały akapit. Przy tworzeniu nowego akapitu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
+Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne (callback) zainicjalizowane przy tworzeniu danego akapitu przez \textbf{NoteParagraphs}, do dodawania nowego akapitu. Wywołanie to przyjmuje identyfikator danego akapitu i na tej podstawie oblicza miejsce w liście, do którego należy włożyć nowo powstały akapit. Przy tworzeniu nowego akapitu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
 
 \subsubsection{Usuwanie tekstu}
 \label{eq:usuwanieTekstu}
@@ -135,7 +135,7 @@ Zrealizowanym pomysłem rozwiązania problemu jest podział parsowania tekstu na
     \item konwersja struktury \textbf{SpanInfo} na obiekt \textbf{TextSpan}.
 \end{enumerate}
 
-\subsection{Implementacja Parsera}
+\subsection{Implementacja parsera}
 
 \subsubsection{Własna implementacja}
 
@@ -202,7 +202,7 @@ class SpecialPatternInfo {
 }
 \end{lstlisting}
 
-W przypadku znalezienia znaku $c$ będącego końcowym znacznikiem, przeszukujemy listę \textbf{startBounds} w poszukiwaniu pierwszego wystąpienia znacznika $c'$ o takiej samej wartości. Jeśli nie zostanie znaleziony, wówczas znak $c$ traktowany jest jako zwykły tekst. Jeśli natomiast zostanie znaleziony, oznacza to, że wystąpił wcześniej początek stylu, a cały tekst pomiędzy aktualnym indeksem, a indeksem zapisanym w strukturze opisującej początkowy znacznik $c'$ jest tekstem zawierającym ten styl. Zatem znalezione znaczniki zamieniane są na swoje odpowiedniki w formie znaków unicode, a znaczniki istniejące na liście będące następnikami znalezionego $c'$ zostają usunięte z listy (granice stylów nie mogą się przecinać), a więc nie zostaną zamienione.
+W przypadku znalezienia znaku $c$ będącego końcowym znacznikiem, przeszukujemy listę \textbf{startBounds} w poszukiwaniu pierwszego wystąpienia znacznika $c'$ o takiej samej wartości. Jeśli nie zostanie znaleziony, wówczas znak $c$ traktowany jest jako zwykły tekst. Jeśli natomiast zostanie znaleziony, oznacza to, że wystąpił wcześniej początek stylu, a cały tekst pomiędzy aktualnym indeksem, a indeksem zapisanym w strukturze opisującej początkowy znacznik $c'$ jest tekstem zawierającym ten styl. Zatem znalezione znaczniki zamieniane są na swoje odpowiedniki w formie znaków unicode, a znaczniki istniejące na liście \textbf{startBounds} będące następnikami znalezionego $c'$ zostają usunięte z listy (granice stylów nie mogą się przecinać), a więc nie zostaną zamienione.
 
 W podobny sposób konwertowane są również widgety i elementy wewnętrzne w tekście. W aktualnej wersji aplikacji nie są one obsługiwane, jednak sam parser został przygotowany na obsługę tego typu problemu. Szukane są zatem również fragmenty tekstu będące tagami widgetów bądź oznaczeniami elementów.
 
