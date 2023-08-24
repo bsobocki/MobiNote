@@ -31,7 +31,7 @@ Istnieją trzy typy akapitów w edytorze dziedziczące po \textbf{NoteParagraph}
 Każdy z akapitów posiada unikalny identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
 Pozwala to na unikalne identyfikowanie akapitów wewnątrz listy, oraz wszystkich utworzonych widgetów w obrębie przestrzeni edytora.
 
-Używane są również mechanizmy wywołań zwrotnych (callbacks) do zgłaszania aktywności (focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy akapitów, na podstawie swojego id, gdy wszystkie jego elementy zostaną usunięte.
+Używane są również mechanizmy wywołań zwrotnych (callbacks) do zgłaszania aktywności (focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy akapitów, na podstawie własnego id, gdy wszystkie jego elementy zostaną usunięte.
 
 \subsubsection{NoteParagraphTextEditor}
 
@@ -86,18 +86,18 @@ Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu info
 
 \subsubsection{Dodawanie tekstu}
 
-Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne (callback) zainicjalizowane przy tworzeniu danego akapitu przez \textbf{NoteParagraphs}, do dodawania nowego akapitu. Wywołanie to przyjmuje identyfikator danego akapitu i na tej podstawie oblicza miejsce w liście, do którego należy włożyć nowo powstały akapit. Przy tworzeniu nowego akapitu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
+Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne (callback), zainicjalizowane przy tworzeniu danego akapitu przez \textbf{NoteParagraphs}, służące do dodania nowego akapitu. Wywołanie to przyjmuje identyfikator danego akapitu i na tej podstawie oblicza miejsce w liście, do którego należy włożyć nowo powstały akapit. Przy tworzeniu nowego akapitu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
 
 \subsubsection{Usuwanie tekstu}
 \label{eq:usuwanieTekstu}
 
 Flutter nie oferuje możliwości przechwycenia zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwycenia zdarzenia edycji tekstu w akapicie.
 
-W każdym akapicie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik, którego brak na początku tekstu podczas sprawdzania tekstu po edycji mówi o potrzebie usunięcia akapitu.
+W każdym akapicie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik. Jego brak na początku tekstu podczas sprawdzania tekstu po edycji mówi o potrzebie usunięcia akapitu.
 
 Gdy użytkownik zechce usunąć akapit, wówczas przenosi się kliknięciem na początek wiersza (o ile już się na nim nie znajduje), a następnie naciska przycisk \textbf{delete}. Dzięki temu usuwa \verb|placeholder|, a przy tym wywoływany jest callback służący do usunięcia akapitu. Jako argument przyjmuje identyfikator akapitu, aby określić miejsce usunięcia.
 
-Aby uniknąć kliknięcia na początek linii, przed wartownika, dodany został mechanizm zmiany pozycji kursora na drugi znak (bezpośrednio za wartownikiem) za każdym razem gdy jest on na pozycji zerowej.
+Aby uniknąć kliknięcia na początek linii przed wartownika został dodany mechanizm zmiany pozycji kursora na drugi znak (bezpośrednio za wartownikiem) za każdym razem, gdy jest on na pozycji zerowej.
 
 \subsection{Wyświetlanie tekstu}
 
@@ -114,18 +114,18 @@ Utworzony w ten sposób \textbf{NoteTextEditingController} może nie tylko używ
     \item sprawdzanie i manipulacja pozycją kursora.
 \end{compactitem}
 
-Callback \textbf{resizeTextField} został użyty w kontrolerze, zamiast w widgecie pola tekstowego, ponieważ wtedy wystarczy parsować tekst jednokrotnie. Przed samym zwróceniem drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego w jego korzeniu, zamiast edytować zawartość widgetu w innych mechanizmach i tak czy inaczej parsować dodatkowo tekst w poszukiwaniu informacji na temat wielkości czcionki.
+Callback \textbf{resizeTextField} został użyty w kontrolerze, zamiast w widgecie pola tekstowego, ponieważ wtedy wystarczy parsować tekst jednokrotnie. W momencie zwrócenia drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego w jego korzeniu, zamiast edytować zawartość widgetu używając innych mechanizmów i parsować dodatkowo tekst w poszukiwaniu informacji na temat wielkości czcionki.
 
 Informacja na temat aktualnego użycia akapitu jest używana do wyświetlania i ukrywania znaczników stylu nagłówka.
 
-Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby kursor nie znajdował się przed znakiem \verb|placeholder|(zobacz \ref{eq:usuwanieTekstu}).
+Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby kursor nie znajdował się przed znakiem \verb|placeholder| (zobacz \ref{eq:usuwanieTekstu}).
 
 Przy każdej zmianie tekstu odświeżany jest widok akapitu, dlatego wystarczy zmienić wartość zmiennej odpowiadającej za jego rozmiar przed końcem całej operacji związanej z przetwarzaniem nowego tekstu.
 %https://api.flutter.dev/flutter/widgets/TextEditingController/buildTextSpan.html
 
 \subsection{Problem parsowania tekstu ze znacznikami stylu}
 
-Do wyświetlania stylizowanego tekstu potrzebne jest jego parsowanie. Funkcjonalność ta, będzie wołana stosunkowo często, a dla długich tekstów bez znaku nowej linii będzie to długi do obsługi tekst. Dlatego też ważny jest sposób implementacji.
+Do wyświetlania stylizowanego tekstu potrzebne jest jego parsowanie. Funkcjonalność ta będzie wołana stosunkowo często, a dla długich tekstów bez znaku nowej linii będzie to długi do obsługi tekst. Dlatego też ważny jest sposób implementacji.
 
 Zrealizowanym pomysłem rozwiązania problemu jest podział parsowania tekstu na trzy etapy:
 \begin{enumerate}
@@ -141,7 +141,7 @@ Zrealizowanym pomysłem rozwiązania problemu jest podział parsowania tekstu na
 
 Parser wraz z jego strukturą został zaprojektowany i zaimplementowany przeze mnie, zamiast przy użyciu narzędzi generowania parsera dla opisanej gramatyki używanego przeze mnie języka znaczników. Powodem tego jest potrzeba łatwego rozwoju oraz wprowadzenia niestandardowych rozwiązań i dodatkowych funkcjonalności niebędących częścią samej składni gramatyki, jednak potrzebnych wewnątrz implementacji parsera.
 
-Własna implementacja parsera pozwoliła mi od początku do końca zaprojektować i zrozumieć jego strukturę co pozwoliło mi tworzyć elastyczne środowisko rozwoju tekstu w notatkach. Przykładowo wprowadzanie funkcji odkrywania i ukrywania znaczników stylu oraz nagłówka, bądź dodanie wywołania zwrotnego zmieniającego rozmiar pola tekstowego, było prostym zabiegiem niewymagającym dużych zmian i rozszerzeń kodu parsera.
+Własna implementacja parsera pozwoliła mi od początku do końca zaprojektować i zrozumieć jego strukturę, co pozwoliło mi tworzyć elastyczne środowisko rozwoju tekstu w notatkach. Przykładowo wprowadzanie funkcji odkrywania i ukrywania znaczników stylu oraz nagłówka, bądź dodanie wywołania zwrotnego zmieniającego rozmiar pola tekstowego było prostym zabiegiem niewymagającym dużych zmian i rozszerzeń kodu parsera.
 
 \subsubsection{Parsowanie}
 
@@ -204,7 +204,7 @@ class SpecialPatternInfo {
 
 W przypadku znalezienia znaku $c$ będącego końcowym znacznikiem, przeszukujemy listę \textbf{startBounds} w poszukiwaniu pierwszego wystąpienia znacznika $c'$ o takiej samej wartości. Jeśli nie zostanie znaleziony, wówczas znak $c$ traktowany jest jako zwykły tekst. Jeśli natomiast zostanie znaleziony, oznacza to, że wystąpił wcześniej początek stylu, a cały tekst pomiędzy aktualnym indeksem, a indeksem zapisanym w strukturze opisującej początkowy znacznik $c'$ jest tekstem zawierającym ten styl. Zatem znalezione znaczniki zamieniane są na swoje odpowiedniki w formie znaków unicode, a znaczniki istniejące na liście \textbf{startBounds} będące następnikami znalezionego $c'$ zostają usunięte z listy (granice stylów nie mogą się przecinać), a więc nie zostaną zamienione.
 
-W podobny sposób konwertowane są również widgety i elementy wewnętrzne w tekście. W aktualnej wersji aplikacji nie są one obsługiwane, jednak sam parser został przygotowany na obsługę tego typu problemu. Szukane są zatem również fragmenty tekstu będące tagami widgetów bądź oznaczeniami elementów.
+W podobny sposób konwertowane są również widgety i elementy wewnętrzne w tekście. W aktualnej wersji aplikacji nie są one obsługiwane, jednak sam parser został przygotowany na obsługę tego typu problemu. Szukane są zatem również fragmenty tekstu będące tagami widgetów, bądź oznaczeniami elementów.
 
 \subsubsection{UnicodeMarkedTextParser}
 
@@ -216,7 +216,7 @@ Oznaczony w ten sposób tekst przechodzimy ponownie posiadając dokładne inform
 
 Podczas przechodzenia tekstu zapisujemy znaki niebędące znacznikami do tymczasowego bufora.
 
-Napotykając znacznik początkowy, jeśli w buforze znajduje się tekst, to wówczas jest on dodawany do tekstu przechowywanego w $currentSpan$. Następnie tworzony jest nowy \textbf{SpanInfo}, na podstawie stylu reprezentowanego przez znacznik, będący dzieckiem $currentSpan$ i zapisywany jest jako $currentSpan$. 
+Napotykając znacznik początkowy, jeśli w buforze znajduje się tekst, to wówczas jest on dodawany do tekstu przechowywanego w $currentSpan$. Następnie tworzony jest nowy \textbf{SpanInfo} (na podstawie stylu reprezentowanego przez znacznik) będący dzieckiem $currentSpan$. Następnie referencja do nowo powstałego obiektu zapisywana jest jako $currentSpan$. 
 
 Po napotkaniu znacznika końcowego dodajemy tekst z tymczasowego bufora do $currentSpan$, czyścimy bufor i przestawiamy $currentSpan$ przechodząc po węzłach \textbf{SpanInfo} (używane jest do tego pole z referencją $parent$ wskazującą na rodzica danego węzła) na pierwszy napotkany węzeł przechowujący informacje na temat stylu reprezentowanego przez aktualnie sprawdzany znacznik.
 

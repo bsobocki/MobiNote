@@ -8,17 +8,15 @@ Implementując aplikację MobiNote starałem się zachowywać czysty kod, podzie
 
 Aplikacja została napisana przy użyciu frameworka flutter w języku Dart.
 
-Wybierając technologie, kierowałem się kryteriami takimi jak: prostota, wieloplatformowość, estetyka bez dużego wkładu w kreowanie komponentów na własną rękę oraz wydajność. Jedną z najbardziej polecanych framework'ów na stronie \href{https://www.linkedin.com/pulse/best-9-mobile-app-development-frameworks-2023-sstech-system/}{linkedin.com} był \textbf{flutter}. Jak podaje strona główna \href{https://www.flutter.dev}{flutter.dev}:
+Wybierając technologie, kierowałem się kryteriami takimi jak: prostota, wieloplatformowość, estetyka bez dużego wkładu w kreowanie komponentów na własną rękę oraz wydajność. Jedną z najbardziej polecanych framework'ów na stronie  linkedin.com \cite{linkedin} oraz itCraft \cite{itCraft} był \textbf{flutter}. Jak podaje strona główna flutter.dev \cite{flutter}:
 
 "Flutter is an open source framework by Google for building beautiful, natively compiled, multi-platform applications from a single codebase."
 
 Składnia języka Dart jest stosunkowo prosta i przejrzysta, natomiast framework flutter pozwala na programowanie aplikacji mobilnych w prosty sposób na platformy IOS oraz Android o dużej wydajności zważywszy na to, że język Dart jest kompilowany do natywnego kodu. Pozwala to na tworzenie aplikacji szybko i bez wielkiego nakładu pracy, dając przy tym duże możliwości i przyjemny dla oka rozbudowany interfejs użytkownika.
 
-%https://itcraftapps.com/pl/blog/flutter-w-swiecie-aplikacji-mobilnych-czy-to-przyszlosc-programowania/ 
-
 \subsection{SQLite}
 
-Do przechowywania notatek została wykorzystana baza danych SQLite. Aplikacja wykorzystuje bibliotekę \textbf{sqlite3}, umożliwiającą wykonywanie operacji na lokalnej bazie danych SQLite. Pozwala na ona na zapis, odczyt a także manipulację danymi. Dodatkowo wykorzystywany jest pakiet \href{https://pub.dev/packages/drift}{drift}, który jest rodzajem systemu ORM umożliwiającym mapowanie między obiektami języka Dart oraz tabelami bazy danych SQLite. Pozwala to na pracę bezpośrednio w kodzie Dart używając dostępnej funkcjonalności bez konieczności pisania zapytań bezpośrednio w języku SQL.
+Do przechowywania notatek została wykorzystana baza danych SQLite. Aplikacja wykorzystuje bibliotekę \textbf{sqlite3} \cite{sqlite3}, umożliwiającą wykonywanie operacji na lokalnej bazie danych SQLite. Pozwala na ona na zapis, odczyt a także manipulację danymi. Dodatkowo wykorzystywany jest pakiet \textbf{drift} \cite{drift}, który jest rodzajem systemu ORM umożliwiającym mapowanie między obiektami języka Dart oraz tabelami bazy danych SQLite. Pozwala to na pracę bezpośrednio w kodzie Dart używając dostępnej funkcjonalności bez konieczności pisania zapytań bezpośrednio w języku SQL.
 
 \section{Organizacja repozytorium}
 
@@ -56,7 +54,7 @@ Dzięki zastosowaniu opisanych mechanizmów możliwe było zaimplementowanie fab
 
 \subsubsection{Wzorce projektowe}
 
-W powyższych opisach możemy zauważyć użycie wzorców projektowych spotykanych podczas pisania aplikacji mobilnej. Niektóre z nich opisane są na stronie \href{https://flutterdesignpatterns.com/}{flutterdesignpatterns.com}. Są to między innymi:
+W powyższych opisach możemy zauważyć użycie wzorców projektowych spotykanych podczas implementacji aplikacji mobilnej \cite{flutterdesignpatterns}. Są to między innymi:
 
 \begin{itemize}
     \item \textbf{Fabryka} -- użyty w przypadku fabryki widgetów \textit{NoteEditorWidgetFactory};
@@ -70,7 +68,7 @@ Część logiki niezwiązanej bezpośrednio z wyświetlaniem i organizacją komp
 
 \subsection{Baza danych}
 
-Do zarządzania dostępem i manipulacją bazy danych tworzony jest jeden obiektu typu \textbf{MobiNoteDatabase} dla całego projektu. Jest on tworzony i udostępniany za pomocą biblioteki do zarządzania stanem \textbf{GetX}. 
+Do zarządzania dostępem i manipulacją bazy danych tworzony jest jeden obiekt typu \textbf{MobiNoteDatabase} dla całego projektu. Jest on tworzony i udostępniany za pomocą biblioteki do zarządzania stanem \textbf{GetX}. 
 
 W implementacji aplikacji MobiNote, GetX pozwala na tworzenie instancji zarządzającej dostępem do bazy danych raz i udostępnianie jej w różnych miejscach aplikacji. Struktura aplikacji wymaga tylko jednej instancji obiektu MobiNoteDatabase, dlatego tworzone jest jedno połączenie w jej konstruktorze, a sam obiekt przechowywany jest z pomocą GetX
 
@@ -95,14 +93,14 @@ Podczas implementacji listy notatek w stronie głównej oraz edytora zawartości
 
 \subsubsection{Reprezentacja widgetów}
 
-Każdy widget reprezentowany jest poprzez obiekt typu pochodnej klasy WidgetData przechowywującej parametry danego widgetu potrzebne do jego prawidłowego wyświetlania oraz funkcjonowania. Oddzielana jest warstwa wyświetlania od warstwy informacji danego widgetu. Pozwala to na zapis stanu widgetu do bazy danych, ponieważ zawarta w obiektach reprezentujących warstwę informacji jest funkcja konwersji do formatu JSON, który jest przechowywany w bazie danych jako fragment zawartości danej notatki.
+Każdy widget reprezentowany jest poprzez obiekt typu pochodnej klasy WidgetData przechowywującej parametry danego widgetu potrzebne do jego prawidłowego wyświetlania oraz funkcjonowania. Oddzielana jest warstwa wyświetlania od warstwy informacji danego widgetu. Pozwala to na zapis stanu widgetu do bazy danych, ponieważ zawarta w obiektach reprezentujących warstwę informacji jest konwersja do formatu JSON, który jest przechowywany w bazie danych jako fragment zawartości danej notatki.
 
 \subsubsection{ID Generator}
 
-Widgety zawierają identyfikatory do odróżniania ich w rodzicu lub liście zwierającej je. Ma to zastosowanie m.in. w znajdowaniu miejsca w liście np do dodawania nowego elementu, czy usuwania i zmiany elementów. Lepiej nadać id i na podstawie znalezienia id na liście pobierać index, zamiast nadawać i aktualizować indeksy za każdym razem elementom przy manipulacji listy.
+Widgety zawierają identyfikatory do odróżniania ich w rodzicu lub liście zwierającej je. Ma to zastosowanie m.in. w znajdowaniu miejsca w liście np do dodawania nowego elementu, czy usuwania i zmiany elementów. Lepiej nadać id i na podstawie znalezienia id na liście pobierać indeks, zamiast nadawać i aktualizować indeksy elementom przy każdej edycji listy.
 
 Do generowania identyfikatorów w odpowiednich miejscach w kodzie służy obiekt klasy \textbf{IdGenerator}.
 
 \subsubsection{Fabryka widgetów}
 
-Widgety tworzone są na podstawie obiektów reprezentacyjnych (opisanych powyżej) w klasie \textbf{NoteEditorWidgetFactory}. Na podstawie pola \textbf{\textit{type}} wybierany jest typ widgetu, który następnie tworzony jest z parametrów obiektu reprezentującego. Używa klasy IdGenerator do generowania identyfikatorów, przez co obsługa przydzielania id jest robiona w jednym miejscu, w fabryce, która jest przekazywana dzieciom i elementom danych widgetów. Pozwala to zachować spójność w aktualnej implementacji, jak również przy dalszym rozwoju.
+Widgety tworzone są na podstawie obiektów reprezentacyjnych (opisanych powyżej) w klasie \textbf{NoteEditorWidgetFactory}. Na podstawie pola \textbf{\textit{type}} wybierany jest typ widgetu, który następnie tworzony jest z parametrów obiektu reprezentującego. Używa klasy \textbf{IdGenerator} do generowania identyfikatorów, przez co obsługa przydzielania id jest robiona w jednym miejscu, w fabryce, która jest przekazywana dzieciom i elementom danych widgetów. Pozwala to zachować spójność w aktualnej implementacji, jak również przy dalszym rozwoju.

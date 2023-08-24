@@ -9,7 +9,7 @@ Po uruchomieniu aplikacji użytkownik zostaje przeniesiony na stronę główną.
     \item przycisk w prawym dolnym rogu służący do tworzenia nowej notatki;
     \item dodatkowe elementy w menu górnego paska.
 \end{compactitem}
-Elementy w menu górnego paska umożliwiają na zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
+Elementy w menu górnego paska umożliwiają zmianę motywu, czy reset bazy danych w celu usunięcia wszystkich notatek. 
 
 \begin{figure}[ht]
     \centering
@@ -23,7 +23,7 @@ Elementy w menu górnego paska umożliwiają na zmianę motywu, czy reset bazy d
 
 Po uruchomieniu tej opcji wyświetli się okienko dialogowe z wyborem motywu, jakiego użytkownik chciałby użyć. Do wyboru mamy trzy mowtywy: \textbf{dark}, \textbf{light} oraz \textbf{easy}.
 
-Motywy \textbf{dark} oraz \textbf{light} służą, jako główne motywy aplikacji, zachowując te same wielkości elementów tekstu i całej aplikacji.
+Motywy \textbf{dark} oraz \textbf{light} służą jako główne motywy aplikacji, zachowując te same wielkości elementów tekstu i całej aplikacji.
 Dla osób mających problemy z widocznością tekstu przy domyślnych ustawieniach wielkości i kolorów aplikacji przygotowany został motyw \textbf{easy}.
 Motyw ten cechują kontrastujące ze sobą kolory, jak również zwiększone rozmiary czcionek, ikon, przycisków i paska narzędzi.
 
@@ -31,15 +31,16 @@ Motyw ten cechują kontrastujące ze sobą kolory, jak również zwiększone roz
     \centering
     \includegraphics[height=8.5cm]{images/strona_domowa_motywy.png}
     \caption{Porównanie motywów na tej samej stronie głównej.}
+    \label{fig:mainPage}
 \end{figure}
 
 \subsection{Opcja \textit{Rebuild Database}}
 
-Opcja ta otwiera okno dialogowe z pytaniem o to, czy na pewno chcemy wykonać operację przebudowy bazy danych. Po zatwierdzeniu baza danych jest usuwana i budowana.
+Opcja ta otwiera okno dialogowe z pytaniem o to, czy na pewno chcemy wykonać operację przebudowy bazy danych. Po zatwierdzeniu baza danych jest usuwana i budowana ponownie.
 
 \subsection{Zeszyty}
 
-Pod etykietą \textbf{\textit{Notebooks}} dostępne są dwa przyciski: \textbf{Trainings} oraz \textbf{Diet}. Są to roboczo dodane przyciski, które są przygotowane pod rozszerzenie aplikacji w przyszłości o możliwość układania notatek w zeszyty, dla lepszej organizacji, a także wprowadzać etykiety.
+Pod etykietą \textbf{\textit{Notebooks}} dostępne są dwa przyciski: \textbf{Trainings} oraz \textbf{Diet}. Są to roboczo dodane przyciski, które są przygotowane do rozszerzenia aplikacji o możliwość układania notatek w zeszyty, dla lepszej organizacji, a także wprowadzać etykiety.
 Pomysł ten zostanie omówiony w rozdziale \ref{ch:rozwoj}.
 
 \subsection{Notatki}
@@ -48,7 +49,7 @@ Kolejnym elementem strony głównej jest lista notatek znajdująca się pod etyk
 W prawym górnym rogu danych elementów znajduje się przycisk \textbf{X} służący do usunięcia z bazy danych notatki reprezentowanej przez ten element.
 Po naciśnięciu na jeden z omawianych elementów użytkownik zostaje przeniesiony do ekranu wyświetlania i edycji wybranej notatki.
 
-W prawym dolnym rogu ekranu widnieje okrągły przycisk z ikoną ołówka.
+W prawym dolnym rogu ekranu widnieje okrągły przycisk z ikoną ołówka (Rysunek \ref{fig:mainPage}).
 Po jego naciśnięciu korzystający zostaje przeniesiony do ekranu edycji, gdzie może stworzyć i zapisać nową notatkę.
 
 \section{Edycja notatki}
@@ -98,7 +99,7 @@ Jest on domyślnie ustawiony na typ \textbf{checkbox}. Oznacza to, że jest to w
 
 \subsection{Edytor strony}
 
-Edytor strony zajmuje resztę powierzchni ekranu. Jest polem, w którym następuje edycja tekstu oraz widgetów. Aktualny stan wizualny jest odświeżany na bieżąco, dzięki czemu użytkownik obserwuje zmiany jako efekt końcowy w czasie rzeczywistym.
+Edytor strony zajmuje resztę powierzchni ekranu. Jest polem, w którym następuje edycja tekstu oraz widgetów. Aktualny stan wizualny jest odświeżany na bieżąco, dzięki czemu użytkownik obserwuje zmiany w efekcie końcowym w czasie rzeczywistym.
 
 
 
@@ -148,7 +149,7 @@ Każdy tekst zamykany jest w akapicie tekstowym od początku, aż do znaku końc
 
 Dodawanie akapitów tekstowych odbywa się za pomocą klawiatury. W momencie, gdy użytkownik podczas edycji doda znak nowej linii utworzy się nowy akapit będący następnikiem edytowanego.
 
-\textbf{Ważne:} Podczas dodawania nowego akapitu widgetów utworzy się nowy akapit tekstowy jako jego następnik. Ma to na celu zachowanie możliwości ciągłej pracy z tekstem.
+\textbf{Ważne:} Podczas dodawania nowego akapitu widgetów utworzy się nowy akapit tekstowy będący jego następnikiem. Ma to na celu zachowanie możliwości ciągłej pracy z tekstem.
 
 \subsubsection{Usuwanie}
 
@@ -184,7 +185,7 @@ Edytor posiada funkcję odkrywania znaków nagłówka, w celu ułatwienia edycji
 \subsubsection{Ustawianie stylów}
 \label{subsec:ustawianieStyli}
 
-Kolejną rzeczą dostępną w aplikacji MobiNote są style. Użytkownik, chcąc sformatować tekst w odpowiednim stylu, wprowadza do niego symbole specjalne oznaczające konkretne style.
+Kolejnym ważnym elementem aplikacji MobiNote są style tekstu. Użytkownik, chcąc sformatować tekst w odpowiednim stylu, wprowadza do niego symbole specjalne oznaczające konkretne style.
 Odbywa się to według poniższych zasad:
 
 \begin{itemize}
@@ -270,6 +271,7 @@ W przypadku obrazów tryb edycji jest oznaczony poprzez dodanie obramowania do z
     \centering
     \includegraphics[width=6cm]{images/tryb_edycji.png}
     \caption{Tryb edycji przykładowych widgetów głównych.}
+    \label{fig:trybEdycji}
     \vspace{3mm}
 \end{figure}
 
@@ -294,11 +296,11 @@ Dodawane są poprzez użycie przycisku na pasku narzędzi. Obraz wybierany jest 
 
 \subsubsection{Edycja}
 
-Aby zmienić rozmiar zdjęcia użytkownik musi przejść w tryb edycji poprzez kliknięcie na zdjęcie, a następnie przeciągać ikonę ze strzałką (Rysunek \ref{fig:trybZaznaczenia}). Automatycznie dostosowywany będzie rozmiar obrazu.
+Aby zmienić rozmiar zdjęcia użytkownik musi przejść w tryb edycji poprzez kliknięcie na zdjęcie, a następnie przeciągać ikonę ze strzałką (Rysunek \ref{fig:trybEdycji}). Automatycznie dostosowywany będzie rozmiar obrazu.
 
 \subsubsection{Usunięcie i zmiana}
 
-Po wejściu w tryb zaznaczenia ukażą się dwie ikony: ikona usunięcia obrazu oraz ikona zmiany obrazu.
+Po wejściu w tryb zaznaczenia ukażą się dwie ikony: ikona usunięcia obrazu oraz ikona zmiany obrazu (Rysunek \ref{fig:trybZaznaczenia}).
 Wybór pierwszej ikony skutkuje usunięciem obrazu wraz z akapitem, natomiast drugiej -- przejściem do pamięci urządzenia w celu wyboru zdjęcia.
 
 \subsection{Listy}
@@ -333,11 +335,11 @@ Użytkownik może zmianić typ wszystkich wierszy w danej liście poprzez przej�
 \subsubsection{Dostępne typy wiersza}
 
 \begin{itemize}
-    \item checkbox
-    \item numerowane
-    \item oznaczone przez symbol "\--{}"
-    \item naznaczane przez symbol "*" (w nowszej wersji aplikacji spodziewane jest tworzenie etykiet przez użytkownika)
-    \item licznik
+    \item checkbox;
+    \item numerowane;
+    \item oznaczone przez symbol "\--{}";
+    \item naznaczane przez symbol "*" (w nowszej wersji aplikacji spodziewane jest tworzenie etykiet przez użytkownika);
+    \item licznik.
 \end{itemize}
 
 Aktualnie listy są jednopoziomowe, bez możliwości zmiany wysunięcia od początku wiersza. Możliwość ta jest przewidziana w dalszym rozwoju aplikacji.
@@ -346,7 +348,7 @@ Aktualnie listy są jednopoziomowe, bez możliwości zmiany wysunięcia od pocz�
 
 Licznik służy do odliczania rzeczy opisywanej przez tekst wiersza. Z każdym kliknięciem zwiększana jest wartość licznika (lewa część etykiety), aż do osiągnięcia celu licznika (liczba w prawej części licznika). Wraz z osiągnięciem ustalonego celu wiersz zostaje odznaczony.
 
-Możliwa jest zmiana wartości celu licznika. W tym celu wystarczy nacisnąć na liczbę w prawej części licznika, a następnie wybrać liczbę na klawiaturze i zatwierdzić. Po zmianie następuje reset licznika.
+Możliwa jest zmiana wartości celu licznika. Aby to zrobić wystarczy nacisnąć na liczbę w prawej części licznika, a następnie wybrać liczbę na klawiaturze i zatwierdzić. Po zmianie następuje reset licznika.
 
 
 \begin{figure}[ht]

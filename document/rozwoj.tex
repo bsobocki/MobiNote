@@ -19,7 +19,7 @@ Na stronie głównej dostępne są przygotowane już przyciski \textbf{Trainings
 
 Po naciśnięciu na przycisk użytkownik zostanie przeniesiony do strony z dostępnymi notatkami, będącymi częścią zeszytu reprezentowanego przez dany przycisk.
 
-Przyciski w dolnym pasku przygotowane są na przełączanie pomiędzy widokami strony głównej. W obecnej aplikacji dostępny jest tylko widok główny, jednak przewidziany jest jeszcze widok zawierający tylko listę zeszytów (Library), oraz widok profilu użytkownika i jego ustawień (Profile).
+Przyciski w dolnym pasku strony głównej przygotowane są na przełączanie pomiędzy jej widokami. W obecnej aplikacji dostępny jest tylko widok główny, jednak przewidziany jest jeszcze widok zawierający tylko listę zeszytów (Library), oraz widok profilu użytkownika i jego ustawień (Profile).
 
 \section{Rozszerzenie istniejących rozwiązań}
 
@@ -48,7 +48,7 @@ Użycie obiektów \textbf{InlineSpan} udostępnianych przez flutter pozwala twor
 
 \subsection{Dodatkowe widgety w notatce}
 
-Przygotowane również zostały obiekty typu \textbf{NoteWidgetData} oraz miejsca w \textbf{NoteListElementWidget} na dodatkowe elementy takie jak na przykład \textbf{NoteInfoPage}, która będzie widgetem złożonym z ikony, który po kliknięciu otwiera okno dialogowe notatką/stroną informacyjną, którą będzie można przewijać.
+Przygotowane również zostały obiekty typu \textbf{NoteWidgetData} oraz miejsca w \textbf{NoteListElementWidget} na dodatkowe elementy. Przykładem takiego elementu jest \textbf{NoteInfoPage}. Będzie on przyciskiem z ikoną, który po kliknięciu otwiera okno dialogowe z notatką/stroną informacyjną, którą będzie można przewijać.
 
 Planowanymi dodatkowymi widgetami są między innymi:
 
@@ -65,7 +65,7 @@ Jedną z głównych funkcjonalności aplikacji MobiNote zaplanowaną na kolejne 
 
 \subsection{Powiadomienia}
 
-Kolejną zaplanowaną funkcjonalnością jest dodanie powiadomień. Powiadomienia mają służyć jako przypomnienia ustawione w notatce do konkretnych działań. Przykładowo w notatce dotyczącej urodzin bliskiej osoby możemy ustawić przypomnienia dotyczące odebrania tortu, bądź prezentu. Nada to użyteczność notatce nawet, gdy nie będzie ona bezpośrednio wyświetlana.
+Kolejną zaplanowaną funkcjonalnością jest dodanie powiadomień. Powiadomienia mają służyć jako przypomnienia ustawione w notatce dotyczące konkretnych działań. Przykładowo w notatce dotyczącej urodzin bliskiej osoby możemy ustawić przypomnienia o odebrania tortu, bądź prezentu. Nada to użyteczność notatce nawet, gdy nie będzie ona bezpośrednio w użyciu.
 
 \subsection{Nagrywanie głosowej notatki}
 
@@ -74,6 +74,11 @@ Przydatną funkcjonalnością danej aplikacji będzie możliwość nagrywania no
 \subsection{Karty step-by-step}
 
 Ostatnią funkcjonalnością przewidzianą w aplikacji MobiNote będą karty \textbf{step-by-step}.
-Funkcjonalność ta będzie polegać na przygotowaniu listy rzeczy do zrobienia, aby osiągnąć dany cel. Następnie użytkownik zapisuje daną listę i przechodzi do widoku danej notatki. Widok ten składać się będzie tylko z jednego pola z opisem kroku, na którym aktualnie znajduje się użytkownik. Będą dostępne przyciski nawigacyjne pozwalające cofnąć się o jeden krok oraz przejść do następnego kroku.
+Funkcjonalność ta będzie polegać na przygotowaniu listy rzeczy do zrobienia, aby osiągnąć zaplanowany cel. Następnie użytkownik zapisuje daną listę i przechodzi do widoku danej notatki. Widok ten składać się będzie tylko z jednego pola z opisem kroku, na którym aktualnie znajduje się użytkownik. Będą dostępne przyciski nawigacyjne pozwalające na:
+\begin{compactitem}
+    \item cofnięcie się o jeden krok;
+    \item przejście do następnego kroku.
+    
+\end{compactitem}
 
 Karty te mają na celu pokazać użytkownikowi jedynie następny krok, zamiast całej listy. Pozwala to na uniknięcie nadmiernego rozmyślania i poczucia przytłoczenia związanego z ilością rzeczy, jakie trzeba wykonać, aby osiągnąć zaplanowany cel.
