@@ -2,22 +2,22 @@
 
 Struktura aplikacji MobiNote została częściowo opisana w rozdziale \ref{ch:manual}.
 
-\section{Edytor notatki}
+\section{Notatki}
 
-Edytor notatki składa się z edytora tytułu znajdującego się w głównym pasku strony edycji notatki, oraz edytora zawartości.
-
-\subsection{Zarządzanie zawartością}
-
-Do zarządzania zawartością notatki używana jest klasa \textbf{NoteParagraphs} przechowująca listę obiektów typu \textbf{NoteParagraph} reprezentujących akapity notatki.
-Współpracę tych klas można przedstawić w uproszczony sposób za pomocą schematu:
+Każda notatka składa się z nagłówka (tytułu) oraz zawartości.
+Nagłówkiem jest tekst edytowany w polu tekstowym znajdującym się w górnym pasku strony, natomiast zawartość notatki jest ciągiem akapitów dodawanych, edytowanych i usuwanych w edytorze notatki. Akapity mogą przechowywać tekst, jak również widgety. Struktura kodu opiera się na wzorcu MVC (Model View Controller), którą można przedstawić w uproszczony sposób za pomocą schematu:
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{images/ContentEditor_podzial.png}
-    \caption{Uproszczony schemat zarządzania akapitami.}
+    \caption{Uproszczony schemat struktury i działania edytora notatki.}
 \end{figure}
 
-\newpage
+W obecnej implementacji aplikacji \textbf{MobiNote} za widok odpowiada obiekt klasy \textbf{ContentEditor}, natomiast kontrolerem danych jest obiekt klasy \textbf{NoteParagraphs}, który również przechowuje dane składające się na model. Jest to świadomy zabieg. Model nie jest skomplikowany i rozbudowany, dlatego też nie trzeba tworzyć dodatkowych struktur i klas do zarządzania nim, jak w klasycznym wzorcu MVC. Pozwala to na uproszczenie logiki i struktury kodu, mniejsze wykorzystanie pamięci, oraz skrócenie ścieżki wywołań w przypadku wykonywania konkretnych operacji na danych. Zabieg ten został użyty z myślą o użytkownikach korzystających z mniej wydajnych urządzeń.
+
+\section{Przechowywanie notatki}
+
+Zawartość notatki przechowywana jest jako lista akapitów w obiekcie klasy \textbf{NoteParagraphs}. Każdy akapit jest obiektem klasy dziedziczącej po klasie \textbf{NoteParagraph}. W przypadku akapitów tekstowych zawartością przechowywaną w obiekcie będzie tekst, natomiast w przypadku akapitów widgetów będą to parametry widgetów zawartych w danym akapicie.
 
 \subsection{Akapity}
 
@@ -28,8 +28,82 @@ Istnieją trzy typy akapitów w edytorze dziedziczące po \textbf{NoteParagraph}
     \item \textbf{NoteParagraphPlaceholder}.
 \end{itemize}
 
-Każdy z akapitów posiada unikalny identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
-Pozwala to na unikalne identyfikowanie akapitów wewnątrz listy, oraz wszystkich utworzonych widgetów w obrębie przestrzeni edytora.
+Schemat dziedziczenia wygląda następująco:
+
+%------- UML---------
+% niestety kompilator daje bledy, gdy chce uzyc:
+% \usepackage{tikz}
+% \usepackage{pgfplots}
+% \usepackage[simplified]{pgf-umlcd}
+% dlatego uzyje zdjecia skompilowanego diagramu w innym projekcie
+
+% \renewcommand{\umltextcolor}{black}
+% \renewcommand{\umlfillcolor}{white}
+% \renewcommand{\umldrawcolor}{black}
+
+% \begin{tikzpicture}[scale=0.7, every node/.style={transform shape},
+% rounded corners=2pt]
+
+% \begin{abstractclass}{NoteParagraph}{5.5,3}
+% \attribute{+ noteWidgetFactory : \mbox{NoteEditorWidgetFactory}}
+% \attribute{+ id : int}
+
+% \operation[0]{+ onContentChange()}
+% \operation[0]{+ reportFocusParagraph()}
+% \operation[0]{+ deleteParagraph()}
+% \operation[0]{+ requestFocus()}
+% \operation[0]{+ setDefaultCallbacks()}
+
+% \operation[0]{+ get content : String}
+% \operation[0]{+ get rawLength : int}
+% \operation[0]{+ get widgetTree : String}
+% \operation[0]{+ get str : String}
+% \end{abstractclass}
+
+% \begin{class}{NoteParagraphTextEditor}{0,-6}
+% \inherit{NoteParagraph}
+% \attribute{+ cursor : int}
+% \attribute{+ fontSize : int}
+% \attribute{+ paragraphText : String}
+
+% \operation[0]{+ addParagraph()}
+% \operation[0]{+ addPlaceholder()}
+% \operation[0]{+ append()}
+% \end{class}
+
+
+% \begin{class}{NoteParagraphWidget}{5.5,-6}
+% \inherit{NoteParagraph}
+% \attribute{+ widgetJSON : String}
+% \attribute{+ mode : WidgetMode}
+% \attribute{+ elements : \mbox{List$<$NoteEditorWidget$>$}}
+
+% \operation[0]{+ \mbox{addWidget()}}
+% \operation[0]{+ \mbox{addWidgetByData()}}
+% \operation[0]{+ setMode()}
+% \operation[0]{+ removeFromParent()}
+% \end{class}
+
+
+% \begin{class}{NoteParagraphPlaceholder}{11,-6}
+% \inherit{NoteParagraph}
+% \operation{+ onTap()}
+% \end{class}
+
+% \end{tikzpicture}
+
+%--------UML---------
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/UML_klas.png}
+    \label{fig:uml}
+\end{figure}
+
+\newpage
+
+Każdy z akapitów posiada unikatowy identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
+Pozwala to na unikatowe identyfikowanie akapitów wewnątrz listy, oraz wszystkich utworzonych widgetów w obrębie przestrzeni edytora.
 
 Używane są również mechanizmy wywołań zwrotnych (callbacks) do zgłaszania aktywności (focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy akapitów, na podstawie własnego id, gdy wszystkie jego elementy zostaną usunięte.
 
@@ -45,12 +119,16 @@ Służy do przechowywania, wyświetlania i edycji widgetów notatki. Posiada mec
 
 Służy jako wypełnienie pozostałej przestrzeni edytora. Po kliknięciu na niego uruchamia mechanizm przenoszenia aktywności (focus) na ostatni akapit na liście, dzięki czemu użytkownik nie musi znać wielkości i szukać ostatniego akapitu, aby kontynuować edycję notatki.
 
+\newpage
 
-\section{Widgety}
+\subsection{Widgety}
 
-\subsection{Struktura widgetów}
-
-W aktualnej wersji aplikacji widgety dzielą się na widgety główne będące bezpośrednimi dziećmi \textbf{NoteParagraphWidget}, oraz widgety będące ich dziećmi. W przypadku rozwoju aplikacji struktury widgetów oraz ich hierarchii i tworzenia ulegną zmianie. Aktualnie struktura aplikacji wygląda następująco:
+W aktualnej wersji aplikacji widgety dzielą się na:
+\begin{compactitem}
+    \item widgety główne (będące bezpośrednimi elementami \textbf{NoteParagraphWidget})
+    \item widgety będące elementami widgetów głównych.
+\end{compactitem}
+W przypadku rozwoju aplikacji struktury widgetów oraz ich hierarchii i tworzenia ulegną zmianie. Aktualnie struktura aplikacji wygląda następująco:
 
 \begin{figure}[ht]
     \centering
@@ -59,7 +137,7 @@ W aktualnej wersji aplikacji widgety dzielą się na widgety główne będące b
     \label{fig:struktura-widgetow}
 \end{figure}
 
-\subsection{Tworzenie widgetów}
+\subsubsection{Tworzenie widgetów}
 
 Widgety tworzone są poprzez interakcję użytkownika przy użyciu interfejsu użytkownika (patrz \ref{sub:dodawanieWidgetow}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych.
 
@@ -70,58 +148,11 @@ Widgety tworzone są poprzez interakcję użytkownika przy użyciu interfejsu u�
     \label{fig:create-widget}
 \end{figure}
 
-\subsection{Usuwanie widgetów}
+\subsubsection{Usuwanie widgetów}
 
 Widgety usuwane są poprzez interakcję użytkownika z dostępnym interfejsem graficznym po przejściu w tryb zaznaczenia (patrz \ref{sub:usuwanieWidgetow}). Widgety usuwane są w swoich rodzicach, a jeśli brakuje widgetów potomnych, wówczas widget listy bądź akapit widgetów zostaje usunięty.
 
-\section{Praca z tekstem}
-
-Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \textbf{NoteParagraphTextEditor} i \textbf{NoteTextEditorWidget}, jak również wyświetlanie go wraz ze zmianą rozmiarów z pomocą \textbf{NoteTextEditingController}.
-
-\subsection{Edycja tekstu}
-
-Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy (lewa i prawa strona) jako stałą wartość, oraz padding pionowy (góra, dół) obliczany na podstawie różnicy pomiędzy wielkoścą czcionki użytej w danym akapicie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej (w przypadku, gdy dany akapit nie ma ustawionego nagłówka, nie chcemy braku odstępu między akapitami z powodu zerowego paddingu pionowego).
-
-Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie akapitu. Stan ten określa się poprzez wielkośc czcionki i stylów tekstu użytych w akapicie.
-
-\subsubsection{Dodawanie tekstu}
-
-Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne (callback), zainicjalizowane przy tworzeniu danego akapitu przez \textbf{NoteParagraphs}, służące do dodania nowego akapitu. Wywołanie to przyjmuje identyfikator danego akapitu i na tej podstawie oblicza miejsce w liście, do którego należy włożyć nowo powstały akapit. Przy tworzeniu nowego akapitu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
-
-\subsubsection{Usuwanie tekstu}
-\label{eq:usuwanieTekstu}
-
-Flutter nie oferuje możliwości przechwycenia zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwycenia zdarzenia edycji tekstu w akapicie.
-
-W każdym akapicie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik. Jego brak na początku tekstu podczas sprawdzania tekstu po edycji mówi o potrzebie usunięcia akapitu.
-
-Gdy użytkownik zechce usunąć akapit, wówczas przenosi się kliknięciem na początek wiersza (o ile już się na nim nie znajduje), a następnie naciska przycisk \textbf{delete}. Dzięki temu usuwa \verb|placeholder|, a przy tym wywoływany jest callback służący do usunięcia akapitu. Jako argument przyjmuje identyfikator akapitu, aby określić miejsce usunięcia.
-
-Aby uniknąć kliknięcia na początek linii przed wartownika został dodany mechanizm zmiany pozycji kursora na drugi znak (bezpośrednio za wartownikiem) za każdym razem, gdy jest on na pozycji zerowej.
-
-\subsection{Wyświetlanie tekstu}
-
-Do wyświetlania stylizowanego tekstu używane są obiekty typu \textbf{TextSpan}. Obiekty te posiadają drzewiastą strukturę, ponieważ mogą zawierać dzieci tego samego typu, które będą dziedziczyć dane parametry stylu, o ile nie zostaną dla nich specjalnie zainicjalizowane. Daje to możliwość zorganizowania tekstu bez potrzeby dzielenia go na małe kawałki oraz nadawania za każdym razem łączonych stylów (gdyby obiekty \textbf{TextSpan} były przechowywane jako elementy jednej listy). Można zainicjalizować jeden styl wewnątrz drugiego, co bardzo upraszcza strukturę i pozwala na wprowadzanie globalnych zmian struktury (jak na przykład wielkość czcionki całego akapitu) tylko w korzeniu, zapewniając, że wszystkie części tekstu odziedziczą zmianę.
-
-Aktualizacja i renderowanie wyglądu pola tekstowego na bieżąco jest możliwe poprzez wykorzystanie klasy \textbf{TextEditingController}. Posiada ona metodę \textbf{buildTextSpan}, która służy do budowania wyglądu i stylu tekstu poprzez obiekty \textbf{TextSpan}. Dziedzicząc z tej klasy i nadpisując metodę \textbf{buildTextSpan} mogłem użyć parsera tekstu zawierającego znaczniki do przekonwertowania go na stylizowany tekst.
-Dzięki temu przy każdej zmianie tekst jest parsowany, a jego wygląd aktualizowany.
-
-Utworzony w ten sposób \textbf{NoteTextEditingController} może nie tylko używać parsera do tworzenia obiektów \textbf{TextSpan}, ale również mógł zostać rozszerzony o dodatkowe parametry, takie jak:
-
-\begin{compactitem}
-    \item callback \textbf{resizeTextField} wołany podczas parsowania, gdy wielkość czcionki w tekście ulega zmianie;
-    \item możliwość przechowywania informacji o tym, czy dany akapit jest aktualnie w użyciu;
-    \item sprawdzanie i manipulacja pozycją kursora.
-\end{compactitem}
-
-Callback \textbf{resizeTextField} został użyty w kontrolerze, zamiast w widgecie pola tekstowego, ponieważ wtedy wystarczy parsować tekst jednokrotnie. W momencie zwrócenia drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego w jego korzeniu, zamiast edytować zawartość widgetu używając innych mechanizmów i parsować dodatkowo tekst w poszukiwaniu informacji na temat wielkości czcionki.
-
-Informacja na temat aktualnego użycia akapitu jest używana do wyświetlania i ukrywania znaczników stylu nagłówka.
-
-Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby kursor nie znajdował się przed znakiem \verb|placeholder| (zobacz \ref{eq:usuwanieTekstu}).
-
-Przy każdej zmianie tekstu odświeżany jest widok akapitu, dlatego wystarczy zmienić wartość zmiennej odpowiadającej za jego rozmiar przed końcem całej operacji związanej z przetwarzaniem nowego tekstu.
-%https://api.flutter.dev/flutter/widgets/TextEditingController/buildTextSpan.html
+\section{Parsowanie notatki}
 
 \subsection{Problem parsowania tekstu ze znacznikami stylu}
 
@@ -145,7 +176,7 @@ Własna implementacja parsera pozwoliła mi od początku do końca zaprojektowa�
 
 \subsubsection{Parsowanie}
 
-Każdy z etapów parsowania jest realizowany poprzez inną klasę. Całość łączona jest w metodzie obiektu \textbf{NoteTextEditingController}.
+Każdy z etapów parsowania jest realizowany poprzez obiekt innej klasy. Całość łączona jest w metodzie obiektu \textbf{NoteTextEditingController}.
 \newline
 \begin{figure}[ht]
     \centering
@@ -157,7 +188,7 @@ Każdy z etapów parsowania jest realizowany poprzez inną klasę. Całość ł�
 \subsubsection{Znaki unicode}
 
 %https://unicode.org/glossary/#private_use_area
-Do procesu parsowania zostały użyte znaki unicode z bloku Private Use Area(Prywatny Obszar Użytkowania). Są to znaki, które są trudno dostępne dla użytkownika z poziomu klawiatury mobilnej.
+Do procesu parsowania zostały użyte znaki unicode z bloku Private Use Area. Są to znaki, które są trudno dostępne dla użytkownika z poziomu klawiatury mobilnej.
 
 \noindent Zdefiniowane zostały w następujący sposób:
 
@@ -171,7 +202,6 @@ const paragraphUnicodeNumber = 0xe200;
 Oznaczają odpowiednio początki przestrzeni znaczników: stylu tekstu, wewnętrznych widgetów i elementów w tekście oraz nagłówków akapitu.
 Znaczniki początkowe mają parzyste numery, natomiast znaczniki końcowe mają nieparzyste numery następujące po odpowiadających im znacznikach początkowych.
 
-\newpage
 
 \subsubsection{Struktura SpanInfo}
 
@@ -243,3 +273,57 @@ InlineSpan getSpans(SpanInfo spanInfo) {
      * oraz zwracanie go wraz z children */
 }
 \end{lstlisting}
+
+
+\section{Prezentowanie notatki}
+
+Za widok notatki odpowiada klasa \textbf{ContentEditor}. Pozwala ona na wyświetlanie zawartości akapitów oraz ich elementów, jak również za jej pośrednictwem użytkownik może edytować notatkę z poziomu widoku.
+
+\subsection{Praca z tekstem}
+
+Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \textbf{NoteParagraphTextEditor} i \textbf{NoteTextEditorWidget}, jak również wyświetlanie go wraz ze zmianą rozmiarów z pomocą \textbf{NoteTextEditingController}.
+
+\subsection{Edycja tekstu}
+
+Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy (lewa i prawa strona) jako stałą wartość, oraz padding pionowy (góra, dół) obliczany na podstawie różnicy pomiędzy wielkością czcionki użytej w danym akapicie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej (w przypadku, gdy dany akapit nie ma ustawionego nagłówka, nie chcemy braku odstępu między akapitami z powodu zerowego paddingu pionowego).
+
+Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie akapitu. Stan ten określa się poprzez wielkośc czcionki i stylów tekstu użytych w akapicie.
+
+\subsubsection{Dodawanie tekstu}
+
+Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas wołane jest wywołanie zwrotne (callback), zainicjalizowane przy tworzeniu danego akapitu przez \textbf{NoteParagraphs}, służące do dodania nowego akapitu. Wywołanie to przyjmuje identyfikator danego akapitu i na tej podstawie oblicza miejsce w liście, do którego należy włożyć nowo powstały akapit. Przy tworzeniu nowego akapitu następuje przeniesienie tekstu następującego po znaku końca linii. Znak końca linii jest usuwany.
+
+\subsubsection{Usuwanie tekstu}
+\label{eq:usuwanieTekstu}
+
+Flutter nie oferuje możliwości przechwycenia zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwycenia zdarzenia edycji tekstu w akapicie.
+
+W każdym akapicie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik. Jego brak na początku tekstu podczas sprawdzania tekstu po edycji mówi o potrzebie usunięcia akapitu.
+
+Gdy użytkownik zechce usunąć akapit, wówczas przenosi się kliknięciem na początek wiersza (o ile już się na nim nie znajduje), a następnie naciska przycisk \textbf{delete}. Dzięki temu usuwa \verb|placeholder|, a przy tym wywoływany jest callback służący do usunięcia akapitu. Jako argument przyjmuje identyfikator akapitu, aby określić miejsce usunięcia.
+
+Aby uniknąć kliknięcia na początek linii przed wartownika został dodany mechanizm zmiany pozycji kursora na drugi znak (bezpośrednio za wartownikiem) za każdym razem, gdy jest on na pozycji zerowej.
+
+\subsection{Wyświetlanie tekstu}
+
+Do wyświetlania stylizowanego tekstu używane są obiekty typu \textbf{TextSpan}. Obiekty te posiadają drzewiastą strukturę, ponieważ mogą zawierać dzieci tego samego typu, które będą dziedziczyć dane parametry stylu, o ile nie zostaną dla nich specjalnie zainicjalizowane. Daje to możliwość zorganizowania tekstu bez potrzeby dzielenia go na małe kawałki oraz nadawania za każdym razem łączonych stylów (gdyby obiekty \textbf{TextSpan} były przechowywane jako elementy jednej listy). Można zainicjalizować jeden styl wewnątrz drugiego, co bardzo upraszcza strukturę i pozwala na wprowadzanie globalnych zmian struktury (jak na przykład wielkość czcionki całego akapitu) tylko w korzeniu, zapewniając, że wszystkie części tekstu odziedziczą zmianę.
+
+Aktualizacja i renderowanie wyglądu pola tekstowego na bieżąco jest możliwe poprzez wykorzystanie klasy \textbf{TextEditingController}. Posiada ona metodę \textbf{buildTextSpan}, która służy do budowania wyglądu i stylu tekstu poprzez obiekty \textbf{TextSpan}. Dziedzicząc z tej klasy i nadpisując metodę \textbf{buildTextSpan} mogłem użyć parsera tekstu zawierającego znaczniki do przekonwertowania go na stylizowany tekst.
+Dzięki temu przy każdej zmianie tekst jest parsowany, a jego wygląd aktualizowany.
+
+Utworzony w ten sposób \textbf{NoteTextEditingController} może nie tylko używać parsera do tworzenia obiektów \textbf{TextSpan}, ale również mógł zostać rozszerzony o dodatkowe parametry, takie jak:
+
+\begin{compactitem}
+    \item callback \textbf{resizeTextField} wołany podczas parsowania, gdy wielkość czcionki w tekście ulega zmianie;
+    \item możliwość przechowywania informacji o tym, czy dany akapit jest aktualnie w użyciu;
+    \item sprawdzanie i manipulacja pozycją kursora.
+\end{compactitem}
+
+Callback \textbf{resizeTextField} został użyty w kontrolerze, zamiast w widgecie pola tekstowego, ponieważ wtedy wystarczy parsować tekst jednokrotnie. W momencie zwrócenia drzewiastej struktury tekstu \textbf{TextSpan} możemy ustawić rozmiar pola tekstowego w jego korzeniu, zamiast edytować zawartość widgetu używając innych mechanizmów i parsować dodatkowo tekst w poszukiwaniu informacji na temat wielkości czcionki.
+
+Informacja na temat aktualnego użycia akapitu jest używana do wyświetlania i ukrywania znaczników stylu nagłówka.
+
+Sprawdzanie i manipulacja pozycją kursora pozwala na odkrywanie znaczników stylu, jak również ustawianie pozycji, aby kursor nie znajdował się przed znakiem \verb|placeholder| (zobacz \ref{eq:usuwanieTekstu}).
+
+Przy każdej zmianie tekstu odświeżany jest widok akapitu, dlatego wystarczy zmienić wartość zmiennej odpowiadającej za jego rozmiar przed końcem całej operacji związanej z przetwarzaniem nowego tekstu.
+%https://api.flutter.dev/flutter/widgets/TextEditingController/buildTextSpan.html
