@@ -17,7 +17,7 @@ W obecnej implementacji aplikacji \textbf{MobiNote} za widok odpowiada obiekt kl
 
 \section{Przechowywanie notatki}
 
-Zawartość notatki przechowywana jest jako lista akapitów w obiekcie klasy \textbf{NoteParagraphs}. Każdy akapit jest obiektem klasy dziedziczącej po klasie \textbf{NoteParagraph}. W przypadku akapitów tekstowych zawartością przechowywaną w obiekcie będzie tekst, natomiast w przypadku akapitów widgetów będą to parametry widgetów zawartych w danym akapicie.
+Zawartość notatki przechowywana jest jako lista akapitów w obiekcie klasy \textbf{NoteParagraphs}. Każdy akapit jest obiektem klasy dziedziczącej po klasie \textbf{NoteParagraph}. W przypadku akapitów tekstowych zawartością przechowywaną w obiekcie będzie tekst, natomiast w przypadku akapitów widgetów będą to parametry widgetów zawartych w danym akapicie. Ten model danych jest zapisywany w bazie danych w odpowiednim formacie oraz odczytywany i konwertowany z powrotem wraz z przejściem do strony edycji danej notatki.
 
 \subsection{Akapity}
 
@@ -137,20 +137,7 @@ W przypadku rozwoju aplikacji struktury widgetów oraz ich hierarchii i tworzeni
     \label{fig:struktura-widgetow}
 \end{figure}
 
-\subsubsection{Tworzenie widgetów}
-
-Widgety tworzone są poprzez interakcję użytkownika przy użyciu interfejsu użytkownika (patrz \ref{sub:dodawanieWidgetow}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[height=5cm]{images/tworzenie_widgetow.png}
-    \caption{Schemat tworzenia widgetów.}
-    \label{fig:create-widget}
-\end{figure}
-
-\subsubsection{Usuwanie widgetów}
-
-Widgety usuwane są poprzez interakcję użytkownika z dostępnym interfejsem graficznym po przejściu w tryb zaznaczenia (patrz \ref{sub:usuwanieWidgetow}). Widgety usuwane są w swoich rodzicach, a jeśli brakuje widgetów potomnych, wówczas widget listy bądź akapit widgetów zostaje usunięty.
+Widgety przechowywane są w modelu za pomocą obiektów klas pochodznych od klasy \textbf{NoteWidgetData}. Każdy używany typ widgetu posiada opisujący go typ danych \textbf{NoteWidgetData}. Wszystkie dostępne typy danych dostępne są w plikach w katalogu \textit{lib/logic/note\_{}editor/widgets/representation/}. Dane te zostają zapisane w bazie danych w formacie JSON.
 
 \section{Parsowanie notatki}
 
@@ -274,20 +261,38 @@ InlineSpan getSpans(SpanInfo spanInfo) {
 }
 \end{lstlisting}
 
+\newpage
 
 \section{Prezentowanie notatki}
 
 Za widok notatki odpowiada klasa \textbf{ContentEditor}. Pozwala ona na wyświetlanie zawartości akapitów oraz ich elementów, jak również za jej pośrednictwem użytkownik może edytować notatkę z poziomu widoku.
 
-\subsection{Praca z tekstem}
+\subsection{Widgety}
+
+\subsubsection{Tworzenie widgetów}
+
+Widgety tworzone są poprzez interakcję użytkownika przy użyciu interfejsu użytkownika (patrz \ref{sub:dodawanieWidgetow}), jak również poprzez przetwarzanie zawartości notatki z bazy danych. W obu przypadkach tworzone są odpowiednie obiekty typu \textbf{NoteWidgetData} na podstawie użytej funkcjonalności bądź przetworzonych danych pobranych z bazy danych. Na ich podstawie tworzone są widgety wyświetlane w edytorze.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=5cm]{images/tworzenie_widgetow.png}
+    \caption{Schemat tworzenia widgetów.}
+    \label{fig:create-widget}
+\end{figure}
+
+\subsubsection{Usuwanie widgetów}
+
+Widgety usuwane są poprzez interakcję użytkownika z dostępnym interfejsem graficznym po przejściu w tryb zaznaczenia (patrz \ref{sub:usuwanieWidgetow}). Widgety usuwane są w swoich rodzicach, a jeśli brakuje widgetów potomnych, wówczas widget listy bądź akapit widgetów zostaje usunięty.
+
+\newpage
+
+\subsection{Tekst}
 
 Praca z tekstem dzieli się na edycję tekstu z użyciem logiki zawartej w \textbf{NoteParagraphTextEditor} i \textbf{NoteTextEditorWidget}, jak również wyświetlanie go wraz ze zmianą rozmiarów z pomocą \textbf{NoteTextEditingController}.
 
-\subsection{Edycja tekstu}
-
 Tekst edytowany jest za pomocą pola tekstowego TextField udostępnianego jako widget przez framework flutter. Posiada on wewnętrzny padding poziomy (lewa i prawa strona) jako stałą wartość, oraz padding pionowy (góra, dół) obliczany na podstawie różnicy pomiędzy wielkością czcionki użytej w danym akapicie, a domyślnej czcionki z dodatkiem podstawowej wartości niezerowej (w przypadku, gdy dany akapit nie ma ustawionego nagłówka, nie chcemy braku odstępu między akapitami z powodu zerowego paddingu pionowego).
 
-Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie akapitu. Stan ten określa się poprzez wielkośc czcionki i stylów tekstu użytych w akapicie.
+Przy każdej zmianie tekstu sprawdzana jest jego zawartość w poszukiwaniu informacji o stanie akapitu. Stan ten określa się poprzez wielkość czcionki i stylów tekstu użytych w akapicie.
 
 \subsubsection{Dodawanie tekstu}
 
@@ -304,7 +309,7 @@ Gdy użytkownik zechce usunąć akapit, wówczas przenosi się kliknięciem na p
 
 Aby uniknąć kliknięcia na początek linii przed wartownika został dodany mechanizm zmiany pozycji kursora na drugi znak (bezpośrednio za wartownikiem) za każdym razem, gdy jest on na pozycji zerowej.
 
-\subsection{Wyświetlanie tekstu}
+\subsubsection{Wyświetlanie tekstu}
 
 Do wyświetlania stylizowanego tekstu używane są obiekty typu \textbf{TextSpan}. Obiekty te posiadają drzewiastą strukturę, ponieważ mogą zawierać dzieci tego samego typu, które będą dziedziczyć dane parametry stylu, o ile nie zostaną dla nich specjalnie zainicjalizowane. Daje to możliwość zorganizowania tekstu bez potrzeby dzielenia go na małe kawałki oraz nadawania za każdym razem łączonych stylów (gdyby obiekty \textbf{TextSpan} były przechowywane jako elementy jednej listy). Można zainicjalizować jeden styl wewnątrz drugiego, co bardzo upraszcza strukturę i pozwala na wprowadzanie globalnych zmian struktury (jak na przykład wielkość czcionki całego akapitu) tylko w korzeniu, zapewniając, że wszystkie części tekstu odziedziczą zmianę.
 
