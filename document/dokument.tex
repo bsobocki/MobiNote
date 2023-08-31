@@ -21,8 +21,12 @@
 % polecenia \fmlinebreak.
 \polishtitle    {Aplikacja mobilna do zarządzania i tworzenia\fmlinebreak  interaktywnych notatek}
 \englishtitle   {A mobile application to manage and create interactive notes}
-\polishabstract {TODO: streszczenie po polsku\ldots}
-\englishabstract{TODO: streszczenie po angielsku\ldots}
+\polishabstract {
+Praca zawiera opis projektu wykonania aplikacji mobilnej MobiNote służącej do tworzenia i zarządzania interaktywnymi notatkami. Aplikacja została zaimplementowana w języku Dart z wykorzystaniem frameworka flutter. Przechowywanie danych możliwe jest dzięki bazie danych SQLite przy użyciu biblioteki sqlite3 oraz drift. Praca zawiera opis implementacji i struktury aplikacji MobiNote oraz podręcznik użytkownika opisujący sposób użytkowania aplikacji. Opisano organizację kodu, zastosowane wzorce projektowe oraz rozwiązania problemów informatycznych napotkane podczas tworzenia aplikacji, jak również implementację parsera języka znaczników wzorowanego na języku Markdown. 
+}
+\englishabstract{
+The thesis contains a description of the design of the MobiNote mobile application for creating and managing interactive notes. The application was implemented in the Dart language using the flutter framework. The data is stored in an SQLite database using sqlite3 and drift libraries. The thesis contains a description of the structure and implementation of the MobiNote application and a user manual describing how to use the application. Code organisation, applied design patterns and solutions for the computer science problems encountered during application development are described, as well as the implementation of the parser of the markup language based on the Markdown language. 
+}
 % w pracach wielu autorow nazwiska mozna oddzielic poleceniem \and
 \author         {Bartosz Sobocki}
 % w przypadku kilku promotorow, lub koniecznosci podania ich afiliacji, linie
@@ -58,7 +62,7 @@
 
 Celem projektu jest wytworzenie aplikacji mobilnej do zarządzania notatkami w interaktywny sposób.
 Aplikacja ma umożliwić użytkownikowi prowadzenie i tworzenie notatek pozwalających na formatowanie tekstu i dołączanie załączników.
-Formatowanie tekstu wzorowane będzie na języku znaczników Markdown. Główną różnicą w stosunku do edytorów używających tego typu formatowania tekstu będą:
+Formatowanie tekstu wzorowane będzie na języku znaczników Markdown \cite{markdown}. Główną różnicą w stosunku do edytorów używających tego typu formatowania tekstu będą:
 \begin{compactitem}
     \item brak konieczności zmian widoków (pomiędzy edycją surowego tekstu, a widokiem zawierającym sformatowany tekst);
     \item przełączenia całej zawartości pomiędzy trybem edycji, a trybem użytkowym;
@@ -82,15 +86,15 @@ Motywacją do stworzenia projektu MobiNote była potrzeba aplikacji pełniącej 
 \end{compactitem}
 Dzięki temu mogę zawsze sięgać do zapisków swoich myśli i pomysłów w chwilach, gdy są mi potrzebne.
 
-Dostępne na rynku aplikacje, takie jak Evernote, czy ostatnio używane przeze mnie proste w użyciu Samsung Notes, w wielu aspektach sprawdziło się i przyniosło wiele korzyści. W obu przypadkach interfejs użytkownika jest przejrzysty, a funkcjonalność obszerna. Jednak po dłuższym okresie użytkowania tych, oraz innych aplikacji dostrzegam w nich problemy lub braki, dlatego chciałbym używać notatnika wolnego od nich.
+Dostępne na rynku aplikacje, takie jak Evernote \cite{evernote}, czy ostatnio używane przeze mnie proste w użyciu Samsung Notes \cite{samsungNotes}, w wielu aspektach sprawdziło się i przyniosło wiele korzyści. W obu przypadkach interfejs użytkownika jest przejrzysty, a funkcjonalność obszerna. Jednak po dłuższym okresie użytkowania tych, oraz innych aplikacji dostrzegam w nich problemy lub braki, dlatego chciałbym używać notatnika wolnego od nich.
 
 Bardzo lubię korzystać z języka znaczników Markdown. Oferuje on możliwość formatowania tekstu, tworzenia różnych nagłówków i elementów notatki przy użyciu jedynie odpowiedniej składni zawartej w zwykłym tekście. W przeciwieństwie do omawianych wyżej aplikacji nie trzeba:
 \begin{compactitem}
     \item przeszukiwania opcji w poszukiwaniu przycisków, którymi użytkownik określa typ i wielkość czcionki;
-    \item przełączania zwkłej klawiatury na klawiaturę zawierającą narzędzia do formatowania tekstu;
+    \item przełączania zwykłej klawiatury na klawiaturę zawierającą narzędzia do formatowania tekstu;
     \item wchodzenia w menu aby zaimportować zdjęcia, dodać listy itd.
 \end{compactitem} 
-Używanym przeze mnie serwisem był \textbf{HackMD}. Dużym minusem jednak był brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i wygenerowanej notatki. Zależało mi na tym, aby notatka była renderowana i formatowana na bieżąco na jednym ekranie z ewentualnym ujawnianiem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
+Używanym przeze mnie serwisem był HackMD \cite{hackmd}. Posiada on jednak duży minus, którym jest brak aplikacji mobilnej, oraz dwa ekrany: edycji tekstu i sformatowanego widoku. Zależało mi na tym, aby notatka była renderowana i formatowana na bieżąco na jednym ekranie z ewentualnym ujawnianiem i chowaniem znaczników w tekście. Tekst powinien być stylizowany już w polu tekstowym uwzględniając dodawanie i usuwanie znaczników w czasie rzeczywistym.
 
 Chciałem stworzyć aplikację, która będzie posiadała szereg wymaganej przeze mnie funkcjonalności, jak na przykład:
 \begin{compactitem}
@@ -138,12 +142,18 @@ Tekst jest automatycznie formatowany wraz z dodaniem znaczników, co pozawala na
 
 Notatki będą zapisywane lokalnie, co pozwoli zaoszczędzić czas ładowania, jak również pominąć problemy związane z synchronizacją.
 
-Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny (\textbf{dark}), jasny (\textbf{light}) oraz ułatwiający użytkowanie (\textbf{easy}) dla osób słabowidzących.
+Interfejs użytkownika jest prosty i przejrzysty, posiada motyw ciemny (\textbf{dark}), jasny (\textbf{light}) oraz ułatwiający użytkowanie osobom słabowidzącym (\textbf{easy}).
+
+\include{podrecznik_uzytkownika}
+
+\include{implementacja}
+
+\include{struktura}
 
 \chapter{Instalacja}
 
-Aplikacja MobiNote jest dostępna i testowana na urządzeniach android.
-Kod żródłowy aplikacji wraz z plikiem \textbf{.apk} można uzyskać pobierając repozytorium \textbf{MobiNote} pod linkiem:
+Aplikacja MobiNote jest dostępna i testowana na urządzeniach mobilnych z systemem operacyjnym Android.
+Kod źródłowy aplikacji wraz z plikiem \textbf{.apk} można uzyskać pobierając repozytorium \textbf{MobiNote} pod linkiem:
 \url{https://github.com/bsobocki/MobiNote}.
 
 \section{Android}
@@ -180,17 +190,24 @@ Aby zainstalować aplikację na urządzeniu mobilnym z systemem Android należy:
     \item kliknąć \textbf{Zainstaluj}.
 \end{compactitem}
 
-\include{podrecznik_uzytkownika}
-
-\include{implementacja}
-
-\include{struktura}
 
 \include{rozwoj}
 
 %%%%% BIBLIOGRAFIA
 
 \begin{thebibliography}{1}
+\bibitem{markdown}
+Dokumentacja i opis języka znacznika markdown dostępne są na stronie \url{https://www.markdownguide.org/}
+
+\bibitem{evernote}
+Strona główna aplikacji Evernote w języku polskim: \url{https://evernote.com/intl/pl}
+
+\bibitem{samsungNotes}
+Opis aplikacji Samsung notes dostępny jest na stronie \url{https://www.samsung.com/pl/apps/samsung-notes/}
+
+\bibitem{hackmd}
+Opis serwisu HackMD wraz z funkcjonalnością dostępny jest pod adresem \url{https://hackmd.io/s/features}
+
 \bibitem{googleplay} 
 Opis platformy Google Play dostępny na stronie \url{https://play.google/howplayworks/}
 
@@ -211,6 +228,15 @@ Opis biblioteki drift dla języka Dart: \url{https://pub.dev/packages/drift}, do
 
 \bibitem{flutterdesignpatterns}
 Wzorce projektowe spotykane podczas implementacji aplikacji mobilnych z użyciem frameworka flutter opisane zostały na stronie: \url{https://flutterdesignpatterns.com/}
+
+\bibitem{testing}
+Dokumentacja biblioteki testing dla języka Dart dostępna jest pod adresem: \url{https://dart.dev/guides/testing}
+
+\bibitem{getx}
+Dokumentacja biblioteki GetX dla języka Dart dostępna jest pod adresem: \url{https://pub.dev/packages/get}
+
+\bibitem{sateManagement}
+Podejścia zarządzania stanem aplikacji mobilnej z użyciem narzędzi i bibliotek frameworka flutter dostępne są pod adresem: \url{https://docs.flutter.dev/data-and-backend/state-mgmt/options}
 
 \end{thebibliography}
 

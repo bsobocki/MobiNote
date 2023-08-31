@@ -1,6 +1,6 @@
 \chapter{Struktura aplikacji MobiNote}
 
-Struktura aplikacji MobiNote została częściowo opisana w rozdziale \ref{ch:manual}.
+Struktura aplikacji MobiNote została częściowo opisana w \ref{ch:manual} rozdziale.
 
 \section{Notatki}
 
@@ -102,10 +102,10 @@ Schemat dziedziczenia wygląda następująco:
 
 \newpage
 
-Każdy z akapitów posiada unikatowy identyfikator \textbf{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
+Każdy z akapitów posiada unikatowy identyfikator \texttt{id} oraz referencję do fabryki widgetów tworzonej wewnątrz managera \textbf{NoteParagraphs}.
 Pozwala to na unikatowe identyfikowanie akapitów wewnątrz listy, oraz wszystkich utworzonych widgetów w obrębie przestrzeni edytora.
 
-Używane są również mechanizmy wywołań zwrotnych (callbacks) do zgłaszania aktywności (focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy akapitów, na podstawie własnego id, gdy wszystkie jego elementy zostaną usunięte.
+Używane są również mechanizmy wywołań zwrotnych (callbacks) do zgłaszania aktywności (focus), zaistniałej zmiany, jak również usunięcia samego siebie z listy akapitów, na podstawie własnego \texttt{id}, gdy wszystkie jego elementy zostaną usunięte.
 
 \subsubsection{NoteParagraphTextEditor}
 
@@ -225,7 +225,7 @@ W podobny sposób konwertowane są również widgety i elementy wewnętrzne w te
 
 \subsubsection{UnicodeMarkedTextParser}
 
-Z racji tego, ze znaki unicode z tego zakresu są trudno dostępne, na potrzeby samego problemu konwersji tekstu notatek możemy założyć, że znaki w tekście symbolizują początkowe i końcowe znaczniki, które na pewno mają swoje odpowiedniki i są poprawnie użyte (nie przecinają się).
+Z racji tego, ze znaki unicode z zakresu Private Use Area są trudno dostępne, na potrzeby samego problemu konwersji tekstu notatek możemy założyć, że znaki w tekście symbolizują początkowe i końcowe znaczniki, które na pewno mają swoje odpowiedniki i są poprawnie użyte (nie przecinają się).
 
 Na początku algorytmu tworzona jest referencja $currentSpan$ na obiekt \textbf{SpanInfo}, który jest aktualnie przetwarzanym stylem (napotkany został jego znacznik początkowy). Początkowo jest to korzeń całej struktury \textbf{SpanInfo}.
 

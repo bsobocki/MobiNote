@@ -1,5 +1,20 @@
 
 
+\chapter{Podsumowanie}
+
+Stworzyłem aplikację MobiNote na moje własne potrzeby, według moich upodobań. Wygląd i funkcjonalność aplikacji zostały zaprojektowane z myślą o przystępności i wygodzie użytkowania. Jestem zadowolony z aktualnego rezultatu, dlatego używanie aplikacji w wersji, która została wydana wraz z napisaniem danej pracy jest dla mnie przyjemne. Podczas codziennego testowania i używania aplikacji napotykałem problemy, które rozwiązywałem wraz z dalszą implementacją, jak również odkrywałem, jakie funkcjonalności mogą być przydatne i wprowadzałem je. Przykładem takiej funkcjonalności jest możliwość zmiany rozmiaru zdjęcia, która nie została przewidziana podczas planowania aplikacji.
+
+Praca nad rozwojem aplikacji pozwoliła mi na rozwinięcie umiejętności implementowania aplikacji mobilnych, której dotychczas nie posiadałem. Użycie wzorców projektowych oraz dobrych praktyk programowania pozwoliły mi odpowiednio zaprojektować strukturę aplikacji i kodu. Wykorzystałem wiedzę zdobytą podczas studiów między innymi na temat rozwoju oprogramowania, programowania obiektowego, tworzenia i operowania danymi przy użyciu bazie danych, inżynierii oprogramowania, jak również zdobytą umiejętność rozwiązywania problemów.
+
+Aplikacji MobiNote używam od momentu ukończenia parsera, ponieważ już w samej wersji tekstowej aplikacja pozwalała na tworzenie przydatnych notatek i zapisków.
+Zaprojektowany sposób interakcji z zawartością notatki sprawdził się podczas tworzenia notatek do treningu na siłowni, ponieważ pozwala na sprawne tworzenie i edycję list. Uważam, że dobrym pomysłem było zaimplementowanie własnego parsera, ponieważ podczas użytkowania aplikacji zauważyłem, że ujawnianie znaczników stylów i użytych nagłówków w akapitach tekstowych jest bardzo pomocne przy edycji tekstu i dostosowywaniu formatowania. Ustawianie typów wielkości nagłówka w akapitach okazało się również przydatne podczas tworzenia odstępów pomiędzy akapitami, ponieważ aplikacja umożliwia ustawienie wielkości nagłówka, który może się składać z samej spacji, dzięki czemu odstępy te mogą być zwiększane zgodnie z upodobaniami użytkownika.
+
+Widget listy w różnych trybach sprawdził się podczas różnych aktywności: od treningu na siłowni (lista typu licznik) po robienie zakupów (lista typu checkbox), natomiast dodawanie obrazów pozwala na rozszerzenie notatek o przydatne schematy, czy poprawę wyglądu. Jest to kolejny powód, dzięki któremu pomimo swojej prostoty aplikacja ma dla mnie charakter użytkowy, a nie tylko teoretyczny na potrzeby pracy.
+
+W wykonaniu aplikacji dostrzegam również drobne błędy i niedociągnięcia, jak na przykład niekontrolowane ukrywanie i ujawnianie klawiatury podczas przewijania ekranu, lub dodawania nowego akapitu tekstowego. Dzieje się tak, ponieważ przy tworzeniu nowych obiektów typu \textbf{TextField} zgłaszana jest jego aktywność (focus) oraz przebudowywany jest stan (state) widgetu głównego widoku \textbf{ContentEditor}. Przy dalszym rozwoju aplikacji niezbędne byłoby użycie menadżera stanu \cite{sateManagement}, aby lepiej zorganizować odświeżanie widoku i aktualizowanie stanu widgetów.
+
+Podczas pracy nad aplikacją narodziły się pomysły na rozwój istniejących rozwiązań, natomiast podczas użytkowania aplikacji w różnych sytuacjach rósł apetyt na kolejne funkcjonalności. Pomysły te omówię w następnym rozdziale.
+
 \chapter{Rozwój aplikacji MobiNote}
 \label{ch:rozwoj}
 
