@@ -8,7 +8,7 @@ Implementując aplikację MobiNote starałem się zachowywać czysty kod, podzie
 
 Aplikacja została napisana przy użyciu frameworka flutter w języku Dart.
 
-Wybierając technologie, kierowałem się kryteriami takimi jak: prostota, wieloplatformowość, estetyka bez dużego wkładu w kreowanie komponentów na własną rękę oraz wydajność. Jedną z najbardziej polecanych framework'ów na stronie  linkedin.com \cite{linkedin} oraz itCraft \cite{itCraft} był flutter. Jak podaje strona główna flutter.dev \cite{flutter}:
+Wybierając technologie kierowałem się kryteriami takimi jak: prostota, wieloplatformowość, estetyka bez dużego wkładu w kreowanie komponentów na własną rękę oraz wydajność. Jedną z najbardziej polecanych framework'ów na stronie  linkedin.com \cite{linkedin} oraz itCraft \cite{itCraft} był flutter. Jak podaje strona główna flutter.dev \cite{flutter}:
 
 "Flutter is an open source framework by Google for building beautiful, natively compiled, multi-platform applications from a single codebase."
 
@@ -16,7 +16,7 @@ Składnia języka Dart jest stosunkowo prosta i przejrzysta, natomiast framework
 
 \subsection{SQLite}
 
-Do przechowywania notatek została wykorzystana baza danych SQLite. Aplikacja wykorzystuje bibliotekę sqlite3 \cite{sqlite3}, umożliwiającą wykonywanie operacji na lokalnej bazie danych SQLite. Pozwala na ona na zapis, odczyt a także manipulację danymi. Dodatkowo wykorzystywany jest pakiet drift \cite{drift}, który jest rodzajem systemu ORM umożliwiającym mapowanie między obiektami języka Dart oraz tabelami bazy danych SQLite. Pozwala to na pracę bezpośrednio w kodzie Dart używając dostępnej funkcjonalności bez konieczności pisania zapytań bezpośrednio w języku SQL.
+Do przechowywania notatek została wykorzystana baza danych SQLite. Aplikacja wykorzystuje bibliotekę sqlite3 \cite{sqlite3}, umożliwiającą wykonywanie operacji na lokalnej bazie danych SQLite. Pozwala ona na zapis, odczyt a także manipulację danymi. Dodatkowo wykorzystywany jest pakiet drift \cite{drift}, który jest rodzajem systemu ORM, umożliwiający mapowanie między obiektami języka Dart oraz tabelami bazy danych SQLite. Pozwala to na pracę bezpośrednio w kodzie Dart używając dostępnej funkcjonalności bez konieczności pisania zapytań bezpośrednio w języku SQL.
 
 \section{Organizacja repozytorium}
 
@@ -64,13 +64,13 @@ W powyższych opisach możemy zauważyć użycie wzorców projektowych spotykany
 
 \subsubsection{Testy Jednostkowe}
 
-Część logiki niezwiązanej bezpośrednio z wyświetlaniem i organizacją komponentów i ich wyglądu testowałem za pomocą testów jednostkowych od razu podczas ich implementacji przy użyciu biblioteki testing \cite{testing}. Dzięki temu uniknąłem długich godzin poszukiwania problemów, gdy któryś z komponentów mógł nie działać poprawnie. Przyczyną niepoprawnego działanie może być nie tylko algorytm, ale i sam widget i funkcjonowanie frameworka flutter. Dostosowując szczegółowość testów jednostkowych starałem się pokryć przypadki użycia jeszcze przed użyciem danych klas, metod i algorytmów w aplikacji. Przetestowany został w ten sposób parser języka znaczników stylów, wraz z pełną funkcjonalnością, jak również konwersja reprezentacji widgetów do formatu JSON.
+Część logiki niezwiązanej bezpośrednio z wyświetlaniem i organizacją komponentów i ich wyglądu testowałem za pomocą testów jednostkowych od razu podczas ich implementacji przy użyciu biblioteki testing \cite{testing}. Dzięki temu uniknąłem długich godzin spędzonych na poszukiwaniu problemów, gdy któryś z komponentów mógł nie działać poprawnie. Przyczyną niepoprawnego działania może być nie tylko algorytm, ale i sam widget i funkcjonowanie frameworka flutter. Dostosowując szczegółowość testów jednostkowych starałem się pokryć przypadki użycia jeszcze przed użyciem danych klas, metod i algorytmów w aplikacji. Przetestowany został w ten sposób parser języka znaczników stylów, wraz z pełną funkcjonalnością, jak również konwersja reprezentacji widgetów do formatu JSON.
 
 \subsection{Baza danych}
 
 Do zarządzania dostępem i manipulacją bazy danych tworzony jest jeden obiekt typu \textbf{MobiNoteDatabase} dla całego projektu. Jest on tworzony i udostępniany za pomocą biblioteki do zarządzania stanem \textbf{GetX} \cite{getx}. 
 
-W implementacji aplikacji MobiNote, \textbf{GetX} pozwala na tworzenie instancji zarządzającej dostępem do bazy danych raz i udostępnianie jej w różnych miejscach aplikacji. Struktura aplikacji wymaga tylko jednej instancji obiektu \textbf{MobiNoteDatabase}, dlatego tworzone jest jedno połączenie w jej konstruktorze, a sam obiekt przechowywany jest z pomocą \textbf{GetX}.
+W implementacji aplikacji MobiNote, \textbf{GetX} pozwala na tworzenie instancji zarządzającej dostępem do bazy danych raz i udostępnianie jej w różnych miejscach aplikacji. Struktura aplikacji wymaga tylko jednej instancji obiektu \textbf{MobiNoteDatabase}, dlatego tworzone jest jedno połączenie w jej konstruktorze, a sam obiekt przechowywany jest za pomocą \textbf{GetX}.
 
 \begin{verbatim}
     Get.put(MobiNoteDatabase());
@@ -88,7 +88,7 @@ Umożliwia to zwiększenie wydajności, ponieważ unikamy otwierania połączeni
 
 \subsubsection{Leniwe tworzenie widgetów w ListView}
 
-Podczas implementacji listy notatek w stronie głównej oraz edytora zawartości notatki użyty został widget \textbf{ListView} poprzez wywołanie twz. \textit{named constructor} \textbf{ListView.builder}. Praktyka ta ma dobre zastosowanie przy długich listach, ponieważ używając konstruktora \textbf{builder} widgety zawarte w \textbf{ListView} budowane są w sposób leniwy, na bieżąco, jeśli istnieje potrzeba ich wyświetlenia. Z racji tego, że budowanie jest szybkie i nieskomplikowane pozwala to uniknąć przechowywania dużej ilości widgetów (znajduje to pozytywne skutki przy długich, skomplikowanych notatkach).
+Podczas implementacji listy notatek w stronie głównej oraz edytora zawartości notatki użyty został widget \textbf{ListView} poprzez wywołanie tzw. \textit{named constructor} \textbf{ListView.builder}\cite{listviewbuilder}. Praktyka ta ma dobre zastosowanie przy długich listach, ponieważ używając konstruktora \textbf{builder} widgety zawarte w \textbf{ListView} budowane są w sposób leniwy, na bieżąco, jeśli istnieje potrzeba ich wyświetlenia. Z racji tego, że budowanie jest szybkie i nieskomplikowane pozwala to uniknąć przechowywania dużej ilości widgetów (znajduje to pozytywne skutki przy długich, skomplikowanych notatkach).
 %https://docs.flutter.dev/cookbook/lists/long-lists
 
 \subsubsection{Reprezentacja widgetów}
@@ -97,7 +97,7 @@ Każdy widget reprezentowany jest poprzez obiekt typu pochodnej klasy \textbf{Wi
 
 \subsubsection{ID Generator}
 
-Widgety zawierają identyfikatory do odróżniania ich w rodzicu lub liście zwierającej je. Ma to zastosowanie m.in. w znajdowaniu miejsca w liście np do dodawania nowego elementu, czy usuwania i zmiany elementów. Lepiej nadać \texttt{id} i na podstawie znalezienia \texttt{id} na liście pobierać indeks, zamiast nadawać i aktualizować indeksy elementom przy każdej edycji listy.
+Widgety zawierają identyfikatory do odróżniania ich w rodzicu lub liście zwierającej je. Ma to zastosowanie m.in. w znajdowaniu miejsca w liście np. do dodawania nowego elementu, czy usuwania i zmiany elementów. Lepiej nadać \texttt{id} i na podstawie znalezienia \texttt{id} na liście pobierać indeks, zamiast nadawać i aktualizować indeksy elementom przy każdej edycji listy.
 
 Do generowania identyfikatorów w odpowiednich miejscach w kodzie służy obiekt klasy \textbf{IdGenerator}.
 

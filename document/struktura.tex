@@ -137,7 +137,7 @@ W przypadku rozwoju aplikacji struktury widgetów oraz ich hierarchii i tworzeni
     \label{fig:struktura-widgetow}
 \end{figure}
 
-Widgety przechowywane są w modelu za pomocą obiektów klas pochodznych od klasy \textbf{NoteWidgetData}. Każdy używany typ widgetu posiada opisujący go typ danych \textbf{NoteWidgetData}. Wszystkie dostępne typy danych dostępne są w plikach w katalogu \textit{lib/logic/note\_{}editor/widgets/representation/}. Dane te zostają zapisane w bazie danych w formacie JSON.
+Widgety przechowywane są w modelu za pomocą obiektów klas pochodnych od klasy \textbf{NoteWidgetData}. Każdy używany typ widgetu posiada opisujący go typ danych \textbf{NoteWidgetData}. Wszystkie dostępne typy danych dostępne są w plikach w katalogu \textit{lib/logic/note\_{}editor/widgets/representation/}. Dane te zostają zapisane w bazie danych w formacie JSON.
 
 \section{Parsowanie notatki}
 
@@ -301,7 +301,7 @@ Jeśli wewnątrz pola tekstowego został dodany znak nowej linii, wówczas woła
 \subsubsection{Usuwanie tekstu}
 \label{eq:usuwanieTekstu}
 
-Flutter nie oferuje możliwości przechwycenia zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwycenia zdarzenia edycji tekstu w akapicie.
+Flutter nie oferuje możliwości przechwytywania zdarzenia naciśnięcia przycisku \textbf{delete}, gdy kursor znajduje się na początku tekstu. W tej sytuacji najprościej jest użyć przechwytywania zdarzenia edycji tekstu w akapicie.
 
 W każdym akapicie na początku dodawany jest znak \verb|placeholder = \u200b|. Jest to znak unicode reprezentujący spację o zerowej długości, a więc niewidoczną w tekście. Jest to swego rodzaju wartownik. Jego brak na początku tekstu podczas sprawdzania tekstu po edycji mówi o potrzebie usunięcia akapitu.
 
