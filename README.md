@@ -16,7 +16,6 @@ My current environtment preparing:
 
 Current way to run an application:
 - clone this repo
-- git checkout editor_textfield_paragraphs
 - run Android Emulator (for me this is `Pixel 6 API 30`)
     to run an emulator from Windows terminal:
     you can run a new Windows Terminal and go to the sdk directory
