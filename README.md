@@ -1,10 +1,10 @@
+<p align="center">
+   <img src="document/images/mobinote_logo.png"/>
+</p>
+
 # MobiNote
 
 A modern, accessible note-taking app with advanced formatting and multimedia support.
-
-<p align="center">
-   <img src="document/images/strona_domowa.png" />
-</p>
 
 ---
 
