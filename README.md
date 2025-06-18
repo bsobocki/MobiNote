@@ -69,8 +69,8 @@ MobiNote supports three visual themes for accessibility and comfort:
 
 Switch themes from the top bar menu.
 
-<img src="document/images/strona_domowa_motywy.png" height="600" />
-<img src="document/images/motywy_notatka.png" height="600" />
+<img src="document/images/strona_domowa_motywy.png" width="800"/>
+<img src="document/images/motywy_notatka.png" width="800"/>
 
 
 # Notebooks and Notes
