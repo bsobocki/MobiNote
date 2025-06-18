@@ -117,8 +117,8 @@ Styles can be nested, but not overlapped.
 **Example of nested styles and raw text with style markers:**
 
 <p>
-   <img src="document/images/style.png"  width="500"/>
-   <img src="document/images/style_surowy_tekst.png" width="500" height="77" />
+   <img src="document/images/style.png"  width="400"/>
+   <img src="document/images/style_surowy_tekst.png" width="400" height="61" />
 </p>
 
 
@@ -126,8 +126,8 @@ Styles can be nested, but not overlapped.
 Application shows style symbols when you enter styled text:
 
 <p>
-   <img src="document/images/pokazywanie_naglowkow.png" width="500" />
-   <img src="document/images/pokazywanie_znakow_specjalnych.png" width="500" height="374" />
+   <img src="document/images/pokazywanie_naglowkow.png" width="400" />
+   <img src="document/images/pokazywanie_znakow_specjalnych.png" width="400" height="299" />
 </p>
 
 # Widgets: Images and Lists
@@ -159,7 +159,7 @@ Add or remove rows using the enter key or the "+" and "x" buttons.
 The counter list type lets you track progress towards a goal.  
 Tap the counter to increment it; tap the goal number to edit the target.
 
-<img src="document/images/liczniki.png" />
+<img src="document/images/liczniki.png" height="400"/>
 
 # Additional Information
 
