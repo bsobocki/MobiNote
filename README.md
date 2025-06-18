@@ -1,4 +1,26 @@
-# mobi_note
+# MobiNote
+
+A modern, accessible note-taking app with advanced formatting and multimedia support.
+
+<p align="center">
+   <img src="document/images/strona_domowa.png" />
+</p>
+
+---
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Main Screen Overview](#main-screen-overview)
+- [Themes](#themes)
+- [Notebooks and Notes](#notebooks-and-notes)
+- [Editing Notes](#editing-notes)
+- [Text Formatting](#text-formatting)
+- [Widgets: Images and Lists](#widgets-images-and-lists)
+- [Counters in Lists](#counters-in-lists)
+- [Additional Information](#additional-information)
+
+---
 
 ## Installation
 
@@ -9,7 +31,6 @@
    ```
 
 2. **Install dependencies**
-   If the app is written in Flutter:
    ```bash
    flutter pub get
    ```
@@ -26,76 +47,148 @@
 
 4. **Requirements**
    - Flutter SDK (https://flutter.dev)
-   - Android Studio or VS Code (recommended for running/emulation)
+   - Android Studio or VS Code (recommended)
    - Android device or emulator
 
 ---
 
-## Main Screen
+## Main Screen Overview
 
-When you launch the app, you'll see a list of your notes and notebooks. The bottom right corner features a button to create a new note. The top bar allows you to change the theme (dark, light, easy) or reset the database (deletes all notes).
+When you launch MobiNote, you are greeted with the main screen, which displays your recent notes and notebooks.  
+You can quickly create a new note using the round pencil button in the bottom right corner.
 
-![Main screen](https://github.com/bsobocki/MobiNote/tree/master/document/images/strona_domowa.png)
+<p align="center">
+   <img src="document/images/strona_domowa_opcje.png"/>
+   
+</p>
 
-### Themes
+The top bar provides access to additional options:
+- **Theme selection**
+- **Database reset** (deletes all notes)
 
-You can choose between three themes: **dark**, **light**, and **easy** (increased contrast and larger fonts).
+---
 
-![Theme comparison](https://github.com/bsobocki/MobiNote/tree/master/document/images/strona_domowa_motywy.png)
+## Themes
 
-## Notes and Notebooks
+MobiNote supports three visual themes for accessibility and comfort:
 
-- **Notebooks**: Button for organizing notes into notebooks (feature in development).
-- **Recent Notes**: List of notes with title and content preview. Each note can be deleted or edited.
+- **Dark**: For low-light environments
+- **Light**: For bright environments
+- **Easy**: High-contrast, larger fonts and icons for better readability
 
-## Editing a Note
+Switch themes from the top bar menu.
 
-- **Top bar**: Save/back button (saves changes), title field, save option switch.
-- **Toolbar**: Add images and lists.
+<img src="document/images/strona_domowa_motywy.png" />
 
-![Note editing screen](https://github.com/bsobocki/MobiNote/tree/master/document/images/tryb_edycji.png)
+---
 
-- **Editor**: Edit text and widgets in real time.
+## Notebooks and Notes
+
+- **Notebooks**: Organize your notes into notebooks (feature in development).
+- **Recent Notes**: See a list of your latest notes, each showing the title and a preview of the content.
+
+You can delete a note using the "X" button or tap a note to view and edit it.
+
+---
+
+## Editing Notes
+
+When you create or open a note, you enter the editing screen:
+
+<img src="document/images/tryb_edycji.png" />
+
+- **Top bar**:  
+  - Back/Save button (saves changes and returns to main screen)
+  - Title field
+  - Save option switch (choose whether to save changes)
+- **Toolbar**:  
+  - Add image
+  - Add list
+
+All changes are reflected in real time in the editor area.
+
+---
 
 ## Text Formatting
 
-- **Headings**: Markdown style – `#`, `##`, `###`, `####` at the start of a line.
-- **Styles**:  
-  - `*text*` – bold  
-  - `^text^` – italic  
-  - `_text_` – underline  
-  - `~text~` – strikethrough  
-- Styles can be nested, but not overlapped.
+MobiNote supports Markdown-inspired formatting:
 
-![Style example](https://github.com/bsobocki/MobiNote/tree/master/document/images/style.png)
-![Raw styled text](https://github.com/bsobocki/MobiNote/tree/master/document/images/style_surowy_tekst.png)
+- **Headings**:  
+  - `#` Heading 1  
+  - `##` Heading 2  
+  - `###` Heading 3  
+  - `####` Heading 4
 
-## Widgets
+- **Text styles**:  
+  - `*text*` for **bold**
+  - `^text^` for *italic*
+  - `_text_` for <u>underline</u>
+  - `~text~` for ~~strikethrough~~
 
-- **Images**: Add from device, resize, or delete.
+Styles can be nested, but not overlapped.
 
-![Image selection mode](https://github.com/bsobocki/MobiNote/tree/master/document/images/tryb_zaznaczenia.png)
+**Example of nested styles:**
 
-- **Lists**:  
-  - Types: checkbox, numbered, with symbols, counter.
-  - Add/remove rows with enter or buttons.
-  - Counter: clicking increases value, goal can be edited.
+<img src="document/images/style.png" />
 
-![Counter in list](https://github.com/bsobocki/MobiNote/tree/master/document/images/liczniki.png)
+**Raw text with style markers:**
+
+<img src="document/images/style_surowy_tekst.png" />
+
+---
+
+## Widgets: Images and Lists
+
+### Images
+
+You can insert images into your notes from your device.  
+Resize or delete images directly in the editor.
+
+- **Edit mode**: Tap the image to resize it using the handle.
+
+- **Selection mode**: Long-press the image to reveal options to delete or change the image.
+
+<img src="document/images/tryb_zaznaczenia.png" />
+
+---
+
+### Lists
+
+Add interactive lists to your notes.  
+Supported list types:
+- Checkbox
+- Numbered
+- Symbol-marked
+- Counter
+
+Add or remove rows using the enter key or the "+" and "x" buttons.
+
+---
+
+## Counters in Lists
+
+The counter list type lets you track progress towards a goal.  
+Tap the counter to increment it; tap the goal number to edit the target.
+
+<img src="document/images/liczniki.png" />
+
+---
 
 ## Additional Information
 
-- Notes consist of text paragraphs and widgets.
+- Notes are made up of text paragraphs and widgets (images, lists).
 - Editing and deleting paragraphs is intuitive via keyboard and gestures.
-- The "easy" theme increases readability (larger fonts, higher contrast).
+- The "easy" theme is designed for users who need higher contrast and larger UI elements.
+- New notes are only saved if you make changes and use the back button in the top bar.
 
 ---
 
-**Note:** A new note is only saved after making changes and using the back button in the top bar.
+**Enjoy using MobiNote!**
+
+If you have any questions or suggestions, feel free to open an issue or contribute to the project.
+
 
 ---
-
-Let me know if you want to add more technical details or further instructions!
 
 ---
 
