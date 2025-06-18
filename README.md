@@ -6,8 +6,6 @@
 
 A modern, accessible note-taking app with advanced formatting and multimedia support.
 
----
-
 ## Table of Contents
 
 - [Installation](#installation)
@@ -20,9 +18,8 @@ A modern, accessible note-taking app with advanced formatting and multimedia sup
 - [Counters in Lists](#counters-in-lists)
 - [Additional Information](#additional-information)
 
----
 
-## Installation
+# Installation
 
 1. **Clone the repository**
    ```bash
@@ -50,25 +47,19 @@ A modern, accessible note-taking app with advanced formatting and multimedia sup
    - Android Studio or VS Code (recommended)
    - Android device or emulator
 
----
 
-## Main Screen Overview
+# Main Screen Overview
 
 When you launch MobiNote, you are greeted with the main screen, which displays your recent notes and notebooks.  
 You can quickly create a new note using the round pencil button in the bottom right corner.
-
-<p align="center">
-   <img src="document/images/strona_domowa_opcje.png"/>
-   
-</p>
 
 The top bar provides access to additional options:
 - **Theme selection**
 - **Database reset** (deletes all notes)
 
----
+<img src="document/images/strona_domowa_opcje.png" height="600" />
 
-## Themes
+# Themes
 
 MobiNote supports three visual themes for accessibility and comfort:
 
@@ -78,20 +69,18 @@ MobiNote supports three visual themes for accessibility and comfort:
 
 Switch themes from the top bar menu.
 
-<img src="document/images/strona_domowa_motywy.png" />
+<img src="document/images/strona_domowa_motywy.png" height="600" />
+<img src="document/images/motywy_notatka.png" height="600" />
 
----
 
-## Notebooks and Notes
+# Notebooks and Notes
 
 - **Notebooks**: Organize your notes into notebooks (feature in development).
 - **Recent Notes**: See a list of your latest notes, each showing the title and a preview of the content.
 
 You can delete a note using the "X" button or tap a note to view and edit it.
 
----
-
-## Editing Notes
+# Editing Notes
 
 When you create or open a note, you enter the editing screen:
 
@@ -107,9 +96,7 @@ When you create or open a note, you enter the editing screen:
 
 All changes are reflected in real time in the editor area.
 
----
-
-## Text Formatting
+# Text Formatting
 
 MobiNote supports Markdown-inspired formatting:
 
@@ -127,32 +114,36 @@ MobiNote supports Markdown-inspired formatting:
 
 Styles can be nested, but not overlapped.
 
-**Example of nested styles:**
+**Example of nested styles and raw text with style markers:**
 
-<img src="document/images/style.png" />
+<p>
+   <img src="document/images/style.png"  width="500"/>
+   <img src="document/images/style_surowy_tekst.png" width="500" height="77" />
+</p>
 
-**Raw text with style markers:**
 
-<img src="document/images/style_surowy_tekst.png" />
 
----
+Application shows style symbols when you enter styled text:
 
-## Widgets: Images and Lists
+<p>
+   <img src="document/images/pokazywanie_naglowkow.png" width="500" />
+   <img src="document/images/pokazywanie_znakow_specjalnych.png" width="500" height="374" />
+</p>
 
-### Images
+# Widgets: Images and Lists
+
+## Images
 
 You can insert images into your notes from your device.  
 Resize or delete images directly in the editor.
 
 - **Edit mode**: Tap the image to resize it using the handle.
-
+  
 - **Selection mode**: Long-press the image to reveal options to delete or change the image.
 
 <img src="document/images/tryb_zaznaczenia.png" />
 
----
-
-### Lists
+## Lists
 
 Add interactive lists to your notes.  
 Supported list types:
@@ -163,8 +154,6 @@ Supported list types:
 
 Add or remove rows using the enter key or the "+" and "x" buttons.
 
----
-
 ## Counters in Lists
 
 The counter list type lets you track progress towards a goal.  
@@ -172,9 +161,7 @@ Tap the counter to increment it; tap the goal number to edit the target.
 
 <img src="document/images/liczniki.png" />
 
----
-
-## Additional Information
+# Additional Information
 
 - Notes are made up of text paragraphs and widgets (images, lists).
 - Editing and deleting paragraphs is intuitive via keyboard and gestures.
@@ -186,9 +173,6 @@ Tap the counter to increment it; tap the goal number to edit the target.
 **Enjoy using MobiNote!**
 
 If you have any questions or suggestions, feel free to open an issue or contribute to the project.
-
-
----
 
 ---
 
