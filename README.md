@@ -20,10 +20,10 @@ Standard rich text editors struggle when the **Logical Text** (saved string) dif
 *   Example: A user types `*bold*` (6 chars). The editor renders **bold** (4 chars).
 *   If the text length changes during rendering, the cursor index becomes desynchronized, causing it to "jump" unpredictably or select the wrong characters during editing.
 
-**The Solution: Unicode Tokenization Engine**
+**The Solution: Unicode Tokenization Engine**\
 I implemented a custom parser that maps Markdown syntax to the **Unicode Private Use Area (PUA)**.
 *   **Collision-Free Parsing:** By mapping syntax characters (e.g., `*`) to specific PUA characters (e.g., `\ue000`), the parser preserves the exact string length logically while altering the visual presentation.
-*   **Result:** This ensures **O(1)** cursor alignment and solves the "Ambiguity Problem"—the parser instantly distinguishes between a user typing a math equation (`2 * 2`) and a bold syntax marker (`*text*`) because its algorithm.
+*   **Result:** This ensures **O(1)** cursor alignment and solves the "Ambiguity Problem"—the parser instantly distinguishes between typing a math equation (`2 * 2`) and a bold syntax marker (`*text*`).
 
 ### 2. Non-Destructive Real-Time Rendering
 **The Challenge:**
@@ -118,5 +118,6 @@ The application supports **Dark**, **Light**, and **Easy** (High Contrast/Large 
     ```
 
 ---
+
 
 **Author:** Bartosz Sobocki
