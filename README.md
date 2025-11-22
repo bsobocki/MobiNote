@@ -1,218 +1,122 @@
 <p align="center">
-   <img src="document/images/mobinote_logo.png"/>
+   <img src="document/images/mobinote_logo.png" alt="MobiNote Logo" width="200"/>
 </p>
 
 # MobiNote
 
-A modern, accessible note-taking app with advanced formatting and multimedia support.
+**A native Android application for seamless, interactive note-taking.**
 
-## Table of Contents
+> **Project Context:** Developed as a thesis project to explore advanced text rendering engines on mobile devices.
 
-- [Installation](#installation)
-- [Main Screen Overview](#main-screen-overview)
-- [Themes](#themes)
-- [Notebooks and Notes](#notebooks-and-notes)
-- [Editing Notes](#editing-notes)
-- [Text Formatting](#text-formatting)
-- [Widgets: Images and Lists](#widgets-images-and-lists)
-- [Counters in Lists](#counters-in-lists)
-- [Additional Information](#additional-information)
+## Engineering Case Study
 
+I approached this project with a focus on strict memory management, data structure efficiency, and algorithmic solutions rather than relying solely on high-level packages.
 
-# Installation
+The core of this project is a **custom-built rendering engine** designed to solve complex problems inherent to rich text editing.
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository_url>
-   cd <repository_name>
-   ```
+### 1. Solving the "Cursor Synchronization" Problem
+**The Challenge:**
+Standard rich text editors struggle when the **Logical Text** (saved string) differs from the **Visual Text** (rendered glyphs).
+*   Example: A user types `*bold*` (6 chars). The editor renders **bold** (4 chars).
+*   If the text length changes during rendering, the cursor index becomes desynchronized, causing it to "jump" unpredictably or select the wrong characters during editing.
 
-2. **Install dependencies**
-   ```bash
-   flutter pub get
-   ```
+**The Solution: Unicode Tokenization Engine**
+I implemented a custom parser that maps Markdown syntax to the **Unicode Private Use Area (PUA)**.
+*   **Collision-Free Parsing:** By mapping syntax characters (e.g., `*`) to specific PUA characters (e.g., `\ue000`), the parser preserves the exact string length logically while altering the visual presentation.
+*   **Result:** This ensures **O(1)** cursor alignment and solves the "Ambiguity Problem"—the parser instantly distinguishes between a user typing a math equation (`2 * 2`) and a bold syntax marker (`*text*`) because its algorithm.
 
-3. **Run the application**
-   - On an emulator or connected device:
-     ```bash
-     flutter run
-     ```
-   - Or build an APK:
-     ```bash
-     flutter build apk
-     ```
+### 2. Non-Destructive Real-Time Rendering
+**The Challenge:**
+Modifying the `TextEditingController` directly to hide markdown characters causes **Data Loss** (the app "forgets" which text was originally formatted) and **Infinite Build Loops** (modifying state during the render phase).
 
-4. **Requirements**
-   - Flutter SDK (https://flutter.dev)
-   - Android Studio or VS Code (recommended)
-   - Android device or emulator
+**The Solution:**
+I implemented a pipeline where the **Model** (Raw Markdown) is strictly separated from the **View** (TextSpans).
+*   The `buildTextSpan` method parses the raw text into a hierarchical **Abstract Syntax Tree (SpanInfo)** on the fly.
+*   This structure is converted to Flutter `TextSpan` objects for rendering.
+*   **Benefit:** The underlying data remains pure, editable markdown, while the user sees rich text.
 
-
-# Main Screen Overview
-
-When you launch MobiNote, you are greeted with the main screen, which displays your recent notes and notebooks.  
-You can quickly create a new note using the round pencil button in the bottom right corner.
-
-The top bar provides access to additional options:
-- **Theme selection**
-- **Database reset** (deletes all notes)
-
-<img src="document/images/strona_domowa_opcje.png" height="600" />
-
-# Themes
-
-MobiNote supports three visual themes for accessibility and comfort:
-
-- **Dark**: For low-light environments
-- **Light**: For bright environments
-- **Easy**: High-contrast, larger fonts and icons for better readability
-
-Switch themes from the top bar menu.
-
-<img src="document/images/strona_domowa_motywy.png" width="800"/>
-<img src="document/images/motywy_notatka.png" width="800"/>
-
-
-# Notebooks and Notes
-
-- **Notebooks**: Organize your notes into notebooks (feature in development).
-- **Recent Notes**: See a list of your latest notes, each showing the title and a preview of the content.
-
-You can delete a note using the "X" button or tap a note to view and edit it.
-
-# Editing Notes
-
-When you create or open a note, you enter the editing screen:
-
-<img src="document/images/tryb_edycji.png" />
-
-- **Top bar**:  
-  - Back/Save button (saves changes and returns to main screen)
-  - Title field
-  - Save option switch (choose whether to save changes)
-- **Toolbar**:  
-  - Add image
-  - Add list
-
-All changes are reflected in real time in the editor area.
-
-# Text Formatting
-
-MobiNote supports Markdown-inspired formatting:
-
-- **Headings**:  
-  - `#` Heading 1  
-  - `##` Heading 2  
-  - `###` Heading 3  
-  - `####` Heading 4
-
-- **Text styles**:  
-  - `*text*` for **bold**
-  - `^text^` for *italic*
-  - `_text_` for <u>underline</u>
-  - `~text~` for ~~strikethrough~~
-
-Styles can be nested, but not overlapped.
-
-**Example of nested styles and raw text with style markers:**
-
-<p>
-   <img src="document/images/style.png"  width="400"/>
-   <img src="document/images/style_surowy_tekst.png" width="400" height="61" />
-</p>
-
-
-
-Application shows style symbols when you enter styled text:
-
-<p>
-   <img src="document/images/pokazywanie_naglowkow.png" width="400" />
-   <img src="document/images/pokazywanie_znakow_specjalnych.png" width="400" height="299" />
-</p>
-
-# Widgets: Images and Lists
-
-## Images
-
-You can insert images into your notes from your device.  
-Resize or delete images directly in the editor.
-
-- **Edit mode**: Tap the image to resize it using the handle.
-  
-- **Selection mode**: Long-press the image to reveal options to delete or change the image.
-
-<img src="document/images/tryb_zaznaczenia.png" />
-
-## Lists
-
-Add interactive lists to your notes.  
-Supported list types:
-- Checkbox
-- Numbered
-- Symbol-marked
-- Counter
-
-Add or remove rows using the enter key or the "+" and "x" buttons.
-
-## Counters in Lists
-
-The counter list type lets you track progress towards a goal.  
-Tap the counter to increment it; tap the goal number to edit the target.
-
-<img src="document/images/liczniki.png" height="400"/>
-
-# Additional Information
-
-- Notes are made up of text paragraphs and widgets (images, lists).
-- Editing and deleting paragraphs is intuitive via keyboard and gestures.
-- The "easy" theme is designed for users who need higher contrast and larger UI elements.
-- New notes are only saved if you make changes and use the back button in the top bar.
+### 3. Architecture & Design Patterns
+*   **Abstract Factory Pattern:** Used in `NoteEditorWidgetFactory` to inject complex, interactive Flutter widgets (images, counters) directly into the text stream based on serialized JSON data.
+*   **Lazy Loading:** The note list utilizes `ListView.builder` to render elements only when visible, optimizing memory usage for notes containing high-resolution media.
+*   **State Management:** Utilizes **GetX** for lightweight Dependency Injection and reactive state management.
 
 ---
 
-**Enjoy using MobiNote!**
+## User Manual & Features
 
-If you have any questions or suggestions, feel free to open an issue or contribute to the project.
+MobiNote eliminates the distinction between "Edit Mode" and "View Mode." Formatting is applied live, and syntax is revealed dynamically when you tap into a word to edit it.
+
+### 1. Live Text Formatting
+Formatting is applied automatically as you type. To edit a style, simply tap into the styled word to reveal the syntax markers.
+
+| Style | Syntax | Example |
+| :--- | :--- | :--- |
+| **Headers** | `#` to `####` | `# Title` |
+| **Bold** | `*text*` | `*Important*` |
+| **Italic** | `^text^` | `^Emphasis^` |
+| **Underline** | `_text_` | `_Underline_` |
+| **Strike** | `~text~` | `~Done~` |
+
+&nbsp;
+
+
+<p>
+   <img src="document/images/style_surowy_tekst.png" width="45%" />
+   <br>
+   <em>Raw text logic.</em>
+</p>
+
+<p>
+   <img src="document/images/pokazywanie_znakow_specjalnych.png" width="45%" />
+   <br>
+   <em>Real-time rendering with revealed syntax.</em>
+</p>
+
+&nbsp;
+
+### 2. Interactive Widgets
+MobiNote treats widgets as first-class citizens within the text flow.
+
+*   **Counters:** A specialized widget for tracking repetitions (e.g., gym sets). Tap left to increment, tap right to set the goal.
+*   **Smart Lists:** Checkboxes and numbered lists that preserve indentation.
+*   **Images:** Insert from gallery. Tap to **Resize** (Edit Mode) or long-press to **Replace/Delete** (Selection Mode).
+
+<p align="center">
+   <img src="document/images/liczniki.png" height="300" alt="Counters"/>
+   <img src="document/images/tryb_zaznaczenia.png" height="300" alt="Selection Mode"/>
+</p>
+
+### 3. Themes
+The application supports **Dark**, **Light**, and **Easy** (High Contrast/Large Text) themes for accessibility.
+
+<p align="center">
+   <img src="document/images/strona_domowa_motywy.png" width="800" alt="Themes Comparison"/>
+</p>
 
 ---
 
-## Prepare Environment
+## Technology Stack
 
-My current environtment preparing:
+*   **Language:** Dart
+*   **Framework:** Flutter
+*   **Database:** SQLite (via `sqlite3` and `drift`)
+*   **Architecture:** MVC / Service-based modularization
 
-- Install according to the [official website](https://docs.flutter.dev/get-started/install):
-    - Flutter 
-    - Android Studio
-    - Android Emulator
-- [Prepare Visual Studio Code](https://docs.flutter.dev/get-started/editor?tab=vscode)
+## Installation
 
-## Running
-
-Current way to run an application:
-- clone this repo
-- run Android Emulator (for me this is `Pixel 6 API 30`)
-    to run an emulator from Windows terminal:
-    you can run a new Windows Terminal and go to the sdk directory
-    for me it was `C:\Users\<my_user>\AppData\Local\Android\Sdk\emulator`
-    and run `emulator.exe -avd <avd_name>`
-    to see available avds run `emulator.exe -list-avds`
-    example:
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/bsobocki/MobiNote.git
     ```
-    C:\Users\bartq\AppData\Local\Android\Sdk\emulator> .\emulator.exe -list-avds
-    Pixel_6_API_30
-    C:\Users\bartq\AppData\Local\Android\Sdk\emulator> .\emulator.exe -avd Pixel_6_API_30
+2.  **Install dependencies**
+    ```bash
+    flutter pub get
     ```
-- flutter run
+3.  **Run the application**
+    ```bash
+    flutter run
+    ```
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Author:** Bartosz Sobocki
